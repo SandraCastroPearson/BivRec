@@ -22,3 +22,4 @@ This function fits the model using Chang's Method given one covariate. Called fr
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

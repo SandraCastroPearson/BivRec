@@ -22,3 +22,4 @@ This function calculates the joint CDF for bivariate recurrent events. Called fr
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

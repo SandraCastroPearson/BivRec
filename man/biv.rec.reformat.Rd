@@ -39,3 +39,4 @@ This function simulates recurrent event data based on a linear combination of tw
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

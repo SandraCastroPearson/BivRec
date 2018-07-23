@@ -225,8 +225,7 @@ sd.estpar=function(init, dat, v, B) {
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
 #'
-#'
-#' @export
+#' @keywords internal
 
 #multivariable regression analysis-Chang's method
 chang.multivariate <- function(new_data, cov_names, CI) {

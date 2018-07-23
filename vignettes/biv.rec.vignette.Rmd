@@ -9,13 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-In this vignette, we introduce you to how to explore and analyze recurrent event data using the differnet methods available in the BivRec package. The details of function syntax and the produced objects are available in the package manual, which will thus not be covered in this vignette. 
+In this vignette, we introduce you to how to explore and analyze recurrent event data using the differnet methods available in the BivRec package. Most details of function syntax and the produced objects are available in the package manual, which will thus not be covered in this vignette. 
 
 ## Model and Data Simulation
 
 ```{r data, message=FALSE, warning=FALSE}
 library(BivRec)
-set.seed(123)
+set.seed(1234)
 biv.rec.data <- data.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 head(biv.rec.data)
 ```
@@ -30,12 +30,15 @@ biv.rec.plot(formula = id ~ xij+ yij, data = biv.rec.data)
 
 ### Semiparametric Regression Analysis using the method developed by Lee et all.
 
-More details on the Semiparametric Regression method can be found at: [Semiparametric regression analysis for alternating recurrent event data](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563)
+More details on the Semiparametric Regression method developed by Lee et all can be found at: [Semiparametric regression analysis for alternating recurrent event data](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563)
 
 
 ```{r fit.lee, warning=FALSE}
+# library(tictoc)
+# tic()
 # biv.rec.lee <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=FALSE)
-# biv.rec.lee
+# toc()
+# biv.rec.lee$covariate.effects
 ```
 
 ### Semiparametric Regression Analysis using the method developed by Chang.

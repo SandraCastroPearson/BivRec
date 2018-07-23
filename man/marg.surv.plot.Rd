@@ -27,6 +27,4 @@ plot.marg.surv(nonpar.example)
 }
 
 }
-\keyword{marginal}
-\keyword{plot}
-\keyword{survival}
+\keyword{internal}

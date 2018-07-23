@@ -1,3 +1,20 @@
+np.fit4conditional <- function(formula, data, ai, u1, u2){
+
+  ### PULL INFORMATION FROM PARAMETERS TO SEND TO REFORMAT
+  identifier=xij=yij=c_indicatorY=c_indicatorX=episode=covariates=NULL
+  method <- "Non-Parametric"
+  condgx <- TRUE
+
+  ###Send to biv.rec.reformat and complete analysis
+  new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data)
+  temp <- rep(u1, each = length(u2))
+  temp2 <- rep(u2, length(u1))
+  u <- cbind(u1=temp, u2=temp2)
+  res1 <- nonparam.cdf(fit_data=new_data$forcdf, u, ai)
+
+  return(res1)
+}
+
 bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
   set.seed(seedi)
   samp.id <- sample(1:n, n, replace = TRUE)
@@ -7,17 +24,15 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
     boot.dat <- rbind(boot.dat, cbind(id = j, temp[, -1]))
   }
 
-  out2 <- biv.rec.fit(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat, method="Non-Parametric",
-                     CI=FALSE, ai=ai, u1=x.grid$Time[2], u2=y.grid, condgx = TRUE)
-  joint2 <- out2$cdf
+  joint2 <- np.fit4conditional(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat,
+                             ai=ai, u1=x.grid$Time[2], u2=y.grid)
 
   if (x.grid$Time[1] == mintime) {
     conditional <- joint2$`Prob(x_ij < u1,  y_ij < u2)` / (1-ps2)
   } else {
     print("esp")
-    out1 <- biv.rec.fit(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat, method="Non-Parametric",
-                        CI=FALSE, ai=ai, u1=x.grid$Time[1], u2=y.grid, condgx = TRUE)
-    joint1 <- out1$cdf
+    joint1 <- np.fit4conditional(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat,
+                          ai=ai, u1=x.grid$Time[1], u2=y.grid)
     conditional <- (joint2$`Prob(x_ij < u1,  y_ij < u2)` - joint1$`Prob(x_ij < u1,  y_ij < u2)`)/
       (ps1 - ps2)
   }
@@ -38,8 +53,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #'
 #' @return A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.
 #'
-#' @keywords conditional cdf
-#' @export
+#' @keywords internal
 #'
 
 nonparam.conditional <- function(bivrec.nonparam.result, given.interval) {
@@ -87,25 +101,6 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval) {
        xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond$upperCI), digits=1)), main=mainlab)
   lines(cond$Time, cond$lowerCI, lty = 2)
   lines(cond$Time, cond$Conditional.Probability,lty = 1)
-
-  #TEST WITHOUT BOOTSTRAP GET CLOSE ESTIMATE BUT NO CI - VERONA DATA
-  #out <- biv.rec.fit(formula = formula, data=data, method="Non-Parametric",
-  #                    CI=FALSE, ai=ai, u1=26/30.5, u2=1:240/2, condgx = FALSE)
-  # cdf <- out$cdf
-  # joint2 <- cdf[which(cdf$u1==x.grid$Time[2]),]
-  #
-  # if (x.grid$Time[1] == min(marginal$Time)) {
-  #   joint2$conditional <- joint2$`Prob(x_ij < u1,  y_ij < u2)` / (1 - ps2)
-  # } else {
-  #   joint2$conditional <- (joint2$`Prob(x_ij < u1,  y_ij < u2)` - joint1$`Prob(x_ij < u1,  y_ij < u2)`)/
-  #     (ps1-ps2)
-  # }
-  # cond <- data.frame(joint2$u2, joint2$conditional)
-  # colnames(cond) <- c("Time", "Conditional.Probability")
-  # mainlab <- paste("Conditional Probability given first gap time between", round(given.interval[1], digits=2),
-  #                  "and", round(given.interval[2], digits=2), sep=" ")
-  # plot(cond$Time, cond$Conditional.Probability, type="l", lty = 1, xlab = "Time", ylab = "Conditional Probability",
-  #      main=mainlab)
 
   return(conditional=cond)
 

@@ -64,7 +64,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 #'
 #' @useDynLib BivRec bivrecur
 #'
-#' @export
+#' @keywords internal
 #'
 
 nonparam.cdf <- function(fit_data, u, ai) {

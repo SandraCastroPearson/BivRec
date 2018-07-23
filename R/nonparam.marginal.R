@@ -50,7 +50,7 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #'
 #' @useDynLib BivRec onesamp
 #'
-#' @export
+#' @keywords internal
 #'
 
 nonparam.marginal <- function(fit_data) {

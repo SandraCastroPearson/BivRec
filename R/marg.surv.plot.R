@@ -19,14 +19,14 @@
 #' plot.marg.surv(nonpar.example)
 #' }
 #'
-#' @keywords plot marginal survival
-#' @export
-
+#' @keywords internal
+#'
 marg.surv.plot <- function(bivrec.nonparam.result) {
 
   forplot <- bivrec.nonparam.result$marginal.survival
   formula <- bivrec.nonparam.result$formula
   data <- bivrec.nonparam.result$data
+
   variables <- all.vars(formula)
   xij <- eval(parse(text =paste("data$", variables[2], sep="")))
   mx <- round(max(xij), digits = 0)

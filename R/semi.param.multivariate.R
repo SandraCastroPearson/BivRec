@@ -1,6 +1,6 @@
-  ###########################################################################
-  ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
-  ###########################################################################
+###########################################################################
+############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
+###########################################################################
 
 #                 o.fun, all MPRO and MVAR FUNCTIONS                           #
 #_______________________________________________________________________________
@@ -15,16 +15,12 @@ o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
 ##-----estimation functions
 ##proposed method
 MPro.ee1=function(beta1,mdat) {
+
   n=mdat$n
   xmat=mdat$xmat
-  #ymat=mdat$ymat
-  #zmat=mdat$zmat
   delta1=mdat$delta1
-  #delta2=mdat$delta2
   g1mat=mdat$g1mat
-  #g2mat=mdat$g2mat
   l1=mdat$l1
-  #l2=mdat$l2
   mstar=mdat$mstar
   amat=mdat$amat
 
@@ -36,6 +32,7 @@ MPro.ee1=function(beta1,mdat) {
     tmp.out=rbind(tmp.out,apply(A*subsum,2,sum))
   }
   out=apply(tmp.out,2,sum)/(n^2)
+
   return(out)
 }
 
@@ -46,7 +43,7 @@ MPro.uf1=function(beta1,mdat) {
 }
 
 MPro.uest1=function(init,mdat) {
-  res=optim(init, MPro.uf1, mdat=mdat,control=list(maxit=20000))
+  res=optim(init, MPro.uf1, mdat=mdat, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
@@ -64,6 +61,7 @@ MPro.ee2=function(beta2,beta1,mdat) {
   mstar=mdat$mstar
   amat=mdat$amat
 
+  #####FIX
   tmp.out=NULL
   for (i in 1:n) {
     A=t(t(amat)-amat[i,])
@@ -179,7 +177,7 @@ semi.param.multivariate <- function(new_data, cov_names, CI) {
   n_params <- length(cov_names)
 
   #solve first equation to get beta1
-  mpro1 <- MPro.uest1(init=rep(0, n_params),mdat=new_data)
+  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
   print(paste("First estimate complete.", str_c(mpro1$par, collapse = ","), "Second estimation in progress.", sep=" "))
 
   #solve second equation to get beta2

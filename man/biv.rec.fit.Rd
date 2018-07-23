@@ -4,7 +4,7 @@
 \alias{biv.rec.fit}
 \title{Analysis of Bivariate Recurrent Data}
 \usage{
-biv.rec.fit(formula, data, method, CI, ai, u1, u2, condgx)
+biv.rec.fit(formula, data, method, CI)
 }
 \arguments{
 \item{formula}{Formula indicating model to fit in the form: \strong{ID + xij + yij + episode + c_indicatorY + c_indicatorX ~ covariates}.
@@ -19,37 +19,24 @@ where
 
 \item{data}{A data frame that includes all the vectors/covariates listed in the formula}
 
-\item{method}{A string indicating which method to use to estimate effect of covariates (and corresponding 95\% CI when specified) or cdf. Options are: "Lee.all" (default), "Chang", or "Non-Parametric". For details on methods see vignette.}
+\item{method}{A string indicating which method to use to estimate effect of covariates (and corresponding 95\% CI when specified). Options are: "Lee.all" (default) or "Chang". For details on methods see vignette.}
 
 \item{CI}{A logical variable. If TRUE a 95\% Confidence Interval for the effect estimates is calculated. Default is FALSE.}
-
-\item{ai}{A real non-negative function of censoring time to be used as weights in the Non-Parametric Method. Current options are 1 such that ai = f(censoring times) = 1 or the default of 2 such that ai = f(censoring times) = censoring times.}
-
-\item{u1}{A vector or single number to be used for Estimation of joint CDF P(xij <= u1, yij <= u2) in the Non-Parametric Method. (see vignette for further details)}
-
-\item{u2}{A vector or single number to be used for Estimation of joint CDF P(xij <= u1, yij <= u2) in the Non-Parametric Method. (see vignette for further details)}
-
-\item{condgx}{Automatically passed - not for user}
 }
 \value{
 A list with dataframes of results and some of the parameters used to produce them.
 }
 \description{
-This function allows the user to:
-1) Evaluate covariate effects on two alternating states/gap times.
-2) Find the joint cdf, marginal survival and conditional cdf for two alternating states/gap times.
+This function allows the user to evaluate covariate effects on two alternating recurrent events/gap times.
 }
 \examples{
 \dontrun{
 library(BivRec)
 set.seed(1234)
-sim.data <- data.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-multiple.lee <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ a1 + a2,
-                data=sim.data, method="Lee.all", CI=FALSE)
+sim.data <- data.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+multiple.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2,
+                data=sim.data, method="Lee.all", CI=TRUE)
 multiple.lee
-nonpar <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ 1,
-          data=sim.data, method="Non-Parametric", ai=1)
-nonpar
 }
 
 }

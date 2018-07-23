@@ -18,3 +18,4 @@ This function calculates the marginal survival for bivariate recurrent events. C
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

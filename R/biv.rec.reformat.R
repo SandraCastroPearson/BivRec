@@ -189,7 +189,7 @@ formarginal <- function(dat){
 #' @return a biv.rec object ready for fitting.
 #' @seealso \code{\link{biv.rec.fit}}
 #'
-#' @export
+#' @keywords internal
 
 ####MAIN FUNCTION
 

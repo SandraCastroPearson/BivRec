@@ -22,3 +22,4 @@ This function fits the model using Chang's Method given multiple  covariates. Ca
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

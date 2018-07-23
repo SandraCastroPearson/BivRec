@@ -18,5 +18,4 @@ A data frame with the conditional CDF for the given an interval of the first gap
 \description{
 This function calculates the conditional cdf after estimation of joint cdf and marginal survival.
 }
-\keyword{cdf}
-\keyword{conditional}
+\keyword{internal}

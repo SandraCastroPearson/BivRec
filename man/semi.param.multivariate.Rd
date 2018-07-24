@@ -22,3 +22,4 @@ This function fits the semiparametric model given multiple  covariates. Called f
 \seealso{
 \code{\link{biv.rec.fit}}
 }
+\keyword{internal}

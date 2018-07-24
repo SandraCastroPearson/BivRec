@@ -34,11 +34,9 @@ More details on the Semiparametric Regression method developed by Lee et all can
 
 
 ```{r fit.lee, warning=FALSE}
-# library(tictoc)
-# tic()
-# biv.rec.lee <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=FALSE)
-# toc()
-# biv.rec.lee$covariate.effects
+library(BivRec)
+biv.rec.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=TRUE)
+biv.rec.lee$covariate.effects
 ```
 
 ### Semiparametric Regression Analysis using the method developed by Chang.

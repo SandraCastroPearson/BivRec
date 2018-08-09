@@ -7,19 +7,16 @@
 nonparam.cdf(fit_data, u, ai)
 }
 \arguments{
-\item{fit_data}{An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.fit() function.}
+\item{fit_data}{An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().}
 
-\item{u}{Passed from biv.rec.fit() function.}
+\item{u}{Passed from biv.rec.np().}
 
-\item{ai}{Passed from biv.rec.fit() function.}
+\item{ai}{Passed from biv.rec.np().}
 }
 \value{
 A dataframe with the joint CDF
 }
 \description{
-This function calculates the joint CDF for bivariate recurrent events. Called from biv.rec.fit(). No user interface.
-}
-\seealso{
-\code{\link{biv.rec.fit}}
+This function calculates the joint CDF for bivariate recurrent events. Called from biv.rec.np(). No user interface.
 }
 \keyword{internal}

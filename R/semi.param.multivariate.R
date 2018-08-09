@@ -5,7 +5,7 @@
 #                 o.fun, all MPRO and MVAR FUNCTIONS                           #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
-# Last Modified by Sandra Castro-Pearson (April, 2018)                         #
+# Modified to Fortran by Sandra Castro-Pearson (last updated July, 2018)       #
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 
@@ -246,8 +246,8 @@ Mvar.est=function(beta1,beta2,mdat) {
 #' This function fits the semiparametric model given multiple  covariates. Called from biv.rec.fit(). No user interface.
 #' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
 #' @param cov_names A vector with the names of the covariates. Passed from biv.rec.fit().
-#' @param CI Logical. Passed from biv.rec.fit().
-#' @return A dataframe summarizing the estimates for effects of the covariates, their standard errors and 95% confidence intervals.
+#' @param CI Passed from biv.rec.fit().
+#' @return A dataframe summarizing effects of the covariates: estimates, SE and CI.
 #' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @importFrom stats na.omit
@@ -267,28 +267,25 @@ semi.param.multivariate <- function(new_data, cov_names, CI) {
   n_params <- length(cov_names)
 
   #solve first equation to get beta1
-  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
+    mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
 
   #solve second equation to get beta2
-  mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
+    mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
 
-  if (CI == TRUE) {
     print("Estimating standard errors/confidence intervals")
 
-    #estimate covariance matrix and get diagonal then std. errors
+  #estimate covariance matrix and get diagonal then std. errors
     se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
 
-    #join all info and calculate CIs, put in nice table
+  #join all info and calculate CIs, put in nice table
     multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
-    CI <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(0.025)*x[2], x[1]+qnorm(0.975)*x[2])))
-    multi.fit  <- cbind(multi.fit, CI)
-    colnames(multi.fit) <- c("Estimate", "SE", "0.25%", "0.95%")
+    conf.lev = 1 - ((1-CI)/2)
+    CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
+    multi.fit  <- cbind(multi.fit, CIcalc)
+    low.string <- paste((1 - conf.lev), "%", sep="")
+    up.string <- paste(conf.lev, "%", sep="")
+    colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
+    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
-  } else {
-    multi.fit <- data.frame(c(mpro1$par, mpro2$par))
-    colnames(multi.fit) <- "Estimate"
-  }
-
-  rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
   return(multi.fit)
 }

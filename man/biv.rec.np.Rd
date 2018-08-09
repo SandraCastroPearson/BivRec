@@ -4,27 +4,32 @@
 \alias{biv.rec.np}
 \title{Non-Parametric Analysis of Bivariate Recurrent Event Data}
 \usage{
-biv.rec.np(formula, data, ai, u1, u2, marginalplot, conditional, given.interval)
+biv.rec.np(formula, data, CI, ai, u1, u2, marginalplot, conditional,
+  given.interval)
 }
 \arguments{
 \item{formula}{Formula in the form: \strong{ID + xij + yij + episode + c_indicatorY + c_indicatorX ~ 1}.
 where
-\strong{ID:} is a vector of subjects' unique identifier.
-\strong{xij:} is a vector with the lengths of time spent in event of type X for individual i in episode j.
-\strong{yij:} is a vector with the lengths of time spent in event of type Y for individual i in episode j.
-\strong{episode:} is a vector indicating the observation or episode j for a subject i.
-\strong{c_indicatorY:} is an vector of indicators with values of 0 for the last episode for subject i and 1 otherwise. A subject with only one episode will have one 0.
-\strong{c_indicatorX:} is an optional vector of indicators with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have only a 1 (if he was censored at event Y) or a 0 (if he was censored at event X).}
+\itemize{
+ \item ID: is a vector of subjects' unique identifier.
+ \item xij: is a vector with the lengths of time spent in event of type X for individual i in episode j.
+ \item yij: is a vector with the lengths of time spent in event of type Y for individual i in episode j.
+ \item episode: is a vector indicating the observation or episode j for a subject i.
+ \item c_indicatorY: is an vector of indicators with values of 0 for the last episode for subject i and 1 otherwise. A subject with only one episode will have one 0.
+ \item c_indicatorX: is an optional vector of indicators with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have only a 1 (if he was censored at event Y) or a 0 (if he was censored at event X).
+}}
 
 \item{data}{A data frame that includes all the vectors/covariates listed in the formula}
 
-\item{ai}{A real non-negative function of censoring time to be used as weights in the Non-Parametric Method. Current options are 1 such that ai = f(censoring times) = 1 or the default of 2 such that ai = f(censoring times) = censoring times.}
+\item{CI}{Level for confidence intervals for marginal plot and conditional cdf, must be between 0.50 and 0.99, 0.99 would give 99\% CI. Default is 0.95.}
+
+\item{ai}{A real non-negative function of censoring time to be used as weights in the Non-Parametric Method. Current options are 1 such that ai = f(censoring times) = 1 which is the default or 2 such that ai = f(censoring times) = censoring times.}
 
 \item{u1}{A vector or single number to be used for Estimation of joint CDF P(xij <= u1, yij <= u2) in the Non-Parametric Method. (see vignette for further details)}
 
 \item{u2}{A vector or single number to be used for Estimation of joint CDF P(xij <= u1, yij <= u2) in the Non-Parametric Method. (see vignette for further details)}
 
-\item{marginalplot}{Logical. If TRUE (default) this function will plot the marginal survival for the first gap time with 95\% confidence interval.}
+\item{marginalplot}{Logical. If TRUE (default) this function will plot the marginal survival for the first gap time with confidence interval.}
 
 \item{conditional}{Logical. If TRUE will calculate the conditional cdf for the second gap time given an interval for the first gap time. Must provide given.interval.}
 
@@ -32,10 +37,17 @@ where
 The given values v1 and v2 must be in the range of gap times in the estimated marginal survival (valid times are given in the Time column of the results for marginal survival).}
 }
 \value{
-A list with dataframes of results and some of the parameters used to produce them.
+A BivRec list object containing:
+\itemize{
+  \item \strong{joint.cdf:} Data Frame with joint cdf and standard error for the two alternating gap times.
+  \item \strong{marginal.survival:} Data Frame with marginnal survival for the first gap time and standard error.
+  \item \strong{conditional.cdf:} Data Frame with conditional cdf, bootstrap standard error and bootstrap confidence interval.
+  \item \strong{formula:} The formula used to specify components of bivariate recurrent response.
+  \item \strong{ai:} The function of censoring time used as weights.
+}
 }
 \description{
-This function allows the user to find the joint cdf, marginal survival and conditional cdf for two alternating states/gap times.
+This function allows the user to find the joint cdf, marginal survival and conditional cdf for two alternating states/gap times using methods outlined in Huang, C. and Wang, M. (2005), Nonparametric Estimation of the Bivariate Recurrence Time Distribution. Biometrics, 61: 392-402. \url{doi.org/10.1111/j.1541-0420.2005.00328.x}
 }
 \examples{
 \dontrun{

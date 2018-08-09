@@ -1,13 +1,13 @@
-#' A Data Simulation Function
+#' Bivariate Recurrent Response and Covariate Data Simulation
 #'
-#' @description This function simulates a series of alternating recurrent events based on a linear combination of two covariates.
+#' @description This function simulates a series of alternating recurrent events based on simulations studies in: Lee CH, Huang C-Y, Xu G, Luo X. Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine. 2018;37:996-1008. \url{https://doi.org/10.1002/sim.7563}
 #'
 #' @param nsize sample size
 #' @param beta1 true coefficients for first gap time
 #' @param beta2 true coefficients for second gap time
 #' @param cr maximum support of censoring time
 #' @param sg2 variance of frailty
-#' @param set optional simulation setting. Choose 1.1 (default) for $rho=1$ in covariance matrix, 1.2 for $rho=0.5$ in covariance matrix or 2.1 for $rho=0$ in covariance matrix.
+#' @param set Simulation setting based on scenerios outlined by Lee et all. Choose 1.1 (default) for scenerio 1 with rho=1 in covariance matrix, 1.2 for scenerio 1 with rho=0.5, 1.3 for scenario 1 with rho=0 and 2.0 for scenario 2.
 #'
 #' @return Data frame with alternating recurrent event data and two covariates
 #'
@@ -30,6 +30,9 @@
 data.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
 
   if (missing(set)) {set <- 1.1}
+  if (missing(cr)) {cr <- 63}
+  if (missing(sg2)) {sg2 <- 0.5}
+
   id=1:nsize
 
   ##generate covariates (A1,A2)
@@ -50,11 +53,11 @@ data.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
     gamma1=gamma[,1]
     gamma2=gamma[,2]
   }
-  if (set==2.1) {
+  if (set==1.3) {
     gamma1=rnorm(nsize,1,sqrt(sg2))
     gamma2=rnorm(nsize,1,sqrt(sg2))
   }
-  if (set==2.2) {
+  if (set==2.0) {
     gamma1=rnorm(nsize,1,sqrt(sg2))
     gamma2=rgamma(nsize,shape=1/sg2,rate=1/sg2)
   }

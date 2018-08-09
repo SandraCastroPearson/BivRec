@@ -1,27 +1,32 @@
-#' Analysis of Bivariate Recurrent Data
+#' Semi-Parametric Accelerated Failure Time Analysis of Bivariate Recurrent Data
 #'
 #' @description
-#' This function allows the user to evaluate covariate effects on two alternating recurrent events/gap times.
+#' This function allows the user to evaluate covariate effects on two alternating recurrent events/gap times using the methods outlined in: Lee CH, Huang C-Y, Xu G, Luo X. Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine. 2018;37:996-1008. \url{https://doi.org/10.1002/sim.7563}
 #'
 #' @importFrom stats model.frame
 #' @importFrom stats na.omit
 #' @importFrom stats quantile
 #'
-#' @param formula Formula indicating model to fit in the form: \strong{ID + xij + yij + episode + c_indicatorY + c_indicatorX ~ covariates}.
+#' @param formula Formula in the form \strong{ID + xij + yij + episode + c_indicatorY + c_indicatorX ~ covariates} indicating model to fit.
 #'  where
-#'  \strong{ID:} is a vector of subjects' unique identifier.
-#'  \strong{xij:} is a vector with the lengths of time spent in event of type X for individual i in episode j.
-#'  \strong{yij:} is a vector with the lengths of time spent in event of type Y for individual i in episode j.
-#'  \strong{episode:} is a vector indicating the observation or episode j for a subject i.
-#'  \strong{c_indicatorY:} is an vector of indicators with values of 0 for the last episode for subject i and 1 otherwise. A subject with only one episode will have one 0.
-#'  \strong{c_indicatorX:} is an optional vector of indicators with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have only a 1 (if he was censored at event Y) or a 0 (if he was censored at event X).
-#'  \strong{covariates:} the names of the covariates in the form covariate_1 + ... + covariate_N. If using Non-parametric method replaces the names with a 1.
+#' \itemize{
+#'   \item ID: is a vector of subjects' unique identifier.
+#'   \item xij: is a vector with the lengths of time spent in event of type X for individual i in episode j.
+#'   \item yij: is a vector with the lengths of time spent in event of type Y for individual i in episode j.
+#'   \item episode: is a vector indicating the observation or episode j for a subject i.
+#'   \item c_indicatorY: is an vector of indicators with values of 0 for the last episode for subject i and 1 otherwise. A subject with only one episode will have one 0.
+#'   \item c_indicatorX: is an optional vector of indicators with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have only a 1 (if he was censored at event Y) or a 0 (if he was censored at event X).
+#'   \item covariates: the names of the covariates in the form covariate_1 + ... + covariate_N. If using Non-parametric method replaces the names with a 1.
+#' }
 #' @param data A data frame that includes all the vectors/covariates listed in the formula
 #' @param method A string indicating which method to use to estimate effect of covariates (and corresponding 95\% CI when specified). Options are: "Lee.all" (default) or "Chang". For details on methods see vignette.
-#' @param CI A logical variable. If TRUE a 95\% Confidence Interval for the effect estimates is calculated. Default is FALSE.
-
+#' @param CI Level for confidence interval between 0.50 and 0.99, 0.99 would give 99\% CI. Default is 0.95.
 #'
-#' @return A list with dataframes of results and some of the parameters used to produce them.
+#' @return A BivRec list object containing:
+#' \itemize{
+#'   \item \strong{covariate.effects:} Data Frame summarizing effects of the covariates including point estimate, standard error and confidence interval.
+#'   \item \strong{formula:} The formula used to specify components of bivariate recurrent response and covariates.
+#' }
 #' @export
 #'
 #' @keywords biv.rec.fit
@@ -42,7 +47,7 @@ biv.rec.fit <- function(formula, data, method, CI){
   #Manage missing information by method
 
   if(missing(method)) {method <- "Lee.all"}
-  if(missing(CI)) {CI <- FALSE}
+  if(missing(CI)) {CI <- 0.95}
 
   ### PULL INFORMATION FROM PARAMETERS TO SEND TO REFORMAT
   variables <- all.vars(formula)
@@ -95,6 +100,6 @@ biv.rec.fit <- function(formula, data, method, CI){
         if (length(cov_names)==1) {results <- chang.univariate(new_data, cov_names, CI)
         } else {results <- chang.multivariate(new_data, cov_names, CI)}
     }
-  return(list(covariate.effects = results, formula=formula, data = data))
+  return(list(covariate.effects = results, formula=formula))
 }
 

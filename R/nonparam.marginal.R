@@ -42,8 +42,8 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #' A Function for non-parametric analysis on a biv.rec object
 #'
 #' @description
-#' This function calculates the marginal survival for bivariate recurrent events. Called from biv.rec.fit(). No user interface.
-#' @param fit_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit() function.
+#' This function calculates the marginal survival for bivariate recurrent events. Called from biv.rec.np(). No user interface.
+#' @param fit_data An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().
 #' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @return A data frame with marginal survival

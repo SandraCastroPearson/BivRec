@@ -4,27 +4,17 @@
 \alias{marg.surv.plot}
 \title{Plot Marginal Survival after non-parametric analysis}
 \usage{
-marg.surv.plot(bivrec.nonparam.result)
+marg.surv.plot(bivrec.nonparam.result, CI)
 }
 \arguments{
-\item{bivrec.nonparam.result}{is a list obtained from running biv.rec.fit with method="Non-Parametric"}
+\item{bivrec.nonparam.result}{List with joing.cdf and marginal.survival. Passed from biv.rec.np()}
+
+\item{CI}{Confidence level for CI. Passed from biv.rec.np()}
 }
 \value{
-A plot of marginal survival vs. first time with 95\% confidence interval.
+A plot of marginal survival vs. first gap time with confidence interval.
 }
 \description{
-This function plots marginal survival for recurrent event data.
-}
-\examples{
-\dontrun{
-library(BivRec)
-set.seed(1234)
-sim.data <- data.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-nonpar.example <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ 1,
-          data=sim.data, method="Non-Parametric", ai=1)
-nonpar.example
-plot.marg.surv(nonpar.example)
-}
-
+This function plots marginal survival for recurrent event data.  Called from biv.rec.np(). No user interface.
 }
 \keyword{internal}

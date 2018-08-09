@@ -1,6 +1,6 @@
-  ###########################################################################
-  ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
-  ###########################################################################
+###########################################################################
+############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
+###########################################################################
 
 #             m.dat.chang, all RE, v.est and sd.estpar FUNCTIONS               #
 #_______________________________________________________________________________
@@ -108,12 +108,13 @@ RE.uest=function(init,dat) {
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
+
 ##-----variance estimation
 ############################################
 #Zeng
 ############################################
 v.est=function(beta,dat,R)
-#----------------------------------------------------------------------------------------------------------------------------
+  #----------------------------------------------------------------------------------------------------------------------------
 # first step of variance estimate: estimate V by bootstrap, only need to evaluate the estimating function, no need to solve it
 #----------------------------------------------------------------------------------------------------------------------------
 {
@@ -183,7 +184,7 @@ RE.ufR=function(beta,dat,R) {
 }
 
 RE.uestR=function(init,dat,R) {
-  res=optim(init,RE.ufR,dat=dat,R=R,control=list(maxit=20000))
+  res=optim(init,RE.ufR,dat=dat,R=R, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
@@ -211,11 +212,11 @@ sd.estpar=function(init, dat, v, B) {
 #'
 #' @description
 #' This function fits the model using Chang's Method given multiple  covariates. Called from biv.rec.fit(). No user interface.
-#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function.
+#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
 #' @param cov_names A vector with the names of the covariates. Passed from biv.rec.fit().
 #' @param CI Passed from biv.rec.fit().
 #'
-#' @return A dataframe summarizing the estimates for effects of the covariates, their standard errors and 95% confidence intervals.
+#' @return A dataframe summarizing effects of the covariates: estimates, SE and CI.
 #' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @importFrom stats na.omit
@@ -225,6 +226,7 @@ sd.estpar=function(init, dat, v, B) {
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
 #'
+#' @useDynLib BivRec changmdat
 #' @keywords internal
 
 #multivariable regression analysis-Chang's method
@@ -234,27 +236,22 @@ chang.multivariate <- function(new_data, cov_names, CI) {
   #solve to get all  estimates
   chang <- RE.uest(beta, new_data)
 
-  if (CI == TRUE) {
+  #estimate covariance matrix / std. errors
+  print(paste("Estimates complete.", str_c(chang$par, collapse = ","), "Estimating Std. Errors", sep=" "))
+  chang.v <- v.est(chang$par,new_data,R=50)
+  chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
+  print("Estimation of std. errors complete.")
+  print(chang.sd)
 
-    #estimate covariance matrix / std. errors
-    print(paste("Estimates complete.", str_c(chang$par, collapse = ","), "Estimating Std. Errors", sep=" "))
-    chang.v <- v.est(chang$par,new_data,R=50)
-    chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
-    print("Estimation of std. errors complete.")
-    print(chang.sd)
-
-    #calculate CIs, join all info, put in nice table
-    print("Calculating confidence intervals")
-    CIlow <- chang$par - qnorm(0.975)*chang.sd
-    CIup <- chang$par + qnorm(0.975)*chang.sd
-    chang.fit <- data.frame(chang$par, chang.sd, CIlow, CIup)
-    colnames(chang.fit) <- c("Estimate", "SE", "0.25%", "0.95%")
-
-  } else {
-    #put estimates only in nice table
-      chang.fit <- data.frame(chang$par)
-      colnames(chang.fit) <- "Estimate"
-  }
+  #calculate CIs, join all info, put in nice table
+  print("Calculating confidence intervals")
+  conf.lev = 1 - ((1-CI)/2)
+  CIlow <- chang$par - qnorm(conf.lev)*chang.sd
+  CIup <- chang$par + qnorm(conf.lev)*chang.sd
+  chang.fit <- data.frame(chang$par, chang.sd, CIlow, CIup)
+  low.string <- paste((1 - conf.lev), "%", sep="")
+  up.string <- paste(conf.lev, "%", sep="")
+  colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
 
   rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
   return(chang.fit)

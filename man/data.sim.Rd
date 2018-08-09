@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.sim.R
 \name{data.sim}
 \alias{data.sim}
-\title{A Data Simulation Function}
+\title{Bivariate Recurrent Response and Covariate Data Simulation}
 \usage{
 data.sim(nsize, beta1, beta2, cr, sg2, set)
 }
@@ -17,13 +17,13 @@ data.sim(nsize, beta1, beta2, cr, sg2, set)
 
 \item{sg2}{variance of frailty}
 
-\item{set}{optional simulation setting. Choose 1.1 (default) for $rho=1$ in covariance matrix, 1.2 for $rho=0.5$ in covariance matrix or 2.1 for $rho=0$ in covariance matrix.}
+\item{set}{Simulation setting based on scenerios outlined by Lee et all. Choose 1.1 (default) for scenerio 1 with rho=1 in covariance matrix, 1.2 for scenerio 1 with rho=0.5, 1.3 for scenario 1 with rho=0 and 2.0 for scenario 2.}
 }
 \value{
 Data frame with alternating recurrent event data and two covariates
 }
 \description{
-This function simulates a series of alternating recurrent events based on a linear combination of two covariates.
+This function simulates a series of alternating recurrent events based on simulations studies in: Lee CH, Huang C-Y, Xu G, Luo X. Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine. 2018;37:996-1008. \url{https://doi.org/10.1002/sim.7563}
 }
 \examples{
 data.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)

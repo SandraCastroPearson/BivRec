@@ -2,6 +2,47 @@
   ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
   ###########################################################################
 
+  ###                 changmdat FORTRAN subroutine and R call                    #
+  #______________________________________________________________________________#
+  # By Sandra Castro-Pearson (Last modified July, 2018)                          #
+  # Based on Chihyun Lee's R code                                                #
+  #______________________________________________________________________________#
+
+  r2f.changmdat <- function(tugap1r, tugap2r, tdatr, idcount,
+                            maxidcount, n, tmpr){
+
+    tmpstart = tmpend = tugapstart = tugapend = 0
+
+    out <- .Fortran("changmdat",
+                    tugap1=as.double(tugap1r),
+                    tugap2=as.double(tugap2r),
+                    tdat=as.double(tdatr),
+                    tmpin=as.double(tmpr),
+
+                    ugapcols=as.integer(ncol(tugap1r)),
+                    tmpstart=as.integer(tmpstart),
+                    tmpend=as.integer(tmpend),
+                    tugapstart=as.integer(tmpend),
+                    tugapend=as.integer(tugapend),
+
+                    idcount=as.integer(idcount),
+                    nrowtdat=as.integer(nrow(tdatr)),
+                    nrowugap=as.integer(nrow(tugap1r)),
+                    maxidcount=as.integer(maxidcount),
+
+                    n=as.integer(n),
+                    tmpcols=as.integer(ncol(tmpr)),
+                    tdatcols=as.integer(ncol(tdatr))
+    )
+
+    mytugap1 <- data.frame(matrix(out$tugap1, ncol=ncol(tugap1r)))
+    mytugap2 <- data.frame(matrix(out$tugap2, ncol=ncol(tugap2r)))
+    colnames(mytugap1) <- colnames(tugap1r)
+    colnames(mytugap2) <- colnames(tugap2r)
+
+    return(list(tugap1 = mytugap1, tugap2 = mytugap2))
+  }
+
 #           m.dat.chang1, all RE, v.est1 and sd.estpar1 FUNCTIONS              #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
@@ -17,51 +58,28 @@ m.dat.chang1=function(dat,beta) {
   beta1 = beta[1]
   beta2 = beta[2]
   maxb = apply(cbind(beta1,beta2), 1, max)
+  amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
   amat = dat$a1
   dat$txij = dat$xij*exp(-amat*beta1)
   dat$tzij = dat$txij + dat$yij*exp(-amat*beta2)
   dat$tci = dat$ci*exp(-amat*maxb)
 
-  all.t.xij = all.t.zij = all.t.d1 = all.t.d2 = all.mstar = all.a = NULL
+  tdatr <- as.matrix(dat[,c(1:2, 11:13, amat_indexes)])
+  tugap1r = tugap2r = matrix(rep(0, n*max(dat$epi)*(3+length(amat_indexes))), ncol=5)
+  colnames(tugap1r) = c("tgtime", "delta", "mstar", "a1")
+  colnames(tugap2r) = c("tgtime", "delta", "mstar", "a1")
+  idcount = as.vector(table(dat$id))
+  maxidcount = max(idcount)
+  tmpr <- matrix(rep(0, maxidcount*(9 + length(amat_indexes))), ncol=9 + length(amat_indexes))
+  colnames(tmpr) = c(colnames(tdatr)[1:5], "uxij" , "uzij", "udx", "udz", "a1")
 
-  for (i in unique(dat$id)) {
-    tmp=dat[dat$id==i,]
+  f.ugaps <- r2f.changmdat(tugap1r, tugap2r, tdatr, idcount,
+                           maxidcount, n, tmpr)
+  tugap1 <- f.ugaps$tugap1
+  tugap2 <- f.ugaps$tugap2
 
-    t.xij=min(tmp$txij[1],tmp$tci[1])
-    t.zij=min(tmp$tzij[1],tmp$tci[1])
-    t.d1=(t.xij<tmp$tci[1])
-    t.d2=(t.zij<tmp$tci[1])
-
-    if (nrow(tmp)>1) {
-      td1=t.d1
-      td2=t.d2
-      j=2
-      while (td1==1 & td2==1 & j<=nrow(tmp)) {
-        tsum=sum(t.zij[1:(j-1)])
-        txij=min(tmp$txij[j],tmp$tci[j]-tsum)
-        tzij=min(tmp$tzij[j],tmp$tci[j]-tsum)
-        td1=(txij+tsum)<tmp$tci[j]
-        td2=(tzij+tsum)<tmp$tci[j]
-        if (td1==1 & td2==1) {
-          t.xij=c(t.xij,txij)
-          t.zij=c(t.zij,tzij)
-          t.d1=c(t.d1,td1)
-          t.d2=c(t.d2,td2)
-        }
-        j=j+1
-      }
-    }
-    all.t.xij = c(all.t.xij,t.xij)
-    all.t.zij = c(all.t.zij,t.zij)
-    all.t.d1 = c(all.t.d1,t.d1)
-    all.t.d2 = c(all.t.d2,t.d2)
-    all.mstar = c(all.mstar,rep(length(t.xij),length(t.xij)))
-    all.a = c(all.a, cbind(tmp[1:length(t.xij), which(colnames(dat)=="a1")]))
-
-  }
-
-  ugap1 = data.frame(tgtime = all.t.xij, delta = all.t.d1, a1 = all.a, mstar=all.mstar)
-  ugap2 = data.frame(tgtime = all.t.zij, delta = all.t.d2, a1 = all.a, mstar=all.mstar)
+  ugap1 = data.frame(tugap1[-which(tugap1$tgtime==0),])
+  ugap2 = data.frame(tugap2[-which(tugap2$tgtime==0),])
 
   #order
   ugap1=ugap1[order(ugap1$tgtime,decreasing=TRUE),]
@@ -203,11 +221,11 @@ sd.estpar1=function(init,dat,v, B) {
 #'
 #' @description
 #' This function fits the model using Chang's Method given one covariate. Called from biv.rec.fit(). No user interface.
-#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function.
-#' @param cov_names A string with the name of the covariate.
+#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
+#' @param cov_names A string with the name of the covariate. Passed from biv.rec.fit().
 #' @param CI Passed from biv.rec.fit().
 #'
-#' @return A dataframe summarizing the estimates for effects of the covariate, its standard error and 95% confidence interval.
+#' @return A dataframe summarizing covariate effect estimate, SE and CI.
 #' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @importFrom stats na.omit
@@ -217,6 +235,7 @@ sd.estpar1=function(init,dat,v, B) {
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
 #'
+#' @useDynLib BivRec changmdat
 #' @keywords internal
 
 
@@ -226,7 +245,6 @@ chang.univariate <- function(new_data, cov_names, CI) {
 
   #solve first equation to get all  estimates
   chang1 <- RE.uest1(beta, new_data)
-  if (CI == TRUE) {
 
     #estimate covariance matrix / std. errors
     print(paste("Estimates complete.", str_c(chang1$par, collapse = ","), "Estimating Std. Errors", sep=" "))
@@ -237,16 +255,13 @@ chang.univariate <- function(new_data, cov_names, CI) {
     print("Calculating confidence intervals")
 
     #calculate CIs, join all info, put in nice table
-    CIlow <- chang1$par - qnorm(0.975)*chang1.sd
-    CIup <- chang1$par + qnorm(0.975)*chang1.sd
+    conf.lev = 1 - ((1-CI)/2)
+    CIlow <- chang1$par - qnorm(conf.lev)*chang1.sd
+    CIup <- chang1$par + qnorm(conf.lev)*chang1.sd
     chang.fit <- data.frame(chang1$par, chang1.sd, CIlow, CIup)
-    colnames(chang.fit) <- c("Estimate", "SE", "0.25%", "0.95%")
-
-  } else {
-    #put estimates only in nice table
-    chang.fit <- data.frame(chang1$par)
-    colnames(chang.fit) <- "Estimate"
-  }
+    low.string <- paste((1 - conf.lev), "%", sep="")
+    up.string <- paste(conf.lev, "%", sep="")
+    colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
 
   rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
   return(chang.fit)

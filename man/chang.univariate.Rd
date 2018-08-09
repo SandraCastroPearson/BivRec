@@ -7,14 +7,14 @@
 chang.univariate(new_data, cov_names, CI)
 }
 \arguments{
-\item{new_data}{An object that has been reformatted for fit using the biv.rec.reformat() function.}
+\item{new_data}{An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().}
 
-\item{cov_names}{A string with the name of the covariate.}
+\item{cov_names}{A string with the name of the covariate. Passed from biv.rec.fit().}
 
 \item{CI}{Passed from biv.rec.fit().}
 }
 \value{
-A dataframe summarizing the estimates for effects of the covariate, its standard error and 95% confidence interval.
+A dataframe summarizing covariate effect estimate, SE and CI.
 }
 \description{
 This function fits the model using Chang's Method given one covariate. Called from biv.rec.fit(). No user interface.

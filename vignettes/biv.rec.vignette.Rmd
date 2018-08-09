@@ -33,24 +33,30 @@ biv.rec.plot(formula = id ~ xij+ yij, data = biv.rec.data)
 More details on the Semiparametric Regression method developed by Lee et all can be found at: [Semiparametric regression analysis for alternating recurrent event data](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563)
 
 
-```{r fit.lee, warning=FALSE}
-library(BivRec)
-biv.rec.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=TRUE)
+```{r fit.lee, warning=FALSE, message=FALSE}
+biv.rec.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=0.99)
 biv.rec.lee$covariate.effects
 ```
 
 ### Semiparametric Regression Analysis using the method developed by Chang.
 
 ```{r fit.chang, warning=FALSE}
-# biv.rec.chang <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Chang", CI=FALSE)
-# biv.rec.chang
+# library(tictoc)
+# tic()
+# biv.rec.chang <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Chang", CI=0.99)
+# toc()
+# biv.rec.chang$covariate.effects
 ```
 
 ### Non-parametric Analysis using the method developed by Huang and Wang.
 
 ```{r fit.np, warning=FALSE}
-# biv.rec.np <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ 1, data=biv.rec.data, method="Non-Parametric")
-# biv.rec.np[[1]]
-# biv.rec.np[[2]]
+biv.rec.nonpar <- biv.rec.np(formula = id + xij + yij + epi + d2 + d1 ~ 1, data=biv.rec.data, CI=0.95, marginalplot=TRUE, conditional=TRUE, given.interval=c(0, 10))
+joint.cdf <- biv.rec.nonpar$joint.cdf
+marginal.survival <- biv.rec.nonpar$marginal.survival
+conditional <- biv.rec.nonpar$conditional.cdf
+head(joint.cdf)
+head(marginal.survival)
+head(conditional)
 ```
 

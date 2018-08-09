@@ -4,18 +4,17 @@
 \alias{nonparam.conditional}
 \title{A Function for additional non-parametric analysis of bivariate recurrent event data.}
 \usage{
-nonparam.conditional(bivrec.nonparam.result, given.interval)
+nonparam.conditional(bivrec.nonparam.result, given.interval, CI)
 }
 \arguments{
-\item{bivrec.nonparam.result}{is a list obtained from running biv.rec.fit with method="Non-Parametric",}
+\item{bivrec.nonparam.result}{List with joing.cdf and marginal.survival. Passed from biv.rec.np()}
 
-\item{given.interval}{is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time given this interval. If interval given is c(v1, v2) the  function calculates P(yij <= w | v1 <= xij <= v2).
-The given values v1 and v2 must be in the range of gap times in the estimated marginal survival (valid times are given in the Time column of the results for marginal survival).}
+\item{given.interval}{is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time. Passed from biv.rec.np()}
 }
 \value{
 A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.
 }
 \description{
-This function calculates the conditional cdf after estimation of joint cdf and marginal survival.
+This function calculates the conditional cdf after estimation of joint cdf and marginal survival.  Called from biv.rec.np(). No user interface.
 }
 \keyword{internal}

@@ -7,14 +7,14 @@
 chang.multivariate(new_data, cov_names, CI)
 }
 \arguments{
-\item{new_data}{An object that has been reformatted for fit using the biv.rec.reformat() function.}
+\item{new_data}{An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().}
 
 \item{cov_names}{A vector with the names of the covariates. Passed from biv.rec.fit().}
 
 \item{CI}{Passed from biv.rec.fit().}
 }
 \value{
-A dataframe summarizing the estimates for effects of the covariates, their standard errors and 95% confidence intervals.
+A dataframe summarizing effects of the covariates: estimates, SE and CI.
 }
 \description{
 This function fits the model using Chang's Method given multiple  covariates. Called from biv.rec.fit(). No user interface.

@@ -1,27 +1,17 @@
 #' Plot Marginal Survival after non-parametric analysis
 #'
 #' @description
-#' This function plots marginal survival for recurrent event data.
+#' This function plots marginal survival for recurrent event data.  Called from biv.rec.np(). No user interface.
 #'
-#' @param bivrec.nonparam.result is a list obtained from running biv.rec.fit with method="Non-Parametric"
+#' @param bivrec.nonparam.result List with joing.cdf and marginal.survival. Passed from biv.rec.np()
+#' @param CI Confidence level for CI. Passed from biv.rec.np()
 #'
 #' @importFrom graphics lines
-#' @return A plot of marginal survival vs. first time with 95\% confidence interval.
-#'
-#' @examples
-#' \dontrun{
-#' library(BivRec)
-#' set.seed(1234)
-#' sim.data <- data.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-#' nonpar.example <- biv.rec.fit(id + xij + yij + epi + d2 + d1 ~ 1,
-#'           data=sim.data, method="Non-Parametric", ai=1)
-#' nonpar.example
-#' plot.marg.surv(nonpar.example)
-#' }
+#' @return A plot of marginal survival vs. first gap time with confidence interval.
 #'
 #' @keywords internal
 #'
-marg.surv.plot <- function(bivrec.nonparam.result) {
+marg.surv.plot <- function(bivrec.nonparam.result, CI) {
 
   forplot <- bivrec.nonparam.result$marginal.survival
   formula <- bivrec.nonparam.result$formula
@@ -36,8 +26,9 @@ marg.surv.plot <- function(bivrec.nonparam.result) {
   forplot <- rbind(c(0, 1, 0), forplot, c(mx, 0, forplot[nrow(forplot),3]))
 
   #####95% Wald CI and plot
-  forplot$lower <- forplot[,2] - 1.96*forplot[,3]
-  forplot$upper <- forplot[,2] + 1.96*forplot[,3]
+  conf.lev = 1 - ((1-CI)/2)
+  forplot$lower <- forplot[,2] - qnorm(conf.lev)*forplot[,3]
+  forplot$upper <- forplot[,2] + qnorm(conf.lev)*forplot[,3]
   index <- which(forplot$lower<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
   plot(forplot$Time, forplot$`Marginal Survival`, type = "l", xlab = "Time", ylab = "Marginal Survival",

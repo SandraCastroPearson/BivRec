@@ -11,10 +11,10 @@ semi.param.univariate(new_data, cov_names, CI)
 
 \item{cov_names}{A vector with the names of the single covariate. Passed from biv.rec.fit().}
 
-\item{CI}{Logical. Passed from biv.rec.fit().}
+\item{CI}{Passed from biv.rec.fit().}
 }
 \value{
-A dataframe summarizing the estimates for effects of the covariate, their standard errors and 95% confidence intervals.
+A dataframe summarizing covariate effect estimate, SE and CI.
 }
 \description{
 This function fits the semiparametric model given only one covariate. Called from biv.rec.fit(). No user interface.

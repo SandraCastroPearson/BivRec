@@ -1,11 +1,13 @@
-#' A Plotting Function
+#' Bivariate Recurrent Response Plotting
 #'
 #' @description
 #' This function plots recurrent event data.
-#' @param formula Formula of the form \strong{ID ~ time1 + time2} where
-#' \strong{ID:} is a vector of unique subject identifiers.
-#' \strong{time1:} is a vector with the length of time subject i spends in event of type 1 during observation j (xij).
-#' \strong{time2:} is a vector with the length of time subject i spends in event of type 2 during observation j (yij).
+#' @param formula Formula of the form \strong{ID ~ xij + yij}.
+#' \itemize{
+#'   \item ID: is a vector of unique subject identifiers.
+#'   \item xij: is a vector with the length of time subject i spends in event of type 1 during observation j.
+#'   \item yij: is a vector with the length of time subject i spends in event of type 2 during observation j.
+#' }
 #' @param data A data frame that contains all the vectors listed in the formula
 #'
 #' @importFrom graphics plot

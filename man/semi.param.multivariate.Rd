@@ -11,10 +11,10 @@ semi.param.multivariate(new_data, cov_names, CI)
 
 \item{cov_names}{A vector with the names of the covariates. Passed from biv.rec.fit().}
 
-\item{CI}{Logical. Passed from biv.rec.fit().}
+\item{CI}{Passed from biv.rec.fit().}
 }
 \value{
-A dataframe summarizing the estimates for effects of the covariates, their standard errors and 95% confidence intervals.
+A dataframe summarizing effects of the covariates: estimates, SE and CI.
 }
 \description{
 This function fits the semiparametric model given multiple  covariates. Called from biv.rec.fit(). No user interface.

@@ -1,4 +1,4 @@
-BivRec Package - Requires devtools and Rtools35
+BivRec Package - Installation requires devtools and Rtools35
 
 
 Recommended commands for R installation from repository:

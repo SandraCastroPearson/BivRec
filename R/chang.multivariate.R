@@ -226,7 +226,6 @@ sd.estpar=function(init, dat, v, B) {
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
 #'
-#' @useDynLib BivRec changmdat
 #' @keywords internal
 
 #multivariable regression analysis-Chang's method

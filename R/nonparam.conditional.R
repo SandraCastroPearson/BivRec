@@ -101,9 +101,9 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
-  mainlab <- paste("Conditional CDF given first gap in [", round(given.interval[1], digits=2),
-                  ", ", round(given.interval[2], digits=2), "]", sep="")
-  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Time", ylab = "Conditional Probability",
+  mainlab <- paste("P(y_ij < t | ", round(given.interval[1], digits=2), " < x_ij < ",
+                  round(given.interval[2], digits=2), ")", sep="")
+  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Time (t)", ylab = "Conditional Probability",
        xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)), main=mainlab)
   lines(cond$Time, cond[,4], lty = 2)
   lines(cond$Time, cond$Conditional.Probability,lty = 1)

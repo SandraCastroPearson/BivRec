@@ -9,9 +9,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-In this vignette, we introduce you to how to explore and analyze recurrent event data using the differnet methods available in the BivRec package. Most details of function syntax and the produced objects are available in the package manual, which will thus not be covered in this vignette. 
+In this vignette, we introduce how to explore and analyze bivariate recurrent event data using the different methods available in the BivRec package. Most details of function syntax and the produced objects are available in the package manual, which will thus not be covered in this vignette. 
 
 ## Model and Data Simulation
+
+
 
 ```{r data, message=FALSE, warning=FALSE}
 library(BivRec)
@@ -22,33 +24,16 @@ head(biv.rec.data)
 
 ## Exploring the Alternating Recurrent Event Response (xij, yij)
 
+
 ```{r plot, message=FALSE, warning=FALSE}
 biv.rec.plot(formula = id ~ xij+ yij, data = biv.rec.data)
 ```
 
 ## Analysis
 
-### Semiparametric Regression Analysis using the method developed by Lee et all.
+### Distribution and Survival Functions
 
-More details on the Semiparametric Regression method developed by Lee et all can be found at: [Semiparametric regression analysis for alternating recurrent event data](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563)
-
-
-```{r fit.lee, warning=FALSE, message=FALSE}
-biv.rec.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=0.99)
-biv.rec.lee$covariate.effects
-```
-
-### Semiparametric Regression Analysis using the method developed by Chang.
-
-```{r fit.chang, warning=FALSE}
-# library(tictoc)
-# tic()
-# biv.rec.chang <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Chang", CI=0.99)
-# toc()
-# biv.rec.chang$covariate.effects
-```
-
-### Non-parametric Analysis using the method developed by Huang and Wang.
+Non-parametric Analysis using the method developed by Huang and Wang.
 
 ```{r fit.np, warning=FALSE}
 biv.rec.nonpar <- biv.rec.np(formula = id + xij + yij + epi + d2 + d1 ~ 1, data=biv.rec.data, CI=0.95, marginalplot=TRUE, conditional=TRUE, given.interval=c(0, 10))
@@ -59,4 +44,18 @@ head(joint.cdf)
 head(marginal.survival)
 head(conditional)
 ```
+
+### Covariate Effects
+
+Semiparametric Regression
+
+More details on the Semiparametric Regression method developed by Lee et all can be found at: [Semiparametric regression analysis for alternating recurrent event data](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563)
+
+
+```{r fit.lee, warning=FALSE, message=FALSE}
+biv.rec.lee <- biv.rec.fit(formula = id + xij + yij + epi + d2 + d1 ~ a1 + a2, data=biv.rec.data, method="Lee.all", CI=0.99)
+biv.rec.lee$covariate.effects
+```
+
+
 

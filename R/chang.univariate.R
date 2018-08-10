@@ -235,7 +235,6 @@ sd.estpar1=function(init,dat,v, B) {
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
 #'
-#' @useDynLib BivRec changmdat
 #' @keywords internal
 
 

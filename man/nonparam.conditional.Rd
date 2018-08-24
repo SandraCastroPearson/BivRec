@@ -4,12 +4,16 @@
 \alias{nonparam.conditional}
 \title{A Function for additional non-parametric analysis of bivariate recurrent event data.}
 \usage{
-nonparam.conditional(bivrec.nonparam.result, given.interval, CI)
+nonparam.conditional(bivrec.nonparam.result, given.interval, CI, condiplot)
 }
 \arguments{
 \item{bivrec.nonparam.result}{List with joing.cdf and marginal.survival. Passed from biv.rec.np()}
 
 \item{given.interval}{is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time. Passed from biv.rec.np()}
+
+\item{CI}{confidence level. Passed from biv.rec.np()}
+
+\item{condiplot}{a logical value. Passed from biv.rec.np()}
 }
 \value{
 A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.

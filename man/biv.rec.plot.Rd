@@ -7,24 +7,23 @@
 biv.rec.plot(formula, data)
 }
 \arguments{
-\item{formula}{Formula of the form \strong{ID ~ xij + yij}.
+\item{formula}{Formula of the form \strong{ID + episode ~ xij + yij}.
 \itemize{
-  \item ID: is a vector of unique subject identifiers.
-  \item xij: is a vector with the length of time subject i spends in event of type 1 during observation j.
-  \item yij: is a vector with the length of time subject i spends in event of type 2 during observation j.
+  \item ID: a vector of subjects' unique identifier which can be numeric or character.
+  \item episode: is a vector indicating the episode of the bivariate alternating gap time pairs.
+  \item xij: is a vector with the lengths of the type I gap times.
+  \item yij: is a vector with the lengths of the type II gap times.
 }}
 
 \item{data}{A data frame that contains all the vectors listed in the formula}
 }
 \description{
-This function plots recurrent event data.
+This function plots bivariate recurrent event gap times.
 }
 \examples{
-\dontrun{
 library(BivRec)
 set.seed(1234)
-sim.biv.rec <- data.sim(300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-biv.rec.plot(formula = id ~ xij + yij, data = sim.biv.rec)
-}
+sim.biv.rec <- data.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+biv.rec.plot(formula = id + epi ~ xij + yij, data = sim.biv.rec)
 
 }

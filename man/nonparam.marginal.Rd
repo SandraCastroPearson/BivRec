@@ -15,7 +15,4 @@ A data frame with marginal survival
 \description{
 This function calculates the marginal survival for bivariate recurrent events. Called from biv.rec.np(). No user interface.
 }
-\seealso{
-\code{\link{biv.rec.fit}}
-}
 \keyword{internal}

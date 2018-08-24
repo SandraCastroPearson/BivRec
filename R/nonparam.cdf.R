@@ -67,54 +67,54 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 
 nonparam.cdf <- function(fit_data, u, ai) {
 
-    n <- fit_data$n
-    m <- fit_data$m
-    mc <- fit_data$mc
-    nd <- fit_data$nd
-    tot <- fit_data$tot
-    gap <- fit_data$gap
-    event <- fit_data$event
-    markvar1 <- fit_data$markvar1
-    markvar2 <- fit_data$markvar2
-    udt <- fit_data$udt
-    ctime <- fit_data$ctime
-    ucen <- fit_data$ucen
-    r <- fit_data$r
-    d <- fit_data$d
-    sest <- fit_data$sest
-    Fest <- fit_data$Fest
-    var <- fit_data$var
-    prob <- fit_data$prob
-    std <- fit_data$std
-    gtime <- fit_data$gtime
-    cen <- fit_data$cen
-    mark1 <- fit_data$mark1
-    mark2 <- fit_data$mark2
+  n <- fit_data$n
+  m <- fit_data$m
+  mc <- fit_data$mc
+  nd <- fit_data$nd
+  tot <- fit_data$tot
+  gap <- fit_data$gap
+  event <- fit_data$event
+  markvar1 <- fit_data$markvar1
+  markvar2 <- fit_data$markvar2
+  udt <- fit_data$udt
+  ctime <- fit_data$ctime
+  ucen <- fit_data$ucen
+  r <- fit_data$r
+  d <- fit_data$d
+  sest <- fit_data$sest
+  Fest <- fit_data$Fest
+  var <- fit_data$var
+  prob <- fit_data$prob
+  std <- fit_data$std
+  gtime <- fit_data$gtime
+  cen <- fit_data$cen
+  mark1 <- fit_data$mark1
+  mark2 <- fit_data$mark2
 
-    estcdf <- list()
+  estcdf <- list()
 
-    for (u.count in 1:nrow(u)) {
-      u1 <- u[u.count, 1]
-      u2 <- u[u.count, 2]
+  for (u.count in 1:nrow(u)) {
+    u1 <- u[u.count, 1]
+    u2 <- u[u.count, 2]
 
 
-      tmpindex <-sum(as.integer(udt<=(u1+u2)))  ### index ORINALLY PART OF BIVGAP FUNCTION
-        if (tmpindex==0) {
-          temp <- data.frame(u1, u2, prob=0, std=0)
-          rownames(temp) <- "1"
-          estcdf[[u.count]] <- temp
-        } else {
-          estimates <- r.bivrecur(n, gtime, ctime, mc, m,
-                                  cen, ucen, nd, udt, tot, gap, event,
-                                  r, d, sest, var, markvar1, markvar2,
-                                  mark1, mark2, u1, u2, Fest, tmpindex, prob, std)
-          estcdf[[u.count]] <- data.frame(u1, u2, prob=estimates[1], std=estimates[2])
-        }
+    tmpindex <-sum(as.integer(udt<=(u1+u2)))  ### index ORINALLY PART OF BIVGAP FUNCTION
+    if (tmpindex==0) {
+      temp <- data.frame(u1, u2, prob=0, std=0)
+      rownames(temp) <- "1"
+      estcdf[[u.count]] <- temp
+    } else {
+      estimates <- r.bivrecur(n, gtime, ctime, mc, m,
+                              cen, ucen, nd, udt, tot, gap, event,
+                              r, d, sest, var, markvar1, markvar2,
+                              mark1, mark2, u1, u2, Fest, tmpindex, prob, std)
+      estcdf[[u.count]] <- data.frame(u1, u2, prob=estimates[1], std=estimates[2])
     }
+  }
 
-    out1 <- data.frame(matrix(unlist(estcdf), nrow=nrow(u), byrow=T))
-    colnames(out1) <- c("u1", "u2", "Prob(x_ij < u1,  y_ij < u2)", "SE")
+  out1 <- data.frame(matrix(unlist(estcdf), nrow=nrow(u), byrow=T))
+  colnames(out1) <- c("u1", "u2", "Prob(x_ij < u1,  y_ij < u2)", "SE")
 
-    return(cdf=out1)
+  return(cdf=out1)
 
 }

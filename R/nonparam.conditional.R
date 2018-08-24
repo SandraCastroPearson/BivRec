@@ -28,12 +28,11 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
                              ai=ai, u1=x.grid$Time[2], u2=y.grid)
 
   if (x.grid$Time[1] == mintime) {
-    conditional <- joint2$`Prob(x_ij < u1,  y_ij < u2)` / (1-ps2)
+    conditional <- joint2[,3] / (1-ps2)
   } else {
     joint1 <- np.fit4conditional(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat,
                           ai=ai, u1=x.grid$Time[1], u2=y.grid)
-    conditional <- (joint2$`Prob(x_ij < u1,  y_ij < u2)` - joint1$`Prob(x_ij < u1,  y_ij < u2)`)/
-      (ps1 - ps2)
+    conditional <- (joint2[,3] - joint1[,3])/(ps1 - ps2)
   }
 
   return(conditional)
@@ -48,17 +47,19 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' This function calculates the conditional cdf after estimation of joint cdf and marginal survival.  Called from biv.rec.np(). No user interface.
 #' @param bivrec.nonparam.result List with joing.cdf and marginal.survival. Passed from biv.rec.np()
 #' @param given.interval is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time. Passed from biv.rec.np()
+#' @param CI confidence level. Passed from biv.rec.np()
+#' @param condiplot a logical value. Passed from biv.rec.np()
 #'
 #' @return A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.
 #' @importFrom stats sd
 #' @keywords internal
 #'
 
-nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
+nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, condiplot) {
 
   ####Extract items from results
   marginal <- bivrec.nonparam.result$marginal.survival
-  marginal$rounded <- round(marginal$`Marginal Survival`, digits=2)
+  marginal$rounded <- round(marginal[,2], digits=2)
   formula <- bivrec.nonparam.result$formula
   data <- bivrec.nonparam.result$data
   ai <- bivrec.nonparam.result$ai
@@ -78,8 +79,8 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
   }
   x.grid <- x.grid[c(1, max(which(x.grid$diffs >= 0.05)), nrow(x.grid)),]
   y.grid <- seq(min(yij), max(yij), length.out = 200)
-  ps1 <- x.grid$`Marginal Survival`[1]
-  ps2 <- x.grid$`Marginal Survival`[3]
+  ps1 <- x.grid[1,2]
+  ps2 <- x.grid[3,2]
 
 
   B = ifelse(CI==0.99, 200, 100)
@@ -101,12 +102,15 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
-  mainlab <- paste("P(y_ij < t | ", round(given.interval[1], digits=2), " < x_ij < ",
-                  round(given.interval[2], digits=2), ")", sep="")
-  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Time (t)", ylab = "Conditional Probability",
-       xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)), main=mainlab)
-  lines(cond$Time, cond[,4], lty = 2)
-  lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  if (condiplot == TRUE) {
+    mainlab <- paste("P(Y0 < y | ", round(given.interval[1], digits=2), " < X0 < ",
+                   round(given.interval[2], digits=2), ")", sep="")
+    plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Time (t)", ylab = "Conditional Probability",
+         xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)), main=mainlab)
+    lines(cond$Time, cond[,4], lty = 2)
+    lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  }
+
 
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
 

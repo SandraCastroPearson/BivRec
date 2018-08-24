@@ -3,7 +3,7 @@
 #' @description
 #' This function plots marginal survival for recurrent event data.  Called from biv.rec.np(). No user interface.
 #'
-#' @param bivrec.nonparam.result List with joing.cdf and marginal.survival. Passed from biv.rec.np()
+#' @param bivrec.nonparam.result List with marginal.survival, formula and data. Passed from biv.rec.np()
 #' @param CI Confidence level for CI. Passed from biv.rec.np()
 #'
 #' @importFrom graphics lines

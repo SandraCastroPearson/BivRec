@@ -44,7 +44,6 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #' @description
 #' This function calculates the marginal survival for bivariate recurrent events. Called from biv.rec.np(). No user interface.
 #' @param fit_data An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().
-#' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @return A data frame with marginal survival
 #'
@@ -69,7 +68,6 @@ nonparam.marginal <- function(fit_data) {
   cen <- fit_data$cen
   r = d = sest = std = rep(0, nd)
 
-  estcdf <- list()
 
   surv <- r.onesamp(n,gtime,ctime,mc,m,
                     cen,ucen,nd,udt,tot,gap,event,

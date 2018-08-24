@@ -19,7 +19,4 @@ A dataframe summarizing effects of the covariates: estimates, SE and CI.
 \description{
 This function fits the semiparametric model given multiple  covariates. Called from biv.rec.fit(). No user interface.
 }
-\seealso{
-\code{\link{biv.rec.fit}}
-}
 \keyword{internal}

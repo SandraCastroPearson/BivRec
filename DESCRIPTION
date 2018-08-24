@@ -1,16 +1,20 @@
 Package: BivRec
 Type: Package
-Title: Bivariate Recurrent Event Data Analysis
+Title: Bivariate Alternating Recurrent Event Data Analysis
 Version: 0.1.0
-Author: Sandra Castro-Pearson, Chi Hyun Lee, Xianghua Luo
+Author: Sandra Castro-Pearson <cast0135@umn.edu>, Chi Hyun Lee<chihyunlee@umass.edu>, 
+        Chiung-Yu Huang <chiungyu.huang@ucsf.edu>, Xianghua Luo <luox0054@umn.edu>
 Maintainer: Sandra Castro-Pearson <cast0135@umn.edu>
-Description: An implementation of three methods to analyze bivariate recurrent event data. 
-    The first two methods, "Lee.All" and "Chang", focus on the estimation of covariate effects on the two alternating events/gap times (xij and yij) using semiparametric approaches. 
-    The last method, "Non-Parametric", can be used to estimate the joint cdf for the two alternating events/gap times (xij and yij) as well as the marginal survival for the first recurrent event/gap time (xij) and the conditional cdf of the second recurrent event/gap time (yij) given the first event (xij) in a non-parametric fashion. 
-    The package provide options to plot the data and the estimates of marginal survival and conditional probability.
+Description: Alternating recurrent event data arise frequently in biomedical and social sciences where 2 types of events such as hospital admissions and discharge occur alternatively over time. 
+    As such we implement a collection of non-parametric and semiparametric methods to analyze such data. 
+Details:
+    The main functions are summarized as follows:  
+    biv.rec.fit: Use for estimation of covariate effects on the two alternating event gap times (xij and yij) using semiparametric methods. The method options are "Lee.et.all" and "Chang".  
+    biv.rec.np:  Used to estimate the joint cumulative distribution funtion (cdf) for the two alternating events gap times (xij and yij) as well as the marginal survival function for type I gap time (xij) and the conditional cdf of the type II gap times (yij) given an interval in type I gap times (xij) in a non-parametric fashion.   
+    The package also provide options to plot the data, and the estimates of teh joint cummulative distribution fuction (cdf), marginal survival function, and the conditional (cdf).  
 URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563 
-Depends: R (>= 3.3.0), survival,  stats 
-Imports: MASS, stringr, testthat, utils, knitr, rmarkdown, Rcpp, inline, methods, graphics
+Depends: R (>= 3.5.0), survival,  stats 
+Imports: MASS, stringr, testthat, utils, knitr, rmarkdown, Rcpp, inline, methods, graphics, rgl
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

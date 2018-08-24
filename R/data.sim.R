@@ -92,12 +92,12 @@ data.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
     } else {
       dat.tmp[epi,2]=ci-dat.tmp[epi,3]-dat.tmp[epi,1]
     }
-    subdat=cbind(i,1:epi,dat.tmp[,1],dat.tmp[,2],dat.tmp[,1]+dat.tmp[,2],ci, cen,matrix(A[i,],epi,2,byrow=TRUE))
+    subdat=cbind(i,1:epi,dat.tmp[,1],dat.tmp[,2],ci, cen,matrix(A[i,],epi,2,byrow=TRUE))
     dat=rbind(dat,subdat)
     deltas=rbind(deltas, cen)
   }
   dat=as.data.frame(dat)
-  colnames(dat)=c("id","epi","xij","yij","zij","ci","d1", "d2","a1","a2")
+  colnames(dat)=c("id","epi","xij","yij","ci","d1", "d2","a1","a2")
   # deltas=as.data.frame(deltas)
   # colnames(deltas)=c("d1","d2")
 

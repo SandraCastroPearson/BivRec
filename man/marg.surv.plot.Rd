@@ -7,7 +7,7 @@
 marg.surv.plot(bivrec.nonparam.result, CI)
 }
 \arguments{
-\item{bivrec.nonparam.result}{List with joing.cdf and marginal.survival. Passed from biv.rec.np()}
+\item{bivrec.nonparam.result}{List with marginal.survival, formula and data. Passed from biv.rec.np()}
 
 \item{CI}{Confidence level for CI. Passed from biv.rec.np()}
 }

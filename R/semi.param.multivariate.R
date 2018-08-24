@@ -47,22 +47,22 @@ r2f.mpro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, k
 r2f.mpro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
                          expAx, expAy, subsumx, subsumy, dx, dy, mstar, mc){
   out <- .Fortran("mprovar",
-                   n=as.integer(n),
-                   nparams=as.integer(nparams),
-                   xmati=as.double(xmat),
-                   ymati=as.double(ymat),
-                   gmatx=as.double(gmatx),
-                   gmaty=as.double(gmaty),
-                   l1=as.double(l1),
-                   l2=as.double(l2),
-                   expAx=as.double(expAx),
-                   expAy=as.double(expAy),
-                   subsumx=as.double(subsumy),
-                   subsumy=as.double(subsumy),
-                   dx=as.double(dx),
-                   dy=as.double(dy),
-                   mstar=as.double(mstar),
-                   mc=as.integer(mc))
+                  n=as.integer(n),
+                  nparams=as.integer(nparams),
+                  xmati=as.double(xmat),
+                  ymati=as.double(ymat),
+                  gmatx=as.double(gmatx),
+                  gmaty=as.double(gmaty),
+                  l1=as.double(l1),
+                  l2=as.double(l2),
+                  expAx=as.double(expAx),
+                  expAy=as.double(expAy),
+                  subsumx=as.double(subsumy),
+                  subsumy=as.double(subsumy),
+                  dx=as.double(dx),
+                  dy=as.double(dy),
+                  mstar=as.double(mstar),
+                  mc=as.integer(mc))
 
   subsum1 <- out$subsumx
   subsum2 <- out$subsumy
@@ -248,7 +248,6 @@ Mvar.est=function(beta1,beta2,mdat) {
 #' @param cov_names A vector with the names of the covariates. Passed from biv.rec.fit().
 #' @param CI Passed from biv.rec.fit().
 #' @return A dataframe summarizing effects of the covariates: estimates, SE and CI.
-#' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
@@ -267,25 +266,25 @@ semi.param.multivariate <- function(new_data, cov_names, CI) {
   n_params <- length(cov_names)
 
   #solve first equation to get beta1
-    mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
+  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
 
   #solve second equation to get beta2
-    mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
+  mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
 
-    print("Estimating standard errors/confidence intervals")
+  print("Estimating standard errors/confidence intervals")
 
   #estimate covariance matrix and get diagonal then std. errors
-    se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
+  se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
 
   #join all info and calculate CIs, put in nice table
-    multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
-    conf.lev = 1 - ((1-CI)/2)
-    CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
-    multi.fit  <- cbind(multi.fit, CIcalc)
-    low.string <- paste((1 - conf.lev), "%", sep="")
-    up.string <- paste(conf.lev, "%", sep="")
-    colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
-    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+  multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
+  conf.lev = 1 - ((1-CI)/2)
+  CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
+  multi.fit  <- cbind(multi.fit, CIcalc)
+  low.string <- paste((1 - conf.lev), "%", sep="")
+  up.string <- paste(conf.lev, "%", sep="")
+  colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
+  rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
   return(multi.fit)
 }

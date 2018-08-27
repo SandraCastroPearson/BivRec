@@ -19,15 +19,15 @@
 #' @importFrom stats runif
 #' @importFrom utils tail
 #'
-#' @keywords data.sim, simulation
+#' @keywords biv.rec.sim, simulation
 #'
 #' @examples
-#' data.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+#' biv.rec.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 #'
 #' @export
 
 ##-----data generation
-data.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
+biv.rec.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
 
   if (missing(set)) {set <- 1.1}
   if (missing(cr)) {cr <- 63}

@@ -29,7 +29,7 @@ plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
 
   open3d()
   plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
-         main = "Joint cdf", ylab ="y", zlab = "P(X0<x,Y0<y)",  expand = 1.09)
+         main = "Joint cdf", ylab ="y", zlab = TeX('$P(X^0 \\leq x, Y^0\\leq y)$'),  expand = 1.09)
   for (i in 1:nrow(forplot)) {
     rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
   }

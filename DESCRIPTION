@@ -14,7 +14,7 @@ Details:
     The package also provide options to plot the data, and the estimates of teh joint cummulative distribution fuction (cdf), marginal survival function, and the conditional (cdf).  
 URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7563 
 Depends: R (>= 3.5.0), survival,  stats 
-Imports: MASS, stringr, testthat, utils, knitr, rmarkdown, Rcpp, inline, methods, graphics, rgl
+Imports: MASS, stringr, testthat, utils, knitr, rmarkdown, Rcpp, inline, methods, graphics, rgl, latex2exp
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

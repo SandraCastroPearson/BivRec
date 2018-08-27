@@ -86,7 +86,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
   colnames(cond.prob) = seq(1,B,1)
-  print(paste("Estimating Conditional CDF with ", CI*100, "% CI using ", B , " Sample Bootstrap", sep=""))
+  print(paste("Estimating Conditional CDF with ", CI*100, "% CI using ", B, " Sample Bootstrap", sep=""))
 
   for (i in 1:B) {
     #print(paste("Sample", i, sep = " "))
@@ -96,21 +96,23 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   conf.lev = 1 - ((1-CI)/2)
   bootstrapCIs <- apply(cond.prob, 1, function(x) c(mean(x), sd(x), sort(x)[(1-conf.lev)*B], sort(x)[conf.lev*B]))
   cond <- round(data.frame(y.grid, bootstrapCIs[1,], bootstrapCIs[2,], bootstrapCIs[3,], bootstrapCIs[4,]), digits = 4)
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(cond) <- c("Time", "Conditional.Probability" , "Std. Error", low.string, up.string)
+  low.string <- paste("Bootstrap ", (1 - conf.lev), "%", sep="")
+  up.string <- paste("Bootstrap ", conf.lev, "%", sep="")
+  colnames(cond) <- c("Time", "Conditional.Probability" , " Bootstrap SE", low.string, up.string)
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
   if (condiplot == TRUE) {
-    mainlab <- paste("P(Y0 < y | ", round(given.interval[1], digits=2), " < X0 < ",
-                   round(given.interval[2], digits=2), ")", sep="")
-    plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Time (t)", ylab = "Conditional Probability",
-         xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)), main=mainlab)
+    plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
+         xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)),
+         main=substitute(
+           paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
+           list(gi1 = given.interval[1], gi2 = given.interval[2]))
+         )
     lines(cond$Time, cond[,4], lty = 2)
     lines(cond$Time, cond$Conditional.Probability,lty = 1)
-  }
 
+  }
 
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
 

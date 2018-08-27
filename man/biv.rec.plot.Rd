@@ -23,7 +23,7 @@ This function plots bivariate recurrent event gap times.
 \examples{
 library(BivRec)
 set.seed(1234)
-sim.biv.rec <- data.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+sim.biv.rec <- biv.rec.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 biv.rec.plot(formula = id + epi ~ xij + yij, data = sim.biv.rec)
 
 }

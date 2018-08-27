@@ -72,7 +72,7 @@ nonparam.marginal <- function(fit_data) {
   surv <- r.onesamp(n,gtime,ctime,mc,m,
                     cen,ucen,nd,udt,tot,gap,event,
                     r,d,sest,std)
-  colnames(surv) <- c("Time", "Marginal Survival", "SE")
+  colnames(surv) <- c("Time", "Marginal.Survival", "SE")
 
   return(marg.survival = surv)
 

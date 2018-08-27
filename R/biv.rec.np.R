@@ -68,7 +68,7 @@
 #' library(BivRec)
 #'#Simulate Bivariate Alternating Recurrent Event Data
 #' set.seed(1234)
-#' sim.data <- data.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+#' sim.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 #'#Apply the non-parametric method of Huang and Wang (2005) on the simulated data.
 #' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #'           data=sim.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),

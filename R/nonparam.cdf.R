@@ -113,7 +113,7 @@ nonparam.cdf <- function(fit_data, u, ai) {
   }
 
   out1 <- data.frame(matrix(unlist(estcdf), nrow=nrow(u), byrow=T))
-  colnames(out1) <- c("u1", "u2", "Prob(x_ij < u1,  y_ij < u2)", "SE")
+  colnames(out1) <- c("x", "y", "Joint.Probability", "SE")
 
   return(cdf=out1)
 

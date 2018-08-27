@@ -21,7 +21,7 @@
 #' @examples
 #' library(BivRec)
 #' set.seed(1234)
-#' sim.biv.rec <- data.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+#' sim.biv.rec <- biv.rec.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 #' biv.rec.plot(formula = id + epi ~ xij + yij, data = sim.biv.rec)
 #'
 #' @export
@@ -99,12 +99,7 @@ biv.rec.plot <- function(formula, data) {
   # set up the plot
   plot(xrange, yrange, type="n", xlab="Time", ylab="Subject", yaxt='n')
   legendtext = c(variables[3], variables[4])
-  legend("topright", legendtext, bty='n', inset = c(0,0), col = c("red", "blue"), lty = 1)
-  # legend(list(x=max(data4plot$stop_time), y=max(data4plot$id)-max(data4plot$id)/2.5), legendtext, bty='n',
-  #        inset = c(0,0),cex = 0.7, col = c("red", "blue"), lty = 1, lwd=0.5,
-  #        y.intersp=0.25, x.intersp=0.3, xjust=0, yjust=0)
-
-  #colors <- rainbow(nsubject)
+  legend("topright", legend=legendtext, bty='n', inset = c(0,0), col = c("red", "blue"), lty = 1)
   plotchar <- seq(18, 18+nsubject, 1)
 
   withgaps <- NULL

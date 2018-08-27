@@ -66,7 +66,7 @@
 #' library(BivRec)
 #'#Simulate Bivariate Alternating Recurrent Event Data
 #' set.seed(1234)
-#' sim.data <- data.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
+#' sim.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
 #' #Apply Lee et All (2017) method using multiple covariates.
 #' multiple.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
 #'                 data=sim.data, method="Lee.et.all", CI=0.99)

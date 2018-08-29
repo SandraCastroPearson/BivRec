@@ -8,7 +8,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats quantile
 #'
-#' @param formula Formula with six variables indicating the bivariate alternating gap time response on the left and the ~ operator and 1 on the right.
+#' @param formula Formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and 1 on the right.
 #' The six variables on the left must have the same length and be given as follows \strong{ID + episode +  xij + yij + delta_x + delta_y ~ 1} where
 #' \itemize{
 #'   \item ID: a vector of subjects' unique identifier which can be numeric or character.

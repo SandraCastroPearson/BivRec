@@ -319,8 +319,8 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
 
             #### Finish reformat based on method ####
 
-            ## Use m.dat for Lee.et.all
-            if (method == "Lee.et.all") {
+            ## Use m.dat for Lee.et.al
+            if (method == "Lee.et.al") {
               if (length(cov_names)==1) {
                 colnames(my_data)[ncol(my_data)] <- "a1"
                 fit_data <- m.dat.1(my_data)

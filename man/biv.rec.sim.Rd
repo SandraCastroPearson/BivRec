@@ -4,30 +4,37 @@
 \alias{biv.rec.sim}
 \title{Bivariate Recurrent Response and Covariate Data Simulation}
 \usage{
-biv.rec.sim(nsize, beta1, beta2, cr, sg2, set)
+biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 }
 \arguments{
-\item{nsize}{sample size}
+\item{nsize}{sample size which refers to the number of subjects in the data set where each subject could have multiple episodes of events.}
 
-\item{beta1}{true coefficients for first gap time}
+\item{beta1}{true coefficients for first gap time in the accelerated failure time model (AFT).}
 
-\item{beta2}{true coefficients for second gap time}
+\item{beta2}{true coefficients for second gap time in the accelerated failure time model (AFT).}
 
-\item{cr}{maximum support of censoring time}
+\item{tau_c}{maximum support of censoring time. Can take values as follows:
+\itemize{
+\item tau_c=63: corresponds to cr=15\% and corresponding \ifelse{html}{\out{m_bar}}{\eqn{\bar{m}}} for each scenario in tables 1 and 2 of Lee CH, Huang C-Y, Xu G, Luo X (2017).
+\item tau_c=30: corresponds to cr=30\% and corresponding \ifelse{html}{\out{m_bar}}{\eqn{\bar{m}}} for each scenario in tables 1 and 2 of Lee CH, Huang C-Y, Xu G, Luo X (2017).
+}}
 
-\item{sg2}{variance of frailty}
-
-\item{set}{Simulation setting based on scenerios outlined by Lee et all. Choose 1.1 (default) for scenerio 1 with rho=1 in covariance matrix, 1.2 for scenerio 1 with rho=0.5, 1.3 for scenario 1 with rho=0 and 2.0 for scenario 2.}
+\item{set}{Simulation setting based on scenerios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenerio 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenerio 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
 }
 \value{
 Data frame with alternating recurrent event data and two covariates
 }
 \description{
-This function simulates a series of alternating recurrent events based on simulations studies in: Lee CH, Huang C-Y, Xu G, Luo X. Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine. 2018;37:996-1008. \url{https://doi.org/10.1002/sim.7563}
+This function simulates a series of alternating recurrent events based on simulations in Lee CH, Huang C-Y, Xu G, Luo X (2017).
 }
 \examples{
-biv.rec.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-
+biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+}
+\references{
+\enumerate{
+\item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
+\url{https://doi.org/10.1002/sim.7563}
+}
 }
 \keyword{biv.rec.sim,}
 \keyword{simulation}

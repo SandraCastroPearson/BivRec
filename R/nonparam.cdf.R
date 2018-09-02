@@ -57,6 +57,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 #' @param fit_data An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().
 #' @param u Passed from biv.rec.np().
 #' @param ai Passed from biv.rec.np().
+#' @param CI Passed from biv.rec.np().
 #'
 #' @return A dataframe with the joint CDF
 #'
@@ -65,7 +66,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 #' @keywords internal
 #'
 
-nonparam.cdf <- function(fit_data, u, ai) {
+nonparam.cdf <- function(fit_data, u, ai, CI) {
 
   n <- fit_data$n
   m <- fit_data$m
@@ -113,7 +114,16 @@ nonparam.cdf <- function(fit_data, u, ai) {
   }
 
   out1 <- data.frame(matrix(unlist(estcdf), nrow=nrow(u), byrow=T))
-  colnames(out1) <- c("x", "y", "Joint.Probability", "SE")
+
+  conf.lev = 1 - ((1-CI)/2)
+  out1$lower <- out1[,3] - qnorm(conf.lev)*out1[,4]
+  out1$upper <- out1[,3] + qnorm(conf.lev)*out1[,4]
+  out1$lower[which(out1$lower<0)] <- 0
+  out1$upper[which(out1$upper>1)] <- 1
+
+  low.string <- paste((1 - conf.lev), "%", sep="")
+  up.string <- paste(conf.lev, "%", sep="")
+  colnames(out1) <- c("x", "y", "Joint.Probability", "SE", low.string, up.string)
 
   return(cdf=out1)
 

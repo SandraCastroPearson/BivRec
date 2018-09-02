@@ -1,13 +1,17 @@
 #' Bivariate Recurrent Response and Covariate Data Simulation
 #'
-#' @description This function simulates a series of alternating recurrent events based on simulations studies in: Lee CH, Huang C-Y, Xu G, Luo X. Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine. 2018;37:996-1008. \url{https://doi.org/10.1002/sim.7563}
+#' @description This function simulates a series of alternating recurrent events based on simulations in Lee CH, Huang C-Y, Xu G, Luo X (2017).
 #'
-#' @param nsize sample size
-#' @param beta1 true coefficients for first gap time
-#' @param beta2 true coefficients for second gap time
-#' @param cr maximum support of censoring time
-#' @param sg2 variance of frailty
-#' @param set Simulation setting based on scenerios outlined by Lee et all. Choose 1.1 (default) for scenerio 1 with rho=1 in covariance matrix, 1.2 for scenerio 1 with rho=0.5, 1.3 for scenario 1 with rho=0 and 2.0 for scenario 2.
+#' @param nsize sample size which refers to the number of subjects in the data set where each subject could have multiple episodes of events.
+#' @param beta1 true coefficients for first gap time in the accelerated failure time model (AFT).
+#' @param beta2 true coefficients for second gap time in the accelerated failure time model (AFT).
+#' @param tau_c maximum support of censoring time. Can take values as follows:
+#' \itemize{
+#' \item tau_c=63: corresponds to cr=15\% and corresponding \ifelse{html}{\out{m_bar}}{\eqn{\bar{m}}} for each scenario in tables 1 and 2 of Lee CH, Huang C-Y, Xu G, Luo X (2017).
+#' \item tau_c=30: corresponds to cr=30\% and corresponding \ifelse{html}{\out{m_bar}}{\eqn{\bar{m}}} for each scenario in tables 1 and 2 of Lee CH, Huang C-Y, Xu G, Luo X (2017).
+#' }
+#'
+#' @param set Simulation setting based on scenerios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenerio 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenerio 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.
 #'
 #' @return Data frame with alternating recurrent event data and two covariates
 #'
@@ -22,16 +26,20 @@
 #' @keywords biv.rec.sim, simulation
 #'
 #' @examples
-#' biv.rec.sim(nsize=300, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-#'
+#' biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' @references
+#' \enumerate{
+#' \item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
+#' \url{https://doi.org/10.1002/sim.7563}
+#' }
 #' @export
 
 ##-----data generation
-biv.rec.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
+biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
 
+  if (missing(tau_c)) {tau_c <- 63}
   if (missing(set)) {set <- 1.1}
-  if (missing(cr)) {cr <- 63}
-  if (missing(sg2)) {sg2 <- 0.5}
+  sg2 <- 0.5
 
   id=1:nsize
 
@@ -68,8 +76,7 @@ biv.rec.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
     x.tmp=exp(gamma1[i]+A[i,]%*%beta1)
     y.tmp=exp(gamma2[i]+A[i,]%*%beta2)
 
-    #ci=rexp(1,1/cr)
-    ci=runif(1,0,cr)
+    ci=runif(1,0,tau_c)
 
     sum.z.tmp=0
     dat.tmp=NULL
@@ -98,8 +105,6 @@ biv.rec.sim <- function(nsize,beta1,beta2,cr,sg2,set) {
   }
   dat=as.data.frame(dat)
   colnames(dat)=c("id","epi","xij","yij","ci","d1", "d2","a1","a2")
-  # deltas=as.data.frame(deltas)
-  # colnames(deltas)=c("d1","d2")
 
   ##return data, censoring rate, average number of gap time pairs
   # cenrate=sum(table(dat$id)==1)/nsize

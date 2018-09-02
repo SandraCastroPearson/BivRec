@@ -4,10 +4,12 @@
 \alias{nonparam.marginal}
 \title{A Function for non-parametric analysis on a biv.rec object}
 \usage{
-nonparam.marginal(fit_data)
+nonparam.marginal(fit_data, CI)
 }
 \arguments{
 \item{fit_data}{An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().}
+
+\item{CI}{Passed from biv.rec.np().}
 }
 \value{
 A data frame with marginal survival

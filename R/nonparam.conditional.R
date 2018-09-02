@@ -10,7 +10,7 @@ np.fit4conditional <- function(formula, data, ai, u1, u2){
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
-  res1 <- nonparam.cdf(fit_data=new_data$forcdf, u, ai)
+  res1 <- nonparam.cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4]
 
   return(res1)
 }
@@ -104,7 +104,8 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
   if (condiplot == TRUE) {
     plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-         xlim=c(0, round(max(y.grid), digits=1)), ylim=c(0, round(max(cond[,5]), digits=1)),
+         cex.lab=1, cex.main=1.5, xlim=c(0, round(max(y.grid), digits=1)),
+         ylim=c(0, round(max(cond[,5]), digits=1)),
          main=substitute(
            paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
            list(gi1 = given.interval[1], gi2 = given.interval[2]))

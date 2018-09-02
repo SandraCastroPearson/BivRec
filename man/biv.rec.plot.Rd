@@ -2,17 +2,17 @@
 % Please edit documentation in R/biv.rec.plot.R
 \name{biv.rec.plot}
 \alias{biv.rec.plot}
-\title{Bivariate Recurrent Response Plotting}
+\title{Bivariate Alternating Recurrent Series Plotting}
 \usage{
 biv.rec.plot(formula, data)
 }
 \arguments{
 \item{formula}{Formula of the form \strong{ID + episode ~ xij + yij}.
 \itemize{
-  \item ID: a vector of subjects' unique identifier which can be numeric or character.
-  \item episode: is a vector indicating the episode of the bivariate alternating gap time pairs.
-  \item xij: is a vector with the lengths of the type I gap times.
-  \item yij: is a vector with the lengths of the type II gap times.
+  \item ID: A vector of subjects' unique identifier which can be numeric or character.
+  \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., m_i where m_i indicates the last episode for subject i.
+  \item xij: A vector with the lengths of the type I gap times.
+  \item yij: A vector with the lengths of the type II gap times.
 }}
 
 \item{data}{A data frame that contains all the vectors listed in the formula}
@@ -23,7 +23,7 @@ This function plots bivariate recurrent event gap times.
 \examples{
 library(BivRec)
 set.seed(1234)
-sim.biv.rec <- biv.rec.sim(150, beta1=c(0.5,0.5), beta2=c(0,-0.5), cr=63, sg2=0.5, set=1.1)
-biv.rec.plot(formula = id + epi ~ xij + yij, data = sim.biv.rec)
+sim.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+biv.rec.plot(formula = id + epi ~ xij + yij, data = sim.data)
 
 }

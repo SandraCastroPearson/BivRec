@@ -4,7 +4,7 @@
 \alias{nonparam.cdf}
 \title{A Function for non-parametric analysis on a biv.rec object}
 \usage{
-nonparam.cdf(fit_data, u, ai)
+nonparam.cdf(fit_data, u, ai, CI)
 }
 \arguments{
 \item{fit_data}{An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().}
@@ -12,6 +12,8 @@ nonparam.cdf(fit_data, u, ai)
 \item{u}{Passed from biv.rec.np().}
 
 \item{ai}{Passed from biv.rec.np().}
+
+\item{CI}{Passed from biv.rec.np().}
 }
 \value{
 A dataframe with the joint CDF

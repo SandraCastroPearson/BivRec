@@ -13,7 +13,7 @@
 #'
 marg.surv.plot <- function(bivrec.nonparam.result, CI) {
 
-  forplot <- bivrec.nonparam.result$marginal.survival
+  forplot <- bivrec.nonparam.result$marginal.survival[1:3]
   formula <- bivrec.nonparam.result$formula
   data <- bivrec.nonparam.result$data
 
@@ -32,7 +32,7 @@ marg.surv.plot <- function(bivrec.nonparam.result, CI) {
   index <- which(forplot$lower<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
   plot(forplot$Time, forplot$Marginal.Survival, type = "l", xlab = "Time", ylab = "Marginal Survival",
-       yaxp  = c(0, 1, 10), xaxp  = c(0, mx, 15))
+       yaxp  = c(0, 1, 10), xaxp  = c(0, mx, 15), main = expression(P(X^0 <= x)))
   lines(forplot$Time, forplot$lower, lty = 2)
   lines(forplot$Time, forplot$upper, lty = 2)
 

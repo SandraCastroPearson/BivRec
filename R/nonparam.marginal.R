@@ -44,6 +44,7 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #' @description
 #' This function calculates the marginal survival for bivariate recurrent events. Called from biv.rec.np(). No user interface.
 #' @param fit_data An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().
+#' @param CI Passed from biv.rec.np().
 #'
 #' @return A data frame with marginal survival
 #'
@@ -52,7 +53,7 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #' @keywords internal
 #'
 
-nonparam.marginal <- function(fit_data) {
+nonparam.marginal <- function(fit_data, CI) {
 
   n <- fit_data$n
   m <- fit_data$m
@@ -72,7 +73,16 @@ nonparam.marginal <- function(fit_data) {
   surv <- r.onesamp(n,gtime,ctime,mc,m,
                     cen,ucen,nd,udt,tot,gap,event,
                     r,d,sest,std)
-  colnames(surv) <- c("Time", "Marginal.Survival", "SE")
+
+  conf.lev = 1 - ((1-CI)/2)
+  surv$lower <- surv[,2] - qnorm(conf.lev)*surv[,3]
+  surv$upper <- surv[,2] + qnorm(conf.lev)*surv[,3]
+  surv$lower[which(surv$lower<0)] <- 0
+  surv$upper[which(surv$upper>1)] <- 1
+
+  low.string <- paste((1 - conf.lev), "%", sep="")
+  up.string <- paste(conf.lev, "%", sep="")
+  colnames(surv) <- c("Time", "Marginal.Survival", "SE", low.string, up.string)
 
   return(marg.survival = surv)
 

@@ -16,7 +16,7 @@ Details:
     The package also provides options to simulate and visualize the data and results of analysis. 
 BugReports: https://github.com/SandraCastroPearson/BivRec/issues
 Depends: R (>= 3.3.0), survival,  stats 
-Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, methods, graphics, rgl, latex2exp
+Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, methods, graphics, rgl, libglu1-mesa-dev, latex2exp
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

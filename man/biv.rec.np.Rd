@@ -78,14 +78,14 @@ For further information, see Huang and Wang (2005).
 library(BivRec)
 #Simulate bivariate alternating recurrent event data
 set.seed(1234)
-sim.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #Apply the non-parametric method of Huang and Wang (2005).
 par(mfrow=c(1,2))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
-          data=sim.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-          conditional = TRUE, jointplot=TRUE,
+          data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+          conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
           marginalplot = TRUE, condiplot = TRUE)
-head(nonpar.result$join.cdf)
+head(nonpar.result$joint.cdf)
 head(nonpar.result$marginal.survival)
 head(nonpar.result$conditional.cdf)
 }

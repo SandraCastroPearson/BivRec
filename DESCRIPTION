@@ -1,9 +1,11 @@
 Package: BivRec
 Type: Package
 Title: Bivariate Alternating Recurrent Event Data Analysis
+Date: 2018-09-01
 Version: 1.0.0
 Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Chi Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
   person("Xianghua", "Luo", email = "luox0054@umn.edu", role = "ctb"))
+Author: Sandra Castro-Pearson [aut, cre],  Chi-Hyun Lee [aut], Chiung-Yu Huang [aut], Xianghua Luo [ctb]
 Maintainer: Sandra Castro-Pearson <cast0135@umn.edu>
 Description: Alternating recurrent event data arise frequently in biomedical and social sciences where 2 types of events such as hospital admissions and discharge occur alternatively over time. 
     As such we implement a collection of non-parametric and semiparametric methods to analyze such data. 
@@ -14,7 +16,7 @@ Details:
     The package also provides options to simulate and visualize the data and results of analysis. 
 BugReports: https://github.com/SandraCastroPearson/BivRec/issues
 Depends: R (>= 3.3.0), survival,  stats 
-Imports: MASS, stringr, testthat, utils, knitr, rmarkdown, Rcpp, inline, methods, graphics, rgl, latex2exp
+Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, methods, graphics, rgl, latex2exp
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

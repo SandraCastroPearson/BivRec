@@ -7,8 +7,7 @@
 #' @param bivrec.nonparam.result List with joing.cdf, formula, data. Passed from biv.rec.np()
 #' @param CI Confidence level for CI. Passed from biv.rec.np()
 #'
-#' @importFrom rgl plot3d
-#' @importFrom rgl rgl.lines
+#' @import rgl
 #' @return A 3D scatter plot of joint cdf with confidence interval.
 #'
 #' @keywords internal

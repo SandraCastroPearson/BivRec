@@ -72,7 +72,8 @@
 #'#Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
 #' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' #Apply the non-parametric method of Huang and Wang (2005).
+#' #Apply the non-parametric method of Huang and Wang (2005) and
+#' #visualize marginal and conditional results.
 #' par(mfrow=c(1,2))
 #' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #'           data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
@@ -134,7 +135,6 @@ biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interva
     c_indicatorY <- eval(parse(text = names[5]))
   }
   covariates <- rep(1, length(identifier))
-  cov_names <- "No Covariates"
   method <- "Non-Parametric"
   condgx <- FALSE
 

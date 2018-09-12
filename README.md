@@ -14,17 +14,19 @@ The package also provides options to simulate and visualize the data and results
 Installation
 ------------
 
-You can install BivRec from github as follows:
+BivRec depends on the following system requirements: 1. Rtools for all systems. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/> 2. XQuartz for OSX. Download XQuartz from <https://www.xquartz.org/>
+
+Once those requirements are met you can install BivRec from github as follows:
 
 ``` r
-# BivRec installation requires devtools and Rtools35
-# install.packages("devtools")
-# Download Rtools 35 from https://cran.r-project.org/bin/windows/Rtools/
+#Installation requires devtools package.
+#install.packages("devtools")
 library(devtools)
 assignInNamespace("version_info", c(devtools:::version_info, 
                                     list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", 
                                     path = "bin"))), "devtools")
 find_rtools()
+#Make sure the results of previous command is true
 install_github("SandraCastroPearson/BivRec")
 ```
 
@@ -34,11 +36,9 @@ Example
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-## basic example code
+# Simulate bivariate alternating recurrent event data
 library(BivRec)
 #> Loading required package: survival
-
-# Simulate bivariate alternating recurrent event data
 set.seed(8822)
 biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 head(biv.rec.data)

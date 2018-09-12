@@ -7,8 +7,8 @@
 #' @param bivrec.nonparam.result List with joing.cdf, formula, data. Passed from biv.rec.np()
 #' @param CI Confidence level for CI. Passed from biv.rec.np()
 #'
-#' @import rgl
-#' @import libglu1-mesa-dev
+#' @importFrom rgl plot3d
+#' @importFrom rgl rgl.lines
 #' @return A 3D scatter plot of joint cdf with confidence interval.
 #'
 #' @keywords internal
@@ -17,8 +17,7 @@ plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
 
   forplot <- bivrec.nonparam.result$cdf
   #####Wald CI and plot
-  open3d(..., params = getr3dDefaults(),
-         useNULL = rgl.useNULL())
+
   plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
          main = "Joint cdf", ylab ="y", zlab = expression(P(X^0 <= x, Y^0 <= y)),  expand = 1.1, cex.lab = 1.5)
   for (i in 1:nrow(forplot)) {

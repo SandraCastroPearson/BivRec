@@ -68,7 +68,6 @@
 #' @keywords biv.rec.np
 #'
 #' @examples
-#'\dontrun{
 #' library(BivRec)
 #'#Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
@@ -83,7 +82,6 @@
 #' head(nonpar.result$joint.cdf)
 #' head(nonpar.result$marginal.survival)
 #' head(nonpar.result$conditional.cdf)
-#' }
 
 biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interval,jointplot,marginalplot,condiplot){
 

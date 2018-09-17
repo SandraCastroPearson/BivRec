@@ -29,7 +29,7 @@ BivRec depends on the following system requirements:
 + XQuartz for OSX. Download XQuartz from https://www.xquartz.org/  
 
 Once those requirements are met you can install BivRec from github as follows:
-```{r gh-installation, eval = FALSE, cache=TRUE}
+```{r gh-installation, eval = FALSE}
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)
@@ -45,7 +45,7 @@ install_github("SandraCastroPearson/BivRec")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r BivRecExample, cache=TRUE}
+```{r BivRecExample}
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(8822)

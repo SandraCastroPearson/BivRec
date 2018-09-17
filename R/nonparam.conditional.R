@@ -110,8 +110,8 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
            paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
            list(gi1 = given.interval[1], gi2 = given.interval[2]))
          )
-    lines(cond$Time, cond[,4], lty = 2)
-    lines(cond$Time, cond$Conditional.Probability,lty = 1)
+    graphics::lines(cond$Time, cond[,4], lty = 2)
+    graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
 
   }
 

@@ -14,6 +14,7 @@ marg.surv.plot <- function(bivrec.nonparam.result, CI) {
 
   forplot <- bivrec.nonparam.result$marginal.survival[1:3]
   formula <- bivrec.nonparam.result$formula
+  data <- bivrec.nonparam.result$data
 
   variables <- all.vars(formula)
   xij <- eval(parse(text =paste("data$", variables[2], sep="")))

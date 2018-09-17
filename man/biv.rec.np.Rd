@@ -84,7 +84,7 @@ biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=
 par(mfrow=c(1,2))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
           data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-          conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
+          conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
           marginalplot = TRUE, condiplot = TRUE)
 head(nonpar.result$joint.cdf)
 head(nonpar.result$marginal.survival)

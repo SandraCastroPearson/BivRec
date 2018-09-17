@@ -16,7 +16,6 @@
 plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
 
   forplot <- bivrec.nonparam.result$cdf
-  RGL_USE_NULL=TRUE
   #####Wald CI and plot
 
   plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",

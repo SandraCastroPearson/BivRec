@@ -14,7 +14,9 @@ The package also provides options to simulate and visualize the data and results
 Installation
 ------------
 
-BivRec depends on the following system requirements: + Rtools for all systems. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/> + XQuartz for OSX. Download XQuartz from <https://www.xquartz.org/>
+BivRec depends on the following system requirements:
++ Rtools for all systems. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/>
++ XQuartz for OSX. Download XQuartz from <https://www.xquartz.org/>
 
 Once those requirements are met you can install BivRec from github as follows:
 

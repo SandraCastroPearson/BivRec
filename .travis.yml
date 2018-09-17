@@ -3,10 +3,8 @@
 language: r
 rvm:
  - 3.5.0
-dist: trusty
-sudo: required
+sudo: false
 warnings_are_errors: true
 cache: packages
-
 
 

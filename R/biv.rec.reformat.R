@@ -286,8 +286,8 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
             }
           } else {
 
-            print(paste("Original Number of Observations:", nrow(temp1), "for", length(unique(temp1$identifier)), "individuals", sep=" "))
-            print(paste("Observations to be used in Analysis:", nrow(temp), "for", length(unique_id), "individuals",sep=" "))
+            print(paste("Original number of observations:", nrow(temp1), "for", length(unique(temp1$identifier)), "individuals", sep=" "))
+            print(paste("Observations to be used in analysis:", nrow(temp), "for", length(unique_id), "individuals",sep=" "))
 
             #Get ready to send to m.dat if needed
             covariate_indexes <- seq(7, ncol(temp), 1)

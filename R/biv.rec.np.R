@@ -1,4 +1,4 @@
-#' Non-Parametric Analysis of Bivariate Alternating Recurrent Event Data
+#' Non-Parametric Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
 #' This function allows the user to apply a non-parametric method to estimate the joint cumulative distribution funtion (cdf) for the two alternating events gap times (xij and yij)
@@ -10,37 +10,37 @@
 #' @importFrom stats quantile
 #'
 #' @param formula A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and a 1 on the right.
-#' The six variables on the left must have the same length and be given as follows \strong{ID + episode +  xij + yij + delta_x + delta_y ~ 1}, where
+#' The six variables on the left must have the same length and be given as \strong{ID + episode +  xij + yij + delta_x + delta_y ~ 1}, where
 #' \itemize{
 #'   \item ID: A vector of subjects' unique identifier which can be numeric or character.
-#'   \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., \eqn{m_i} where \eqn{m_i} indicates the last episode for subject i.
+#'   \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., m_i where m_i indicates the last episode for subject i.
 #'   \item xij: A vector with the lengths of the type I gap times.
 #'   \item yij: A vector with the lengths of the type II gap times.
 #'   \item delta_x: An optional vector of indicators with values:
 #'   \itemize{
-#'       \item 0 for the last episode for subject i (\eqn{m_i}) if subject was censored during period xij.
+#'       \item 0 for the last episode for subject i (m_i) if subject was censored during period xij.
 #'       \item 1 otherwise.
 #'      }
-#'   A subject with only one episode (\eqn{m_i=1}) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
+#'   A subject with only one episode (m_i = 1) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
 #'   \item delta_y: A vector of indicators with values:
 #'   \itemize{
-#'       \item 0 for the last episode of subject i (\eqn{m_i}).
+#'       \item 0 for the last episode of subject i (m_i).
 #'       \item 1 otherwise.
 #'      }
-#'   A subject with only one episode (\eqn{m_i=1}) will have one 0.
+#'   A subject with only one episode (m_i = 1) will have one 0.
 #' }
 #' @param data A data frame that includes all the vectors listed in the formula.
 #' @param ai A real non-negative function of censoring time. See details.
 #' @param u1 A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.
 #' @param u2 A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.
-#' @param conditional A logical value. If TRUE this function will calculate the conditional cdf for the type II gap time given an interval of the type I gap time and bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.
-#' @param given.interval A 1x2 vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the type I gap time to use for estimation of the cdf of the type II gap time given this interval.
-#' If given.interval = c(v1, v2) the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
+#' @param conditional A logical value. If TRUE, this function will calculate the conditional cdf for the type II gap time given an interval of the type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.
+#' @param given.interval A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the type I gap time to use for estimation of the cdf of the type II gap time given this interval.
+#' If given.interval = c(v1, v2), the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #' Valid values for these times are given in the "Time" column of the marginal survival data frame that results from biv.rec.np().
-#' @param jointplot A logical value. If TRUE (default) this function will create a 3D plot of the joing cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.
-#' @param marginalplot A logical value. If TRUE (default) this function will plot the marginal survival fuction for the type I gap times with pointwise large sample confidence interval at the specified confidence level.
-#' @param condiplot A logical value. Can only be TRUE if conditional=TRUE. If TRUE this function will plot the conditional cdf with bootstrap confidence interval at the specified confidence level. Default is FALSE.
-#' @param CI The level for confidence intervals for joing cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99 where 0.99 would give 99\% CI. Default is 0.95.
+#' @param jointplot A logical value. If TRUE (default), this function will create a 3D plot of the joing cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.
+#' @param marginalplot A logical value. If TRUE (default), this function will plot the marginal survival fuction for the type I gap times with pointwise large sample confidence interval at the specified confidence level.
+#' @param condiplot A logical value. Can only be TRUE if conditional=TRUE. If TRUE, this function will plot the conditional cdf with bootstrap confidence interval at the specified confidence level. Default is FALSE.
+#' @param CI The level for confidence intervals for joing cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.
 
 #'
 #' @return Plots as specified from jointplot, marginalplot, conditional and a BivRec list object containing:
@@ -69,11 +69,11 @@
 #'
 #' @examples
 #' library(BivRec)
-#'#Simulate bivariate alternating recurrent event data
+#'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
 #' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' #Apply the non-parametric method of Huang and Wang (2005) and
-#' #visualize marginal and conditional results.
+#' # Apply the non-parametric method of Huang and Wang (2005) and
+#' # Visualize marginal and conditional results
 #' par(mfrow=c(1,2))
 #' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #'           data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
@@ -83,7 +83,7 @@
 #' head(nonpar.result$marginal.survival)
 #' head(nonpar.result$conditional.cdf)
 
-biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interval,jointplot,marginalplot,condiplot){
+biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interval, jointplot, marginalplot, condiplot){
 
   if (missing(ai)) {ai<-1}
   if (missing(jointplot)) {jointplot <- TRUE}

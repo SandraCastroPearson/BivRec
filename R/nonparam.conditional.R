@@ -86,7 +86,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
   colnames(cond.prob) = seq(1,B,1)
-  print(paste("Estimating Conditional CDF with ", CI*100, "% CI using ", B, " Sample Bootstrap", sep=""))
+  print(paste("Estimating conditional CDF with ", CI*100, "% CI using ", B, " Bootstrap samples", sep=""))
 
   for (i in 1:B) {
     #print(paste("Sample", i, sep = " "))

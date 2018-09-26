@@ -1,4 +1,4 @@
-#' Semi-Parametric Accelerated Failure Time Analysis of Bivariate Alternating Recurrent Event Data
+#' Semi-Parametric Accelerated Failure Time Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
 #' This function allows the user to evaluate covariate effects on two alternating recurrent events gap times (referred as type I and type II gap times)
@@ -9,33 +9,33 @@
 #' @importFrom stats quantile
 #'
 #' @param formula A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-#' The six variables on the left must have the same length and be given as follows \strong{ID + episode +  xij + yij + delta_x + delta_y ~ covariates}, where
+#' The six variables on the left must have the same length and be given as \strong{ID + episode +  xij + yij + delta_x + delta_y ~ covariates}, where
 #' \itemize{
 #'   \item ID: A vector of subjects' unique identifier which can be numeric or character.
-#'   \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., \eqn{m_i} where \eqn{m_i} indicates the last episode for subject i.
+#'   \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., m_i where m_i indicates the last episode for subject i.
 #'   \item xij: A vector with the lengths of the type I gap times.
 #'   \item yij: A vector with the lengths of the type II gap times.
 #'   \item delta_x: A vector of indicators with values
 #'   \itemize{
-#'       \item 0 for the last episode for subject i (\eqn{m_i}) if subject was censored during period xij.
+#'       \item 0 for the last episode for subject i (m_i) if subject was censored during period xij.
 #'       \item 1 otherwise.
 #'      }
-#'   A subject with only one episode (\eqn{m_i=1}) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
+#'   A subject with only one episode (m_i=1) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
 #'   \item delta_y: A vector of indicators with values
 #'   \itemize{
-#'       \item 0 for the last episode of subject i (\eqn{m_i}).
+#'       \item 0 for the last episode of subject i (m_i).
 #'       \item 1 otherwise.
 #'      }
-#'   A subject with only one episode (\eqn{m_i=1}) will have one 0.
+#'   A subject with only one episode (m_i=1) will have one 0.
 #'   \item covariates: the names of the covariates in the form covariate_1 + ... + covariate_p.
 #' }
 #' @param data A data frame that includes all the vectors/covariates listed in the formula above.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
-#' @param CI The level to be used for confidence intervals. Must be between 0.50 and 0.99, 0.99 would give 99\% CI. The default is 0.95.
+#' @param CI The level to be used for confidence intervals. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. The default is 0.95.
 #'
 #' @return A BivRec list object containing:
 #' \itemize{
-#'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including point estimate, standard error and confidence interval.
+#'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
 #'   \item \strong{formula:} The formula used to specify components of bivariate recurrent response and covariates.
 #' }
 #'
@@ -50,7 +50,7 @@
 #'
 #' @references
 #' \enumerate{
-#' \item Chang, S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.
+#' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.
 #' \url{https://doi.org/10.1023/B:LIDA.0000030202.20842.c9}
 #'
 #' \item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
@@ -62,14 +62,14 @@
 #'
 #' @examples
 #' library(BivRec)
-#'#Simulate bivariate alternating recurrent event data
+#'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
 #' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' #Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates.
+#' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 #' fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
 #'                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
 #' fit.lee$covariate.effects
-#'# To apply Chang (2004) method use method="Chang".
+#'# To apply Chang (2004) method use method="Chang"
 #'
 #' @export
 #'

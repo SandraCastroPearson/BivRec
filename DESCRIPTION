@@ -15,7 +15,7 @@ Details:
     biv.rec.np:  Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (xij and yij) as well as the marginal survival function for type I gap times (xij) and the conditional cdf of the type II gap times (yij) given an interval of type I gap times (xij) in a non-parametric fashion.   
     The package also provides options to simulate and visualize the data and results of analysis. 
 BugReports: https://github.com/SandraCastroPearson/BivRec/issues
-Depends: R (>= 3.5.0), survival, stats 
+Depends: R (>= 3.3.0), survival, stats 
 Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, methods, graphics, latex2exp, rgl(>= 0.92.861)
 SystemRequirements:	OpenGL, GLU Library, XQuartz (on OSX), Rtools35
 License: GPL-2

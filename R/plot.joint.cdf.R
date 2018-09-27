@@ -14,12 +14,19 @@
 plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
 
   forplot <- bivrec.nonparam.result$cdf
-  #####Wald CI and plot
 
-  rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
-         main = "Joint cdf", ylab ="y", zlab = expression(P(X^0 <= x, Y^0 <= y)),  expand = 1.1, cex.lab = 1.5)
-  for (i in 1:nrow(forplot)) {
-    rgl::rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
-  }
+  #####OLD MAY RE-USE LATTER: Wald CI and plot
+  # rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
+  #        main = "Joint cdf", ylab ="y", zlab = expression(P(X^0 <= x, Y^0 <= y)),  expand = 1.1, cex.lab = 1.5)
+  # for (i in 1:nrow(forplot)) {
+  #   rgl::rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
+  # }
+
+  forplot <- forplot[1:3]
+  colnames(forplot) <- c("X", "Y", "Cumm.Prob")
+  plotly::plot_ly(forplot, x = ~X, y = ~Y, z = ~Cumm.Prob,
+               type = "contour")
 
 }
+
+

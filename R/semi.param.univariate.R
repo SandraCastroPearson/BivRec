@@ -257,7 +257,7 @@ var.est=function(beta1,beta2,mdat) {
 #MAIN PROGRAM FOR univariate regression analysis
 semi.param.univariate <- function(new_data, cov_names, CI) {
 
-  print(paste("fitting model with covariate", cov_names))
+  print(paste("Fitting model with covariate", cov_names))
   pro1 <- Pro.uest1(c(-2,2),new_data)[[1]]
   pro2 <- Pro.uest2(c(-2,2), pro1, new_data)[[1]]
 

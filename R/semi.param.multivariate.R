@@ -262,7 +262,7 @@ Mvar.est=function(beta1,beta2,mdat) {
 #multivariable regression analysis
 semi.param.multivariate <- function(new_data, cov_names, CI) {
 
-  print(paste("fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
+  print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
   n_params <- length(cov_names)
 
   #solve first equation to get beta1

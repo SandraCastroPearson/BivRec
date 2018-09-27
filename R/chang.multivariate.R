@@ -230,6 +230,8 @@ sd.estpar=function(init, dat, v, B) {
 
 #multivariable regression analysis-Chang's method
 chang.multivariate <- function(new_data, cov_names, CI) {
+
+  print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
   beta <- rep(0, length(cov_names)*2)
 
   #solve to get all  estimates

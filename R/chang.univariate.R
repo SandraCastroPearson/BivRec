@@ -240,6 +240,8 @@ sd.estpar1=function(init,dat,v, B) {
 
 #multivariable regression analysis-Chang's method
 chang.univariate <- function(new_data, cov_names, CI) {
+
+  print(paste("Fitting model with covariate", cov_names))
   beta <- rep(0, 2)
 
   #solve first equation to get all  estimates

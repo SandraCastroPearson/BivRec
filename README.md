@@ -59,7 +59,6 @@ biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 ![](README-BivRecExample-1.png)
 
 ``` r
-
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
 
 # To save the plots open a pdf file by un-commenting the following line of code: 
@@ -75,7 +74,7 @@ nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
 ```
 
-![](README-BivRecExample-2.png)
+![](README-BivRecExample2-1.png)
 
 ``` r
 

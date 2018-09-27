@@ -59,7 +59,7 @@ biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 
 # To save the plots open a pdf file by un-commenting the following line of code: 
 # pdf("nonparamplots.pdf")
-par(mfro=c(1,2))
+par(mfrow=c(1,2))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
            data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
            conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,

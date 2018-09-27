@@ -35,7 +35,7 @@ install_github("SandraCastroPearson/BivRec")
 Example
 -------
 
-This is a basic example which shows you how to solve a common problem:
+This is an example using a simulated data set.
 
 ``` r
 # Simulate bivariate alternating recurrent event data
@@ -60,23 +60,28 @@ biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 
 ``` r
 
-#Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results.
+# Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
+
+# To save the plots open a pdf file by un-commenting the following line of code: 
+# pdf("nonparamplots.pdf")
+par(mfrow=c(1,2))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
            data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
            conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
            marginalplot = TRUE, condiplot = TRUE)
-#> [1] "Original Number of Observations: 866 for 150 individuals"
-#> [1] "Observations to be used in Analysis: 866 for 150 individuals"
+#> [1] "Original number of observations: 866 for 150 individuals"
+#> [1] "Observations to be used in analysis: 866 for 150 individuals"
 #> [1] "Estimating joint cdf and marginal survival"
+#> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
 ```
 
 ![](README-BivRecExample-2.png)
 
-    #> [1] "Estimating Conditional CDF with 95% CI using 100 Sample Bootstrap"
-
-![](README-BivRecExample-3.png)
-
 ``` r
+
+# To close the pdf file with the plot un-comment the following line of code
+# dev.off()
+
 head(nonpar.result$joint.cdf)
 #>   x  y Joint.Probability         SE     0.025%    0.975%
 #> 1 2  1        0.08928573 0.01892769 0.05218813 0.1263833
@@ -109,11 +114,11 @@ head(nonpar.result$conditional.cdf)
 #> 5             0.09
 #> 6             0.14
 
-#Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates.
+# Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
-#> [1] "Original Number of Observations: 866 for 150 individuals"
-#> [1] "Observations to be used in Analysis: 866 for 150 individuals"
+#> [1] "Original number of observations: 866 for 150 individuals"
+#> [1] "Observations to be used in analysis: 866 for 150 individuals"
 #> [1] "fitting model with covariates: a1,a2"
 #> [1] "Estimating standard errors/confidence intervals"
 fit.lee$covariate.effects

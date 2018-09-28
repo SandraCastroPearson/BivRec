@@ -35,7 +35,7 @@ plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
       forplot2[i,] = forplot$Cumm.Prob[index]
   }
   graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
-                           forplot2, color.palette = heat.colors,
+                           forplot2, color.palette = heat.colors, cex.main=1.5,
                            xlab="x", ylab="y", main = expression(P(X^0 <= x, Y^0 <= y)))
 
 }

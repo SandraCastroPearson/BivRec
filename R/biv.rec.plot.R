@@ -74,17 +74,17 @@ biv.rec.plot <- function(formula, data) {
       stop_time <- c(subject$time1, subject$time1+subject$time2)
       temp <- rbind(temp, cbind(sub_id=rep(iter, 2), sub_epi=rep(1, 2), start_time, stop_time))
     } else {
-        subject <- subject[sort(subject$episode),]
-        times <- c(rbind(subject$time1, subject$time2))
-        start_time <- 0
-        stop_time <- times[1]
-        for (j in 2:length(times)) {
-          start_time[j] <- stop_time[j-1]
-          stop_time[j] <- start_time[j]+times[j]
-        }
-        sub_id <- rep(iter, length(times))
-        sub_epi <- rep(subject$episode, each=2)
-        temp <- rbind(temp, cbind(sub_id, sub_epi, start_time, stop_time))
+      subject <- subject[sort(subject$episode),]
+      times <- c(rbind(subject$time1, subject$time2))
+      start_time <- 0
+      stop_time <- times[1]
+      for (j in 2:length(times)) {
+        start_time[j] <- stop_time[j-1]
+        stop_time[j] <- start_time[j]+times[j]
+      }
+      sub_id <- rep(iter, length(times))
+      sub_epi <- rep(subject$episode, each=2)
+      temp <- rbind(temp, cbind(sub_id, sub_epi, start_time, stop_time))
     }
   }
   data4plot <- data.frame(temp)
@@ -111,11 +111,11 @@ biv.rec.plot <- function(formula, data) {
       segments(subject$start_time[1], subject$id,
                subject$stop_time[1], subject$id, col="red")
     } else {
-        for (j in 1:length(subject$id)) {
-          if (j %% 2 == 1) colors <- "red" else colors <- "blue"
-          segments(subject$start_time[j], subject$id,
-                   subject$stop_time[j], subject$id, col=colors)
-        }
+      for (j in 1:length(subject$id)) {
+        if (j %% 2 == 1) colors <- "red" else colors <- "blue"
+        segments(subject$start_time[j], subject$id,
+                 subject$stop_time[j], subject$id, col=colors)
       }
     }
+  }
 }

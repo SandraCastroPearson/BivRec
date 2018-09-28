@@ -24,8 +24,19 @@ plot.joint.cdf <- function(bivrec.nonparam.result, CI) {
 
   forplot <- forplot[1:3]
   colnames(forplot) <- c("X", "Y", "Cumm.Prob")
-  plotly::plot_ly(forplot, x = ~X, y = ~Y, z = ~Cumm.Prob,
-               type = "contour")
+  myx <- as.factor(forplot$X)
+  myy <- as.factor(forplot$Y)
+  lx <- length(levels(myx))
+  forplot2 <- matrix(ftable(forplot, row.vars = 1, col.vars = 2), nrow=lx)
+  rownames(forplot2) <- levels(myx)
+  colnames(forplot2) <- levels(myy)
+  for (i in 1:lx) {
+      index <- which(forplot$X==as.numeric(rownames(forplot2)[i]))
+      forplot2[i,] = forplot$Cumm.Prob[index]
+  }
+  graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
+                           forplot2, color.palette = heat.colors,
+                           xlab="x", ylab="y", main = expression(P(X^0 <= x, Y^0 <= y)))
 
 }
 

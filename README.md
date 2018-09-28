@@ -63,18 +63,20 @@ biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 
 # To save the plots open a pdf file by un-commenting the following line of code: 
 # pdf("nonparamplots.pdf")
-par(mfrow=c(1,2))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
            data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-           conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
+           conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
            marginalplot = TRUE, condiplot = TRUE)
 #> [1] "Original number of observations: 866 for 150 individuals"
 #> [1] "Observations to be used in analysis: 866 for 150 individuals"
 #> [1] "Estimating joint cdf and marginal survival"
-#> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
 ```
 
-![](README-BivRecExample2-1.png)
+![](README-BivRecExample2-1.png)![](README-BivRecExample2-2.png)
+
+    #> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
+
+![](README-BivRecExample2-3.png)
 
 ``` r
 
@@ -118,7 +120,7 @@ fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
 #> [1] "Original number of observations: 866 for 150 individuals"
 #> [1] "Observations to be used in analysis: 866 for 150 individuals"
-#> [1] "fitting model with covariates: a1,a2"
+#> [1] "Fitting model with covariates: a1,a2"
 #> [1] "Estimating standard errors/confidence intervals"
 fit.lee$covariate.effects
 #>          Estimate        SE     0.005%    0.995%

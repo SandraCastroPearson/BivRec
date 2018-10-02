@@ -54,7 +54,7 @@ head(biv.rec.data)
 # Plot gap times
 biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 ```
-```{r BivRecExample2, fig.height=4.5, fig.width=5}
+```{r BivRecExample2, fig.height=4.5}
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
 
 # To save the plots open a pdf file by un-commenting the following line of code: 

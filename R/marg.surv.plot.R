@@ -31,7 +31,7 @@ marg.surv.plot <- function(bivrec.nonparam.result, CI) {
   index <- which(forplot$lower<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
   plot(forplot$Time, forplot$Marginal.Survival, type = "l", xlab = "Type I Gap Times (x)", ylab = "Marginal Survival",
-       yaxp  = c(0, 1, 10), xaxp  = c(0, mx, 15), main = expression(P(X^0 <= x)))
+       yaxp  = c(0, 1, 10), xaxp  = round(c(0, mx, 15), digits=1), main = expression(P(X^0 <= x)))
   graphics::lines(forplot$Time, forplot$lower, lty = 2)
   graphics::lines(forplot$Time, forplot$upper, lty = 2)
 

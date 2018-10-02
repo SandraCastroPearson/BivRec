@@ -246,14 +246,14 @@ chang.univariate <- function(new_data, cov_names, CI) {
 
   #solve first equation to get all  estimates
   chang1 <- RE.uest1(beta, new_data)
-
+  if (chang1$conv!=0) {
+    print("Error - No Convergence")
+    stop()
+  }
     #estimate covariance matrix / std. errors
-    print(paste("Estimates complete.", str_c(chang1$par, collapse = ","), "Estimating Std. Errors", sep=" "))
+    print(paste("Estimates complete.", str_c(round(chang1$par, digits=4), collapse = ","), ". Estimating Standard Errors/Confidence Intervals", sep=" "))
     chang1.v <- v.est1(chang1$par,new_data, R=100)
     chang1.sd <- sd.estpar1(beta, new_data, chang1.v ,B=50)
-    print("Estimation of std. errors complete.")
-    print(chang1.sd)
-    print("Calculating confidence intervals")
 
     #calculate CIs, join all info, put in nice table
     conf.lev = 1 - ((1-CI)/2)

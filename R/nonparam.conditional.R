@@ -104,7 +104,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
   if (condiplot == TRUE) {
     plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-         cex.lab=1, cex.main=1.5, xlim=c(0, round(max(y.grid), digits=1)),
+         xlim=c(0, round(max(y.grid), digits=1)),
          ylim=c(0, round(max(cond[,5]), digits=1)),
          main=substitute(
            paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),

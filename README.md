@@ -16,7 +16,6 @@ Installation
 
 BivRec depends on the following system requirements:
 + Rtools for all systems. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/>
-+ XQuartz for OSX. Download XQuartz from <https://www.xquartz.org/>
 
 Once those requirements are met you can install BivRec from github as follows:
 
@@ -130,4 +129,6 @@ fit.lee$covariate.effects
 #> yij a2 -0.4560038 0.3181004 -1.2753761 0.3633685
 
 # To apply Chang (2004) method use method="Chang".
+# biv.rec.chang<- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2, 
+# data=biv.rec.data, method="Chang", CI=0.99)
 ```

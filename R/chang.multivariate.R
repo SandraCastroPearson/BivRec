@@ -236,16 +236,16 @@ chang.multivariate <- function(new_data, cov_names, CI) {
 
   #solve to get all  estimates
   chang <- RE.uest(beta, new_data)
-
   #estimate covariance matrix / std. errors
-  print(paste("Estimates complete.", str_c(chang$par, collapse = ","), "Estimating Std. Errors", sep=" "))
+  print(paste("Estimates complete.", str_c(round(chang$par, digits=4), collapse = ","), ". Estimating Standard Errors/Confidence Intervals", sep=" "))
+  if (chang$conv!=0) {
+    print("Error: Max Iterations reached. No proper convergence. Estimates are not accurate.")
+    stop()
+  }
   chang.v <- v.est(chang$par,new_data,R=50)
   chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
-  print("Estimation of std. errors complete.")
-  print(chang.sd)
 
   #calculate CIs, join all info, put in nice table
-  print("Calculating confidence intervals")
   conf.lev = 1 - ((1-CI)/2)
   CIlow <- chang$par - qnorm(conf.lev)*chang.sd
   CIup <- chang$par + qnorm(conf.lev)*chang.sd

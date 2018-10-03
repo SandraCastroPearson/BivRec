@@ -10,7 +10,7 @@
 #' @return A 3D scatter plot of joint cdf with confidence interval.
 #'
 #' @importFrom stats ftable
-#' @importClassesFrom grDevices heat.colors
+#' @import grDevices
 #' @keywords internal
 #'
 plot.joint.cdf <- function(bivrec.nonparam.result, CI) {

@@ -7,10 +7,11 @@
 0 errors | 0 warnings | 0 notes 
 
 *Travis-ci results:*
-0.54schecking R code for possible problems ... NOTE
+NOTE:
 plot.joint.cdf: no visible binding for global variable ‘heat.colors’
 Undefined global functions or variables:
   heat.colors
-Note does not affect program since heat.colors is in base R
+
+This note does not affect program since heat.colors is part of grDevices for base R
 
 

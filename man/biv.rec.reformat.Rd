@@ -16,7 +16,7 @@ biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode,
 
 \item{c_indicatorY}{Vector with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0. Passed from biv.rec.fit()}
 
-\item{c_indicatorX}{Optional vector with values of 0 if the last episode for subject i occured for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). Passed from biv.rec.fit()}
+\item{c_indicatorX}{Optional vector with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). Passed from biv.rec.fit()}
 
 \item{episode}{Vector indicating the observation or episode (j) for a subject (i). Passed from biv.rec.fit()}
 

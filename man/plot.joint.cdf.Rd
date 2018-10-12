@@ -7,7 +7,7 @@
 \method{plot}{joint.cdf}(bivrec.nonparam.result, CI)
 }
 \arguments{
-\item{bivrec.nonparam.result}{List with joing.cdf, formula, data. Passed from biv.rec.np()}
+\item{bivrec.nonparam.result}{List with joint.cdf, formula, data. Passed from biv.rec.np()}
 
 \item{CI}{Confidence level for CI. Passed from biv.rec.np()}
 }

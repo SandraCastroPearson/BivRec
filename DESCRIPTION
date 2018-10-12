@@ -3,7 +3,7 @@ Type: Package
 Title: Bivariate Alternating Recurrent Event Data Analysis
 Date: 2018-09-01
 Version: 1.0.0
-Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Chi Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
+Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Chi-Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
   person("Xianghua", "Luo", email = "luox0054@umn.edu", role = "ctb"))
 Author: Sandra Castro-Pearson [aut, cre],  Chi-Hyun Lee [aut], Chiung-Yu Huang [aut], Xianghua Luo [ctb]
 Maintainer: Sandra Castro-Pearson <cast0135@umn.edu>

@@ -178,7 +178,7 @@ formarginal <- function(dat){
 #' @param xij Vector with the lengths of time spent in event of type X for individual i in episode j. Passed from biv.rec.fit()
 #' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j. Passed from biv.rec.fit()
 #' @param c_indicatorY Vector with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0. Passed from biv.rec.fit()
-#' @param c_indicatorX Optional vector with values of 0 if the last episode for subject i occured for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). Passed from biv.rec.fit()
+#' @param c_indicatorX Optional vector with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). Passed from biv.rec.fit()
 #' @param episode Vector indicating the observation or episode (j) for a subject (i). Passed from biv.rec.fit()
 #' @param covariates A Matrix of Covariates. Passed from biv.rec.fit()
 #' @param method A string for method to be used. Passed from biv.rec.fit()

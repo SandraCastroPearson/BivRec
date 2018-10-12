@@ -4,7 +4,7 @@
 #' @description
 #' This function plots joint cdf for recurrent event data.  Called from biv.rec.np(). No user interface.
 #'
-#' @param bivrec.nonparam.result List with joing.cdf, formula, data. Passed from biv.rec.np()
+#' @param bivrec.nonparam.result List with joint.cdf, formula, data. Passed from biv.rec.np()
 #' @param CI Confidence level for CI. Passed from biv.rec.np()
 #'
 #' @return A 3D scatter plot of joint cdf with confidence interval.

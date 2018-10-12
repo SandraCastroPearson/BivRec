@@ -1,7 +1,7 @@
 #' Non-Parametric Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
-#' This function allows the user to apply a non-parametric method to estimate the joint cumulative distribution funtion (cdf) for the two alternating events gap times (xij and yij)
+#' This function allows the user to apply a non-parametric method to estimate the joint cumulative distribution function (cdf) for the two alternating events gap times (xij and yij)
 #' as well as the marginal survival function for type I gap times (xij) and the conditional cdf of the type II gap times (yij) given an interval of type I gap times (xij).
 #' See Huang and Wang (2005) for more details.
 #'
@@ -38,15 +38,15 @@
 #' If given.interval = c(v1, v2), the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #' Valid values for these times are given in the "Time" column of the marginal survival data frame that results from biv.rec.np().
 #' @param jointplot A logical value. If TRUE (default), this function will create a 3D plot of the joing cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.
-#' @param marginalplot A logical value. If TRUE (default), this function will plot the marginal survival fuction for the type I gap times with pointwise large sample confidence interval at the specified confidence level.
+#' @param marginalplot A logical value. If TRUE (default), this function will plot the marginal survival function for the type I gap times with pointwise large sample confidence interval at the specified confidence level.
 #' @param condiplot A logical value. Can only be TRUE if conditional=TRUE. If TRUE, this function will plot the conditional cdf with bootstrap confidence interval at the specified confidence level. Default is FALSE.
-#' @param CI The level for confidence intervals for joing cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.
+#' @param CI The level for confidence intervals for joint cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.
 
 #'
 #' @return Plots as specified from jointplot, marginalplot, conditional and a BivRec list object containing:
 #' \itemize{
 #'   \item \strong{joint.cdf:} Data frame with joint cdf and standard error for the two alternating gap times.
-#'   \item \strong{marginal.survival:} Data frame with marginnal survival for the first gap time and standard error.
+#'   \item \strong{marginal.survival:} Data frame with marginal survival for the first gap time and standard error.
 #'   \item \strong{conditional.cdf:} Data frame with conditional cdf, bootstrap standard error and bootstrap confidence interval.
 #'   \item \strong{formula:} The formula used to specify components of bivariate recurrent response.
 #'   \item \strong{ai:} The function of censoring time used as weights.

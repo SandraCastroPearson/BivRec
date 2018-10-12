@@ -4,7 +4,12 @@
 
 ## R CMD check results
 *Local results:*
-0 errors | 0 warnings | 0 notes 
+R CMD check results
+0 errors | 0 warnings | 1 note 
+checking R code for possible problems ... NOTE
+plot.joint.cdf: no visible binding for global variable 'heat.colors'
+Undefined global functions or variables:
+  heat.colors
 
 *Travis-ci results:*
 NOTE:
@@ -12,6 +17,6 @@ plot.joint.cdf: no visible binding for global variable ‘heat.colors’
 Undefined global functions or variables:
   heat.colors
 
-This note does not affect program since heat.colors is part of grDevices for base R
+This note does not affect package since heat.colors is part of grDevices for base R.
 
 

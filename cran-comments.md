@@ -1,5 +1,5 @@
 ## Test environments
-* Local: Windows OS  x86_64-w64-mingw32, R 3.5.0
+* Local: Windows OS  x86_64-w64-mingw32, R 3.5.1
 * On travis-ci: Linux Ubuntu Trusty 14.04.5, R 3.5.0
 
 ## R CMD check results

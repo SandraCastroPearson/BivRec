@@ -38,7 +38,6 @@ This is an example using a simulated data set.
 ``` r
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
-#> Loading required package: survival
 set.seed(8822)
 biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 head(biv.rec.data)

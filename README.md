@@ -2,34 +2,21 @@ Bivariate Alternating Recurrent Event Data Analysis (BivRec)
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+Alternating recurrent event data arise frequently in biomedical and social sciences where two types of events such as hospital admissions and discharge occur alternatively over time. BivRec implements a collection of non-parametric and semiparametric methods to analyze such data.
 
-Alternating recurrent event data arise frequently in biomedical and
-social sciences where two types of events such as hospital admissions
-and discharge occur alternatively over time. BivRec implements a
-collection of non-parametric and semiparametric methods to analyze such
-data.
+The main functions are:
+- biv.rec.fit: Use for the estimation of covariate effects on the two alternating event gap times (Xij and Yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".
+- biv.rec.np: Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a non-parametric fashion.
 
-The main functions are:  
-\- biv.rec.fit: Use for the estimation of covariate effects on the two
-alternating event gap times (Xij and Yij) using semiparametric methods.
-The method options are “Lee.et.al” and “Chang”.  
-\- biv.rec.np: Use for the estimation of the joint cumulative
-distribution funtion (cdf) for the two alternating events gap times (Xij
-and Yij) as well as the marginal survival function for type I gap times
-(Xij) and the conditional cdf of the type II gap times (Yij) given an
-interval of type I gap times (Xij) in a non-parametric fashion.
+The package also provides options to simulate and visualize the data and results of analysis.
 
-The package also provides options to simulate and visualize the data and
-results of analysis.
+Installation
+------------
 
-## Installation
+BivRec depends on the following system requirements:
+- Rtools. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/>
 
-BivRec depends on the following system requirements:  
-\- Rtools. Download Rtools 35 from
-<https://cran.r-project.org/bin/windows/Rtools/>
-
-Once those requirements are met you can install BivRec from github as
-follows:
+Once those requirements are met you can install BivRec from github as follows:
 
 ``` r
 #Installation requires devtools package.
@@ -43,7 +30,8 @@ find_rtools()
 install_github("SandraCastroPearson/BivRec")
 ```
 
-## Example
+Example
+-------
 
 This is an example using a simulated data set.
 
@@ -66,7 +54,7 @@ head(biv.rec.data)
 biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 ```
 
-![](README-BivRecExample-1.png)<!-- -->
+![](README-BivRecExample-1.png)
 
 ``` r
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
@@ -83,11 +71,11 @@ nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #> [1] "Estimating joint cdf and marginal survival"
 ```
 
-![](README-BivRecExample2-1.png)<!-- -->![](README-BivRecExample2-2.png)<!-- -->
+![](README-BivRecExample2-1.png)![](README-BivRecExample2-2.png)
 
     #> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
 
-![](README-BivRecExample2-3.png)<!-- -->
+![](README-BivRecExample2-3.png)
 
 ``` r
 

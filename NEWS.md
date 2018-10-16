@@ -1,6 +1,6 @@
 # BivRec 1.0.0
 
-* Added a `NEWS.md` file to track changes to the package.
+Submitted to CRAN 10/16/18  
 
 
 

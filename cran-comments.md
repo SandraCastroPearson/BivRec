@@ -1,13 +1,23 @@
 ## Test environments
-* local OS X install, R 3.5.1
-* ubuntu 12.04 (on travis-ci), R 3.5.1
-* win-builder (devel and release)
+* Local: Windows OS  x86_64-w64-mingw32, R 3.5.1
+* On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.1
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+*Local results:*  
+0 errors | 0 warnings | 1 note   
+checking R code for possible problems ... NOTE  
+plot.joint.cdf: no visible binding for global variable 'heat.colors'  
+Undefined global functions or variables:  
+  heat.colors  
 
-* This is a new release.
+*Travis-ci results:*  
+NOTE:  
+plot.joint.cdf: no visible binding for global variable ‘heat.colors’  
+Undefined global functions or variables:  
+  heat.colors  
+
+This note does not affect package since heat.colors is part of grDevices for base R.  
 
 ## Reverse dependencies
 

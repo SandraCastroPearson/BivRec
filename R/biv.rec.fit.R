@@ -61,6 +61,7 @@
 #' }
 #'
 #' @examples
+#' #'\dontrun{
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
@@ -70,6 +71,7 @@
 #'                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
 #' fit.lee$covariate.effects
 #'# To apply Chang (2004) method use method="Chang"
+#'}
 #'
 #' @export
 #'

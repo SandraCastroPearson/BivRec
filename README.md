@@ -2,21 +2,34 @@ Bivariate Alternating Recurrent Event Data Analysis (BivRec)
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-Alternating recurrent event data arise frequently in biomedical and social sciences where two types of events such as hospital admissions and discharge occur alternatively over time. BivRec implements a collection of non-parametric and semiparametric methods to analyze such data.
 
-The main functions are:
-- biv.rec.fit: Use for the estimation of covariate effects on the two alternating event gap times (Xij and Yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".
-- biv.rec.np: Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a non-parametric fashion.
+Alternating recurrent event data arise frequently in biomedical and
+social sciences where two types of events such as hospital admissions
+and discharge occur alternatively over time. BivRec implements a
+collection of non-parametric and semiparametric methods to analyze such
+data.
 
-The package also provides options to simulate and visualize the data and results of analysis.
+The main functions are:  
+\- biv.rec.fit: Use for the estimation of covariate effects on the two
+alternating event gap times (Xij and Yij) using semiparametric methods.
+The method options are “Lee.et.al” and “Chang”.  
+\- biv.rec.np: Use for the estimation of the joint cumulative
+distribution funtion (cdf) for the two alternating events gap times (Xij
+and Yij) as well as the marginal survival function for type I gap times
+(Xij) and the conditional cdf of the type II gap times (Yij) given an
+interval of type I gap times (Xij) in a non-parametric fashion.
 
-Installation
-------------
+The package also provides options to simulate and visualize the data and
+results of analysis.
 
-BivRec depends on the following system requirements:
-- Rtools. Download Rtools 35 from <https://cran.r-project.org/bin/windows/Rtools/>
+## Installation
 
-Once those requirements are met you can install BivRec from github as follows:
+BivRec depends on the following system requirements:  
+\- Rtools. Download Rtools 35 from
+<https://cran.r-project.org/bin/windows/Rtools/>
+
+Once those requirements are met you can install BivRec from github as
+follows:
 
 ``` r
 #Installation requires devtools package.
@@ -30,14 +43,14 @@ find_rtools()
 install_github("SandraCastroPearson/BivRec")
 ```
 
-Example
--------
+## Example
 
 This is an example using a simulated data set.
 
 ``` r
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
+#> Loading required package: survival
 set.seed(8822)
 biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 head(biv.rec.data)
@@ -53,14 +66,15 @@ head(biv.rec.data)
 biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 ```
 
-![](README-BivRecExample-1.png)
+![](man/figures/README-BivRecExample-1.png)<!-- -->
 
 ``` r
+
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
 
 # To save plots in a pdf file un-comment the following lines of code: 
 # pdf("nonparamplots.pdf")
-# par(mfrow=c(3,1))
+# layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE), heights=c(2,1))
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
            data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
            conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
@@ -70,11 +84,11 @@ nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #> [1] "Estimating joint cdf and marginal survival"
 ```
 
-![](README-BivRecExample2-1.png)![](README-BivRecExample2-2.png)
+![](man/figures/README-BivRecExample-2.png)<!-- -->![](man/figures/README-BivRecExample-3.png)<!-- -->
 
     #> [1] "Estimating conditional CDF with 95% CI using 100 Bootstrap samples"
 
-![](README-BivRecExample2-3.png)
+![](man/figures/README-BivRecExample-4.png)<!-- -->
 
 ``` r
 

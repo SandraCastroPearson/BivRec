@@ -61,7 +61,7 @@
 #' }
 #'
 #' @examples
-#' #'\dontrun{
+#' \dontrun{
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)

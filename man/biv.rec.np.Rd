@@ -75,7 +75,7 @@ See Huang and Wang (2005) for more details.
 For further information, see Huang and Wang (2005).
 }
 \examples{
-#'\dontrun{
+\dontrun{
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)

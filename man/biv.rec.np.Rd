@@ -75,6 +75,7 @@ See Huang and Wang (2005) for more details.
 For further information, see Huang and Wang (2005).
 }
 \examples{
+#'\dontrun{
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
@@ -89,6 +90,7 @@ nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 head(nonpar.result$joint.cdf)
 head(nonpar.result$marginal.survival)
 head(nonpar.result$conditional.cdf)
+}
 }
 \references{
 Huang CY, Wang MC (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.

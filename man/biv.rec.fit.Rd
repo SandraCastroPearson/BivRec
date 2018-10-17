@@ -56,6 +56,7 @@ This approximation requires extensive computing time for a relatively small samp
 }
 }
 \examples{
+#'\dontrun{
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
@@ -65,6 +66,7 @@ fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
 fit.lee$covariate.effects
 # To apply Chang (2004) method use method="Chang"
+}
 
 }
 \references{

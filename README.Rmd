@@ -27,13 +27,13 @@ BivRec depends on the following system requirements:
 - Rtools. Download Rtools 35 from https://cran.r-project.org/bin/windows/Rtools/  
 
 Once those requirements are met you can install BivRec from github as follows:
-```{r gh-installation, eval = FALSE}
+```{r gh-installation}
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)
 assignInNamespace("version_info", c(devtools:::version_info, 
-                                    list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", 
-                                    path = "bin"))), "devtools")
+                  list("3.5" = list(version_min = "3.3.0", version_max =
+                  "99.99.99", path = "bin"))), "devtools")
 find_rtools()
 #Make sure the results of previous command is true
 install_github("SandraCastroPearson/BivRec")

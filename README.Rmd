@@ -31,12 +31,13 @@ Once those requirements are met you can install BivRec from github as follows:
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)
-assignInNamespace("version_info", c(devtools:::version_info, 
-                  list("3.5" = list(version_min = "3.3.0", version_max =
-                  "99.99.99", path = "bin"))), "devtools")
-find_rtools()
-#Make sure the results of previous command is true
 install_github("SandraCastroPearson/BivRec")
+
+#If devtools or R doesn't recognize you have Rtools uncomment and use the following code:
+# assignInNamespace("version_info", c(devtools:::version_info, 
+#                   list("3.5" = list(version_min = "3.3.0", version_max =
+#                   "99.99.99", path = "bin"))), "devtools")
+# find_rtools()
 ```
 
 ## Example

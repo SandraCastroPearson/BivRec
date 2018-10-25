@@ -35,12 +35,15 @@ follows:
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)
-assignInNamespace("version_info", c(devtools:::version_info, 
-                                    list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", 
-                                    path = "bin"))), "devtools")
-find_rtools()
-#Make sure the results of previous command is true
 install_github("SandraCastroPearson/BivRec")
+#> Skipping install of 'BivRec' from a github remote, the SHA1 (71958b35) has not changed since last install.
+#>   Use `force = TRUE` to force installation
+
+#If devtools or R doesn't recognize you have Rtools uncomment and use the following code:
+# assignInNamespace("version_info", c(devtools:::version_info, 
+#                   list("3.5" = list(version_min = "3.3.0", version_max =
+#                   "99.99.99", path = "bin"))), "devtools")
+# find_rtools()
 ```
 
 ## Example

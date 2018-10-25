@@ -27,7 +27,7 @@ BivRec depends on the following system requirements:
 - Rtools. Download Rtools 35 from https://cran.r-project.org/bin/windows/Rtools/  
 
 Once those requirements are met you can install BivRec from github as follows:
-```{r gh-installation}
+```{r gh-installation, eval=FALSE}
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)

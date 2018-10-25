@@ -36,8 +36,6 @@ follows:
 #install.packages("devtools")
 library(devtools)
 install_github("SandraCastroPearson/BivRec")
-#> Skipping install of 'BivRec' from a github remote, the SHA1 (71958b35) has not changed since last install.
-#>   Use `force = TRUE` to force installation
 
 #If devtools or R doesn't recognize you have Rtools uncomment and use the following code:
 # assignInNamespace("version_info", c(devtools:::version_info, 

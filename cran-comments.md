@@ -10,9 +10,11 @@ All NOTES have been fixed except one about possible spelling errors in the descr
 *Local results:*   
 R CMD check results
 0 errors | 0 warnings | 0 notes  
+
 *Travis-ci results:*   
 * DONE
 Status: OK 
+
 *devtools::build_win() results:*   
 1 NOTE
 

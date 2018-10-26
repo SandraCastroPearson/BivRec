@@ -6,5 +6,12 @@ rvm:
 sudo: false
 warnings_are_errors: true
 cache: packages
+env:
+  global:
+    - RENV="./pkg-build.sh"    # r-builder
+    - R_BUILD_ARGS="--no-manual"
+    - R_CHECK_ARGS="--no-manual --as-cran"
+  matrix:
+    - RVERSION=devel _R_VALGRIND_=TRUE _R_CHECK_FULL_=TRUE
 
 

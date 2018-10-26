@@ -37,7 +37,7 @@
 #' @param given.interval A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the type I gap time to use for estimation of the cdf of the type II gap time given this interval.
 #' If given.interval = c(v1, v2), the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #' Valid values for these times are given in the "Time" column of the marginal survival data frame that results from biv.rec.np().
-#' @param jointplot A logical value. If TRUE (default), this function will create a 3D plot of the joing cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.
+#' @param jointplot A logical value. If TRUE (default), this function will create a 3D plot of the joint cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.
 #' @param marginalplot A logical value. If TRUE (default), this function will plot the marginal survival function for the type I gap times with pointwise large sample confidence interval at the specified confidence level.
 #' @param condiplot A logical value. Can only be TRUE if conditional=TRUE. If TRUE, this function will plot the conditional cdf with bootstrap confidence interval at the specified confidence level. Default is FALSE.
 #' @param CI The level for confidence intervals for joint cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.

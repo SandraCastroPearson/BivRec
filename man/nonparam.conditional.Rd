@@ -7,7 +7,7 @@
 nonparam.conditional(bivrec.nonparam.result, given.interval, CI, condiplot)
 }
 \arguments{
-\item{bivrec.nonparam.result}{List with joing.cdf and marginal.survival. Passed from biv.rec.np()}
+\item{bivrec.nonparam.result}{List with joint.cdf and marginal.survival. Passed from biv.rec.np()}
 
 \item{given.interval}{is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time. Passed from biv.rec.np()}
 

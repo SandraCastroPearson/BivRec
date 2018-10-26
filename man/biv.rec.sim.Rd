@@ -19,7 +19,7 @@ biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 \item tau_c=30: corresponds to cr=30\% and corresponding \ifelse{html}{\out{m_bar}}{\eqn{\bar{m}}} for each scenario in tables 1 and 2 of Lee CH, Huang C-Y, Xu G, Luo X (2017).
 }}
 
-\item{set}{Simulation setting based on scenarios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenerio 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
+\item{set}{Simulation setting based on scenarios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
 }
 \value{
 Data frame with alternating recurrent event data and two covariates

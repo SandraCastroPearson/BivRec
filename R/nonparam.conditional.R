@@ -45,7 +45,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #'
 #' @description
 #' This function calculates the conditional cdf after estimation of joint cdf and marginal survival.  Called from biv.rec.np(). No user interface.
-#' @param bivrec.nonparam.result List with joing.cdf and marginal.survival. Passed from biv.rec.np()
+#' @param bivrec.nonparam.result List with joint.cdf and marginal.survival. Passed from biv.rec.np()
 #' @param given.interval is a 1x2 vector indicating an interval for the first gap time to estimate the cdf of second gap time. Passed from biv.rec.np()
 #' @param CI confidence level. Passed from biv.rec.np()
 #' @param condiplot a logical value. Passed from biv.rec.np()

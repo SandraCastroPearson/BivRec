@@ -45,7 +45,7 @@ The six variables on the left must have the same length and be given as \strong{
 If given.interval = c(v1, v2), the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 Valid values for these times are given in the "Time" column of the marginal survival data frame that results from biv.rec.np().}
 
-\item{jointplot}{A logical value. If TRUE (default), this function will create a 3D plot of the joing cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.}
+\item{jointplot}{A logical value. If TRUE (default), this function will create a 3D plot of the joint cdf for the two gap times with pointwise large sample confidence interval at the specified confidence level.}
 
 \item{marginalplot}{A logical value. If TRUE (default), this function will plot the marginal survival function for the type I gap times with pointwise large sample confidence interval at the specified confidence level.}
 

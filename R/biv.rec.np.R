@@ -68,7 +68,6 @@
 #' @keywords biv.rec.np
 #'
 #' @examples
-#' \dontrun{
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
@@ -78,12 +77,11 @@
 #' par(mfrow=c(1,2))
 #' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 #'           data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-#'           conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
-#'           marginalplot = TRUE, condiplot = TRUE)
+#'           conditional = FALSE, given.interval=c(0, 10), jointplot=FALSE,
+#'           marginalplot = TRUE, condiplot = FALSE)
 #' head(nonpar.result$joint.cdf)
 #' head(nonpar.result$marginal.survival)
-#' head(nonpar.result$conditional.cdf)
-#' }
+#' #For a more detailed example visit github.com/SandraCastroPearson/BivRec
 
 biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interval, jointplot, marginalplot, condiplot){
 

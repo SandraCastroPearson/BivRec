@@ -251,7 +251,7 @@ chang.univariate <- function(new_data, cov_names, CI) {
     stop()
   }
     #estimate covariance matrix / std. errors
-    print(paste("Estimates complete.", str_c(round(chang1$par, digits=4), collapse = ","), ". Estimating Standard Errors/Confidence Intervals", sep=" "))
+    print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
     chang1.v <- v.est1(chang1$par,new_data, R=100)
     chang1.sd <- sd.estpar1(beta, new_data, chang1.v ,B=50)
 

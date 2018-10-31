@@ -28,6 +28,8 @@ Data frame with alternating recurrent event data and two covariates
 This function simulates a series of alternating recurrent events based on simulations in Lee CH, Huang C-Y, Xu G, Luo X (2017).
 }
 \examples{
+library(BivRec)
+set.seed(1234)
 biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 }
 \references{

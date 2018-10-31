@@ -237,7 +237,7 @@ chang.multivariate <- function(new_data, cov_names, CI) {
   #solve to get all  estimates
   chang <- RE.uest(beta, new_data)
   #estimate covariance matrix / std. errors
-  print(paste("Estimates complete.", str_c(round(chang$par, digits=4), collapse = ","), ". Estimating Standard Errors/Confidence Intervals", sep=" "))
+  print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
   if (chang$conv!=0) {
     print("Error: Max Iterations reached. No proper convergence. Estimates are not accurate.")
     stop()

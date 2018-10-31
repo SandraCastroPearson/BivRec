@@ -61,7 +61,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
@@ -71,7 +70,7 @@
 #'                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
 #' fit.lee$covariate.effects
 #'# To apply Chang (2004) method use method="Chang"
-#'}
+#'#For a more detailed example visit github.com/SandraCastroPearson/BivRec
 #'
 #' @export
 #'
@@ -118,13 +117,8 @@ biv.rec.fit <- function(formula, data, method, CI){
       episode <- eval(parse(text = names[2]))
       xij <- eval(parse(text = names[3]))
       yij <- eval(parse(text = names[4]))
-      if (length(names)==6) {
-        c_indicatorX <- eval(parse(text = names[5]))
-        c_indicatorY <- eval(parse(text = names[6]))
-      } else {
-        c_indicatorX <- rep(1, length(xij))
-        c_indicatorY <- eval(parse(text = names[5]))
-      }
+      c_indicatorX <- eval(parse(text = names[5]))
+      c_indicatorY <- eval(parse(text = names[6]))
       covariates <- as.matrix(covariates)
 
   #### Manage data vectors, fit correct model, return results ###

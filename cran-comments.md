@@ -1,4 +1,5 @@
 ## Resubmission
+Examples modified to run under 5s. 
 All NOTES have been fixed except one about possible spelling errors in the description. These are false positives for mispelled words and authors would like to keep as is.  
 
 ## Test environments

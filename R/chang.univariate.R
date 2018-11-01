@@ -252,7 +252,7 @@ chang.univariate <- function(new_data, cov_names, CI) {
     stop()
   }
 
-  if (CI=NULL) {
+  if (is.null(CI)==TRUE) {
     chang.fit <- data.frame(chang1$par)
     colnames(chang.fit) <- c("Estimate")
     rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))

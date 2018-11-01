@@ -242,7 +242,7 @@ chang.multivariate <- function(new_data, cov_names, CI) {
     stop()
   }
 
-  if (CI=NULL) {
+  if (is.null(CI)==TRUE) {
     #return only point estimates
     chang.fit <- data.frame(chang$par)
     colnames(chang.fit) <- c("Estimate")

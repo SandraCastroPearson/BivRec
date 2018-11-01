@@ -261,7 +261,7 @@ semi.param.univariate <- function(new_data, cov_names, CI) {
   pro1 <- Pro.uest1(c(-2,2),new_data)[[1]]
   pro2 <- Pro.uest2(c(-2,2), pro1, new_data)[[1]]
 
-  if (CI=NULL) {
+  if (is.null(CI)==TRUE) {
     #return point estimates only
     univ_fits <- data.frame(c(pro1, pro2))
     colnames(univ_fits) <- c("Estimate")

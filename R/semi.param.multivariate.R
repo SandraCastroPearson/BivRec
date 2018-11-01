@@ -271,7 +271,7 @@ semi.param.multivariate <- function(new_data, cov_names, CI) {
   #solve second equation to get beta2 values - related to yij
   mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
 
-  if (CI=NULL) {
+  if (is.null(CI)==TRUE) {
     #return point estimates only
     multi.fit <- data.frame(c(mpro1$par, mpro2$par))
     colnames(multi.fit) <- c("Estimate")

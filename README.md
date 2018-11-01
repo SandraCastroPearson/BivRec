@@ -36,12 +36,6 @@ follows:
 #install.packages("devtools")
 library(devtools)
 install_github("SandraCastroPearson/BivRec")
-
-#If devtools or R doesn't recognize you have Rtools uncomment and use the following code:
-# assignInNamespace("version_info", c(devtools:::version_info, 
-#                   list("3.5" = list(version_min = "3.3.0", version_max =
-#                   "99.99.99", path = "bin"))), "devtools")
-# find_rtools()
 ```
 
 ## Example
@@ -73,9 +67,9 @@ biv.rec.plot(formula = id + epi ~ xij + yij, data = biv.rec.data)
 
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
 
-# To save plots in a pdf file un-comment the following lines of code: 
+# To save plots in a pdf file un-comment the following line of code: 
 # pdf("nonparamplots.pdf")
-# layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE), heights=c(2,1))
+
 nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
            data=biv.rec.data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
            conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
@@ -130,17 +124,17 @@ head(nonpar.result$conditional.cdf)
 
 # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
-                data=biv.rec.data, method="Lee.et.al", CI=0.99)
+                data=biv.rec.data, method="Lee.et.al", CI=0.95)
 #> [1] "Original number of observations: 866 for 150 individuals"
 #> [1] "Observations to be used in analysis: 866 for 150 individuals"
 #> [1] "Fitting model with covariates: a1,a2"
 #> [1] "Estimating standard errors/confidence intervals"
 fit.lee$covariate.effects
-#>          Estimate        SE     0.005%    0.995%
-#> xij a1  0.5389506 0.1333088  0.1955699 0.8823313
-#> xij a2  0.4156700 0.2292714 -0.1748941 1.0062340
-#> yij a1  0.1824334 0.1796552 -0.2803277 0.6451945
-#> yij a2 -0.4560038 0.3181004 -1.2753761 0.3633685
+#>          Estimate        SE      0.025%    0.975%
+#> xij a1  0.5389506 0.1333088  0.27767013 0.8002310
+#> xij a2  0.4156700 0.2292714 -0.03369374 0.8650337
+#> yij a1  0.1824334 0.1796552 -0.16968429 0.5345511
+#> yij a2 -0.4560038 0.3181004 -1.07946913 0.1674615
 
 # To apply Chang (2004) method use method="Chang".
 # biv.rec.chang<- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2, 

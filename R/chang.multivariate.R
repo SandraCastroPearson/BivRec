@@ -236,24 +236,37 @@ chang.multivariate <- function(new_data, cov_names, CI) {
 
   #solve to get all  estimates
   chang <- RE.uest(beta, new_data)
-  #estimate covariance matrix / std. errors
-  print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
+
   if (chang$conv!=0) {
     print("Error: Max Iterations reached. No proper convergence. Estimates are not accurate.")
     stop()
   }
-  chang.v <- v.est(chang$par,new_data,R=50)
-  chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
 
-  #calculate CIs, join all info, put in nice table
-  conf.lev = 1 - ((1-CI)/2)
-  CIlow <- chang$par - qnorm(conf.lev)*chang.sd
-  CIup <- chang$par + qnorm(conf.lev)*chang.sd
-  chang.fit <- data.frame(chang$par, chang.sd, CIlow, CIup)
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
+  if (CI=NULL) {
+    #return only point estimates
+    chang.fit <- data.frame(chang$par)
+    colnames(chang.fit) <- c("Estimate")
+    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
-  rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+  } else {
+
+    print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
+
+    #estimate covariance matrix / std. errors using Parzen's method
+    chang.v <- v.est(chang$par,new_data,R=50)
+    chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
+
+    #calculate CIs, join all info, put in nice table
+    conf.lev = 1 - ((1-CI)/2)
+    CIlow <- chang$par - qnorm(conf.lev)*chang.sd
+    CIup <- chang$par + qnorm(conf.lev)*chang.sd
+    chang.fit <- data.frame(chang$par, chang.sd, CIlow, CIup)
+    low.string <- paste((1 - conf.lev), "%", sep="")
+    up.string <- paste(conf.lev, "%", sep="")
+    colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
+    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+
+  }
+
   return(chang.fit)
 }

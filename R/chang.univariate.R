@@ -246,12 +246,22 @@ chang.univariate <- function(new_data, cov_names, CI) {
 
   #solve first equation to get all  estimates
   chang1 <- RE.uest1(beta, new_data)
+
   if (chang1$conv!=0) {
     print("Error - No Convergence")
     stop()
   }
-    #estimate covariance matrix / std. errors
+
+  if (CI=NULL) {
+    chang.fit <- data.frame(chang1$par)
+    colnames(chang.fit) <- c("Estimate")
+    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+
+  } else {
+
     print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
+
+    #estimate covariance matrix / std. errors
     chang1.v <- v.est1(chang1$par,new_data, R=100)
     chang1.sd <- sd.estpar1(beta, new_data, chang1.v ,B=50)
 
@@ -263,7 +273,9 @@ chang.univariate <- function(new_data, cov_names, CI) {
     low.string <- paste((1 - conf.lev), "%", sep="")
     up.string <- paste(conf.lev, "%", sep="")
     colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
+    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
-  rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+  }
+
   return(chang.fit)
 }

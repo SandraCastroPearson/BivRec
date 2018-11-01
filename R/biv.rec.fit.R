@@ -31,7 +31,7 @@
 #' }
 #' @param data A data frame that includes all the vectors/covariates listed in the formula above.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
-#' @param CI The level to be used for confidence intervals. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. The default is 0.95.
+#' @param CI The level to be used for confidence intervals. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. The default is 0.95. CI=NULL gives point estimates without confidence intervals.
 #'
 #' @return A BivRec list object containing:
 #' \itemize{
@@ -67,7 +67,7 @@
 #' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 #' fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
-#'                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
+#'                 data=biv.rec.data, method="Lee.et.al", CI=NULL)
 #' fit.lee$covariate.effects
 #'# To apply Chang (2004) method use method="Chang"
 #'#For a more detailed example visit github.com/SandraCastroPearson/BivRec

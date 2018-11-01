@@ -224,9 +224,9 @@ var.est=function(beta1,beta2,mdat) {
 
   mat=solve(gamm)%*%xi%*%t(solve(gamm))
 
-  var1=sqrt(diag(mat)/n)[1]
-  var2=sqrt(diag(mat)/n)[2]
-  return(list(var1=var1,var2=var2))
+  se1=sqrt(diag(mat)/n)[1]
+  se2=sqrt(diag(mat)/n)[2]
+  return(list(se1=se1,se2=se2))
 }
 
 ###################################################################
@@ -261,17 +261,30 @@ semi.param.univariate <- function(new_data, cov_names, CI) {
   pro1 <- Pro.uest1(c(-2,2),new_data)[[1]]
   pro2 <- Pro.uest2(c(-2,2), pro1, new_data)[[1]]
 
-  print("Estimations complete. Calculating standard errors and confidence intervals")
-  variance_est=var.est(pro1, pro2, new_data)
-  univ_fits <- data.frame(c(pro1, pro2), c(variance_est$var1,variance_est$var2))
-  conf.lev = 1 - ((1-CI)/2)
-  CIcalc <- t(apply(univ_fits, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
-  univ_fits <- cbind(univ_fits, CIcalc)
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(univ_fits) <- c("Estimate", "SE", low.string, up.string)
+  if (CI=NULL) {
+    #return point estimates only
+    univ_fits <- data.frame(c(pro1, pro2))
+    colnames(univ_fits) <- c("Estimate")
+    rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
-  rownames(univ_fits) <- c("xij", "yij")
+  } else {
+
+    print("Estimating standard errors/confidence intervals")
+    #estimate covariance matrix and get diagonal then std. errors
+    sd_est=var.est(pro1, pro2, new_data)
+    univ_fits <- data.frame(c(pro1, pro2), c(sd_est$se1,sd_est$se2))
+
+    #Calculate CI's and put in nice table
+    conf.lev = 1 - ((1-CI)/2)
+    CIcalc <- t(apply(univ_fits, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
+    univ_fits <- cbind(univ_fits, CIcalc)
+    low.string <- paste((1 - conf.lev), "%", sep="")
+    up.string <- paste(conf.lev, "%", sep="")
+    colnames(univ_fits) <- c("Estimate", "SE", low.string, up.string)
+    rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
+
+  }
+
   return(univ_fits)
 }
 

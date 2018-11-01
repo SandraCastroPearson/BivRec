@@ -265,26 +265,33 @@ semi.param.multivariate <- function(new_data, cov_names, CI) {
   print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
   n_params <- length(cov_names)
 
-  #solve first equation to get beta1
+  #solve first equation to get beta1 values - related to xij
   mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
 
-  #solve second equation to get beta2
+  #solve second equation to get beta2 values - related to yij
   mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
 
-  print("Estimating standard errors/confidence intervals")
+  if (CI=NULL) {
+    #return point estimates only
+    multi.fit <- data.frame(c(mpro1$par, mpro2$par))
+    colnames(multi.fit) <- c("Estimate")
+    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
-  #estimate covariance matrix and get diagonal then std. errors
-  se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
+  } else {
 
-  #join all info and calculate CIs, put in nice table
-  multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
-  conf.lev = 1 - ((1-CI)/2)
-  CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
-  multi.fit  <- cbind(multi.fit, CIcalc)
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
-  rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    print("Estimating standard errors/confidence intervals")
+    #estimate covariance matrix and get diagonal then std. errors
+    se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
+    #join all info and calculate CIs, put in nice table
+    multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
+    conf.lev = 1 - ((1-CI)/2)
+    CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
+    multi.fit  <- cbind(multi.fit, CIcalc)
+    low.string <- paste((1 - conf.lev), "%", sep="")
+    up.string <- paste(conf.lev, "%", sep="")
+    colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
+    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+  }
 
   return(multi.fit)
 }

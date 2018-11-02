@@ -1,7 +1,7 @@
 Package: BivRec
 Type: Package
 Title: Bivariate Alternating Recurrent Event Data Analysis
-Date: 2018-10-26
+Date: 2018-10-31
 Version: 1.0.0
 Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Chi-Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
   person("Xianghua", "Luo", email = "luox0054@umn.edu", role = "ctb"))
@@ -15,7 +15,7 @@ Description: Alternating recurrent event data arise frequently in biomedical and
 BugReports: https://github.com/SandraCastroPearson/BivRec/issues
 Depends: R (>= 3.3.0), survival, stats 
 Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, graphics, grDevices
-License: GPL-2
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0

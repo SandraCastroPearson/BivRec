@@ -71,7 +71,7 @@
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' biv.rec.data <- biv.rec.sim(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply the non-parametric method of Huang and Wang (2005) and
 #' # Visualize joint cdf and marginal survival results
 #' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
@@ -82,9 +82,7 @@
 #' head(nonpar.result$marginal.survival)
 #'
 #' \dontrun{
-#'
 #' #This is an example with longer runtime.
-#'
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
@@ -98,7 +96,6 @@
 #' head(nonpar.result$joint.cdf)
 #' head(nonpar.result$marginal.survival)
 #' head(nonpar.result$conditional.cdf)
-#'
 #' }
 
 biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interval, jointplot, marginalplot, condiplot){

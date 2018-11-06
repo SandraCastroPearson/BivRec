@@ -89,9 +89,7 @@ head(nonpar.result$joint.cdf)
 head(nonpar.result$marginal.survival)
 
 \dontrun{
-
 #This is an example with longer runtime.
-
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
@@ -105,7 +103,6 @@ nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
 head(nonpar.result$joint.cdf)
 head(nonpar.result$marginal.survival)
 head(nonpar.result$conditional.cdf)
-
 }
 }
 \references{

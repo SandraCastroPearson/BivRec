@@ -1,6 +1,6 @@
 ## Resubmission
 
-Examples were modified to run 5-10 seconds. Examples that take longer run time are wrapped in \dontrun{}.  
+Examples were modified to run in 3 to 8 seconds. Examples that take longer run time are wrapped in \dontrun{}.  
 
 All NOTES have been fixed except one about possible spelling errors in the description. These are false positives for mispelled words and authors would like to keep as is.  
 

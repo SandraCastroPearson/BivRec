@@ -39,7 +39,7 @@ mdat=function(dat) {
   l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv)
   l2mat=cbind(g2surv$time,diff(c(cumh2,tail(cumh2,1))),g2surv$surv)
 
-  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,amat=amat,ctime=ctime)
+  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,ctime=ctime)
   return(out)
 }
 
@@ -69,9 +69,9 @@ mdat=function(dat) {
 #' @examples
 #' set.seed(1)
 #' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' with(dat, bivrecSurv(id, epi, xij, yij, d2, d1))
+#' with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
-bivrecSurv <- function(id, episode, xij, yij, Ycind, Xcind) {
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check if anything is missing
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")
@@ -95,19 +95,19 @@ bivrecSurv <- function(id, episode, xij, yij, Ycind, Xcind) {
   if (any(Xcind!=0 && Xcind!=1)) stop("Indicator vector for type 1 gap times (Xcind) must be made of 0 or 1 values only.")
   if (any(Ycind!=0 && Ycind!=1)) stop("Indicator vector for type 2 gap times (Ycind) must be made of 0 or 1 values only.")
 
-  inputdf <- data.frame(id, episode, xij, yij, Ycind, Xcind)
+  inputdf <- data.frame(id=id, epi=episode, xij=xij, yij=yij, d1=Xcind, d2=Ycind)
   #Checks for each subject
       err_xind = err_yind = err_epi = NULL
       unique_id <- unique(inputdf$id)
         for (i in 1:length(unique_id)) {
           sub_id <- unique_id[i]
           temp_by_subject <- subset(inputdf, inputdf$id==sub_id)
-          temp_by_subject <- temp_by_subject[order(temp_by_subject$episode),]
+          temp_by_subject <- temp_by_subject[order(temp_by_subject$epi),]
           sub_n <- nrow(temp_by_subject)
-          last_cx <- temp_by_subject$Xcind[sub_n]
-          last_cy <- temp_by_subject$Ycind[sub_n]
-          other_cx <- temp_by_subject$Xcind[-sub_n]
-          other_cy <- temp_by_subject$Ycind[-sub_n]
+          last_cx <- temp_by_subject$d1[sub_n]
+          last_cy <- temp_by_subject$d2[sub_n]
+          other_cx <- temp_by_subject$d1[-sub_n]
+          other_cy <- temp_by_subject$d2[-sub_n]
 
           #Check indicators (cx is all 1's or one zero at end /  cy last is 0 and all others are 1)
           if (sum(other_cx)!=(sub_n-1)) {err_xind <- c(err_xind, sub_id)}
@@ -117,7 +117,7 @@ bivrecSurv <- function(id, episode, xij, yij, Ycind, Xcind) {
 
           #Check episodes don't have gaps
           for (j in 1:sub_n){
-            if (temp_by_subject$episode[j]!=j) {
+            if (temp_by_subject$epi[j]!=j) {
               err_epi <- c(err_epi, sub_id)}
           }
         }

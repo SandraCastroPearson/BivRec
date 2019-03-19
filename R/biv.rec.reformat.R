@@ -104,7 +104,7 @@ m.dat=function(dat) {
 # dat : a data.frame including
 #     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
 #     5)censoring times, 6) censoring indicators in each column
-# ai: a non-begative function of censoring time
+# ai: a non-negative function of censoring time
 
 np.dat <- function(dat, ai) {
 
@@ -218,7 +218,7 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
       print("Invalid values for length of time in event Y for rows. All must be >=0.")
       temp[invalid_yij,]
       stop()
-
+    }
       ####CHECK INDICATORS AND EPISODE SEQUENCES, yij VARIABLES HAVE CORRECT VALUES
     } else {
 

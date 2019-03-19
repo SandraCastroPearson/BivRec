@@ -1,104 +1,14 @@
 
 ##-----reformat any dataset HIDDEN FROM USER
 
-#                 m.dat.1, m.dat, np.dat FUNCTIONS                             #
+#                 m.dat, np.dat FUNCTIONS                             #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
-# Last Modified by Sandra Castro-Pearson (June, 2018)                          #
+# Last Modified by Sandra Castro-Pearson (March, 2019)                         #
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 
-#####FOR UNIVARIATE ANALYSIS
-m.dat.1=function(dat) {
-  n=length(unique(dat$id))
-  mc=max(dat$epi)-1
 
-  #G_hat estimators
-  g1dat=cbind(dat[dat$epi==1,]$xij,1-dat[dat$epi==1,]$d1)
-  g2dat=cbind(dat[dat$epi==1,]$zij,1-dat[dat$epi==1,]$d2)
-  l1=max(g1dat[g1dat[,2]==0,1])-(1e-07)
-  l2=max(g2dat[g2dat[,2]==0,1])-(1e-07)
-  g1surv=survfit(Surv(g1dat[,1],g1dat[,2])~1)
-  g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
-
-  xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
-  mstar=ctime=NULL
-  for (i in 1:n) {
-    tmp=dat[dat$id==i,]
-    tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1)
-    mstar=c(mstar,tmp.mstar)
-    # amat=c(amat,tmp$a1[1])
-    ctime=c(ctime,tmp$ci[1])
-
-    xmat[i,1:tmp.mstar]=tmp$xij[1:tmp.mstar]
-    ymat[i,1:tmp.mstar]=tmp$yij[1:tmp.mstar]
-    zmat[i,1:tmp.mstar]=tmp$zij[1:tmp.mstar]
-    delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar]
-    delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar]
-
-    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv)
-    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x)summary(g2surv,times=min(x,l2))$surv)
-  }
-
-  cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
-  cumh2=cumsum(g2surv$n.event/g2surv$n.risk)
-  l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv)
-  l2mat=cbind(g2surv$time,diff(c(cumh2,tail(cumh2,1))),g2surv$surv)
-
-  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,ctime=ctime)
-  return(out)
-}
-
-####For multivariate analysis covariates
-######################
-##-----reformat dataset
-m.dat=function(dat) {
-  n=length(unique(dat$id))
-  mc=max(dat$epi)-1
-
-  g1dat=cbind(dat[dat$epi==1,]$xij,1-dat[dat$epi==1,]$d1)
-  g2dat=cbind(dat[dat$epi==1,]$zij,1-dat[dat$epi==1,]$d2)
-  l1=max(g1dat[g1dat[,2]==0,1])-(1e-07)
-  l2=max(g2dat[g2dat[,2]==0,1])-(1e-07)
-  g1surv=survfit(Surv(g1dat[,1],g1dat[,2])~1)
-  g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
-
-  xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
-  mstar=ctime=NULL
-  for (i in 1:n) {
-    tmp=dat[dat$id==i,]
-    tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1)
-    mstar=c(mstar,tmp.mstar)
-    #amat=rbind(amat,c(tmp$a1[1],tmp$a2[1],tmp$a3[1]))
-    ctime=c(ctime,tmp$ci[1])
-
-    xmat[i,1:tmp.mstar]=tmp$xij[1:tmp.mstar]
-    ymat[i,1:tmp.mstar]=tmp$yij[1:tmp.mstar]
-    zmat[i,1:tmp.mstar]=tmp$zij[1:tmp.mstar]
-    delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar]
-    delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar]
-
-    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv)
-    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x)summary(g2surv,times=min(x,l2))$surv)
-  }
-
-  unique_rows <- NULL
-  for (k in 1:n) {
-    temp <- which(dat$id==k)[1]
-    unique_rows <- c(unique_rows, temp)
-  }
-
-  # amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
-  # amat <- as.matrix(dat[unique_rows,amat_indexes])
-
-  cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
-  cumh2=cumsum(g2surv$n.event/g2surv$n.risk)
-  l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv)
-  l2mat=cbind(g2surv$time,diff(c(cumh2,tail(cumh2,1))),g2surv$surv)
-
-  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,amat=amat,ctime=ctime)
-  return(out)
-}
 
 #####For non-parametric analysis
 # dat : a data.frame including
@@ -200,40 +110,6 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
   ### PUT POTENTIAL RESPONSE TOGETHER
   temp1 <- data.frame(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates)
 
-  ####CHECK MISSINGNESS AND KEEP RECORD OF WHAT IS BEING OMITTED
-  temp <- na.omit(temp1)
-  n_missing <- nrow(temp1) - nrow(temp)
-
-  ####CHECK xij, yij VARIABLES HAVE CORRECT VALUES
-
-  invalid_xij <- which(temp$xij<=0)
-  if (length(invalid_xij)>0) {
-    print("Invalid values for length of time in event X for rows. All must be >0.")
-    temp[invalid_xij,]
-    stop()
-  } else {
-    invalid_yij <- which(temp$yij<0)
-    if (length(invalid_yij)>0) {
-      print("Invalid values for length of time in event Y for rows. All must be >=0.")
-      temp[invalid_yij,]
-      stop()
-
-      ####CHECK INDICATORS AND EPISODE SEQUENCES, yij VARIABLES HAVE CORRECT VALUES
-    } else {
-
-      #First check for indicators - all 0 and 1
-      cx_check1 <- length(which(temp$c_indicatorX!=1&&temp$c_indicatorX!=0))
-      cy_check1 <- length(which(temp$c_indicatorY!=1&&temp$c_indicatorY!=0))
-      if (cx_check1!=0) {
-        print("Invalid values for c_indicatorX")
-        temp[which(c_indicatorX!=1&&c_indicatorX!=0),]
-        stop()
-      } else {
-        if (cx_check1!=0) {
-          print("Invalid values for c_indicatorY")
-          temp[which(c_indicatorY!=1&&c_indicatorY!=0),]
-          return("Error")
-        } else {
           ## Second check for indicators
           ## Indicators match episode (last is 0 or 1 for X an 0 for Y) and episode doesn't have gaps
           wrong_xind <- NULL
@@ -265,25 +141,6 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
 
           ##Print Errors and exit function with recommendations
 
-          if (length(wrong_epi)!=0 || length(wrong_xind)!=0 || length(wrong_xind)!=0) {
-            if (length(wrong_epi)!=0) {
-              wrong_epi <- unique(wrong_epi)
-              print(paste("The subjects with following ID's have invalid episode sequences"))
-              for (w in 1:length(wrong_epi)) {
-                print(subset(temp, temp$identifier==wrong_epi[w]))
-              }
-              stop()
-            } else {
-              if (length(wrong_xind)!=0 || length(wrong_xind)!=0) {
-                wrong_ind <- c(unique(wrong_xind), unique(wrong_yind))
-                print(paste("The subjects with following ID's have invalid censoring times"))
-                for (w2 in 1:length(wrong_ind)) {
-                  print(subset(temp, temp$identifier==wrong_xind[w2]))
-                }
-                stop()
-              }
-            }
-          } else {
 
             print(paste("Original number of observations:", nrow(temp1), "for", length(unique(temp1$identifier)), "individuals", sep=" "))
             print(paste("Observations to be used in analysis:", nrow(temp), "for", length(unique_id), "individuals",sep=" "))
@@ -291,6 +148,7 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
             #Get ready to send to m.dat if needed
             covariate_indexes <- seq(7, ncol(temp), 1)
             response <- temp[, -covariate_indexes]
+            #calculate censoring time
             ci=id=NULL
             j=1
             response$zij <- response$xij + response$yij

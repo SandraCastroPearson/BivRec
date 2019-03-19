@@ -157,7 +157,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 #' @export
 
 is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
-is.BivRec <- function(x) inherits(x, "BivRec")
+is.bivrecReg <- function(x) inherits(x, "bivrecReg")
+is.bivrecNP <- function(x) inherits(x, "bivrecNP")
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
 
 

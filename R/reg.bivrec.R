@@ -131,7 +131,7 @@ biv.rec.fit <- function(formula, data, method, CI){
       removable_from_all <- seq(length(variables), length(variables) - length(cov_names) +1, -1)
       names <- paste("data$", variables[-removable_from_all], sep="")
       identifier <- eval(parse(text = names[1]))
-      episode <- eval(parse(text = names[2]))
+      episode <- eval(parse(text = names[2])) 
       xij <- eval(parse(text = names[3]))
       yij <- eval(parse(text = names[4]))
       c_indicatorX <- eval(parse(text = names[5]))
@@ -152,3 +152,8 @@ biv.rec.fit <- function(formula, data, method, CI){
   return(list(covariate.effects = results, formula=formula))
 }
 
+#Essentially the person has to give either just the dataframe and the formula 
+#or the exact vectors (we have to make a choice). Also they will have to use 2
+#functions. One to get the y response variable and the other to put the y response variable
+#into the biv.rec.fit function. Want to use S3 classes so then they can do summary(model), 
+#coeff(model) etc. 

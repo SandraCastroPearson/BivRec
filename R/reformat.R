@@ -14,7 +14,7 @@
 # dat : a data.frame including
 #     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
 #     5)censoring times, 6) censoring indicators in each column
-# ai: a non-begative function of censoring time
+# ai: a non-negative function of censoring time
 
 np.dat <- function(dat, ai) {
 
@@ -110,6 +110,43 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
   ### PUT POTENTIAL RESPONSE TOGETHER
   temp1 <- data.frame(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates)
 
+<<<<<<< HEAD:R/biv.rec.reformat.R
+  ####CHECK MISSINGNESS AND KEEP RECORD OF WHAT IS BEING OMITTED
+  temp <- na.omit(temp1)
+  n_missing <- nrow(temp1) - nrow(temp)
+
+  ####CHECK xij, yij VARIABLES HAVE CORRECT VALUES
+
+  invalid_xij <- which(temp$xij<=0)
+  if (length(invalid_xij)>0) {
+    print("Invalid values for length of time in event X for rows. All must be >0.")
+    temp[invalid_xij,]
+    stop()
+  } else {
+    invalid_yij <- which(temp$yij<0)
+    if (length(invalid_yij)>0) {
+      print("Invalid values for length of time in event Y for rows. All must be >=0.")
+      temp[invalid_yij,]
+      stop()
+    }
+      ####CHECK INDICATORS AND EPISODE SEQUENCES, yij VARIABLES HAVE CORRECT VALUES
+    } else {
+
+      #First check for indicators - all 0 and 1
+      cx_check1 <- length(which(temp$c_indicatorX!=1&&temp$c_indicatorX!=0))
+      cy_check1 <- length(which(temp$c_indicatorY!=1&&temp$c_indicatorY!=0))
+      if (cx_check1!=0) {
+        print("Invalid values for c_indicatorX")
+        temp[which(c_indicatorX!=1&&c_indicatorX!=0),]
+        stop()
+      } else {
+        if (cx_check1!=0) {
+          print("Invalid values for c_indicatorY")
+          temp[which(c_indicatorY!=1&&c_indicatorY!=0),]
+          return("Error")
+        } else {
+=======
+>>>>>>> 8c89f8021f00c92b91f53b5d49c67811755bed55:R/reformat.R
           ## Second check for indicators
           ## Indicators match episode (last is 0 or 1 for X an 0 for Y) and episode doesn't have gaps
           wrong_xind <- NULL

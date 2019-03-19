@@ -22,12 +22,12 @@ m.dat.1=function(dat) {
   g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
 
   xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
-  mstar=amat=ctime=NULL
+  mstar=ctime=NULL
   for (i in 1:n) {
     tmp=dat[dat$id==i,]
     tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1)
     mstar=c(mstar,tmp.mstar)
-    amat=c(amat,tmp$a1[1])
+    # amat=c(amat,tmp$a1[1])
     ctime=c(ctime,tmp$ci[1])
 
     xmat[i,1:tmp.mstar]=tmp$xij[1:tmp.mstar]
@@ -45,7 +45,7 @@ m.dat.1=function(dat) {
   l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv)
   l2mat=cbind(g2surv$time,diff(c(cumh2,tail(cumh2,1))),g2surv$surv)
 
-  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,amat=amat,ctime=ctime)
+  out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,ctime=ctime)
   return(out)
 }
 
@@ -64,7 +64,7 @@ m.dat=function(dat) {
   g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
 
   xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
-  mstar=amat=ctime=NULL
+  mstar=ctime=NULL
   for (i in 1:n) {
     tmp=dat[dat$id==i,]
     tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1)
@@ -88,8 +88,8 @@ m.dat=function(dat) {
     unique_rows <- c(unique_rows, temp)
   }
 
-  amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
-  amat <- as.matrix(dat[unique_rows,amat_indexes])
+  # amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
+  # amat <- as.matrix(dat[unique_rows,amat_indexes])
 
   cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
   cumh2=cumsum(g2surv$n.event/g2surv$n.risk)
@@ -169,7 +169,7 @@ formarginal <- function(dat){
 #' A function to create a biv.rec object
 #'
 #' @description
-#' This function simulates recurrent event data based on a linear combination of two covariates.
+#' This function takes a BivRec object and covariate information and reformats it for proper fit.
 #'
 #' @importFrom stats na.omit
 #' @importFrom survival survfit
@@ -179,14 +179,13 @@ formarginal <- function(dat){
 #' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j. Passed from biv.rec.fit()
 #' @param c_indicatorY Vector with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0. Passed from biv.rec.fit()
 #' @param c_indicatorX Optional vector with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). Passed from biv.rec.fit()
-#' @param episode Vector indicating the observation or episode (j) for a subject (i). Passed from biv.rec.fit()
-#' @param covariates A Matrix of Covariates. Passed from biv.rec.fit()
+#' @param episode Vector indicating the observation or episode (j) for a subject (i).
 #' @param method A string for method to be used. Passed from biv.rec.fit()
 #' @param ai Passed from biv.rec.fit()
 #' @param condgx Passed from biv.rec.fit()
 #' @param data Passed from biv.rec.fit()
 #'
-#' @return a biv.rec object ready for fitting.
+#' @return a bivrec object ready for fitting.
 #' @seealso \code{\link{biv.rec.fit}}
 #'
 #' @keywords internal
@@ -353,7 +352,7 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
 } else {
   my_data = na.omit(data)
   forcdf <- np.dat(dat=my_data, ai=ai)
-  fit_data <- list(forcdf=forcdf, refdata = my_data)
+  fit_data <- list(forcdf=identifierforcdf, refdata = my_data)
 }
 
   return(fit_data)

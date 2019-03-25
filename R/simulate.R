@@ -28,7 +28,7 @@
 #' @examples
 #' library(BivRec)
 #' set.seed(1234)
-#' biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' @references
 #' \enumerate{
 #' \item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
@@ -37,7 +37,7 @@
 #' @export
 
 ##-----data generation
-biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
+simulate <- function(nsize,beta1,beta2,tau_c,set) {
 
   if (missing(tau_c)) {tau_c <- 63}
   if (missing(set)) {set <- 1.1}

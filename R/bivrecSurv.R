@@ -149,6 +149,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
       df4mdat <- cbind(id=id2, df4mdat[-1], ci)
 
   result <- mdat(dat=df4mdat)
+  result$df <- df4mdat
+
   class(result) <- "bivrecSurv"
   return(result)
 }

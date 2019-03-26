@@ -69,7 +69,7 @@ mdat=function(dat) {
 #' @examples
 #' set.seed(1)
 #' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   

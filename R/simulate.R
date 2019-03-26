@@ -28,7 +28,7 @@
 #' @examples
 #' library(BivRec)
 #' set.seed(1234)
-#' biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' @references
 #' \enumerate{
 #' \item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
@@ -37,19 +37,19 @@
 #' @export
 
 ##-----data generation
-biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
-
+simulate <- function(nsize,beta1,beta2,tau_c,set) {
+  
   if (missing(tau_c)) {tau_c <- 63}
   if (missing(set)) {set <- 1.1}
   sg2 <- 0.5
-
+  
   id=1:nsize
-
+  
   ##generate covariates (A1,A2)
   A1=rbinom(nsize,1,0.5)
   A2=runif(nsize)
   A=cbind(A1,A2)
-
+  
   ##generate gamma
   if (set==1.1) {
     Sig=matrix(c(sg2,sqrt(sg2)*sqrt(sg2)*1,sqrt(sg2)*sqrt(sg2)*1,sg2),2,2)
@@ -71,22 +71,22 @@ biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
     gamma1=rnorm(nsize,1,sqrt(sg2))
     gamma2=rgamma(nsize,shape=1/sg2,rate=1/sg2)
   }
-
+  
   dat=NULL
   deltas=NULL
   for (i in id) {
     x.tmp=exp(gamma1[i]+A[i,]%*%beta1)
     y.tmp=exp(gamma2[i]+A[i,]%*%beta2)
-
+    
     ci=runif(1,0,tau_c)
-
+    
     sum.z.tmp=0
     dat.tmp=NULL
     while(sum.z.tmp<ci) {
       #generate alternating gap times until C_i
       xij=x.tmp*exp(rnorm(1,0,sqrt(0.1)))
       yij=y.tmp*exp(rnorm(1,0,sqrt(0.1)))
-
+      
       dat.tmp=rbind(dat.tmp,c(xij,yij,sum.z.tmp))
       sum.z.tmp=sum.z.tmp+(xij+yij)
     }
@@ -107,7 +107,7 @@ biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
   }
   dat=as.data.frame(dat)
   colnames(dat)=c("id","epi","xij","yij","ci","d1", "d2","a1","a2")
-
+  
   ##return data, censoring rate, average number of gap time pairs
   # cenrate=sum(table(dat$id)==1)/nsize
   # mbar=mean(table(dat$id))

@@ -25,6 +25,7 @@
 #bivrecPlot <- function(x) UseMethod("bivrecPlot")
 
 plot.bivrecSurv=function(x){
+  if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
   #EXTRACT VECTORS FOR PLOTTING FUNCTION
   parameters <- x$df[-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")

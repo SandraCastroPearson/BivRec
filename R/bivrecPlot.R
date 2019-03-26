@@ -22,9 +22,9 @@
 #' @export
 #'
 #'
-bivrecPlot <- function(x) UseMethod("bivrecPlot")
+#bivrecPlot <- function(x) UseMethod("bivrecPlot")
 
-bivrecPlot.bivrecSurv=function(x){
+plot.bivrecSurv=function(x){
   #EXTRACT VECTORS FOR PLOTTING FUNCTION
   parameters <- x$df[-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")

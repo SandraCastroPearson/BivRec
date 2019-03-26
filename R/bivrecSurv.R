@@ -5,7 +5,8 @@
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 ##-----reformat dataset
-mdat=function(dat) {
+#for Lee's method 
+mdat=function(dat) { 
   n=length(unique(dat$id))
   mc=max(dat$epi)-1
   
@@ -42,7 +43,65 @@ mdat=function(dat) {
   out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,ctime=ctime)
   return(out)
 }
+#for CDF and Marginal survival
+np.dat <- function(dat, ai) {
+  
+  id <- dat$id
+  uid <- unique(id)   # vector of unique id's
+  n.uid <- length(uid)   # scalar : number of unique IDs
+  event <- dat$d2 #event indicator : must always be 0 for the last obs per ID and 1 otherwise
+  markvar1 <- dat$vij
+  markvar2 <- dat$wij
+  gap <- markvar1 + markvar2
+  
+  m.uid <- as.integer(table(id))   # vector: number of observed pairs per id/subject (m)
+  max.m <- max(m.uid, na.rm=T) # scalar : maximum number of repeated observations
+  
+  ifelse (ai == 1, weight <- rep(1, n.uid), weight <- dat$ci[which(dat$epi == 1)]) #Set weights
+  
+  tot <- length(gap) # total number of observations
+  ugap <- sort(unique(gap[event == 1]))   # sorted unique uncensored X_0 gap times (support points for sum)
+  n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
+  
+  umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
+  n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
+  
+  # Space holders
+  r <- sest <- Fest <- rep(0, n.ugap)
+  
+  d <- matrix(0, nrow = n.ugap, ncol = 2)
+  prob <- var <- std <- 0
+  gtime <- cen <- mark1 <- mark2 <- matrix(0, nrow = n.uid, ncol = max.m)
+  
+  out <- list(n = n.uid, m = m.uid, mc = max.m, nd = n.ugap, tot=tot,
+              gap =gap, event = event, markvar1 = markvar1, markvar2 =markvar2,
+              udt = ugap,  ctime = weight, ucen = m.uid-1,
+              r = r, d=d, sest = sest, Fest = Fest, var = var,
+              prob = prob, std = std, gtime = gtime, cen = cen,
+              mark1 = mark1, mark2 = mark2, umark1=umark1, nm1 = n.umark1)
+  
+  return(out)
+}
 
+formarginal <- function(dat){
+  
+  mdata <- tmp<- NULL
+  freq <-cumsum(c(0,table(dat[,1])))
+  
+  for (i in 1:(length(freq)-1)){
+    tmp<- dat[(freq[i]+1):freq[i+1], -c(5,7)]
+    if (nrow(tmp)==1){
+      if(tmp$wij>0){
+        mdata <- rbind(mdata,
+                       c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=1, epi=tmp$epi, ci=tmp$ci),
+                       c(id=tmp$id, vij=0, wij=0, d2=0, epi=2, ci=tmp$ci))
+      } else{
+        mdata<-rbind(mdata, c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=0, epi=tmp$epi, ci=tmp$ci))
+      }
+    } else{mdata<-rbind(mdata, tmp)}
+  }
+  return(mdata)
+}
 #################### CREATE A BIVREC RESPONSE OBJECT ######################
 
 #####
@@ -71,9 +130,10 @@ mdat=function(dat) {
 #' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
-bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind,ai) {
   
   #Check if anything is missing
+  if (missing(ai)) {ai<-1}
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")
   if (missing(yij)) stop("Missing - gap times for type 2 event (yij).")
   if (missing(id)) stop("Missing - subject identifiers (id).")
@@ -147,9 +207,16 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
     j=j+1
   }
   df4mdat <- cbind(id=id2, df4mdat[-1], ci)
+  df4npdat<- df4mdat
+  colnames(df4npdat)<-c("id", "epi", "vij", "wij", "d2", "d1", "x0ij", "ci")
+  forcdf <- np.dat(dat=df4npdat, ai=ai)
+  marg_dat <- formarginal(dat = df4npdat)
+  formarg <- np.dat(dat=marg_dat, ai=ai)
+  fit_data <- list(forcdf=forcdf, formarg=formarg,refdata = df4npdat)
   
-  result <- mdat(dat=df4mdat)
-  result$df <- df4mdat
+  result <- mdat(dat=df4mdat) #for Lee method
+  result$df <- df4mdat #dataframe of response vectors
+  result$np <- fit_data #reformatted data for NP joint cdf and marginal 
   class(result) <- "bivrecSurv"
   return(result)
 }

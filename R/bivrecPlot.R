@@ -24,8 +24,8 @@
 #'
 #bivrecPlot <- function(x) UseMethod("bivrecPlot")
 
-plot.bivrecSurv=function(x){
-  if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
+plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
+  #if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
   #EXTRACT VECTORS FOR PLOTTING FUNCTION
   parameters <- x$df[-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")
@@ -68,8 +68,20 @@ plot.bivrecSurv=function(x){
   yrange <- c(0, nsubject) #subjects
 
   # set up the plot
-  plot(xrange, yrange, type="n", xlab="Gap Times", ylab = "Individual", yaxt='n')
-  legendtext = c("Type 1", "Type 2")
+  #check arguments for labels 
+  if (missing(xlab)) {xlab="Gap Times"}
+  if (missing(ylab)) {ylab="Individual"}
+  if (missing(main)) {main=""}
+  if (missing(type1)) {type1="Type 1"}
+  if (missing(type2)) {type2="Type 2"}
+  # if (!is.numeric(xlab)&&!is.character(xlab)) {xlab="Gap Times"}
+  # if (!is.numeric(ylab)&&!is.character(ylab)) {xlab="Individual"}
+  # if (!is.numeric(main)&&!is.character(main)) {xlab="Bivariate Recurrent Gap Times"}
+  # if (!is.numeric(type1)&&!is.character(type1)) {xlab="Type1"}
+  # if (!is.numeric(type2)&&!is.character(type2)) {xlab="Type2"}
+  
+  plot(xrange, yrange, type="n", main=main, xlab=xlab, ylab = ylab, yaxt='n')
+  legendtext = c(type1, type2)
   legend("bottomright", legend=legendtext, bty='n', inset = c(0,0),
          col = c("gray", "salmon"), lty = 1, cex=0.9)
 

@@ -55,7 +55,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, condiplot) {
+nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
 
   ####Extract items from results
   marginal <- bivrec.nonparam.result$marginal.survival
@@ -102,18 +102,18 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
-  if (condiplot == TRUE) {
-    plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-         xlim=c(0, round(max(y.grid), digits=1)),
-         ylim=c(0, round(max(cond[,5]), digits=1)),
-         main=substitute(
-           paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
-           list(gi1 = given.interval[1], gi2 = given.interval[2]))
-         )
-    graphics::lines(cond$Time, cond[,4], lty = 2)
-    graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  #if (condiplot == TRUE) {
+    #plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
+         #xlim=c(0, round(max(y.grid), digits=1)),
+         #ylim=c(0, round(max(cond[,5]), digits=1)),
+         #main=substitute(
+           #paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
+           #list(gi1 = given.interval[1], gi2 = given.interval[2]))
+         #)
+    #graphics::lines(cond$Time, cond[,4], lty = 2)
+    #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
 
-  }
+  #}
 
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
 

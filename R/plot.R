@@ -17,12 +17,13 @@
 #' set.seed(1234)
 #' dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' bdat <- with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
-#' bivrecPlot(x)
+#' plot(x)
 #'
 #' @export
 #'
 #'
-#bivrecPlot <- function(x) UseMethod("bivrecPlot")
+
+plot <- function(x) UseMethod("plot")
 
 plot.bivrecSurv=function(x){
   #EXTRACT VECTORS FOR PLOTTING FUNCTION

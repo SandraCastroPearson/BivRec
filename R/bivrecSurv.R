@@ -210,13 +210,14 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
         }
         j=j+1
       }
+
       df4mdat <- cbind(id=id2, df4mdat[-1], ci)
 
   result <- list()
-  result$dat4Lreg <- mdat(dat=df4mdat)
-  result$df <- df4mdat
+  result$dat4Lreg <- mdat(dat=df4mdat) #data for Lee regression
+  result$dat4Creg <- df4mdat #data for Change regression
 
-  #####ADD REFORMAT TO np.dat() FUNCT HERE
+  #####ADD data for cdf and marginal of NP model
   # df4np <- df4mdat
   # change column names to match np.dat fct
   # npdat colnames should be    c("id", "vij", "wij", "d2", "d1", "epi", "x0ij", "ci")

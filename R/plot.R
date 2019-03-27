@@ -27,7 +27,7 @@ plot <- function(x) UseMethod("plot")
 
 plot.bivrecSurv=function(x){
   #EXTRACT VECTORS FOR PLOTTING FUNCTION
-  parameters <- x$df[-(5:7)]
+  parameters <- x$dat4Creg[-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")
   ctimes <- x$ctime
   nsubject <- x$n

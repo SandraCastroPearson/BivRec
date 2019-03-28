@@ -1,10 +1,12 @@
 #                 m.dat, np.dat FUNCTIONS                                      #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
-# Last Modified by Sandra Castro-Pearson (March, 2019)                         #
+# Last Modified by Sandra Castro-Pearson and Aparajita Sur (March, 2019)       #
 # Received from Chihyun Lee (January, 2018)                                    #
-#_______________________________________________________________________________
-##-----reformat dataset
+#______________________________________________________________________________#
+
+
+##-----reformat dataset for Lee Regression
 mdat=function(dat) {
   n=length(unique(dat$id))
   mc=max(dat$epi)-1
@@ -43,11 +45,12 @@ mdat=function(dat) {
   return(out)
 }
 
-#####For non-parametric analysis
+#####Reformat data set for non-parametric analysis
+
 # dat : a data.frame including
 #     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
 #     5)censoring times, 6) censoring indicators in each column
-# ai: a non-begative function of censoring time
+# ai: a non-negative function of censoring time
 
 np.dat <- function(dat, ai) {
 
@@ -55,9 +58,9 @@ np.dat <- function(dat, ai) {
   uid <- unique(id)   # vector of unique id's
   n.uid <- length(uid)   # scalar : number of unique IDs
   event <- dat$d2 #event indicator : must always be 0 for the last obs per ID and 1 otherwise
-  markvar1 <- dat$vij
-  markvar2 <- dat$wij
-  gap <- markvar1 + markvar2
+  markvar1 <- dat$vij #gap times of type 1
+  markvar2 <- dat$wij #gap times of type 2
+  gap <- markvar1 + markvar2 
 
   m.uid <- as.integer(table(id))   # vector: number of observed pairs per id/subject (m)
   max.m <- max(m.uid, na.rm=T) # scalar : maximum number of repeated observations
@@ -89,7 +92,7 @@ np.dat <- function(dat, ai) {
 
 formarginal <- function(dat){
 
-  mdata <- tmp<- NULL
+  mdata <- tmp <- NULL
   freq <-cumsum(c(0,table(dat[,1])))
 
   for (i in 1:(length(freq)-1)){

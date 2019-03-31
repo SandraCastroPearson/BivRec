@@ -1,5 +1,6 @@
 #' #' Produce Bivariate Alternating Recurrent Series Plot
-#'
+#' #strata option within this same plot function 
+#' #data= option in our functions 
 #' @description
 #' This function plots bivariate recurrent event gap times.
 #'
@@ -83,7 +84,7 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
   plot(xrange, yrange, type="n", main=main, xlab=xlab, ylab = ylab, yaxt='n')
   legendtext = c(type1, type2)
   legend("bottomright", legend=legendtext, bty='n', inset = c(0,0),
-         col = c("gray", "salmon"), lty = 1, cex=0.9)
+         col = c("blue", "red"), lty = 1, cex=0.9)
 
   # add line segments
   newid = 0
@@ -93,10 +94,10 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
     subject$newid = newid
     if (nrow(subject)==1) {
       segments(subject$start_time[1], subject$newid,
-               subject$stop_time[1], subject$newid, col="gray")
+               subject$stop_time[1], subject$newid, col="blue")
     } else {
       for (j in 1:length(subject$id)) {
-        if (j %% 2 == 1) colors <- "gray" else colors <- "salmon"
+        if (j %% 2 == 1) colors <- "blue" else colors <- "red"
         segments(subject$start_time[j], subject$newid,
                  subject$stop_time[j], subject$newid, col=colors)
       }

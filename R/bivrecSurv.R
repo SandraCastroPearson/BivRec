@@ -1,58 +1,66 @@
 #                 m.dat, np.dat FUNCTIONS                                      #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
-# Last Modified by Sandra Castro-Pearson (March, 2019)                         #
+# Last Modified by Sandra Castro-Pearson and Aparajita Sur (March, 2019)       #
 # Received from Chihyun Lee (January, 2018)                                    #
-#_______________________________________________________________________________
-##-----reformat dataset
-#for Lee's method 
-mdat=function(dat) { 
+#______________________________________________________________________________#
+
+
+##-----reformat dataset for Lee Regression
+mdat=function(dat) {
   n=length(unique(dat$id))
   mc=max(dat$epi)-1
   
-  g1dat=cbind(dat[dat$epi==1,]$xij,1-dat[dat$epi==1,]$d1) #a vector of event 1 gap time and 1-d1 for all the first episodes for each subject
-  g2dat=cbind(dat[dat$epi==1,]$zij,1-dat[dat$epi==1,]$d2) #a vector of total gap time and 1-d2 for all the first episodes for each subject
-  l1=max(g1dat[g1dat[,2]==0,1])-(1e-07) #finding maximum event 1 gap time for first episode
-  l2=max(g2dat[g2dat[,2]==0,1])-(1e-07) #finding the maximum total time for first episode
-  g1surv=survfit(Surv(g1dat[,1],g1dat[,2])~1) #outputs the number of censored (?) events in hospital and the median survival time
-  g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1) #outputs the number of total censored (?) events and the median survival time 
+  g1dat=cbind(dat[dat$epi==1,]$xij,1-dat[dat$epi==1,]$d1)
+  g2dat=cbind(dat[dat$epi==1,]$zij,1-dat[dat$epi==1,]$d2)
+  l1=max(g1dat[g1dat[,2]==0,1])-(1e-07)
+  l2=max(g2dat[g2dat[,2]==0,1])-(1e-07)
+  g1surv=survfit(Surv(g1dat[,1],g1dat[,2])~1)
+  g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
   
   xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
-  mstar=ctime=NULL #mstar is the number of episodes a subject has 
-  for (i in 1:n) { #for each subject
-    tmp=dat[dat$id==i,] #dataframe of all episodes for a subject
-    tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1) #if 1 episode mstar=1, otherwise 6 episodes before censored
-    mstar=c(mstar,tmp.mstar) #compiles a vector of the number of episodes before censoring for each person
-    ctime=c(ctime,tmp$ci[1]) #censoring time for each subject 
+  mstar=ctime=NULL
+  for (i in 1:n) {
+    tmp=dat[dat$id==i,]
+    tmp.mstar=ifelse(nrow(tmp)==1,1,nrow(tmp)-1)
+    mstar=c(mstar,tmp.mstar)
+    ctime=c(ctime,tmp$ci[1])
     
-    xmat[i,1:tmp.mstar]=tmp$xij[1:tmp.mstar] #a matrix of all the in hospital times for each episode before censoring 
-    ymat[i,1:tmp.mstar]=tmp$yij[1:tmp.mstar] #a matrix of all the out of hospital times for each episode before censoring
-    zmat[i,1:tmp.mstar]=tmp$zij[1:tmp.mstar] #a matrix of all the combined times for each episode before censoring 
-    delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar] #this should all be 1's always?
-    delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar] #this should also always be 1's?
+    xmat[i,1:tmp.mstar]=tmp$xij[1:tmp.mstar]
+    ymat[i,1:tmp.mstar]=tmp$yij[1:tmp.mstar]
+    zmat[i,1:tmp.mstar]=tmp$zij[1:tmp.mstar]
+    delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar]
+    delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar]
     
-    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv) #something for survival curves 
+    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv)
     g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x)summary(g2surv,times=min(x,l2))$surv)
   }
   
-  cumh1=cumsum(g1surv$n.event/g1surv$n.risk) #cumulative survival probabilities?
+  cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
   cumh2=cumsum(g2surv$n.event/g2surv$n.risk)
-  l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv) #idk what this is tbh
+  l1mat=cbind(g1surv$time,diff(c(cumh1,tail(cumh1,1))),g1surv$surv)
   l2mat=cbind(g2surv$time,diff(c(cumh2,tail(cumh2,1))),g2surv$surv)
   
   out=list(n=n,mc=mc,xmat=xmat,ymat=ymat,zmat=zmat,delta1=delta1,delta2=delta2,g1mat=g1mat,g2mat=g2mat,l1=l1,l2=l2,l1mat=l1mat,l2mat=l2mat, mstar=mstar,ctime=ctime)
   return(out)
 }
-#for CDF and Marginal survival
+
+#####Reformat data set for non-parametric analysis
+
+# dat : a data.frame including
+#     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
+#     5)censoring times, 6) censoring indicators in each column
+# ai: a non-negative function of censoring time
+
 np.dat <- function(dat, ai) {
   
   id <- dat$id
   uid <- unique(id)   # vector of unique id's
   n.uid <- length(uid)   # scalar : number of unique IDs
   event <- dat$d2 #event indicator : must always be 0 for the last obs per ID and 1 otherwise
-  markvar1 <- dat$vij
-  markvar2 <- dat$wij
-  gap <- markvar1 + markvar2
+  markvar1 <- dat$vij #gap times of type 1
+  markvar2 <- dat$wij #gap times of type 2
+  gap <- markvar1 + markvar2 
   
   m.uid <- as.integer(table(id))   # vector: number of observed pairs per id/subject (m)
   max.m <- max(m.uid, na.rm=T) # scalar : maximum number of repeated observations
@@ -68,7 +76,6 @@ np.dat <- function(dat, ai) {
   
   # Space holders
   r <- sest <- Fest <- rep(0, n.ugap)
-  
   d <- matrix(0, nrow = n.ugap, ncol = 2)
   prob <- var <- std <- 0
   gtime <- cen <- mark1 <- mark2 <- matrix(0, nrow = n.uid, ncol = max.m)
@@ -85,7 +92,7 @@ np.dat <- function(dat, ai) {
 
 formarginal <- function(dat){
   
-  mdata <- tmp<- NULL
+  mdata <- tmp <- NULL
   freq <-cumsum(c(0,table(dat[,1])))
   
   for (i in 1:(length(freq)-1)){
@@ -102,7 +109,8 @@ formarginal <- function(dat){
   }
   return(mdata)
 }
-#################### CREATE A BIVREC RESPONSE OBJECT ######################
+
+#################### CREATE A BIVREC OBJECT ######################
 
 #####
 #' A function to create a bivrecSurv object
@@ -128,12 +136,11 @@ formarginal <- function(dat){
 #' @examples
 #' set.seed(1)
 #' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
-bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind,ai) {
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   
   #Check if anything is missing
-  if (missing(ai)) {ai<-1}
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")
   if (missing(yij)) stop("Missing - gap times for type 2 event (yij).")
   if (missing(id)) stop("Missing - subject identifiers (id).")
@@ -206,17 +213,31 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind,ai) {
     }
     j=j+1
   }
-  df4mdat <- cbind(id=id2, df4mdat[-1], ci)
-  df4npdat<- df4mdat
-  colnames(df4npdat)<-c("id", "epi", "vij", "wij", "d2", "d1", "x0ij", "ci")
-  forcdf <- np.dat(dat=df4npdat, ai=ai)
-  marg_dat <- formarginal(dat = df4npdat)
-  formarg <- np.dat(dat=marg_dat, ai=ai)
-  fit_data <- list(forcdf=forcdf, formarg=formarg,refdata = df4npdat)
   
-  result <- mdat(dat=df4mdat) #for Lee method
-  result$df <- df4mdat #dataframe of response vectors
-  result$np <- fit_data #reformatted data for NP joint cdf and marginal 
+  df4mdat <- cbind(id=id2, df4mdat[-1], ci)
+  
+  result <- list()
+  result$dat4Lreg <- mdat(dat=df4mdat) #data for Lee regression
+  result$df <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)
+  
+  #####ADD data for cdf and marginal of NP model
+  df4np <- df4mdat
+  colnames(df4np)=c("id", "vij", "wij", "d2", "d1", "epi", "x0ij", "ci")
+  forcdf1 <- np.dat(df4np, ai=1)
+  forcdf2 <- np.dat(df4np, ai=2)
+  marg1 <- formarginal(dat = df4np) #this is from the reformat code 
+  marg2 <- formarginal(dat = df4np)
+  formarg1 <- np.dat(marg1, ai=1)
+  formarg2 <- np.dat(marg2, ai=2)
+  #two np objects that have data for cdf, marg and conditional depending on ai
+  result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
+  result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
+
+  # forcdf <- np.dat(dat=df4npdat, ai=ai)
+  # marg_dat <- formarginal(dat = df4npdat)
+  # formarg <- np.dat(dat=marg_dat, ai=ai)
+  # fit_data <- list(forcdf=forcdf, formarg=formarg,refdata = df4npdat)
+  
   class(result) <- "bivrecSurv"
   return(result)
 }
@@ -225,5 +246,6 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind,ai) {
 #' @export
 
 is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
-is.BivRec <- function(x) inherits(x, "BivRec")
+is.bivrecReg <- function(x) inherits(x, "bivrecReg")
+is.bivrecNP <- function(x) inherits(x, "bivrecNP")
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol

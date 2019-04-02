@@ -236,7 +236,7 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
               forcdf <- np.dat(dat=my_data, ai=ai)
               marg_dat <- formarginal(dat = my_data)
               formarg <- np.dat(dat=marg_dat, ai=ai)
-              fit_data <- list(forcdf=forcdf, formarg=formarg, refdata = my_data)
+              fit_data <- list(forcdf=forcdf, formarg=formarg, refdata = my_data) #my_data is just response object df
               }
           }
         }

@@ -6,7 +6,7 @@ np.fit4conditional <- function(formula, data, ai, u1, u2){
   condgx <- TRUE
 
   ###Send to biv.rec.reformat and complete analysis
-  new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data)
+  new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data) 
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
@@ -63,7 +63,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI) {
   formula <- bivrec.nonparam.result$formula
   data <- bivrec.nonparam.result$data
   ai <- bivrec.nonparam.result$ai
-  new_data <- bivrec.nonparam.result$new_data
+  new_data <- bivrec.nonparam.result$new_data #this is essentially the "fit_data" 
   margdata <- new_data$formarg
   refdata <- new_data$refdata
   n <- margdata$n

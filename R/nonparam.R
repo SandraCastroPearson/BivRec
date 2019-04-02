@@ -134,7 +134,7 @@ biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interva
     }
   }
   data <- data[,-which(colnames(data)==variables[1])]
-  colnames(data)[ncol(data)] = variables[1]
+  colnames(data)[ncol(data)] = variables[1] #this just moved the id column to the end to match up with new.id values 
 
   ####extract vectors/data needed to send to biv.rec.reformat
   names <- paste("data$", variables, sep="")

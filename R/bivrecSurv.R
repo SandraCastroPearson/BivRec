@@ -134,9 +134,9 @@ formarginal <- function(dat){
 #' @rdname BivRec
 #' @export
 #' @examples
-#' set.seed(1)
+#' set.seed(1234)
 #' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   
@@ -222,21 +222,17 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   
   #####ADD data for cdf and marginal of NP model
   df4np <- df4mdat
-  colnames(df4np)=c("id", "vij", "wij", "d2", "d1", "epi", "x0ij", "ci")
+  colnames(df4np)=c("id", "epi", "vij", "wij", "d1", "d2", "x0ij", "ci")
+  df4np=df4np[,c("id","vij","wij","d2","d1","epi","x0ij","ci")] #change order of columns 
   forcdf1 <- np.dat(df4np, ai=1)
   forcdf2 <- np.dat(df4np, ai=2)
   marg1 <- formarginal(dat = df4np) #this is from the reformat code 
   marg2 <- formarginal(dat = df4np)
   formarg1 <- np.dat(marg1, ai=1)
   formarg2 <- np.dat(marg2, ai=2)
-  #two np objects that have data for cdf, marg and conditional depending on ai
+  #two np objects that have data for cdf and marg depending on ai
   result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
   result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
-
-  # forcdf <- np.dat(dat=df4npdat, ai=ai)
-  # marg_dat <- formarginal(dat = df4npdat)
-  # formarg <- np.dat(dat=marg_dat, ai=ai)
-  # fit_data <- list(forcdf=forcdf, formarg=formarg,refdata = df4npdat)
   
   class(result) <- "bivrecSurv"
   return(result)

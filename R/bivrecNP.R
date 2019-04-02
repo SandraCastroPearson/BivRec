@@ -1,13 +1,11 @@
-#bivrecNP function to obtain results for marginal survival, conditional cdf and joint cdf
+
+#####bivrecNP function to obtain results for marginal survival, conditional cdf and joint cdf
 
 #x is the bivrecSurv object 
-#id + epi + xij + yij + d1 + d2
-#####For non-parametric analysis
-# dat : a data.frame including
-#     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
-#     5)censoring times, 6) censoring indicators in each column
-# ai: a non-negative function of censoring time
-biv.rec.np <- function(x, CI, ai, u1, u2, conditional, given.interval){
+
+##Example
+#npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
+bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
   if (missing(ai)) {ai<-1}
   if (missing(conditional)) {conditional <- FALSE}
@@ -21,9 +19,27 @@ biv.rec.np <- function(x, CI, ai, u1, u2, conditional, given.interval){
       }
     }
   
-  ### Dataframe with id, epi, xij, yij, d1, d2, zij and ci 
+  ### Dataframe with id, epi, xij, yij, d1, d2, zij and ci. This part will be moved to bivrecSurv
   data <- x$df
   covariates <- rep(1, length(data$id))
+  
+  iden <- data$id #move this to BivrecSurv object 
+  iden.u <- unique(iden)
+  new.id <- NULL
+  if (class(iden)!="num") {
+    if (class(iden)!="int") {
+      for (i in 1:length(iden.u)){
+        for (j in 1:length(iden)) {
+          if (iden[j] == iden.u[i]){
+            new.id=c(new.id,i)
+          }
+        }
+      }
+      data$new.id <- new.id
+    }
+  }
+  data <- data[,-which(colnames(data)=="id")]
+  colnames(data)[ncol(data)] = "id" #this just moved the id column to the end to match up with new.id values 
 
   if (missing(u1)) {u1 <- round(seq(quantile(data$xij, probs = 0.4), max(data$xij), length.out=5))}
   if (missing(u2)) {u2 <- round(seq(quantile(data$yij, probs = 0.4), max(data$yij), length.out=4))}
@@ -31,23 +47,45 @@ biv.rec.np <- function(x, CI, ai, u1, u2, conditional, given.interval){
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
   
-  print("Estimating joint cdf and marginal survival")
-  res1 <- nonparam.cdf(x$np$forcdf, u, ai, CI)
-  res2 <- nonparam.marginal(x$np$formarg, CI)
-  
+  #print("Estimating joint cdf and marginal survival")
+  if (ai==1) {
+  cdf_res1 <- nonparam.cdf(x$dat4np1$forcdf, u, ai, CI) #result for joint cdf if ai=1
+  marg_res1 <- nonparam.marginal(x$dat4np1$formarg, CI) #result for marginal if ai=1
   if (conditional == FALSE) {
-    final.result <- list(joint.cdf = res1, marginal.survival = res2, formula=formula, ai=ai)
+    final.result <- list(joint.cdf = cdf_res1, marginal.survival = marg_res1, ai=ai)
   } else {
     if (missing(given.interval)) {
       print("Error for conditional calculation given.interval argument missing.")
-      final.result <- list(cdf = res1, marginal.survival = res2, formula=formula, data = data, ai=ai)
+      final.result <- list(cdf = cdf_res1, marginal.survival = marg_res1, ai=ai)
     } else {
-      partial.result <- list(cdf = res1, marginal.survival = res2, formula=formula, data = data, ai=ai, new_data=new_data)
-      res3 <- nonparam.conditional(partial.result, given.interval, CI) #took out condiplot as a param
-      final.result <- list(joint.cdf = res1, marginal.survival = res2, conditional.cdf = res3, formula=formula, ai=ai)
+      partial.result <- list(cdf = cdf_res1, marginal.survival = marg_res1, data = data, ai=ai, new_data=x$dat4np1) #took out formula as a param
+      ccdf_res1 <- nonparam.conditional(partial.result, given.interval, CI) #took out condiplot as a param
+      final.result <- list(joint.cdf = cdf_res1, marginal.survival = marg_res1, conditional.cdf = ccdf_res1,ai=ai)
     }
   }
-  
-  return(final.result)
+  }
+  else { #ai=2
+  cdf_res2 <- nonparam.cdf(x$dat4np2$forcdf, u, ai, CI) #result for joint cdf if ai=2
+  marg_res2 <- nonparam.marginal(x$dat4np2$formarg, CI) #result for marginal if ai=2  
+  if (conditional == FALSE) {
+    final.result <- list(joint.cdf = cdf_res2, marginal.survival = marg_res2, ai=ai)
+  } else {
+    if (missing(given.interval)) {
+      print("Error for conditional calculation given.interval argument missing.")
+      final.result <- list(joint.cdf = cdf_res2, marginal.survival = marg_res2, ai=ai)
+    } else {
+      partial.result <- list(cdf = cdf_res1, marginal.survival = marg_res2, data = data, ai=ai, new_data=x$dat4np2) #took out formula as a param
+      ccdf_res2 <- nonparam.conditional(partial.result, given.interval, CI) #took out condiplot as a param
+      final.result <- list(joint.cdf = cdf_res2, marginal.survival = marg_res2, conditional.cdf = ccdf_res2,ai=ai)
+    }
+  }
+  }
+  class(final.result)<-"bivrecNP"
+  final.result$CI <- CI
+  final.result$conditional <- conditional 
+  final.result$df <-x$df #original response data from bivrecSurv object 
+  return(final.result) #Essentially the bivrecNP object provides the data (the new_id stuff), CI, results for all 3 (if conditional=true),
+  #the conditional indicator 
 }
 
+is.bivrecNP <- function(x) inherits(x, "bivrecNP")

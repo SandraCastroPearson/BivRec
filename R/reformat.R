@@ -243,7 +243,6 @@ biv.rec.reformat <- function(identifier, xij, yij, c_indicatorY, c_indicatorX, e
       }
     }
    }
-  }
 } else {
   my_data = na.omit(data)
   forcdf <- np.dat(dat=my_data, ai=ai)

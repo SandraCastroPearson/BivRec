@@ -56,16 +56,19 @@ plot.bivrecNP <- function(x) {
   index <- which(mgplot$lower<0)
   mgplot[index, -1] <- mgplot[index[1]-1, -1]
   
-  par(mfrow=c(1,2))
-  #plot for joint cdf 
-  graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
-                           forplot2, color.palette = grDevices::heat.colors, cex.main=1.5,
-                           xlab="x", ylab="y", main = expression(P(X^0 <= x, Y^0 <= y)))
+  #par(mfrow=c(1,2))
+  #mar = c(0,0,0,0)
   #plot for marginal survival
   plot(mgplot$Time, mgplot$Marginal.Survival, type = "l", xlab = "Type I Gap Times (x)", ylab = "Marginal Survival",
        yaxp  = c(0, 1, 10), xaxp  = round(c(0, mx, 10), digits=1), main = expression(1 - P(X^0 <= x)))
   graphics::lines(mgplot$Time, mgplot$lower, lty = 2)
   graphics::lines(mgplot$Time, mgplot$upper, lty = 2)
+  #plot for joint cdf 
+  graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
+                           forplot2, color.palette = grDevices::heat.colors, cex.main=1.5,
+                           xlab="x", ylab="y", main = expression(P(X^0 <= x, Y^0 <= y)))
+  
   
 }
 
+#have to figure out how to get heatmap and plot(ggplot?) side by side.

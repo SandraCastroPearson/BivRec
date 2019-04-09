@@ -18,7 +18,7 @@
 #' set.seed(1234)
 #' dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' bdat <- with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
-#' bivrecPlot(x)
+#' plot(bdat)
 #'
 #' @export
 #'
@@ -30,13 +30,15 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
   #EXTRACT VECTORS FOR PLOTTING FUNCTION
   parameters <- x$df[-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")
-  ctimes <- x$ctime
-  nsubject <- x$n
+  #ctimes <- x$data4Lreg$ctime
+  ctimes <- unique(x$df$ci)
+  nsubject <- x$dat4Lreg$n
   temp <- NULL
 
   #### Reformat data to start-stop times ########
   for (iter in 1:nsubject) {
       subject <- parameters[parameters$id==iter,] #pull dat for each subject
+      #print(subject)
       if (nrow(subject)==1) {
         start_time <- c(0, subject$xij)
         stop_time <- c(subject$xij, subject$xij+subject$yij)
@@ -48,7 +50,7 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
         start_time <- 0
         stop_time <- times[1]
         for (j in 2:length(times)) {
-          start_time[j] <- stop_time[j-1]
+          start_time[j] <- stop_time[j-1]y
           stop_time[j] <- start_time[j]+times[j]
         }
         sub_id <- rep(iter, length(times))
@@ -63,6 +65,9 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
   colnames(data4plot) <- c("id", "epi", "start_time", "stop_time", "ci")
   data4plot  <- data4plot[order(data4plot$ci),]
 
+  
+  #if (missing(covariate)) {
+
   ###### PLOT ########
   # get the range for the x and y axis
   xrange <- c(0, max(ctimes)+ 5) #Time
@@ -75,11 +80,6 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
   if (missing(main)) {main=""}
   if (missing(type1)) {type1="Type 1"}
   if (missing(type2)) {type2="Type 2"}
-  # if (!is.numeric(xlab)&&!is.character(xlab)) {xlab="Gap Times"}
-  # if (!is.numeric(ylab)&&!is.character(ylab)) {xlab="Individual"}
-  # if (!is.numeric(main)&&!is.character(main)) {xlab="Bivariate Recurrent Gap Times"}
-  # if (!is.numeric(type1)&&!is.character(type1)) {xlab="Type1"}
-  # if (!is.numeric(type2)&&!is.character(type2)) {xlab="Type2"}
   
   plot(xrange, yrange, type="n", main=main, xlab=xlab, ylab = ylab, yaxt='n')
   legendtext = c(type1, type2)
@@ -103,5 +103,13 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
       }
     }
   }
+  #}
+  # else {
+  #    #eval(parse(text = paste("data$", covariate, sep="")))
+  #   if (!is.factor(covariate)) stop("Plots can only be stratified for categorical covariates
+  #                                        - ", covariate, " must be factor.")
+  #   ngroups=length(levels(covariate))
+  #   #for loop for 1 to ngroups and match the id's for a level with the xijs and yijs
+  # }
 
 }

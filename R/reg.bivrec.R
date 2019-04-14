@@ -8,35 +8,14 @@
 #' @importFrom stats na.omit
 #' @importFrom stats quantile
 #'
-#' @param formula A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-#' The six variables on the left must have the same length and be given as \strong{ID + episode +  xij + yij + delta_x + delta_y ~ covariates}, where
-#' \itemize{
-#'   \item ID: A vector of subjects' unique identifier which can be numeric or character.
-#'   \item episode: A vector indicating the episode of the bivariate alternating gap time pairs, e.g.: 1, 2, ..., m_i where m_i indicates the last episode for subject i.
-#'   \item xij: A vector with the lengths of the type I gap times.
-#'   \item yij: A vector with the lengths of the type II gap times.
-#'   \item delta_x: A vector of indicators with values
-#'   \itemize{
-#'       \item 0 for the last episode for subject i (m_i) if subject was censored during period xij.
-#'       \item 1 otherwise.
-#'      }
-#'   A subject with only one episode (m_i=1) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
-#'   \item delta_y: A vector of indicators with values
-#'   \itemize{
-#'       \item 0 for the last episode of subject i (m_i).
-#'       \item 1 otherwise.
-#'      }
-#'   A subject with only one episode (m_i=1) will have one 0.
-#'   \item covariates: the names of the covariates in the form covariate_1 + ... + covariate_p.
-#' }
-#' @param data A data frame that includes all the vectors/covariates listed in the formula above.
+#' @param formula A formula with a bivrecSurv object as response.
+#' @param data A data frame that includes all the covariates listed in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
-#' @param CI The level to be used for confidence intervals. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. The default is 0.95. CI=NULL gives point estimates without confidence intervals.
 #'
-#' @return A BivRec list object containing:
+#' @return A bivrecReg object containing:
 #' \itemize{
 #'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
-#'   \item \strong{formula:} The formula used to specify components of bivariate recurrent response and covariates.
+#'   \item \strong{formula:} The formula used to specify the model.
 #' }
 #'
 #' @details
@@ -64,11 +43,13 @@
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' #bivrec_data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#'
+#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
-#' fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1,
-#'                 data=biv.rec.data, method="Lee.et.al", CI=NULL)
-#' fit.lee$covariate.effects
+#' fit_lee <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#'                     data = bivrec_data, method="Lee.et.al")
+#' fit_lee$covariate.effects
 #' \dontrun{
 #'
 #' #This is an example with longer runtime.
@@ -76,84 +57,75 @@
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' biv.rec.data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #'
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 #' # and 99% confidence intervals.
-#' fit.lee <- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2,
-#'                 data=biv.rec.data, method="Lee.et.al", CI=0.99)
-#' fit.lee$covariate.effects
+#'fit_chang <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#'                     data = bivrec_data, method = "Chang")
 #'
-#' }
-
 #'# To apply Chang (2004) method use method="Chang"
+#'}
+
 #'
-#'
-#' @export
-#'
-#' @keywords biv.rec.fit
-biv.rec.fit <- function(formula, data, method, CI){
+#' @keywords bivrecReg
+
+bivrecReg =function(formula, data, method){
 
   #Manage missing information by method
+  formula_ref = formula
+  if (missing(method)) {method <- "Lee.et.al"}
+  if (missing(data)) response <- eval(formula[[2]], parent.frame())
+  if (!missing(data)) response <- eval(formula[[2]], data)
+  if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
+  formula[[2]] <- NULL
 
-  if(missing(method)) {method <- "Lee.et.all"}
-  if(missing(CI)) {CI <- 0.95}
-
-  ### PULL INFORMATION FROM PARAMETERS TO SEND TO REFORMAT
-  variables <- all.vars(formula)
-
-  ####Ensure unique identifiers are numeric
-  iden <- eval(parse(text = paste("data$", variables[1], sep="")))
-  iden.u <- unique(iden)
-  new.id <- NULL
-  if (class(iden)!="num") {
-    if (class(iden)!="int") {
-      for (i in 1:length(iden.u)){
-        for (j in 1:length(iden)) {
-          if (iden[j] == iden.u[i]){
-            new.id=c(new.id,i)
-          }
-        }
+  if (ncol(model.matrix(formula, data)) > 1) {
+      predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
+      colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
+      cov_names <- colnames(predictors)[-1]
+      amat = NULL
+      for (i in unique(predictors$id)) {
+        tmp=predictors[predictors$id==i, ]
+        amat=rbind(amat,tmp[1, 2:ncol(predictors)])
       }
-      data$new.id <- new.id
-    }
+      amat = as.matrix(amat)
+  } else {
+    stop("This is a non-parametric analysis use non-parametric functions")
   }
-  data <- data[,-which(colnames(data)==variables[1])]
-  colnames(data)[ncol(data)] = variables[1]
 
-  ####extract vectors/data needed to send to biv.rec.reformat
-      covariates <- model.frame(formula, data, na.action = NULL)[-1]
-      if (ncol(covariates)==0) {
-        print(paste("Error: Covariates needed for", method, "method", sep = " "))
-        return()
-      }
-      cov_names <- colnames(covariates)
-      removable_from_all <- seq(length(variables), length(variables) - length(cov_names) +1, -1)
-      names <- paste("data$", variables[-removable_from_all], sep="")
-      identifier <- eval(parse(text = names[1]))
-      episode <- eval(parse(text = names[2])) 
-      xij <- eval(parse(text = names[3]))
-      yij <- eval(parse(text = names[4]))
-      c_indicatorX <- eval(parse(text = names[5]))
-      c_indicatorY <- eval(parse(text = names[6]))
-      covariates <- as.matrix(covariates)
-
-  #### Manage data vectors, fit correct model, return results ###
-  new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai=2, condgx=FALSE, data)
-    #Proposed Method
-    if (method == "Lee.et.al") {
-        if (length(cov_names)==1) {results <- semi.param.univariate(new_data, cov_names, CI)
-        } else {results <- semi.param.multivariate(new_data, cov_names, CI)}
-    #Chang Method
+  #Lee et all Method
+   if (method == "Lee.et.al") {
+      ### note issue - must figure out what to do with subjects that are missing predictors
+        if (ncol(amat)==1) {
+          results <- list(
+                  leeall_univariate(response$dat4Lreg, amat, cov_names, SE="Y"),
+                  formula=formula_ref, data = list(response=response$dat4Lreg, predictors = amat))
+        } else {
+          results <- list(
+                  leeall_multivariate(response$dat4Lreg, amat, cov_names, SE="Y"),
+                  formula=formula_ref, data = list(response=response$dat4Lreg, predictors = amat))}
+  #Chang Method
     } else {
-        if (length(cov_names)==1) {results <- chang.univariate(new_data, cov_names, CI)
-        } else {results <- chang.multivariate(new_data, cov_names, CI)}
+      if (ncol(amat)==1) {
+        results <- list(
+          chang_univariate(response$dat4Creg, amat, cov_names, SE="Y"),
+          formula=formula_ref, data = list(response=response$dat4Creg, predictors = amat))
+      } else {
+        results <- list(
+          chang_multivariate(response$dat4Creg, amat, cov_names, SE="Y"),
+          formula=formula_ref, data = list(response=response$dat4Creg, predictors = amat))}
     }
-  return(list(covariate.effects = results, formula=formula))
+  return(results)
 }
 
-#Essentially the person has to give either just the dataframe and the formula 
+#' @rdname bivrecReg
+#' @export
+
+is.bivrecReg <- function(x) inherits(x, "bivrecReg")
+
+#Essentially the person has to give either just the dataframe and the formula
 #or the exact vectors (we have to make a choice). Also they will have to use 2
 #functions. One to get the y response variable and the other to put the y response variable
-#into the biv.rec.fit function. Want to use S3 classes so then they can do summary(model), 
-#coeff(model) etc. 
+#into the biv.rec.fit function. Want to use S3 classes so then they can do summary(model),
+#coeff(model) etc.

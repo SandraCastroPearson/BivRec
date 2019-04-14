@@ -75,7 +75,7 @@ o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
 
 ##-----estimation functions
 ##proposed method
-MPro.ee1=function(beta1,mdat) {
+MPro.ee1=function(beta1,mdat, amat) {
 
   n=mdat$n
   xmat=mdat$xmat
@@ -83,7 +83,6 @@ MPro.ee1=function(beta1,mdat) {
   g1mat=mdat$g1mat
   l1=mdat$l1
   mstar=mdat$mstar
-  amat=mdat$amat
   nparams = length(beta1)
   subsum = rep(0, n)
 
@@ -103,18 +102,18 @@ MPro.ee1=function(beta1,mdat) {
   return(out)
 }
 
-MPro.uf1=function(beta1,mdat) {
-  tmp.out=MPro.ee1(beta1,mdat)
+MPro.uf1=function(beta1,mdat, amat) {
+  tmp.out=MPro.ee1(beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-MPro.uest1=function(init,mdat) {
-  res=optim(init, MPro.uf1, mdat=mdat, control=list(maxit=20000))
+MPro.uest1=function(init,mdat, amat) {
+  res=optim(init, MPro.uf1, mdat=mdat, amat=amat, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
-MPro.ee2=function(beta2,beta1,mdat) {
+MPro.ee2=function(beta2,beta1,mdat,amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -126,7 +125,6 @@ MPro.ee2=function(beta2,beta1,mdat) {
   #l1=mdat$l1
   l2=mdat$l2
   mstar=mdat$mstar
-  amat=mdat$amat
   nparams = length(beta1)
   subsum = rep(0, n)
 
@@ -148,19 +146,19 @@ MPro.ee2=function(beta2,beta1,mdat) {
   return(out)
 }
 
-MPro.uf2 <- function(beta2,beta1,mdat) {
-  tmp.out <- MPro.ee2(beta2,beta1,mdat)
+MPro.uf2 <- function(beta2,beta1,mdat,amat) {
+  tmp.out <- MPro.ee2(beta2,beta1,mdat, amat)
   out <- tmp.out%*%tmp.out
   return(out)
 }
 
-MPro.uest2 <- function(init,beta1,mdat) {
-  res <- optim(init, MPro.uf2, beta1=beta1, mdat=mdat, control=list(maxit=20000))
+MPro.uest2 <- function(init,beta1,mdat, amat) {
+  res <- optim(init, MPro.uf2, beta1=beta1, mdat=mdat, amat=amat, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
 ##variance estimation
-Mvar.est=function(beta1,beta2,mdat) {
+Mvar.est=function(beta1,beta2,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -173,7 +171,6 @@ Mvar.est=function(beta1,beta2,mdat) {
   l1=mdat$l1
   l2=mdat$l2
   mstar=mdat$mstar
-  amat=mdat$amat
 
   xi=matrix(0,length(c(beta1,beta2)),length(c(beta1,beta2)))
   gam1=gam21=gam22=rep(0,length(beta1))
@@ -240,14 +237,15 @@ Mvar.est=function(beta1,beta2,mdat) {
 ###################################################################
 ##################### FUNCTION NOT FOR USER #######################
 ###################################################################
-#' A Function for multivariate fits using semiparametric regression method on a biv.rec object
+#' A Function for multivariate fits using semiparametric regression method on a bivrecSurv object
 #'
 #' @description
-#' This function fits the semiparametric model given multiple  covariates. Called from biv.rec.fit(). No user interface.
-#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
-#' @param cov_names A vector with the names of the covariates. Passed from biv.rec.fit().
-#' @param CI Passed from biv.rec.fit().
-#' @return A dataframe summarizing effects of the covariates: estimates, SE and CI.
+#' This function fits the semiparametric model given one  covariate. Called from bivrecReg(). No user interface.
+#' @param response Passed from bivrecReg().
+#' @param amat Passed from bivrecReg().
+#' @param cov_names Passed from bivrecReg().
+#' @param SE Passed from bivrecReg()
+#' @return A dataframe summarizing estimates and SE.
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
@@ -260,38 +258,33 @@ Mvar.est=function(beta1,beta2,mdat) {
 
 
 #multivariable regression analysis
-semi.param.multivariate <- function(new_data, cov_names, CI) {
+leeall_multivariate <- function(response, amat, cov_names, SE) {
 
-  print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
+  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ","), sep=" "))
   n_params <- length(cov_names)
 
   #solve first equation to get beta1 values - related to xij
-  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=new_data)
+  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=response, amat=amat)
 
   #solve second equation to get beta2 values - related to yij
-  mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_data)
+  mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=response, amat = amat)
 
-  if (is.null(CI)==TRUE) {
+  if (is.null(SE)) {
     #return point estimates only
-    multi.fit <- data.frame(c(mpro1$par, mpro2$par))
-    colnames(multi.fit) <- c("Estimate")
-    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-
+    fit <- data.frame(c(mpro1$par, mpro2$par))
+    colnames(fit) <- c("Estimate")
+    rownames(fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    result <- list(mpro1$par, mpro2$par, fit)
   } else {
-
-    print("Estimating standard errors/confidence intervals")
+    print("Estimating standard errors")
     #estimate covariance matrix and get diagonal then std. errors
-    se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_data)
+    se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=response, amat = amat)
     #join all info and calculate CIs, put in nice table
-    multi.fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
-    conf.lev = 1 - ((1-CI)/2)
-    CIcalc <- t(apply(multi.fit, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
-    multi.fit  <- cbind(multi.fit, CIcalc)
-    low.string <- paste((1 - conf.lev), "%", sep="")
-    up.string <- paste(conf.lev, "%", sep="")
-    colnames(multi.fit) <- c("Estimate", "SE", low.string, up.string)
-    rownames(multi.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-  }
+    fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
+    colnames(fit) <- c("Estimate", "SE")
+    rownames(fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    result <- list(fit = as.matrix(fit))
 
-  return(multi.fit)
+  }
+  return(result)
 }

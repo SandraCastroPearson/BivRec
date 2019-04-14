@@ -76,14 +76,13 @@ o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
 ##-----estimation functions
 
 ##proposed method
-Pro.ee1=function(beta1,mdat) {
+Pro.ee1=function(beta1,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   delta1=mdat$delta1
   g1mat=mdat$g1mat
   l1=mdat$l1
   mstar=mdat$mstar
-  amat=mdat$amat
 
   tmp.out=NULL
   for (i in 1:n) {
@@ -100,18 +99,18 @@ Pro.ee1=function(beta1,mdat) {
   return(out)
 }
 
-Pro.uf1=function(beta1,mdat) {
-  tmp.out=Pro.ee1(beta1,mdat)
+Pro.uf1=function(beta1,mdat, amat) {
+  tmp.out=Pro.ee1(beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-Pro.uest1=function(int,mdat) {
-  res=optimize(Pro.uf1,interval=int,mdat=mdat)
+Pro.uest1=function(int,mdat, amat) {
+  res=optimize(Pro.uf1,interval=int,mdat=mdat, amat=amat)
   return(list(par=res$minimum,value=res$objective))
 }
 
-Pro.ee2=function(beta2,beta1,mdat) {
+Pro.ee2=function(beta2,beta1,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -119,7 +118,6 @@ Pro.ee2=function(beta2,beta1,mdat) {
   g2mat=mdat$g2mat
   l2=mdat$l2
   mstar=mdat$mstar
-  amat=mdat$amat
 
   tmp.out=NULL
   for (i in 1:n) {
@@ -139,20 +137,20 @@ Pro.ee2=function(beta2,beta1,mdat) {
   return(out)
 }
 
-Pro.uf2=function(beta2,beta1,mdat) {
-  tmp.out=Pro.ee2(beta2,beta1,mdat)
+Pro.uf2=function(beta2,beta1,mdat, amat) {
+  tmp.out=Pro.ee2(beta2,beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-Pro.uest2=function(int,beta1,mdat) {
-  res=optimize(Pro.uf2,interval=int,beta1=beta1,mdat=mdat)
+Pro.uest2=function(int,beta1,mdat, amat) {
+  res=optimize(Pro.uf2,interval=int,beta1=beta1,mdat=mdat, amat=amat)
   return(list(par=res$minimum,value=res$objective))
 }
 
 
 ##variance estimation
-var.est=function(beta1,beta2,mdat) {
+var.est=function(beta1,beta2,mdat, amat) {
   n=mdat$n
   mc=mdat$mc
   xmat=mdat$xmat
@@ -164,7 +162,6 @@ var.est=function(beta1,beta2,mdat) {
   l1=mdat$l1
   l2=mdat$l2
   mstar=mdat$mstar
-  amat=mdat$amat
 
   xi=matrix(0,length(c(beta1,beta2)),length(c(beta1,beta2)))
   gam1=gam21=gam22=rep(0,length(beta1))
@@ -229,63 +226,59 @@ var.est=function(beta1,beta2,mdat) {
   return(list(se1=se1,se2=se2))
 }
 
+##################### FUNCTION NOT FOR USER #######################
 ###################################################################
-######################## FUNCTION FOR USE ########################
-###################################################################
-#' A Function for univariate fits using semiparametric regression method on a biv.rec object
+#' A Function for univariate fits using semiparametric regression method on a bivrecSurv object
 #'
 #' @description
-#' This function fits the semiparametric model given only one covariate. Called from biv.rec.fit(). No user interface.
-#' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
-#' @param cov_names A vector with the names of the single covariate. Passed from biv.rec.fit().
-#' @param CI Passed from biv.rec.fit().
-#' @return A dataframe summarizing covariate effect estimate, SE and CI.
-#' @seealso \code{\link{biv.rec.fit}}
+#' This function fits the semiparametric model given one  covariate. Called from bivrecReg(). No user interface.
+#' @param response Passed from bivrecReg().
+#' @param amat Passed from bivrecReg().
+#' @param cov_names Passed from bivrecReg().
+#' @param SE Passed from bivrecReg()
+#' @return A dataframe summarizing estimates and SE.
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
 #' @importFrom stats optimize
 #' @importFrom stats qnorm
-#' @importFrom stats rbinom
-#' @importFrom stats rgamma
-#' @importFrom stats rnorm
-#' @importFrom stats runif
+#' @importFrom stringr str_c
 #'
 #' @useDynLib BivRec xmproee ymproee mprovar
 #' @keywords internal
+#' @keywords internal
 
 #MAIN PROGRAM FOR univariate regression analysis
-semi.param.univariate <- function(new_data, cov_names, CI) {
+
+#multivariable regression analysis
+leeall_univariate <- function(response, amat, cov_names, SE){
 
   print(paste("Fitting model with covariate", cov_names))
-  pro1 <- Pro.uest1(c(-2,2),new_data)[[1]]
-  pro2 <- Pro.uest2(c(-2,2), pro1, new_data)[[1]]
 
-  if (is.null(CI)==TRUE) {
+  #solve first equation to get beta1 values - related to xij
+  pro1 <- Pro.uest1(c(-2,2), mdat=response, amat=amat)[[1]]
+
+  #solve second equation to get beta2 values - related to yij
+  pro2 <- Pro.uest2(c(-2,2), pro1, mdat=response, amat=amat)[[1]]
+
+  if (is.null(SE)==TRUE) {
     #return point estimates only
     univ_fits <- data.frame(c(pro1, pro2))
     colnames(univ_fits) <- c("Estimate")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
-
+    result <- list(pro1$par, pro2$par, fit)
   } else {
-
-    print("Estimating standard errors/confidence intervals")
+    print("Estimating standard errors")
     #estimate covariance matrix and get diagonal then std. errors
-    sd_est=var.est(pro1, pro2, new_data)
+    sd_est=var.est(pro1, pro2, mdat=response, amat = amat)
     univ_fits <- data.frame(c(pro1, pro2), c(sd_est$se1,sd_est$se2))
-
-    #Calculate CI's and put in nice table
-    conf.lev = 1 - ((1-CI)/2)
-    CIcalc <- t(apply(univ_fits, 1, function (x) c(x[1]+qnorm(1-conf.lev)*x[2], x[1]+qnorm(conf.lev)*x[2])))
-    univ_fits <- cbind(univ_fits, CIcalc)
-    low.string <- paste((1 - conf.lev), "%", sep="")
-    up.string <- paste(conf.lev, "%", sep="")
-    colnames(univ_fits) <- c("Estimate", "SE", low.string, up.string)
+    colnames(univ_fits) <- c("Estimate", "SE")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    result <- list(fit = as.matrix(univ_fits))
 
   }
 
-  return(univ_fits)
+  return(result)
 }
 
 

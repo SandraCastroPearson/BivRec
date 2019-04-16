@@ -5,6 +5,17 @@
 
 ##Example
 #npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
+#npresult2 <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = TRUE, given.interval=c(0, 10))
+
+#' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
+#'           data=dat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+#'           conditional = FALSE, given.interval=c(0, 10), jointplot=FALSE,
+#'           marginalplot = FALSE, condiplot = FALSE)
+#'           
+#'           nonpar.result2 <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
+#'           data=dat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+#'           conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
+#'           marginalplot = FALSE, condiplot = FALSE)
 bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
   if (missing(ai)) {ai<-1}
@@ -59,7 +70,7 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
       final.result <- list(cdf = cdf_res1, marginal.survival = marg_res1, ai=ai)
     } else {
       partial.result <- list(cdf = cdf_res1, marginal.survival = marg_res1, data = data, ai=ai, new_data=x$dat4np1) #took out formula as a param
-      ccdf_res1 <- nonparam.conditional(partial.result, given.interval, CI) #took out condiplot as a param
+      ccdf_res1 <- nonparam.conditional(partial.result, given.interval, CI,x$df$yij) #took out condiplot as a param
       final.result <- list(joint.cdf = cdf_res1, marginal.survival = marg_res1, conditional.cdf = ccdf_res1,ai=ai)
     }
   }
@@ -75,14 +86,14 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
       final.result <- list(joint.cdf = cdf_res2, marginal.survival = marg_res2, ai=ai)
     } else {
       partial.result <- list(cdf = cdf_res1, marginal.survival = marg_res2, data = data, ai=ai, new_data=x$dat4np2) #took out formula as a param
-      ccdf_res2 <- nonparam.conditional(partial.result, given.interval, CI) #took out condiplot as a param
+      ccdf_res2 <- nonparam.conditional(partial.result, given.interval, CI,x$df$yij) #took out condiplot as a param
       final.result <- list(joint.cdf = cdf_res2, marginal.survival = marg_res2, conditional.cdf = ccdf_res2,ai=ai)
     }
   }
   }
   class(final.result)<-"bivrecNP"
   final.result$CI <- CI
-  final.result$conditional <- conditional 
+  final.result$conditional <- conditional #boolean indicator
   final.result$df <-x$df #original response data from bivrecSurv object 
   return(final.result) #Essentially the bivrecNP object provides the data (the new_id stuff), CI, results for all 3 (if conditional=true),
   #the conditional indicator 

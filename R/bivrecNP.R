@@ -58,7 +58,7 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
   
-  #print("Estimating joint cdf and marginal survival")
+  print("Estimating joint cdf and marginal survival")
   if (ai==1) {
   cdf_res1 <- nonparam.cdf(x$dat4np1$forcdf, u, ai, CI) #result for joint cdf if ai=1
   marg_res1 <- nonparam.marginal(x$dat4np1$formarg, CI) #result for marginal if ai=1
@@ -93,6 +93,7 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   }
   class(final.result)<-"bivrecNP"
   final.result$CI <- CI
+  final.result$given.interval<-given.interval
   final.result$conditional <- conditional #boolean indicator
   final.result$df <-x$df #original response data from bivrecSurv object 
   return(final.result) #Essentially the bivrecNP object provides the data (the new_id stuff), CI, results for all 3 (if conditional=true),

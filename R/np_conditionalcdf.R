@@ -70,7 +70,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI,yij)
   margdata <- new_data$formarg
   refdata <- new_data$refdata
   n <- margdata$n
-  yij<-x$df$yij
+ 
 
   x.grid <- marginal[which(marginal$Time<=given.interval[2]), ] #this uses marginal result and is a param for bstp
   x.grid <- x.grid[which(x.grid$Time>=given.interval[1]), ]
@@ -122,6 +122,6 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI,yij)
   # cond$ygrid=y.grid
   # cond$data=data
   # cond$cond.prob
-  return(conditional=cond)
+  return(list(conditional=cond,ygrid=y.grid))
   #return(list(conditional=cond,xgrid=x.grid,ygrid=y.grid,data=data,condprob=cond.prob,yij=yij))
 }

@@ -50,7 +50,7 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
         start_time <- 0
         stop_time <- times[1]
         for (j in 2:length(times)) {
-          start_time[j] <- stop_time[j-1]y
+          start_time[j] <- stop_time[j-1]
           stop_time[j] <- start_time[j]+times[j]
         }
         sub_id <- rep(iter, length(times))
@@ -65,8 +65,7 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
   colnames(data4plot) <- c("id", "epi", "start_time", "stop_time", "ci")
   data4plot  <- data4plot[order(data4plot$ci),]
 
-  
-  #if (missing(covariate)) {
+
 
   ###### PLOT ########
   # get the range for the x and y axis
@@ -103,13 +102,5 @@ plot.bivrecSurv=function(x,main,xlab,ylab,type1,type2){
       }
     }
   }
-  #}
-  # else {
-  #    #eval(parse(text = paste("data$", covariate, sep="")))
-  #   if (!is.factor(covariate)) stop("Plots can only be stratified for categorical covariates
-  #                                        - ", covariate, " must be factor.")
-  #   ngroups=length(levels(covariate))
-  #   #for loop for 1 to ngroups and match the id's for a level with the xijs and yijs
-  # }
 
 }

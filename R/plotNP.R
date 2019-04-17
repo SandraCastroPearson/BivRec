@@ -26,7 +26,7 @@ plot.bivrecNP <-function(x) {
   }
   else {
     plotJoint(x)
-    par(mfrow=c(1,2))
+    #par(mfrow=c(1,2))
     plotMarg(x)
     plotCond(x)
   }

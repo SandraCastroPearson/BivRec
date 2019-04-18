@@ -231,8 +231,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   result <- list()
   result$id_ref = id_ref
   result$error_ids <- error_subjects
-  result$dat4Lreg <- mdat(dat=df4mdat) #data for Lee regression
-  result$dat4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)
+  result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
+  result$data4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)
 
   #####ADD data for cdf and marginal of NP model
   df4np <- df4mdat
@@ -245,8 +245,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   formarg1 <- np.dat(marg1, ai=1)
   formarg2 <- np.dat(marg2, ai=2)
   #two np objects that have data for cdf and marg depending on ai
-  result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
-  result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
+  result$data4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
+  result$data4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
 
   class(result) <- "bivrecSurv"
   return(result)

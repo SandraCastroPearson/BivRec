@@ -229,7 +229,7 @@ sd.estpar=function(init, dat, v, B) {
 #' @keywords internal
 
 #multivariable regression analysis-Chang's method
-chang.multivariate <- function(new_data, cov_names, CI) {
+chang.multivariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
   beta <- rep(0, length(cov_names)*2)
@@ -242,7 +242,7 @@ chang.multivariate <- function(new_data, cov_names, CI) {
     stop()
   }
 
-  if (is.null(CI)==TRUE) {
+  if (is.null(SE)==TRUE) {
     #return only point estimates
     chang.fit <- data.frame(chang$par)
     colnames(chang.fit) <- c("Estimate")
@@ -250,23 +250,18 @@ chang.multivariate <- function(new_data, cov_names, CI) {
 
   } else {
 
-    print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
+    print("Point Estimates complete. Estimating Standard Errors.")
 
     #estimate covariance matrix / std. errors using Parzen's method
     chang.v <- v.est(chang$par,new_data,R=50)
     chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
 
     #calculate CIs, join all info, put in nice table
-    conf.lev = 1 - ((1-CI)/2)
-    CIlow <- chang$par - qnorm(conf.lev)*chang.sd
-    CIup <- chang$par + qnorm(conf.lev)*chang.sd
-    chang.fit <- data.frame(chang$par, chang.sd, CIlow, CIup)
-    low.string <- paste((1 - conf.lev), "%", sep="")
-    up.string <- paste(conf.lev, "%", sep="")
-    colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
+    chang.fit <- data.frame(chang$par, chang.sd)
+    colnames(chang.fit) <- c("Estimate", "SE")
     rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
 
   }
 
-  return(chang.fit)
+  return(list(fit = as.matrix(chang.fit)))
 }

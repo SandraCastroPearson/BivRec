@@ -80,41 +80,74 @@ bivrecReg =function(formula, data, method){
   if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
 
-  if (ncol(model.matrix(formula, data)) > 1) {
-      predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
-      colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
-      cov_names <- colnames(predictors)[-1]
-      amat = NULL
-      for (i in unique(predictors$id)) {
-        tmp=predictors[predictors$id==i, ]
-        amat=rbind(amat,tmp[1, 2:ncol(predictors)])
-      }
-      amat = as.matrix(amat)
-  } else {
-    stop("This is a non-parametric analysis use non-parametric functions")
-  }
+  if (ncol(model.matrix(formula, data)) = 1) {
+    stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
    if (method == "Lee.et.al") {
-      ### note issue - must figure out what to do with subjects that are missing predictors
-        if (ncol(amat)==1) {
+     predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
+     colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
+     cov_names <- colnames(predictors)[-1]
+     missing <- unlist(apply(predictors[,-1], 2, function(x) which(is.na(x))))
+
+     if (length(missing)!=0) {
+       predictors <- predictors[-missing,]
+
+       #need to test missing fix
+       temp1 = list(xmat = response$dat4Lreg$xmat, ymat = response$data4Lreg$ymat, zmat = response$dat4Lreg$zmat,
+                    delta1 = response$dat4Lreg$delta1, delta2 = response$data4Lreg$delta2,
+                    g1mat = response$dat4Lre$g1mat, g2mat = response$data4Lre$g2mat,
+                    l1mat = response$dat4Lreg$l1mat, l2mat = response$data4Lreg$l2mat)
+
+       new_response = lapply(temp1, function(x) x = x[-missing,])
+       new_response$mstar = response$data4Lreg$mstar[-missing]
+       new_response$ctime = response$data4Lreg$ctime[-missing]
+       new_response$n = response$dat4Lreg$n - length(unique(missing))
+       new_response$mc = response$data4Lreg$mc
+       new_response$l1 = response$data4Lreg$l1
+       new_response$l2 = response$data4Lreg$l2
+
+     } else {new_response = response$data4Lreg}
+
+     amat = NULL
+     for (i in unique(predictors$id)) {
+       tmp=predictors[predictors$id==i, ]
+       amat=rbind(amat,tmp[1, 2:ncol(predictors)])
+     }
+     amat = as.matrix(amat)
+
+      if (ncol(amat)==1) {
           results <- list(
-                  leeall_univariate(response$dat4Lreg, amat, cov_names, SE="Y"),
-                  formula=formula_ref, data = list(response=response$dat4Lreg, predictors = amat))
+                  leeall_univariate(response=new_response, amat, cov_names, SE="Y"),
+                  formula=formula_ref, method="Lee.et.al",
+                  data = list(response=new_response, predictors = amat, original = data))
         } else {
           results <- list(
-                  leeall_multivariate(response$dat4Lreg, amat, cov_names, SE="Y"),
-                  formula=formula_ref, data = list(response=response$dat4Lreg, predictors = amat))}
-  #Chang Method
+                  leeall_multivariate(response=new_response, amat, cov_names, SE="Y"),
+                  formula=formula_ref, method="Lee.et.al",
+                  data = list(response=new_response, predictors = amat, original = data))}
+
+    ### Chang Method
     } else {
-      if (ncol(amat)==1) {
+      predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
+      colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
+      cov_names = colnames(predictors)[-1]
+      new_data <- merge(as.data.frame(response$dat4Creg), predictors, by="id")
+      orig_num <- length(unique(new_data$id))
+      new_data <- na.omit(new_data)
+      new_num <-length(unique(new_data$id))
+      message <- paste("Original number of subjects: ", orig_num,
+                       ". Subjects for Chang Analysis: ", new_num)
+      print(message)
+
+      if (length(cov_names)==1) {
         results <- list(
-          chang_univariate(response$dat4Creg, amat, cov_names, SE="Y"),
-          formula=formula_ref, data = list(response=response$dat4Creg, predictors = amat))
+          chang_fit = chang_univariate(new_data, cov_names, SE="Y"),
+          formula=formula_ref, method = "Chang", data = list(new_data, original = data))
       } else {
         results <- list(
-          chang_multivariate(response$dat4Creg, amat, cov_names, SE="Y"),
-          formula=formula_ref, data = list(response=response$dat4Creg, predictors = amat))}
+          chang_fit = chang_multivariate(new_data, cov_names, SE="Y"),
+          formula=formula_ref, method="Chang", data = list(new_data, original = data))}
     }
   return(results)
 }

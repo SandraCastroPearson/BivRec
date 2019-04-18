@@ -75,7 +75,7 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
     }
   }
   }
-  else { #ai=2
+  if (ai==2) { #ai=2
   cdf_res2 <- nonparam.cdf(x$dat4np2$forcdf, u, ai, CI) #result for joint cdf if ai=2
   marg_res2 <- nonparam.marginal(x$dat4np2$formarg, CI) #result for marginal if ai=2  
   if (conditional == FALSE) {
@@ -95,7 +95,7 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   final.result$CI <- CI
   final.result$given.interval<-given.interval
   final.result$conditional <- conditional #boolean indicator
-  final.result$df <-x$df #original response data from bivrecSurv object 
+  #final.result$ygrid <-ccdf_res2$ygrid #original response data from bivrecSurv object 
   return(final.result) #Essentially the bivrecNP object provides the data (the new_id stuff), CI, results for all 3 (if conditional=true),
   #the conditional indicator 
 }

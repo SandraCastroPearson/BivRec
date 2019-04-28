@@ -19,7 +19,7 @@
 #'   \item delta_x: An optional vector of indicators with values:
 #'   \itemize{
 #'       \item 0 for the last episode for subject i (m_i) if subject was censored during period xij.
-#'       \item 1 otherwise.
+#'       \item 1 otherwise.                                                                                                                             
 #'      }
 #'   A subject with only one episode (m_i = 1) could have a 0 if he was censored during period xi1 or 1 if he was censored during period yi1. If delta_x is not provided estimation proceeds with the assumption that no subject was censored during period xij.
 #'   \item delta_y: A vector of indicators with values:
@@ -134,7 +134,7 @@ biv.rec.np <- function(formula, data, CI, ai, u1, u2, conditional, given.interva
     }
   }
   data <- data[,-which(colnames(data)==variables[1])]
-  colnames(data)[ncol(data)] = variables[1]
+  colnames(data)[ncol(data)] = variables[1] #this just moved the id column to the end to match up with new.id values 
 
   ####extract vectors/data needed to send to biv.rec.reformat
   names <- paste("data$", variables, sep="")

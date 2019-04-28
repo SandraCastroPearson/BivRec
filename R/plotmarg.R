@@ -10,14 +10,14 @@
 #'
 #' @keywords internal
 #'
-marg.surv.plot <- function(bivrec.nonparam.result, CI) {
+plotMarg <- function(x) {
+  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  forplot <- x$marginal.survival[1:3]
+  #formula <- bivrec.nonparam.result$formula
+  data <- x$df
 
-  forplot <- bivrec.nonparam.result$marginal.survival[1:3]
-  formula <- bivrec.nonparam.result$formula
-  data <- bivrec.nonparam.result$data
-
-  variables <- all.vars(formula)
-  xij <- eval(parse(text =paste("data$", variables[2], sep="")))
+  #variables <- all.vars(formula)
+  xij <- x$df$xij
   mx <- round(max(xij), digits = 0)
   str_mx <- substring(as.character(mx), 1, nchar(as.character(mx))-1)
   str_mx <- paste(as.numeric(str_mx)+1, 0, sep="")
@@ -25,7 +25,7 @@ marg.surv.plot <- function(bivrec.nonparam.result, CI) {
   forplot <- rbind(c(0, 1, 0), forplot, c(mx, 0, forplot[nrow(forplot),3]))
 
   #####95% Wald CI and plot
-  conf.lev = 1 - ((1-CI)/2)
+  conf.lev = 1 - ((1-x$CI)/2)
   forplot$lower <- forplot[,2] - qnorm(conf.lev)*forplot[,3]
   forplot$upper <- forplot[,2] + qnorm(conf.lev)*forplot[,3]
   index <- which(forplot$lower<0)

@@ -1,4 +1,3 @@
-
 #                 m.dat, np.dat FUNCTIONS                                      #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
@@ -96,20 +95,71 @@ formarginal <- function(dat){
   mdata <- tmp <- NULL
   freq <-cumsum(c(0,table(dat[,1])))
 
-  for (i in 1:(length(freq)-1)){
-    tmp<- dat[(freq[i]+1):freq[i+1], -c(5,7)]
-    if (nrow(tmp)==1){
-      if(tmp$wij>0){
-        mdata <- rbind(mdata,
-                       c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=1, epi=tmp$epi, ci=tmp$ci),
-                       c(id=tmp$id, vij=0, wij=0, d2=0, epi=2, ci=tmp$ci))
-      } else{
-        mdata<-rbind(mdata, c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=0, epi=tmp$epi, ci=tmp$ci))
-      }
-    } else{mdata<-rbind(mdata, tmp)}
+#####Reformat data set for non-parametric analysis
+
+  # dat : a data.frame including
+  #     1)id numbers, 2)orders of episodes, 3)first gap time, 4)second gap time
+  #     5)censoring times, 6) censoring indicators in each column
+  # ai: a non-negative function of censoring time
+
+  np.dat <- function(dat, ai) {
+
+    id <- dat$id
+    uid <- unique(id)   # vector of unique id's
+    n.uid <- length(uid)   # scalar : number of unique IDs
+    event <- dat$d2 #event indicator : must always be 0 for the last obs per ID and 1 otherwise
+    markvar1 <- dat$vij #gap times of type 1
+    markvar2 <- dat$wij #gap times of type 2
+    gap <- markvar1 + markvar2
+
+    m.uid <- as.integer(table(id))   # vector: number of observed pairs per id/subject (m)
+    max.m <- max(m.uid, na.rm=T) # scalar : maximum number of repeated observations
+
+    ifelse (ai == 1, weight <- rep(1, n.uid), weight <- dat$ci[which(dat$epi == 1)]) #Set weights
+
+    tot <- length(gap) # total number of observations
+    ugap <- sort(unique(gap[event == 1]))   # sorted unique uncensored X_0 gap times (support points for sum)
+    n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
+
+    umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
+    n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
+
+    # Space holders
+    r <- sest <- Fest <- rep(0, n.ugap)
+    d <- matrix(0, nrow = n.ugap, ncol = 2)
+    prob <- var <- std <- 0
+    gtime <- cen <- mark1 <- mark2 <- matrix(0, nrow = n.uid, ncol = max.m)
+
+    out <- list(n = n.uid, m = m.uid, mc = max.m, nd = n.ugap, tot=tot,
+                gap =gap, event = event, markvar1 = markvar1, markvar2 =markvar2,
+                udt = ugap,  ctime = weight, ucen = m.uid-1,
+                r = r, d=d, sest = sest, Fest = Fest, var = var,
+                prob = prob, std = std, gtime = gtime, cen = cen,
+                mark1 = mark1, mark2 = mark2, umark1=umark1, nm1 = n.umark1)
+
+    return(out)
   }
-  return(mdata)
-}
+
+  formarginal <- function(dat){
+
+    mdata <- tmp <- NULL
+    freq <-cumsum(c(0,table(dat[,1])))
+
+    for (i in 1:(length(freq)-1)){
+      tmp<- dat[(freq[i]+1):freq[i+1], -c(5,7)]
+      if (nrow(tmp)==1){
+        if(tmp$wij>0){
+          mdata <- rbind(mdata,
+                         c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=1, epi=tmp$epi, ci=tmp$ci),
+                         c(id=tmp$id, vij=0, wij=0, d2=0, epi=2, ci=tmp$ci))
+        } else{
+          mdata<-rbind(mdata, c(id=tmp$id, vij=tmp$vij, wij=tmp$wij, d2=0, epi=tmp$epi, ci=tmp$ci))
+        }
+      } else{mdata<-rbind(mdata, tmp)}
+    }
+    return(mdata)
+  }
+
 
 #################### CREATE A BIVREC OBJECT ######################
 
@@ -172,12 +222,12 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   }
 
   id_ref = id
-
   inputdf <- data.frame(id=id, epi=episode, xij=xij, yij=yij, d1=Xcind, d2=Ycind)
 
   #Checks for each subject
   err_xind = err_yind = err_epi = NULL
   unique_id <- unique(inputdf$id)
+
   for (i in 1:length(unique_id)) {
     sub_id <- unique_id[i]
     temp_by_subject <- subset(inputdf, inputdf$id==sub_id)
@@ -200,6 +250,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
         err_epi <- c(err_epi, sub_id)}
     }
   }
+
   error_subjects <- unique(c(err_xind, err_yind, err_epi))
   if (length(error_subjects>0)){
     errmsg <- paste(error_subjects, collapse = ", ")
@@ -245,17 +296,16 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   formarg1 <- np.dat(marg1, ai=1)
   formarg2 <- np.dat(marg2, ai=2)
   #two np objects that have data for cdf and marg depending on ai
-  result$data4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
-  result$data4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
+  result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
+  result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
 
   class(result) <- "bivrecSurv"
   return(result)
+
 }
 
-#' @rdname bivrecSurv
-#' @export
+  is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
+  is.bivrecReg <- function(x) inherits(x, "bivrecReg")
+  is.bivrecNP <- function(x) inherits(x, "bivrecNP")
+  is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
 
-is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
-is.bivrecReg <- function(x) inherits(x, "bivrecReg")
-is.bivrecNP <- function(x) inherits(x, "bivrecNP")
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol

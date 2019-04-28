@@ -85,7 +85,7 @@ bivrecReg =function(formula, data, method){
   if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
 
-  if (ncol(model.matrix(formula, data)) = 1) {stop("This is a non-parametric analysis use non-parametric functions")}
+  if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
    if (method == "Lee.et.al") {

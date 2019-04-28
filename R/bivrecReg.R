@@ -75,6 +75,8 @@
 
 bivrecReg =function(formula, data, method){
 
+  call = match.call()
+
   #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
@@ -116,12 +118,12 @@ bivrecReg =function(formula, data, method){
      amat = as.matrix(amat)
 
       if (ncol(amat)==1) {
-          results <- list(
+          results <- list(call = call,
                   leeall_univariate(response=new_response, amat, cov_names, SE="Y"),
                   formula=formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))
         } else {
-          results <- list(
+          results <- list(call = call,
                   leeall_multivariate(response=new_response, amat, cov_names, SE="Y"),
                   formula=formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))}
@@ -139,19 +141,17 @@ bivrecReg =function(formula, data, method){
       print(message)
 
       if (length(cov_names)==1) {
-        results <- list(
+        results <- list(call = call,
           chang_fit = chang_univariate(new_data, cov_names, SE="Y"),
           formula = formula_ref, method = "Chang", data = list(new_data, original = data))
       } else {
-        results <- list(
+        results <- list(call = call,
           chang_fit = chang_multivariate(new_data, cov_names, SE="Y"),
           formula=formula_ref, method="Chang", data = list(new_data, original = data))}
     }
 
   return(results)
 }
-
-
 
 is.bivrecReg <- function(x) inherits(x, "bivrecReg")
 

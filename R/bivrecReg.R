@@ -39,6 +39,9 @@
 #' \url{https://doi.org/10.1093/biomet/81.2.341}
 #' }
 #'
+#' @rdname bivrecReg
+#' @export
+#'
 #' @examples
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
@@ -75,13 +78,12 @@ bivrecReg =function(formula, data, method){
   #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
-  if (missing(data)) response <- eval(formula[[2]], parent.frame())
-  if (!missing(data)) response <- eval(formula[[2]], data)
+  if (!missing(data)) {response <- eval(formula[[2]], data)
+      } else {stop("data argument missing")}
   if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
 
-  if (ncol(model.matrix(formula, data)) = 1) {
-    stop("This is a non-parametric analysis use non-parametric functions")}
+  if (ncol(model.matrix(formula, data)) = 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
    if (method == "Lee.et.al") {
@@ -90,15 +92,12 @@ bivrecReg =function(formula, data, method){
      cov_names <- colnames(predictors)[-1]
      missing <- unlist(apply(predictors[,-1], 2, function(x) which(is.na(x))))
 
-     if (length(missing)!=0) {
+     if (length(missing)!=0) {    #need to test missing fix
        predictors <- predictors[-missing,]
-
-       #need to test missing fix
        temp1 = list(xmat = response$dat4Lreg$xmat, ymat = response$data4Lreg$ymat, zmat = response$dat4Lreg$zmat,
                     delta1 = response$dat4Lreg$delta1, delta2 = response$data4Lreg$delta2,
                     g1mat = response$dat4Lre$g1mat, g2mat = response$data4Lre$g2mat,
                     l1mat = response$dat4Lreg$l1mat, l2mat = response$data4Lreg$l2mat)
-
        new_response = lapply(temp1, function(x) x = x[-missing,])
        new_response$mstar = response$data4Lreg$mstar[-missing]
        new_response$ctime = response$data4Lreg$ctime[-missing]
@@ -132,28 +131,27 @@ bivrecReg =function(formula, data, method){
       predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
       colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
       cov_names = colnames(predictors)[-1]
-      new_data <- merge(as.data.frame(response$dat4Creg), predictors, by="id")
+      new_data <- rbind(as.data.frame(response$dat4Creg), predictors, by="id")
       orig_num <- length(unique(new_data$id))
       new_data <- na.omit(new_data)
       new_num <-length(unique(new_data$id))
-      message <- paste("Original number of subjects: ", orig_num,
-                       ". Subjects for Chang Analysis: ", new_num)
+      message <- paste("Original number of subjects: ", orig_num, ". Subjects for Chang Analysis: ", new_num, sep="")
       print(message)
 
       if (length(cov_names)==1) {
         results <- list(
           chang_fit = chang_univariate(new_data, cov_names, SE="Y"),
-          formula=formula_ref, method = "Chang", data = list(new_data, original = data))
+          formula = formula_ref, method = "Chang", data = list(new_data, original = data))
       } else {
         results <- list(
           chang_fit = chang_multivariate(new_data, cov_names, SE="Y"),
           formula=formula_ref, method="Chang", data = list(new_data, original = data))}
     }
+
   return(results)
 }
 
-#' @rdname bivrecReg
-#' @export
+
 
 is.bivrecReg <- function(x) inherits(x, "bivrecReg")
 

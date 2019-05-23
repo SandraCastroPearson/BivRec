@@ -200,9 +200,9 @@ sd.estpar=function(init, dat, v, B) {
     i=i+1
     A[i,]=est.R$par
   }
-  var.est=cov(A,A) #cov compute the cov between columns
+  varest=cov(A,A) #cov compute the cov between columns
   out=sqrt(diag(var.est))
-  return(out)
+  return(sd=out, covmat=varest)
 }
 
 ###################################################################
@@ -214,10 +214,9 @@ sd.estpar=function(init, dat, v, B) {
 #' This function fits the model using Chang's Method given multiple  covariates. Called from biv.rec.fit(). No user interface.
 #' @param new_data An object that has been reformatted for fit using the biv.rec.reformat() function. Passed from biv.rec.fit().
 #' @param cov_names A vector with the names of the covariates. Passed from biv.rec.fit().
-#' @param CI Passed from biv.rec.fit().
+#' @param SE Passed from biv.rec.fit().
 #'
-#' @return A dataframe summarizing effects of the covariates: estimates, SE and CI.
-#' @seealso \code{\link{biv.rec.fit}}
+#' @return A list with estimates, SE and variance-covariance matrix.
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
@@ -238,30 +237,31 @@ chang.multivariate <- function(new_data, cov_names, SE) {
   chang <- RE.uest(beta, new_data)
 
   if (chang$conv!=0) {
-    print("Error: Max Iterations reached. No proper convergence. Estimates are not accurate.")
+    print("Error: Max Iterations reached. Did not converge. Estimates are not accurate.")
     stop()
   }
 
   if (is.null(SE)==TRUE) {
     #return only point estimates
-    chang.fit <- data.frame(chang$par)
-    colnames(chang.fit) <- c("Estimate")
-    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    changfit <- data.frame(chang$par)
+    colnames(changfit) <- c("Estimate")
+    rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    return(list(fit = as.matrix(changfit)))
 
   } else {
 
     print("Point Estimates complete. Estimating Standard Errors.")
 
     #estimate covariance matrix / std. errors using Parzen's method
-    chang.v <- v.est(chang$par,new_data,R=50)
-    chang.sd <- sd.estpar(beta, new_data, v = chang.v, B=30)
+    changv <- v.est(chang$par,new_data,R=50)
+    changsd <- sd.estpar(beta, new_data, v = changv, B=30)
 
     #calculate CIs, join all info, put in nice table
-    chang.fit <- data.frame(chang$par, chang.sd)
-    colnames(chang.fit) <- c("Estimate", "SE")
-    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    changfit <- data.frame(chang$par, changsd$sd)
+    colnames(changfit) <- c("Estimate", "SE")
+    rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    return(list(fit = as.matrix(changfit), vcovmatrix = changsd$covmat))
 
   }
 
-  return(list(fit = as.matrix(chang.fit)))
 }

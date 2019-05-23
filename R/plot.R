@@ -101,12 +101,12 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
 
 plot <- function(object, data, main, xlab, ylab, type1, type2) UseMethod("plot")
 
-  if (is.bivrecSurv(object)) {plot.bivrecSurv(object, main, args)} else {
-    if (inherits(object,"formula")) {plot.formula(object, data, args)} else {
-      if (is.bivrecReg(object)) {plot.bivrecReg(object, data, args)} else {
-        if (is.bivrecNP(object)) {plot.bivrecNP(object, data, args)}
-        else {stop("Response must be of bivrecSurv, bivrecReg or bivrecNP class or a formula")
-        }}}}
+  # if (is.bivrecSurv(object)) {plot.bivrecSurv(object, main, args)} else {
+  #   if (inherits(object,"formula")) {plot.formula(object, data, args)} else {
+  #     if (is.bivrecReg(object)) {plot.bivrecReg(object, data, args)} else {
+  #       else {stop("Response must be of bivrecSurv, bivrecReg or bivrecNP class or a formula")
+  #       }}}}
+
 
 
 plot.bivrecSurv <- function(object, main, xlab, ylab, type1, type2){

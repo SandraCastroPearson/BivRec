@@ -50,9 +50,9 @@
 #'
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
-#' fit_lee <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method="Lee.et.al")
-#' fit_lee$covariate.effects
+#' summary(lee_reg)
 #' \dontrun{
 #'
 #' #This is an example with longer runtime.
@@ -119,13 +119,13 @@ bivrecReg =function(formula, data, method){
 
       if (ncol(amat)==1) {
           results <- list(call = call,
-                  leeall_univariate(response=new_response, amat, cov_names, SE="Y"),
+                  leefit = leeall_univariate(response=new_response, amat, cov_names, SE="TRUE"),
                   formula=formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))
         } else {
           results <- list(call = call,
-                  leeall_multivariate(response=new_response, amat, cov_names, SE="Y"),
-                  formula=formula_ref, method="Lee.et.al",
+                  leefit = leeall_multivariate(response=new_response, amat, cov_names, SE="TRUE"),
+                  formula = formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))}
 
     ### Chang Method
@@ -142,14 +142,15 @@ bivrecReg =function(formula, data, method){
 
       if (length(cov_names)==1) {
         results <- list(call = call,
-          chang_fit = chang_univariate(new_data, cov_names, SE="Y"),
+          chang_fit = chang_univariate(new_data, cov_names, SE="TRUE"),
           formula = formula_ref, method = "Chang", data = list(new_data, original = data))
       } else {
         results <- list(call = call,
-          chang_fit = chang_multivariate(new_data, cov_names, SE="Y"),
+          chang_fit = chang_multivariate(new_data, cov_names, SE="TRUE"),
           formula=formula_ref, method="Chang", data = list(new_data, original = data))}
     }
 
+  class(results) <- "bivrecReg"
   return(results)
 }
 

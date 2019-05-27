@@ -37,8 +37,6 @@ This approximation requires extensive computing time for a relatively small samp
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
-#bivrec_data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
 lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

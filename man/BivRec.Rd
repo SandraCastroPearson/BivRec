@@ -27,7 +27,7 @@ This function creates a bivariate recurrent response survival object (bivrecSurv
 }
 \examples{
 set.seed(1234)
-dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 
 }

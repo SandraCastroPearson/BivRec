@@ -70,12 +70,12 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
 #' @description
 #' This function plots bivariate recurrent event gap times for either a bivrec object or a function. If a function is used plots will be produced for levels of categorical covariates.
 #'
-#' @importFrom graphics plot
-#' @importFrom graphics segments
-#' @importFrom graphics legend
+#' @import graphics
 #' @importFrom utils tail
 #' @importFrom stats model.frame
 #' @importFrom stats na.omit
+#' @importFrom stats model.matrix
+
 #'
 #' @param object must be an object of \code{bivrecSurv}, \code{bivrecReg} or \code{bivrecNP} class or a formula that has a bivrecSurv class object as the response.
 #' @param data a data frame that contains categorical covariates from a formula (if a formula is used for the object to be plotted).
@@ -99,22 +99,11 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
 #'
 #'
 
-plot <- function(object, data, main, xlab, ylab, type1, type2) UseMethod("plot")
-
-  # if (is.bivrecSurv(object)) {plot.bivrecSurv(object, main, args)} else {
-  #   if (inherits(object,"formula")) {plot.formula(object, data, args)} else {
-  #     if (is.bivrecReg(object)) {plot.bivrecReg(object, data, args)} else {
-  #       else {stop("Response must be of bivrecSurv, bivrecReg or bivrecNP class or a formula")
-  #       }}}}
-
-
-
 plot.bivrecSurv <- function(object, main, xlab, ylab, type1, type2){
-
   #check arguments for labels
+  if (missing(main)) {main=""}
   if (missing(xlab)) {xlab="Gap Times"}
   if (missing(ylab)) {ylab="Individual"}
-  if (missing(main)) {main=""}
   if (missing(type1)) {type1="Type 1"}
   if (missing(type2)) {type2="Type 2"}
 
@@ -131,6 +120,7 @@ plot.bivrecSurv <- function(object, main, xlab, ylab, type1, type2){
 
 }
 
+#' @export
 plot.formula <- function(object, data, main, xlab, ylab, type1, type2) {
   #check arguments for labels
   if (missing(xlab)) {xlab="Gap Times"}
@@ -214,7 +204,8 @@ plot.formula <- function(object, data, main, xlab, ylab, type1, type2) {
 
 }
 
-plot.bivrecReg <- function(object, data, main, xlab, ylab, type1, type2) {
+#' @export
+plot.bivrecReg <- function(object, main, xlab, ylab, type1, type2) {
     newobject = object$formula
     newdata = object$data$original
     plot.formula(newobject, newdata, main, xlab, ylab, type1, type2)

@@ -32,8 +32,8 @@ mdat=function(dat) {
     delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar]
     delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar]
 
-    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv)
-    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x)summary(g2surv,times=min(x,l2))$surv)
+    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x) summary(g1surv,times=min(x,l1))$surv)
+    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x) summary(g2surv,times=min(x,l2))$surv)
   }
 
   cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
@@ -135,7 +135,7 @@ formarginal <- function(dat){
 #' @export
 #' @examples
 #' set.seed(1234)
-#' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
@@ -150,7 +150,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check all vectors have same length
   all_lengths <- c(length(id),length(episode),length(xij),length(yij),length(Ycind),length(Xcind))
-  if (length(unique(all_lengths)) != 1) top("One or more input vectors (id, episode, xij, yij, Ycind, Xcind) differs in length from the rest.")
+  if (length(unique(all_lengths)) != 1) stop("One or more input vectors (id, episode, xij, yij, Ycind, Xcind) differs in length from the rest.")
 
   #Check xij > 0 and yij >=0 both numeric vectors
   if (!is.numeric(xij)) stop("Time arguments (xij and yij) must be numeric.")

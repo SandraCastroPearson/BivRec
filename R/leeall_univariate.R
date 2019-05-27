@@ -265,7 +265,7 @@ leeall_univariate <- function(response, amat, cov_names, SE){
     univ_fits <- data.frame(c(pro1, pro2))
     colnames(univ_fits) <- c("Estimate")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    result <- list(pro1$par, pro2$par, fit)
+    result <- list(pro1$par, pro2$par, univ_fits)
   } else {
     print("Estimating standard errors")
     #estimate covariance matrix and get diagonal then std. errors
@@ -273,7 +273,7 @@ leeall_univariate <- function(response, amat, cov_names, SE){
     univ_fits <- data.frame(c(pro1, pro2), c(sd_est$se1,sd_est$se2))
     colnames(univ_fits) <- c("Estimate", "SE")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    result <- list(fit = as.matrix(univ_fits),  vcovmat = se_est$covmat)
+    result <- list(fit = as.matrix(univ_fits),  vcovmat = sd_est$covmat)
 
   }
 

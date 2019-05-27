@@ -1,14 +1,3 @@
-#' @importFrom dplyr rename
-#' @export
-#'
-print.bivrecSurv <- function(x, ...) {
-  #Perry
-}
-
-print.bivrecNP <- function(x, ...) {
-  #Perry
-}
-
 significance <- function(pval) {
   sigcode <- ifelse(pval < 0.001, "***",
                     ifelse(pval < 0.01, "**",
@@ -20,8 +9,22 @@ significance <- function(pval) {
   return(sigcode)
 }
 
-summary.bivrecReg <- function(object, ...) {
-  if (!is.bivrecReg(object)) stop("Must be a bivrecReg")
+#' @importFrom stats qnorm
+#' @importFrom stats pnorm
+#' @export
+#'
+
+print.bivrecSurv <- function(x) {
+  #Perry
+}
+
+#' @export
+print.bivrecNP <- function(x) {
+  #Perry
+}
+
+#' @export
+summary.bivrecReg <- function(object) {
   coeffs <- object$leefit$fit
   coeffs <- as.data.frame(cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
                                 rep(0, nrow(coeffs)), rep(0, nrow(coeffs))))
@@ -45,7 +48,8 @@ summary.bivrecReg <- function(object, ...) {
   ans
 }
 
-print.summary.bivrecReg <- function(x, ...) {
+#' @export
+print.summary.bivrecReg <- function(x) {
   cat("\nCall:\n",
       paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
 
@@ -59,9 +63,11 @@ print.summary.bivrecReg <- function(x, ...) {
   cat("\n---\n",
       paste(x$signifcodes, sep = "\n", collapse = "\n"), "\n\n", sep = "")
 
-  print(expcoeffs)
+  print(x$expcoeffs)
+
 }
 
+#' @export
 coef.bivrecReg <- function(object, ...) {
   if (!is.bivrecReg(object)) stop("Must be a bivrecReg")
   coeffs <- object$leefit$fit
@@ -75,14 +81,15 @@ coef.bivrecReg <- function(object, ...) {
   coeffs
 }
 
-
+#' @export
 print.bivrecReg <- function(x) {
-  if (!is.bivrecReg(object)) stop("Must be a bivrecReg")
+  if (!is.bivrecReg(x)) stop("Must be a bivrecReg")
   coeffs1 <- coef.bivrecReg(x)
   print(coeffs1)
 }
 
-vcov.bivrecReg <- function(object, ...) {
+#' @export
+vcov.bivrecReg <- function(object) {
   if (!is.bivrecReg(object)) stop("Must be a bivrecReg")
   vcovmatrix <- object$leefit$vcovmat
   covnames <- rownames(object$leefit$fit)
@@ -92,7 +99,8 @@ vcov.bivrecReg <- function(object, ...) {
 
 }
 
-confint.bivrecReg <- function(object, parm, level, ...) {
+#' @export
+confint.bivrecReg <- function(object, parm, level) {
   if (!is.bivrecReg(object)) stop("Must be a bivrecReg")
   coeffs <- object$leefit$fit
   if (missing(level)) {level = 0.95}
@@ -100,9 +108,9 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   conf_lev = 1 - ((1-level)/2)
   CIcalc <- t(apply(coeffs, 1, function(x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
   ans  <- cbind(coeffs, CIcalc)
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(ans) <- c("Estimate", "SE", low.string, up.string)
+  lowstring <- paste((1 - conf_lev), "%", sep="")
+  upstring <- paste(conf_lev, "%", sep="")
+  colnames(ans) <- c("Estimate", "SE", lowstring, upstring)
   rownames(ans) <- rownames(coeffs)
   ans
 }

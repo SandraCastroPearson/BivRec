@@ -4,19 +4,9 @@
 #x is the bivrecSurv object
 
 ##Example
-#npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
-#npresult2 <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = TRUE, given.interval=c(0, 10))
+# npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
+# npresult2 <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = TRUE, given.interval=c(0, 10))
 
-#' nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
-#'           data=dat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-#'           conditional = FALSE, given.interval=c(0, 10), jointplot=FALSE,
-#'           marginalplot = FALSE, condiplot = FALSE)
-#'
-#'           nonpar.result2 <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
-#'           data=dat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-#'           conditional = TRUE, given.interval=c(0, 10), jointplot=FALSE,
-#'           marginalplot = FALSE, condiplot = FALSE)
-#'
 bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
   if (!is.bivrecSurv(x)) stop("Response must be a bivrecSurv class")
   if (missing(ai)) {ai<-1}
@@ -33,7 +23,6 @@ bivrecNP <- function(x, CI, ai, u1, u2, conditional, given.interval){
 
   ### Dataframe with id, epi, xij, yij, d1, d2, zij and ci. This part will be moved to bivrecSurv
   data <- x$df
-  covariates <- rep(1, length(data$id))
 
   iden <- data$id #move this to BivrecSurv object
   iden.u <- unique(iden)

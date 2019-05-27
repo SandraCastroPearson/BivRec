@@ -238,7 +238,7 @@ sd.estpar1=function(init,dat,v, B) {
 
 
 #multivariable regression analysis-Chang's method
-chang.univariate <- function(new_data, cov_names, sd) {
+chang_univariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariate", cov_names))
   beta <- rep(0, 2)
@@ -251,7 +251,7 @@ chang.univariate <- function(new_data, cov_names, sd) {
     stop()
   }
 
-  if (is.null(sd)==TRUE) {
+  if (is.null(SE)==TRUE) {
     changfit <- data.frame(chang1$par)
     colnames(changfit) <- c("Estimate")
     rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))

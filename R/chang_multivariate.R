@@ -228,7 +228,7 @@ sd.estpar=function(init, dat, v, B) {
 #' @keywords internal
 
 #multivariable regression analysis-Chang's method
-chang.multivariate <- function(new_data, cov_names, SE) {
+chang_multivariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
   beta <- rep(0, length(cov_names)*2)

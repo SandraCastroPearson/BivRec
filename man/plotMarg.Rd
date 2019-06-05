@@ -4,17 +4,17 @@
 \alias{plotMarg}
 \title{Plot Marginal Survival after non-parametric analysis}
 \usage{
-plotMarg(x)
+plotMarg(x, CI)
 }
 \arguments{
-\item{bivrec.nonparam.result}{List with marginal.survival, formula and data. Passed from biv.rec.np()}
+\item{x}{must be an object of \code{bivrecNP} class.}
 
-\item{CI}{Confidence level for CI. Passed from biv.rec.np()}
+\item{CI}{}
 }
 \value{
 A plot of marginal survival vs. first gap time with confidence interval.
 }
 \description{
-This function plots marginal survival for recurrent event data.  Called from biv.rec.np(). No user interface.
+This function plots marginal survival for recurrent event data.
 }
 \keyword{internal}

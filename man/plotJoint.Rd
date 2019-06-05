@@ -7,14 +7,12 @@
 plotJoint(x)
 }
 \arguments{
-\item{bivrec.nonparam.result}{List with joint.cdf, formula, data. Passed from biv.rec.np()}
-
-\item{CI}{Confidence level for CI. Passed from biv.rec.np()}
+\item{x}{must be an object of \code{bivrecNP} class.}
 }
 \value{
-A 3D scatter plot of joint cdf with confidence interval.
+A contour plot of joint cdf.
 }
 \description{
-This function plots joint cdf for recurrent event data.  Called from biv.rec.np(). No user interface.
+This function plots joint cdf for recurrent event data.
 }
 \keyword{internal}

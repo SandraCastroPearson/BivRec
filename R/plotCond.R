@@ -2,11 +2,11 @@
 #' Plot conditional CDF after non-parametric analysis
 #'
 #' @description
-#' This function plots conditional cdf for recurrent event data.  
+#' This function plots conditional cdf for recurrent event data.
 #'
-#' @param BivrecNP object 
+#' @param x must be an object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.
 #'
-#' @return A plot of conditional cdf in given interval.
+#' @return A plot of conditional cdf in the given interval.
 #'
 #' @importFrom stats ftable
 #' @keywords internal

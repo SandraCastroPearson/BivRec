@@ -7,10 +7,10 @@
 plotCond(x)
 }
 \arguments{
-\item{BivrecNP}{object}
+\item{x}{must be an object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.}
 }
 \value{
-A plot of conditional cdf in given interval.
+A plot of conditional cdf in the given interval.
 }
 \description{
 This function plots conditional cdf for recurrent event data.

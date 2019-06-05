@@ -40,7 +40,6 @@
 #' \url{https://doi.org/10.1093/biomet/81.2.341}
 #' }
 #'
-#' @rdname bivrecReg
 #' @export
 #'
 #' @examples

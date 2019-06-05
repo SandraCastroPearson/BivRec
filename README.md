@@ -35,7 +35,7 @@ follows:
 #Installation requires devtools package.
 #install.packages("devtools")
 library(devtools)
-install_github("SandraCastroPearson/BivRec")
+#install_github("SandraCastroPearson/BivRec")
 ```
 
 ## Example

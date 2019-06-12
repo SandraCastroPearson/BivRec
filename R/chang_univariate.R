@@ -22,7 +22,7 @@
                     ugapcols=as.integer(ncol(tugap1r)),
                     tmpstart=as.integer(tmpstart),
                     tmpend=as.integer(tmpend),
-                    tugapstart=as.integer(tmpend),
+                    tugapstart=as.integer(tugapstart),
                     tugapend=as.integer(tugapend),
 
                     idcount=as.integer(idcount),
@@ -168,7 +168,7 @@ v.est1=function(beta, dat, R)
 RE.bivR1=function(beta,dat,R) {
   mdat=m.dat.chang1(dat,beta)
   n=mdat$n
-  p=length(beta)
+  # p=length(beta)
   ugap1=mdat$ugap1
   ugap2=mdat$ugap2
 
@@ -209,9 +209,9 @@ sd.estpar1=function(init,dat,v, B) {
     i=i+1
     A[i,]=est.R$par
   }
-  var.est=cov(A,A) #cov compute the cov between columns
+  var_est=cov(A,A) #cov compute the cov between columns
   out=sqrt(diag(var.est))
-  return(out)
+  return(sd=out, covmat=var_est)
 }
 
 ###################################################################
@@ -225,8 +225,7 @@ sd.estpar1=function(init,dat,v, B) {
 #' @param cov_names A string with the name of the covariate. Passed from biv.rec.fit().
 #' @param CI Passed from biv.rec.fit().
 #'
-#' @return A dataframe summarizing covariate effect estimate, SE and CI.
-#' @seealso \code{\link{biv.rec.fit}}
+#' @return A list with estimates, SE and variance-covariance matrix.
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
@@ -239,7 +238,7 @@ sd.estpar1=function(init,dat,v, B) {
 
 
 #multivariable regression analysis-Chang's method
-chang.univariate <- function(new_data, cov_names, CI) {
+chang_univariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariate", cov_names))
   beta <- rep(0, 2)
@@ -252,30 +251,25 @@ chang.univariate <- function(new_data, cov_names, CI) {
     stop()
   }
 
-  if (is.null(CI)==TRUE) {
-    chang.fit <- data.frame(chang1$par)
-    colnames(chang.fit) <- c("Estimate")
-    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+  if (is.null(SE)==TRUE) {
+    changfit <- data.frame(chang1$par)
+    colnames(changfit) <- c("Estimate")
+    rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    return(fit=changfit)
 
   } else {
 
     print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
 
     #estimate covariance matrix / std. errors
-    chang1.v <- v.est1(chang1$par,new_data, R=100)
-    chang1.sd <- sd.estpar1(beta, new_data, chang1.v ,B=50)
+    chang1v <- v.est1(chang1$par,new_data, R=100)
+    chang1sd <- sd.estpar1(beta, new_data, chang1v ,B=50)
 
     #calculate CIs, join all info, put in nice table
-    conf.lev = 1 - ((1-CI)/2)
-    CIlow <- chang1$par - qnorm(conf.lev)*chang1.sd
-    CIup <- chang1$par + qnorm(conf.lev)*chang1.sd
-    chang.fit <- data.frame(chang1$par, chang1.sd, CIlow, CIup)
-    low.string <- paste((1 - conf.lev), "%", sep="")
-    up.string <- paste(conf.lev, "%", sep="")
-    colnames(chang.fit) <- c("Estimate", "SE", low.string, up.string)
-    rownames(chang.fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-
+    changfit <- data.frame(chang1$par, chang1sd$sd)
+    colnames(changfit) <- c("Estimate", "SE")
+    rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    return(list(fit=changfit, vcovmatrix = chang1sd$covmat))
   }
 
-  return(chang.fit)
 }

@@ -7,6 +7,7 @@
 #' @importFrom stats model.frame
 #' @importFrom stats na.omit
 #' @importFrom stats quantile
+#' @importFrom stats model.matrix
 #'
 #' @param formula A formula with a bivrecSurv object as response.
 #' @param data A data frame that includes all the covariates listed in the formula.
@@ -39,20 +40,17 @@
 #' \url{https://doi.org/10.1093/biomet/81.2.341}
 #' }
 #'
-#' @rdname bivrecReg
 #' @export
 #'
 #' @examples
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' #bivrec_data <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#'
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
-#' fit_lee <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method="Lee.et.al")
-#' fit_lee$covariate.effects
+#' summary(lee_reg)
 #' \dontrun{
 #'
 #' #This is an example with longer runtime.
@@ -75,6 +73,8 @@
 
 bivrecReg =function(formula, data, method){
 
+  call = match.call()
+
   #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
@@ -83,7 +83,7 @@ bivrecReg =function(formula, data, method){
   if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
 
-  if (ncol(model.matrix(formula, data)) = 1) {stop("This is a non-parametric analysis use non-parametric functions")}
+  if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
    if (method == "Lee.et.al") {
@@ -116,14 +116,14 @@ bivrecReg =function(formula, data, method){
      amat = as.matrix(amat)
 
       if (ncol(amat)==1) {
-          results <- list(
-                  leeall_univariate(response=new_response, amat, cov_names, SE="Y"),
+          results <- list(call = call,
+                  leefit = leeall_univariate(response=new_response, amat, cov_names, SE="TRUE"),
                   formula=formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))
         } else {
-          results <- list(
-                  leeall_multivariate(response=new_response, amat, cov_names, SE="Y"),
-                  formula=formula_ref, method="Lee.et.al",
+          results <- list(call = call,
+                  leefit = leeall_multivariate(response=new_response, amat, cov_names, SE="TRUE"),
+                  formula = formula_ref, method="Lee.et.al",
                   data = list(response=new_response, predictors = amat, original = data))}
 
     ### Chang Method
@@ -139,19 +139,18 @@ bivrecReg =function(formula, data, method){
       print(message)
 
       if (length(cov_names)==1) {
-        results <- list(
-          chang_fit = chang_univariate(new_data, cov_names, SE="Y"),
+        results <- list(call = call,
+          chang_fit = chang_univariate(new_data, cov_names, SE="TRUE"),
           formula = formula_ref, method = "Chang", data = list(new_data, original = data))
       } else {
-        results <- list(
-          chang_fit = chang_multivariate(new_data, cov_names, SE="Y"),
+        results <- list(call = call,
+          chang_fit = chang_multivariate(new_data, cov_names, SE="TRUE"),
           formula=formula_ref, method="Chang", data = list(new_data, original = data))}
     }
 
+  class(results) <- "bivrecReg"
   return(results)
 }
-
-
 
 is.bivrecReg <- function(x) inherits(x, "bivrecReg")
 

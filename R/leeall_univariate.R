@@ -223,7 +223,7 @@ var.est=function(beta1,beta2,mdat, amat) {
 
   se1=sqrt(diag(mat)/n)[1]
   se2=sqrt(diag(mat)/n)[2]
-  return(list(se1=se1,se2=se2))
+  return(list(se1=se1,se2=se2, covmat = mat/n))
 }
 
 ##################### FUNCTION NOT FOR USER #######################
@@ -236,7 +236,7 @@ var.est=function(beta1,beta2,mdat, amat) {
 #' @param amat Passed from bivrecReg().
 #' @param cov_names Passed from bivrecReg().
 #' @param SE Passed from bivrecReg()
-#' @return A dataframe summarizing estimates and SE.
+#' @return A list with estimates, SE and variance-covariance matrix.
 #'
 #' @importFrom stats na.omit
 #' @importFrom stats optim
@@ -245,7 +245,6 @@ var.est=function(beta1,beta2,mdat, amat) {
 #' @importFrom stringr str_c
 #'
 #' @useDynLib BivRec xmproee ymproee mprovar
-#' @keywords internal
 #' @keywords internal
 
 #MAIN PROGRAM FOR univariate regression analysis
@@ -266,7 +265,7 @@ leeall_univariate <- function(response, amat, cov_names, SE){
     univ_fits <- data.frame(c(pro1, pro2))
     colnames(univ_fits) <- c("Estimate")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    result <- list(pro1$par, pro2$par, fit)
+    result <- list(pro1$par, pro2$par, univ_fits)
   } else {
     print("Estimating standard errors")
     #estimate covariance matrix and get diagonal then std. errors
@@ -274,7 +273,7 @@ leeall_univariate <- function(response, amat, cov_names, SE){
     univ_fits <- data.frame(c(pro1, pro2), c(sd_est$se1,sd_est$se2))
     colnames(univ_fits) <- c("Estimate", "SE")
     rownames(univ_fits) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    result <- list(fit = as.matrix(univ_fits))
+    result <- list(fit = as.matrix(univ_fits),  vcovmat = sd_est$covmat)
 
   }
 

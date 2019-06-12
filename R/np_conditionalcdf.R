@@ -1,16 +1,20 @@
-np.fit4conditional <- function(formula, data, ai, u1, u2){
+np.fit4conditional <- function(data, ai, u1, u2){
 
   ### PULL INFORMATION FROM PARAMETERS TO SEND TO REFORMAT
-  identifier=xij=yij=c_indicatorY=c_indicatorX=episode=covariates=NULL
-  method <- "Non-Parametric"
-  condgx <- TRUE
+  # identifier=xij=yij=c_indicatorY=c_indicatorX=episode=covariates=NULL
+  # method <- "Non-Parametric"
+  # condgx <- TRUE
 
   ###Send to biv.rec.reformat and complete analysis
-  new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data)
+  #new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data) 
+  #The following code is what is happening in reformat except data is boot.data and the u1,u2's are different
+  my_data = na.omit(data)
+  forcdf <- np.dat(dat=my_data, ai=ai)
+  new_data <- list(forcdf=forcdf, refdata = my_data)
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
-  res1 <- nonparam.cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4]
+  res1 <- nonparam.cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4] #this fortran code has to be moved to bivrecsurv object 
 
   return(res1)
 }
@@ -24,14 +28,14 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
     boot.dat <- rbind(boot.dat, cbind(id = j, temp[, -1]))
   }
 
-  joint2 <- np.fit4conditional(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat,
+  joint2 <- np.fit4conditional(data=boot.dat, #got rid of formula 
                              ai=ai, u1=x.grid$Time[2], u2=y.grid)
 
   if (x.grid$Time[1] == mintime) {
     conditional <- joint2[,3] / (1-ps2)
   } else {
-    joint1 <- np.fit4conditional(formula = id + vij + wij + epi + d2 ~ 1, data=boot.dat,
-                          ai=ai, u1=x.grid$Time[1], u2=y.grid)
+    joint1 <- np.fit4conditional(data=boot.dat,
+                          ai=ai, u1=x.grid$Time[1], u2=y.grid) #got rid of formula 
     conditional <- (joint2[,3] - joint1[,3])/(ps1 - ps2)
   }
 
@@ -55,22 +59,20 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, condiplot) {
+nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI,yij) { #added yij parameter
 
   ####Extract items from results
-  marginal <- bivrec.nonparam.result$marginal.survival
+  marginal <- bivrec.nonparam.result$marginal.survival #marg result (res2)
   marginal$rounded <- round(marginal[,2], digits=2)
-  formula <- bivrec.nonparam.result$formula
   data <- bivrec.nonparam.result$data
   ai <- bivrec.nonparam.result$ai
-  new_data <- bivrec.nonparam.result$new_data
+  new_data <- bivrec.nonparam.result$new_data #this is essentially the "fit_data" 
   margdata <- new_data$formarg
   refdata <- new_data$refdata
   n <- margdata$n
-  variables <- all.vars(formula)
-  yij <- eval(parse(text =paste("data$", variables[3], sep="")))
+ 
 
-  x.grid <- marginal[which(marginal$Time<=given.interval[2]), ]
+  x.grid <- marginal[which(marginal$Time<=given.interval[2]), ] #this uses marginal result and is a param for bstp
   x.grid <- x.grid[which(x.grid$Time>=given.interval[1]), ]
   x.grid$diffs <- x.grid$rounded - x.grid$rounded[nrow(x.grid)]
   if (length(which(x.grid$diffs >= 0.1))==0) {
@@ -82,7 +84,6 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
   ps1 <- x.grid[1,2]
   ps2 <- x.grid[3,2]
 
-
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
   colnames(cond.prob) = seq(1,B,1)
@@ -93,6 +94,7 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
     cond.prob[,i] <- bstp(seedi=i, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime = min(marginal$Time))
   }
 
+  
   conf.lev = 1 - ((1-CI)/2)
   bootstrapCIs <- apply(cond.prob, 1, function(x) c(mean(x), sd(x), sort(x)[(1-conf.lev)*B], sort(x)[conf.lev*B]))
   cond <- round(data.frame(y.grid, bootstrapCIs[1,], bootstrapCIs[2,], bootstrapCIs[3,], bootstrapCIs[4,]), digits = 4)
@@ -102,21 +104,24 @@ nonparam.conditional <- function(bivrec.nonparam.result, given.interval, CI, con
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
-  if (condiplot == TRUE) {
-    plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-         xlim=c(0, round(max(y.grid), digits=1)),
-         ylim=c(0, round(max(cond[,5]), digits=1)),
-         main=substitute(
-           paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
-           list(gi1 = given.interval[1], gi2 = given.interval[2]))
-         )
-    graphics::lines(cond$Time, cond[,4], lty = 2)
-    graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  #if (condiplot == TRUE) {
+    #plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
+         #xlim=c(0, round(max(y.grid), digits=1)),
+         #ylim=c(0, round(max(cond[,5]), digits=1)),
+         #main=substitute(
+           #paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
+           #list(gi1 = given.interval[1], gi2 = given.interval[2]))
+         #)
+    #graphics::lines(cond$Time, cond[,4], lty = 2)
+    #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
 
-  }
+  #}
 
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
-
-  return(conditional=cond)
-
+  # cond$xgrid=x.grid
+  # cond$ygrid=y.grid
+  # cond$data=data
+  # cond$cond.prob
+  return(list(conditional=cond,ygrid=y.grid))
+  #return(list(conditional=cond,xgrid=x.grid,ygrid=y.grid,data=data,condprob=cond.prob,yij=yij))
 }

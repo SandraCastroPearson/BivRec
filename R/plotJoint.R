@@ -2,12 +2,11 @@
 #' Plot Joint CDF after non-parametric analysis
 #'
 #' @description
-#' This function plots joint cdf for recurrent event data.  Called from biv.rec.np(). No user interface.
+#' This function plots joint cdf for recurrent event data.
 #'
-#' @param bivrec.nonparam.result List with joint.cdf, formula, data. Passed from biv.rec.np()
-#' @param CI Confidence level for CI. Passed from bivrecNP() 
+#' @param x must be an object of \code{bivrecNP} class.
 #'
-#' @return A 3D scatter plot of joint cdf with confidence interval. This is a separate function from plot
+#' @return A contour plot of joint cdf.
 #'
 #' @importFrom stats ftable
 #' @keywords internal

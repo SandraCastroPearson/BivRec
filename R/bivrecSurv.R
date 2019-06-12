@@ -1,4 +1,3 @@
-
 #                 m.dat, np.dat FUNCTIONS                                      #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
@@ -33,8 +32,8 @@ mdat=function(dat) {
     delta1[i,1:tmp.mstar]=tmp$d1[1:tmp.mstar]
     delta2[i,1:tmp.mstar]=tmp$d2[1:tmp.mstar]
 
-    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x)summary(g1surv,times=min(x,l1))$surv)
-    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x)summary(g2surv,times=min(x,l2))$surv)
+    g1mat[i,1:tmp.mstar]=sapply(xmat[i,1:tmp.mstar],function(x) summary(g1surv,times=min(x,l1))$surv)
+    g2mat[i,1:tmp.mstar]=sapply(zmat[i,1:tmp.mstar],function(x) summary(g2surv,times=min(x,l2))$surv)
   }
 
   cumh1=cumsum(g1surv$n.event/g1surv$n.risk)
@@ -111,6 +110,7 @@ formarginal <- function(dat){
   return(mdata)
 }
 
+
 #################### CREATE A BIVREC OBJECT ######################
 
 #####
@@ -130,13 +130,12 @@ formarginal <- function(dat){
 #' @param Xcind Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
 #'
 #' @return a BivRec repsonse object ready to put in a formula.
-#' @seealso \code{\link{BivRec.fit}}
 #'
 #' @rdname BivRec
 #' @export
 #' @examples
 #' set.seed(1234)
-#' dat <- biv.rec.sim(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
@@ -151,7 +150,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check all vectors have same length
   all_lengths <- c(length(id),length(episode),length(xij),length(yij),length(Ycind),length(Xcind))
-  if (length(unique(all_lengths)) != 1) top("One or more input vectors (id, episode, xij, yij, Ycind, Xcind) differs in length from the rest.")
+  if (length(unique(all_lengths)) != 1) stop("One or more input vectors (id, episode, xij, yij, Ycind, Xcind) differs in length from the rest.")
 
   #Check xij > 0 and yij >=0 both numeric vectors
   if (!is.numeric(xij)) stop("Time arguments (xij and yij) must be numeric.")
@@ -172,12 +171,12 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   }
 
   id_ref = id
-
   inputdf <- data.frame(id=id, epi=episode, xij=xij, yij=yij, d1=Xcind, d2=Ycind)
 
   #Checks for each subject
   err_xind = err_yind = err_epi = NULL
   unique_id <- unique(inputdf$id)
+
   for (i in 1:length(unique_id)) {
     sub_id <- unique_id[i]
     temp_by_subject <- subset(inputdf, inputdf$id==sub_id)
@@ -200,6 +199,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
         err_epi <- c(err_epi, sub_id)}
     }
   }
+
   error_subjects <- unique(c(err_xind, err_yind, err_epi))
   if (length(error_subjects>0)){
     errmsg <- paste(error_subjects, collapse = ", ")
@@ -245,17 +245,15 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   formarg1 <- np.dat(marg1, ai=1)
   formarg2 <- np.dat(marg2, ai=2)
   #two np objects that have data for cdf and marg depending on ai
-  result$data4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
-  result$data4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
+  result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
+  result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
 
   class(result) <- "bivrecSurv"
   return(result)
+
 }
 
-#' @rdname bivrecSurv
-#' @export
-
-is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
-is.bivrecReg <- function(x) inherits(x, "bivrecReg")
-is.bivrecNP <- function(x) inherits(x, "bivrecNP")
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
+  is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
+  is.bivrecReg <- function(x) inherits(x, "bivrecReg")
+  is.bivrecNP <- function(x) inherits(x, "bivrecNP")
+  is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol

@@ -3,14 +3,14 @@ Type: Package
 Title: Bivariate Alternating Recurrent Event Data Analysis
 Date: 2018-10-31
 Version: 1.0.0
-Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Chi-Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
+Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Aparajita", "Sur", email = "sur00001@umn.edu", role = "aut"), person("Chi-Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
   person("Xianghua", "Luo", email = "luox0054@umn.edu", role = "ctb"))
 Author: Sandra Castro-Pearson [aut, cre],  Chi-Hyun Lee [aut], Chiung-Yu Huang [aut], Xianghua Luo [ctb]
 Maintainer: Sandra Castro-Pearson <cast0135@umn.edu>
 Description: Alternating recurrent event data arise frequently in biomedical and social sciences where 2 types of events such as hospital admissions and discharge occur alternatively over time. 
     As such we implement a collection of non-parametric and semiparametric methods to analyze such data.   
-    The main functions are biv.rec.fit() and biv.rec.np(). Use biv.rec.fit() for estimation of covariate effects on the two alternating event gap times (xij and yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".   
-    Use biv.rec.np() for estimation of the joint cumulative distribution function (cdf) for the two alternating events gap times (xij and yij) as well as the marginal survival function for type I gap times (xij) and the conditional cdf of the type II gap times (yij) given an interval of type I gap times (xij) in a non-parametric fashion.   
+    The main functions are bivrecReg() and bivrecNP(). Use bivrecReg() for estimation of covariate effects on the two alternating event gap times (xij and yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".   
+    Use bivrecNP() for estimation of the joint cumulative distribution function (cdf) for the two alternating events gap times (xij and yij) as well as the marginal survival function for type I gap times (xij) and the conditional cdf of the type II gap times (yij) given an interval of type I gap times (xij) in a non-parametric fashion.   
     The package also provides options to simulate and visualize the data and results of analysis. 
 BugReports: https://github.com/SandraCastroPearson/BivRec/issues
 Depends: R (>= 3.2.0), survival, stats 
@@ -18,5 +18,5 @@ Imports: MASS, stringr, utils, knitr, rmarkdown, Rcpp, graphics, grDevices
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 LinkingTo: Rcpp

@@ -13,11 +13,6 @@
 #' @param data A data frame that includes all the covariates listed in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
-#' @return A bivrecReg object containing:
-#' \itemize{
-#'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
-#'   \item \strong{formula:} The formula used to specify the model.
-#' }
 #'
 #' @details
 #' Two different estimation methods are available:
@@ -62,9 +57,9 @@
 #'
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 #' # and 99% confidence intervals.
-#'fit_chang <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#'chang_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method = "Chang")
-#'
+#'summary(chang_reg)
 #'# To apply Chang (2004) method use method="Chang"
 #'}
 
@@ -78,11 +73,23 @@ bivrecReg =function(formula, data, method){
   #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
-  if (!missing(data)) {response <- eval(formula[[2]], data)
-      } else {stop("data argument missing")}
-  if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
-  formula[[2]] <- NULL
+  if (!missing(data)) {
+    variables <- all.vars(formula_ref)
+    names <- paste("data$", variables, sep="")
+    numbercov <- length(variables)- 6
+    dat2 <- data.frame(eval(parse(text = names[1])), eval(parse(text = names[2])))
+    for (i in 1:numbercov) {
+      dat2[, 2+i] <- eval(parse(text = names[6+i]))
+    }
+    which_missing <- unique(unlist(apply(dat2, 2, function(x) which(is.na(x)==TRUE))))
+    data_ref <- data
+    data <- data[-which_missing, ]
 
+    response <- eval(formula[[2]], data)
+    formula[[2]] <- NULL
+  } else {stop("data argument missing")}
+
+  if (!is.bivrecSurv(response)) stop("Response must be a bivrecSurv object")
   if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
@@ -90,23 +97,6 @@ bivrecReg =function(formula, data, method){
      predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
      colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
      cov_names <- colnames(predictors)[-1]
-     missing <- unlist(apply(predictors[,-1], 2, function(x) which(is.na(x))))
-
-     if (length(missing)!=0) {    #need to test missing fix
-       predictors <- predictors[-missing,]
-       temp1 = list(xmat = response$dat4Lreg$xmat, ymat = response$data4Lreg$ymat, zmat = response$dat4Lreg$zmat,
-                    delta1 = response$dat4Lreg$delta1, delta2 = response$data4Lreg$delta2,
-                    g1mat = response$dat4Lre$g1mat, g2mat = response$data4Lre$g2mat,
-                    l1mat = response$dat4Lreg$l1mat, l2mat = response$data4Lreg$l2mat)
-       new_response = lapply(temp1, function(x) x = x[-missing,])
-       new_response$mstar = response$data4Lreg$mstar[-missing]
-       new_response$ctime = response$data4Lreg$ctime[-missing]
-       new_response$n = response$dat4Lreg$n - length(unique(missing))
-       new_response$mc = response$data4Lreg$mc
-       new_response$l1 = response$data4Lreg$l1
-       new_response$l2 = response$data4Lreg$l2
-
-     } else {new_response = response$data4Lreg}
 
      amat = NULL
      for (i in unique(predictors$id)) {
@@ -115,37 +105,37 @@ bivrecReg =function(formula, data, method){
      }
      amat = as.matrix(amat)
 
+     new_response = response$data4Lreg
+
       if (ncol(amat)==1) {
           results <- list(call = call,
                   leefit = leeall_univariate(response=new_response, amat, cov_names, SE="TRUE"),
                   formula=formula_ref, method="Lee.et.al",
-                  data = list(response=new_response, predictors = amat, original = data))
+                  data = list(response=new_response, predictors = amat, original = data_ref))
         } else {
           results <- list(call = call,
                   leefit = leeall_multivariate(response=new_response, amat, cov_names, SE="TRUE"),
                   formula = formula_ref, method="Lee.et.al",
-                  data = list(response=new_response, predictors = amat, original = data))}
+                  data = list(response=new_response, predictors = amat, original = data_ref))}
 
     ### Chang Method
     } else {
-      predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
-      colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
-      cov_names = colnames(predictors)[-1]
-      new_data <- rbind(as.data.frame(response$dat4Creg), predictors, by="id")
-      orig_num <- length(unique(new_data$id))
-      new_data <- na.omit(new_data)
-      new_num <-length(unique(new_data$id))
-      message <- paste("Original number of subjects: ", orig_num, ". Subjects for Chang Analysis: ", new_num, sep="")
-      print(message)
+      predictors <- data.frame(id = response$id_ref, epi = na.omit(dat2)[,2], model.matrix(formula, data)[,-1])
+      colnames(predictors) <-  c("id", "epi", colnames(model.matrix(formula, data))[-1])
+      cov_names <- colnames(predictors)[-c(1,2)]
+      new_data <- merge(response$data4Creg, predictors, c("id","epi"))
+      new_data <- new_data[order(new_data$id, decreasing = FALSE),]
 
       if (length(cov_names)==1) {
         results <- list(call = call,
           chang_fit = chang_univariate(new_data, cov_names, SE="TRUE"),
-          formula = formula_ref, method = "Chang", data = list(new_data, original = data))
+          formula = formula_ref, method = "Chang",
+          data = list(new_data=new_data, original = data_ref))
       } else {
         results <- list(call = call,
           chang_fit = chang_multivariate(new_data, cov_names, SE="TRUE"),
-          formula=formula_ref, method="Chang", data = list(new_data, original = data))}
+          formula=formula_ref, method="Chang",
+          data = list(new_data=new_data, original = data_ref))}
     }
 
   class(results) <- "bivrecReg"

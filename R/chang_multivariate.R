@@ -18,7 +18,7 @@ m.dat.chang=function(dat,beta) {
   beta1=beta[1:p]
   beta2=beta[(p+1):(2*p)]
   maxb=apply(cbind(beta1,beta2),1,max)
-  amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
+  amat_indexes <- c(9:ncol(dat))
   amat <- as.matrix(dat[,amat_indexes])
   dat$txij=dat$xij*exp(-amat%*%beta1)
   dat$tzij=dat$txij+dat$yij*exp(-amat%*%beta2)
@@ -80,8 +80,8 @@ RE.biv=function(beta,dat) {
   n=mdat$n
   ugap1=mdat$ugap1
   ugap2=mdat$ugap2
-  a_indexes1 <- which(substr(colnames(ugap1), 1,1)=="a")
-  a_indexes2 <- which(substr(colnames(ugap2), 1,1)=="a")
+  ncov = length(c(9:ncol(dat)))
+  a_indexes1 = a_indexes2 = seq(3, 2+ncov, 1)
 
   ss10=cumsum(1/ugap1$mstar/n)
   ss11=apply(ugap1[, a_indexes1]/ugap1$mstar/n,2,cumsum)
@@ -160,8 +160,8 @@ RE.bivR=function(beta,dat,R) {
   p=length(beta)
   ugap1=mdat$ugap1
   ugap2=mdat$ugap2
-  a_indexes1 <- which(substr(colnames(ugap1), 1,1)=="a")
-  a_indexes2 <- which(substr(colnames(ugap2), 1,1)=="a")
+  ncov = length(c(9:ncol(dat)))
+  a_indexes1 = a_indexes2 = seq(3, 2+ncov, 1)
 
   ss10=cumsum(1/ugap1$mstar/n)
   ss11=apply(ugap1[, a_indexes1]/ugap1$mstar/n,2,cumsum)
@@ -194,7 +194,7 @@ sd.estpar=function(init, dat, v, B) {
   i=0
   while (i < B)
   {
-    R=mvrnorm(1,rep(0,p),v)
+    R=MASS::mvrnorm(1,rep(0,p),v)
     est.R=RE.uestR(init,dat,R)
     if (est.R$conv!=0) next
     i=i+1
@@ -230,11 +230,11 @@ sd.estpar=function(init, dat, v, B) {
 #multivariable regression analysis-Chang's method
 chang_multivariate <- function(new_data, cov_names, SE) {
 
-  print(paste("Fitting model with covariates:", str_c(cov_names, collapse = ","), sep=" "))
+  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ","), sep=" "))
   beta <- rep(0, length(cov_names)*2)
 
   #solve to get all  estimates
-  chang <- RE.uest(beta, new_data)
+  chang <- RE.uest(init = beta, dat=new_data)
 
   if (chang$conv!=0) {
     print("Error: Max Iterations reached. Did not converge. Estimates are not accurate.")
@@ -256,7 +256,7 @@ chang_multivariate <- function(new_data, cov_names, SE) {
     changv <- v.est(chang$par,new_data,R=50)
     changsd <- sd.estpar(beta, new_data, v = changv, B=30)
 
-    #calculate CIs, join all info, put in nice table
+    #Join all info, put in nice table
     changfit <- data.frame(chang$par, changsd$sd)
     colnames(changfit) <- c("Estimate", "SE")
     rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))

@@ -129,15 +129,16 @@ formarginal <- function(dat){
 #' @param Ycind Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
 #' @param Xcind Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
 #'
-#' @return a BivRec repsonse object ready to put in a formula.
+#' @return a BivRec repsonse object ready to put in a formula for analysis using bivrecReg or bivrecNP.
 #'
-#' @rdname BivRec
 #' @export
 #' @examples
 #' set.seed(1234)
-#' dat <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' bdat<-with(dat, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' bivrec_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' is.bivrecSurv(bivrec_data)
 #'
+
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check if anything is missing
@@ -170,7 +171,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
     }
   }
 
-  id_ref = id
+
   inputdf <- data.frame(id=id, epi=episode, xij=xij, yij=yij, d1=Xcind, d2=Ycind)
 
   #Checks for each subject
@@ -229,8 +230,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   df4mdat <- cbind(id=id2, df4mdat[-1], ci)
 
   result <- list()
-  result$id_ref = id_ref
-  result$error_ids <- error_subjects
+  result$id_ref = df4mdat$id
   result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
   result$data4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)
 

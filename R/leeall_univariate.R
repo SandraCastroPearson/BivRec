@@ -185,7 +185,7 @@ var.est=function(beta1,beta2,mdat, amat) {
     #sub1.xi1=sapply(expA1,function(x) mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     #sub1.xi2=apply(expA,1,function(x) mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
 
-    sub2 <- r2f.mpro.var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
+    sub2 <- r2f.pro.var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
                          expAx=expA1, expAy=expA2, subsumx=subsum, subsumy=subsum, dx=delta1, dy=delta2, mstar, mc)
     sub2.xi1 <- sub2[,1]
     sub2.xi2 <- sub2[,2]

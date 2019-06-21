@@ -83,7 +83,9 @@ bivrecReg =function(formula, data, method){
     }
     which_missing <- unique(unlist(apply(dat2, 2, function(x) which(is.na(x)==TRUE))))
     data_ref <- data
-    data <- data[-which_missing, ]
+    if (length(which_missing)!=0) {
+      data <- data[-which_missing, ]
+      }
 
     response <- eval(formula[[2]], data)
     formula[[2]] <- NULL

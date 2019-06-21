@@ -1,13 +1,10 @@
 
-#' Plot graphs (joint cdf, marginal and conditional (if user wants)) after non-parametric analysis
+#' Plot graphs (joint cdf, marginal and conditional cdf (if user wants)) after non-parametric analysis
 #'
 #' @description
-#' This function plots joint cdf, marginal survival and conditional for recurrent event data.  Called from biv.rec.np(). No user interface.
+#' This function plots joint cdf, marginal survival and conditional cdf for recurrent event data.  Called from biv.rec.np(). No user interface.
 #'
 #' @param x an object of class \code{bivrecNP}
-
-#'
-#' @return A 2 (or 3) plots
 #'
 #' @importFrom graphics plot
 #' @importFrom graphics segments
@@ -19,7 +16,7 @@
 #'
 plot.bivrecNP <-function(x) {
   if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
-  cond=x$conditional #boolean saying if conditional is in bivrecNP object 
+  cond=x$conditional #boolean saying if conditional is in bivrecNP object
   if (cond==FALSE){
     plotJoint(x)
     plotMarg(x)
@@ -31,5 +28,5 @@ plot.bivrecNP <-function(x) {
     plotCond(x)
   }
 }
-  
+
 

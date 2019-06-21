@@ -20,7 +20,7 @@
 \item{type2}{optional string to label type 2 gap times (default is "Type 2")}
 }
 \description{
-This function plots bivariate recurrent event gap times for a bivrecSurv object.
+This function plots bivariate recurrent event gap times from a bivrecSurv object.
 }
 \examples{
 library(BivRec)
@@ -29,10 +29,10 @@ library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 
-#Create a bivrecObject
+#Create a bivrecSurv object
 bivrecSurvObject <- with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 
-#Plot  bivrecObject
+#Plot
 plot(bivrecSurvObject)
 
 }

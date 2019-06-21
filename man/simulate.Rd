@@ -22,7 +22,7 @@ simulate(nsize, beta1, beta2, tau_c, set)
 \item{set}{Simulation setting based on scenarios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
 }
 \value{
-Data frame with alternating recurrent event data and two covariates
+Data frame with alternating recurrent event data and one continuous and one binary covariate.
 }
 \description{
 This function simulates a series of alternating recurrent events based on simulations in Lee CH, Huang C-Y, Xu G, Luo X (2017).
@@ -30,7 +30,9 @@ This function simulates a series of alternating recurrent events based on simula
 \examples{
 library(BivRec)
 set.seed(1234)
-simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+head(sim_data)
+
 }
 \references{
 \enumerate{

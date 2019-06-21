@@ -46,8 +46,8 @@
 #' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method="Lee.et.al")
 #' summary(lee_reg)
-#' \dontrun{
 #'
+#' \dontrun{
 #' #This is an example with longer runtime.
 #'
 #' library(BivRec)

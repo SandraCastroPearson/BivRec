@@ -4,7 +4,7 @@
 #______________________________________________________________________________#
 # Original by Shu-Hui Chang                                                    #
 # Modified by Chiung-Yu for bivariate recurrent event - Fortran (Feb, 2001)    #
-# Modified and compiled for package by Sandra Castro-Pearson (July, 2018)      #
+# Modified and compiled for package by Sandra Castro-Pearson                  #
 # Received from Xianghua Luo (May, 2018)                                       #
 #______________________________________________________________________________#
 
@@ -50,7 +50,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 ###################################################################
 #################### FUNCTION NOT FOR USER ########################
 ###################################################################
-#' A Function for non-parametric analysis on a biv.rec object for joint cdf 
+#' A Function for non-parametric analysis on a biv.rec object for joint cdf
 #'
 #' @description
 #' This function calculates the joint CDF for bivariate recurrent events. Called from biv.rec.np(). No user interface.

@@ -46,7 +46,7 @@
 #           m.dat.chang1, all RE, v.est1 and sd.estpar1 FUNCTIONS              #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
-# Last Modified by Sandra Castro-Pearson (June, 2018)                          #
+# Last Modified by Sandra Castro-Pearson and Aparajita Sur (June, 2019)        #
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 

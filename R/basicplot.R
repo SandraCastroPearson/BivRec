@@ -1,3 +1,4 @@
+#' @import graphics
 #' @keywords internal
 basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
 

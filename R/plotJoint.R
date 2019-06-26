@@ -3,7 +3,7 @@
 #'
 #' @description
 #' This function plots joint cdf for recurrent event data.
-#'
+#' @noRd
 #' @param x must be an object of \code{bivrecNP} class.
 #'
 #' @return A contour plot of joint cdf.
@@ -12,7 +12,7 @@
 #' @keywords internal
 #'
 plotJoint <- function(x) {
-  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  if (!is_bivrecNP(x)) stop("Object must be a bivrecNP class")
   forplot <- x$joint.cdf
 
   #####OLD MAY RE-USE LATTER: Wald CI and plot

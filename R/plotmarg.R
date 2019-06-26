@@ -4,14 +4,14 @@
 #' This function plots marginal survival for recurrent event data.
 #'
 #' @param x must be an object of \code{bivrecNP} class.
-#' @param CI
-#'
+#' @param CI passed from object
+#' @noRd
 #' @return A plot of marginal survival vs. first gap time with confidence interval.
 #'
 #' @keywords internal
 #'
 plotMarg <- function(x, CI) {
-  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  if (!is_bivrecNP(x)) stop("Object must be a bivrecNP class")
   forplot <- x$marginal.survival[1:3]
   #formula <- bivrec.nonparam.result$formula
 

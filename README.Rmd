@@ -70,7 +70,7 @@ plot(bivrec_data)
 # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
 fitlee <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                      data = simdata, method="Lee.et.al")
-summary(fitlee)
+summarize(fitlee)
 
 # To apply Chang (2004) method use method="Chang".
 # biv.rec.chang<- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2, 

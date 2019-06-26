@@ -1,6 +1,6 @@
-  ###########################################################################
-  ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
-  ###########################################################################
+###########################################################################
+############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
+###########################################################################
 
 #                  o.fun, all PRO and var.est FUNCTIONS                        #
 #_______________________________________________________________________________
@@ -10,64 +10,64 @@
 #_______________________________________________________________________________
 
 r2f.pro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
-    out1 <- .Fortran("xmproee",
-                     n=as.integer(n),
-                     nparams=as.integer(nparams),
-                     di=as.double(di),
-                     xmati=as.double(xmati),
-                     gmati=as.double(gmati),
-                     L=as.double(L),
-                     expA=as.double(expA),
-                     subsum=as.double(subsum),
-                     kcount=as.integer(kcount))
+  out1 <- .Fortran("xmproee",
+                   n=as.integer(n),
+                   nparams=as.integer(nparams),
+                   di=as.double(di),
+                   xmati=as.double(xmati),
+                   gmati=as.double(gmati),
+                   L=as.double(L),
+                   expA=as.double(expA),
+                   subsum=as.double(subsum),
+                   kcount=as.integer(kcount))
 
-    subsum <- out1$subsum
+  subsum <- out1$subsum
 
-    return(subsum)
+  return(subsum)
 }
 
 r2f.pro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kcount){
-    out2 <- .Fortran("ymproee",
-                     n=as.integer(n),
-                     nparams=as.integer(nparams),
-                     di=as.double(di),
-                     xmati=as.double(xmati),
-                     ymati=as.double(ymati),
-                     gmati=as.double(gmati),
-                     L=as.double(L),
-                     expA=as.double(expA),
-                     subsum=as.double(subsum),
-                     kcount=as.integer(kcount))
+  out2 <- .Fortran("ymproee",
+                   n=as.integer(n),
+                   nparams=as.integer(nparams),
+                   di=as.double(di),
+                   xmati=as.double(xmati),
+                   ymati=as.double(ymati),
+                   gmati=as.double(gmati),
+                   L=as.double(L),
+                   expA=as.double(expA),
+                   subsum=as.double(subsum),
+                   kcount=as.integer(kcount))
 
-    subsum <- out2$subsum
+  subsum <- out2$subsum
 
-    return(subsum)
-  }
+  return(subsum)
+}
 
 r2f.pro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
-                           expAx, expAy, subsumx, subsumy, dx, dy, mstar, mc){
-    out <- .Fortran("mprovar",
-                    n=as.integer(n),
-                    nparams=as.integer(nparams),
-                    xmati=as.double(xmat),
-                    ymati=as.double(ymat),
-                    gmatx=as.double(gmatx),
-                    gmaty=as.double(gmaty),
-                    l1=as.double(l1),
-                    l2=as.double(l2),
-                    expAx=as.double(expAx),
-                    expAy=as.double(expAy),
-                    subsumx=as.double(subsumy),
-                    subsumy=as.double(subsumy),
-                    dx=as.double(dx),
-                    dy=as.double(dy),
-                    mstar=as.double(mstar),
-                    mc=as.integer(mc))
+                        expAx, expAy, subsumx, subsumy, dx, dy, mstar, mc){
+  out <- .Fortran("mprovar",
+                  n=as.integer(n),
+                  nparams=as.integer(nparams),
+                  xmati=as.double(xmat),
+                  ymati=as.double(ymat),
+                  gmatx=as.double(gmatx),
+                  gmaty=as.double(gmaty),
+                  l1=as.double(l1),
+                  l2=as.double(l2),
+                  expAx=as.double(expAx),
+                  expAy=as.double(expAy),
+                  subsumx=as.double(subsumy),
+                  subsumy=as.double(subsumy),
+                  dx=as.double(dx),
+                  dy=as.double(dy),
+                  mstar=as.double(mstar),
+                  mc=as.integer(mc))
 
-    subsum1 <- out$subsumx
-    subsum2 <- out$subsumy
+  subsum1 <- out$subsumx
+  subsum2 <- out$subsumy
 
-    return(cbind(subsum1, subsum2))
+  return(cbind(subsum1, subsum2))
 }
 
 ##------symmetric O function
@@ -185,7 +185,7 @@ var.est=function(beta1,beta2,mdat, amat) {
     #sub1.xi1=sapply(expA1,function(x) mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     #sub1.xi2=apply(expA,1,function(x) mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
 
-    sub2 <- r2f.pro.var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
+    sub2 <- r2f.mpro.var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
                          expAx=expA1, expAy=expA2, subsumx=subsum, subsumy=subsum, dx=delta1, dy=delta2, mstar, mc)
     sub2.xi1 <- sub2[,1]
     sub2.xi2 <- sub2[,2]
@@ -279,5 +279,3 @@ leeall_univariate <- function(response, amat, cov_names, SE){
 
   return(result)
 }
-
-

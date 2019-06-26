@@ -15,6 +15,7 @@
 #' @param ylab optional string with label for vertical axis (default is "Individual")
 #' @param type1 optional string to label type 1 gap times (default is "Type 1")
 #' @param type2 optional string to label type 2 gap times (default is "Type 2")
+#' @param data only for formula
 #'
 #' @examples
 #' library(BivRec)
@@ -31,7 +32,7 @@
 #'
 #' @export
 #'
-plot.bivrecSurv <- function(object, main, xlab, ylab, type1, type2){
+plot.bivrecSurv <- function(object, main, xlab, ylab, type1, type2, data=NULL){
   #check arguments for labels
   if (missing(main)) {main=""}
   if (missing(xlab)) {xlab="Gap Times"}

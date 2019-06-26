@@ -128,6 +128,7 @@ formarginal <- function(dat){
 #' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j.
 #' @param Ycind Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
 #' @param Xcind Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
+#' @param x an object to be checked with is_bivrecSurv
 #'
 #' @return A bivrecSurv repsonse object ready for analysis using bivrecReg or bivrecNP.
 #'
@@ -136,7 +137,7 @@ formarginal <- function(dat){
 #' set.seed(1234)
 #' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bivrec_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-#' is.bivrecSurv(bivrec_data)
+#' is_bivrecSurv(bivrec_data)
 #'
 
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
@@ -252,3 +253,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   return(result)
 
 }
+
+
+
+
+

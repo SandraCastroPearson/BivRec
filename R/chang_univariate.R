@@ -233,6 +233,7 @@ sd.estpar1=function(init,dat,v, B) {
 #' @importFrom stats qnorm
 #' @importFrom stats cov
 #' @importFrom MASS mvrnorm
+#' @importFrom survival Surv
 #'
 #' @keywords internal
 

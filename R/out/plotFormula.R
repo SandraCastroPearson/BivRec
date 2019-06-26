@@ -10,13 +10,13 @@
 #' @importFrom stats model.matrix
 
 #'
-#' @param formula must be a formula that has a bivrecSurv class object as the response.
-#' @param data a data frame that contains categorical covariates and/or vectors to create the response indicate in the given formula.
+#' @param object must be a formula that has a bivrecSurv class object as the response.
 #' @param main optional string with plot title (default is no title)
 #' @param xlab optional string with label for horizontal axis (default is "Gap Times")
 #' @param ylab optional string with label for vertical axis (default is "Individual")
 #' @param type1 optional string to label type 1 gap times (default is "Type 1")
 #' @param type2 optional string to label type 2 gap times (default is "Type 2")
+#' @param data a data frame that contains categorical covariates and/or vectors to create the response indicate in the given formula.
 #'
 #' @examples
 #' library(BivRec)
@@ -30,8 +30,9 @@
 #'
 #' @export
 
-plot.formula <- function(formula, data, main, xlab, ylab, type1, type2) {
+plot.formula <- function(object, main, xlab, ylab, type1, type2, data) {
   #check arguments for labels
+  formula = object
   if (missing(xlab)) {xlab="Gap Times"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}

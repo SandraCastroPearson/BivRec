@@ -9,10 +9,12 @@
 #' @return A plot of conditional cdf in the given interval.
 #'
 #' @importFrom stats ftable
+#' @noRd
 #' @keywords internal
 #'
+
 plotCond <- function(x) {
-  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  if (!is_bivrecNP(x)) stop("Object must be a bivrecNP class")
   cond <-x$conditional.cdf$conditional
   plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
   xlim=c(0, round(max(x$conditional.cdf$ygrid), digits=1)),

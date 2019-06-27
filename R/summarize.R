@@ -12,7 +12,7 @@ significance <- function(pval) {
 is.summary.bivrecReg <- function(object) inherits(object, "summary.bivrecReg")
 
 print.summary.bivrecReg <- function(x) {
-  if (!is.summary.bivrecReg(x)) stop("Must be a summary.bivrecReg object")
+  if (!inherits(x, "summary.bivrecReg")) stop("Must be a summary.bivrecReg object")
   cat("\nCall:\n",
       paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
 
@@ -39,6 +39,9 @@ print.summary.bivrecReg <- function(x) {
 summarize <- function(object) {UseMethod("summarize")}
 
 summarize.bivrecReg <- function(object){
+
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
+
   #Make summary for Chang
   coeffs <- object$leefit$fit
   coeffs <- as.data.frame(cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],

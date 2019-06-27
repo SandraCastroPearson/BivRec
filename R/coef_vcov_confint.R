@@ -11,7 +11,7 @@ coef.default <- function(object) stats::coef(object)
 
 coef.bivrecReg <- function(object) {
   #add chang
-  if (!is_bivrecReg(object)) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   coeffs <- object$leefit$fit
   coeffs <- as.data.frame(cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
                                 rep(0, nrow(coeffs)), rep(0, nrow(coeffs))))
@@ -36,7 +36,7 @@ vcov <- function(object) UseMethod("vcov")
 vcov.default <- function(object) stats::vcov(object)
 
 vcov.bivrecReg <- function(object) {
-  if (!is_bivrecReg(object)) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   #do for Chang
   vcovmatrix <- object$leefit$vcovmat
   covnames <- rownames(object$leefit$fit)
@@ -61,7 +61,7 @@ confint <- function(object, parm, level) UseMethod("confint")
 confint.default <- function(object, parm, level) stats::confint(object)
 
 confint.bivrecReg <- function(object, parm, level) {
-  if (!is_bivrecReg(object)) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   #do for Chang
   coeffs <- object$leefit$fit
   if (missing(level)) {level = 0.95}

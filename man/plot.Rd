@@ -26,17 +26,12 @@ plot(x, y, data, ...)
 This function plots bivariate recurrent event gap times in different format
 }
 \examples{
-\dontrun{
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 
-# Apply Lee C, Huang CY, Xu G, Luo X (2017) method
-lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-                    data = bivrec_data, method="Lee.et.al")
+plot(with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example")
+plot(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data, main="Example")
 
-#Plot bivrecReg object
-plot(lee_reg)
-}
 }

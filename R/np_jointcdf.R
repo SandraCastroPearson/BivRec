@@ -50,7 +50,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 ###################################################################
 #################### FUNCTION NOT FOR USER ########################
 ###################################################################
-#' A Function for non-parametric analysis on a biv.rec object for joint cdf 
+#' A Function for non-parametric analysis on a biv.rec object for joint cdf
 #'
 #' @description
 #' This function calculates the joint CDF for bivariate recurrent events. Called from biv.rec.np(). No user interface.
@@ -66,7 +66,7 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 #' @keywords internal
 #'
 
-nonparam.cdf <- function(fit_data, u, ai, CI) {
+nonparam_cdf <- function(fit_data, u, ai, CI) {
 
   n <- fit_data$n
   m <- fit_data$m

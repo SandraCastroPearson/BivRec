@@ -12,8 +12,8 @@
 #' @keywords internal
 #'
 plotJoint <- function(x) {
-  if (!is_bivrecNP(x)) stop("Object must be a bivrecNP class")
-  forplot <- x$joint.cdf
+
+  forplot <- x$joint_cdf
 
   #####OLD MAY RE-USE LATTER: Wald CI and plot
   # rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",

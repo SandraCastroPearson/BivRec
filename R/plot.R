@@ -21,21 +21,16 @@
 #'  \item type1: String to label type 1 gap times (default is "Type 1")
 #'  \item type2: String to label type 2 gap times (default is "Type 2")
 #'}
+#' @export
+#'
 #' @examples
-#' \dontrun{
 #'# Simulate bivariate alternating recurrent event data
 #' library(BivRec)
 #' set.seed(1234)
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #'
-#' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method
-#' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-#'                     data = bivrec_data, method="Lee.et.al")
-#'
-#' #Plot bivrecReg object
-#' plot(lee_reg)
-#' }
-#' @export
+#' plot(with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example")
+#' plot(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data, main="Example")
 #'
 
 plot <- function(x, y, data, ...) {UseMethod("plot")}
@@ -45,7 +40,7 @@ plot.default <- function(x, y, data,...) {
   graphics::plot(x, y,...)}
 
 plot.formula <- function(x, y=NULL, data,...) {
-  if (class(x)!="formula") stop("Object must be a formula")
+  if (!inherits(x, "formula")) stop("Object must be a formula")
   formula <- x
 
   #check arguments for labels
@@ -62,7 +57,7 @@ plot.formula <- function(x, y=NULL, data,...) {
   formula_ref = formula
   if (!missing(data)) {response <- eval(formula[[2]], data)
   } else {stop("data argument missing")}
-  if (!is_bivrecSurv(response)) stop("Response must be a bivrecSurv object")
+  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
   predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
   colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
@@ -133,7 +128,7 @@ plot.formula <- function(x, y=NULL, data,...) {
 
 plot.bivrecReg <- function(x, y=NULL, data=NULL,...) {
 
-  if (!is_bivrecReg(x)) stop("Object must be a bivrecReg class")
+  if (!inherits(x, "bivrecReg")) stop("Object must be a bivrecReg class")
   object <- x
   formula = object$formula
   data = object$data$original
@@ -149,7 +144,7 @@ plot.bivrecReg <- function(x, y=NULL, data=NULL,...) {
   formula_ref = formula
   if (!missing(data)) {response <- eval(formula[[2]], data)
   } else {stop("data argument missing")}
-  if (!is_bivrecSurv(response)) stop("Response must be a bivrecSurv object")
+  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object")
   formula[[2]] <- NULL
   predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
   colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
@@ -219,7 +214,7 @@ plot.bivrecReg <- function(x, y=NULL, data=NULL,...) {
 }
 
 plot.bivrecSurv <- function(x, y=NULL,...){
-  if (!is_bivrecSurv(x)) stop("Object must be a bivrecSurv class")
+  if (!inherits(x, "bivrecSurv")) stop("Object must be a bivrecSurv class")
   object <- x
 
   #check arguments for labels
@@ -243,7 +238,7 @@ plot.bivrecSurv <- function(x, y=NULL,...){
 }
 
 plot.bivrecNP <-function(x, y=NULL,...) {
-  if (!is_bivrecNP(x)) stop("Object must be a bivrecNP class")
+  if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
   cond=x$conditional #boolean saying if conditional is in bivrecNP object
   if (cond==FALSE){
     plotJoint(x)
@@ -257,7 +252,3 @@ plot.bivrecNP <-function(x, y=NULL,...) {
   }
 }
 
-
-# @param x an object for plotting
-# @param y an additional optional object to plot along with x
-# @param ... arguments to be passed to methods

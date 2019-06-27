@@ -53,7 +53,7 @@ r.onesamp <- function(n,gtime,ctime,mc,m,
 #' @keywords internal
 #'
 
-nonparam.marginal <- function(fit_data, CI) {
+nonparam_marginal <- function(fit_data, CI) {
 
   n <- fit_data$n
   m <- fit_data$m

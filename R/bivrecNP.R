@@ -33,18 +33,17 @@
 #' # Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#'
-#' npresult <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-#'                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-#'                      conditional = FALSE, given.interval=c(0, 10))
+#' surv_data <- with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' npresult <- bivrecNP(response = surv_data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
 #' plot(npresult)
 #'
 #' \dontrun{
 #' #This is an example with longer runtime (it runs the conditional graph)
-#  npresult2 <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = TRUE, given.interval=c(0, 10))
+#'  npresult2 <- bivrecNP(bdat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+#'               conditional = TRUE, given.interval=c(0, 10))
 #' }
 
-bivrecNP <- function(response, CI, ai, u1, u2, conditional, given.interval){
+bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
 
   x <- response
 
@@ -53,13 +52,8 @@ bivrecNP <- function(response, CI, ai, u1, u2, conditional, given.interval){
   if (missing(conditional)) {conditional <- FALSE}
   if (missing(CI)) {CI <- 0.95}
 
-  if (CI > 0.99) {
-    print("Error CI > 0.99")
-    stop()} else {
-      if (CI<0.5) {
-        print("Error CI < 0.5")
-        stop()
-      }
+  if (CI > 0.99) {stop("Error CI > 0.99")} else {
+      if (CI<0.5) {stop("Error CI < 0.5")}
     }
 
   data = x$data4Creg
@@ -73,13 +67,15 @@ bivrecNP <- function(response, CI, ai, u1, u2, conditional, given.interval){
   print("Estimating joint cdf and marginal survival")
 
   if (ai==1) {
-    forcdf <- x$dat4np1$forcdf
-    formarg <- x$dat4np1$formarg
+    new_data = x$dat4np1
+    forcdf <- new_data$forcdf
+    formarg <- new_data$formarg
     }
 
   if (ai==2) {
-    forcdf <- x$dat4np2$forcdf
-    formarg <- x$dat4np2$formarg
+    new_data = x$dat4np2
+    forcdf <- new_data$forcdf
+    formarg <- new_data$formarg
     }
 
   cdf_res <- nonparam_cdf(forcdf, u, ai, CI)
@@ -87,7 +83,7 @@ bivrecNP <- function(response, CI, ai, u1, u2, conditional, given.interval){
 
   if (conditional==FALSE) {
 
-    final_result <- list(joint.cdf = cdf_res, marginal.survival = marg_res, ai=ai)
+    final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
 
     } else {
 
@@ -97,17 +93,20 @@ bivrecNP <- function(response, CI, ai, u1, u2, conditional, given.interval){
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
 
     } else {
-      partial_result <- list(cdf = cdf_res, marginal.survival = marg_res,
-                             data = data, ai=ai, new_data=x$dat4np1)
+      partial_result <- list(cdf = cdf_res, marginal_survival = marg_res,
+                             ai=ai, new_data=new_data)
+
       ccdf_res <- nonparam_conditional(partial_result, given.interval,
                                        CI, data$yij)
+
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
                            conditional_cdf = ccdf_res,ai=ai)
+
+      final_result$given.interval <-given.interval
     }
   }
 
   final_result$CI <- CI
-  final_result$given.interval <-given.interval
   final_result$conditional <- conditional
 
   class(final_result) <- "bivrecNP"

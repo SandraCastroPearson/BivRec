@@ -45,14 +45,14 @@ np_fit4conditional <- function(data, ai, u1, u2){
 
   ###Send to biv.rec.reformat and complete analysis
   #new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data)
-  #The following code is what is happening in reformat except data is boot.data and the u1,u2's are different
+
   my_data = na.omit(data)
   forcdf <- np_dat(dat=my_data, ai=ai)
   new_data <- list(forcdf=forcdf, refdata = my_data)
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
-  res1 <- nonparam_cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4] #this fortran code has to be moved to bivrecsurv object
+  res1 <- nonparam_cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4]
 
   return(res1)
 }
@@ -60,19 +60,19 @@ np_fit4conditional <- function(data, ai, u1, u2){
 bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
   set.seed(seedi)
   samp.id <- sample(1:n, n, replace = TRUE)
-  boot.dat <- NULL
+  bootdat <- NULL
   for (j in 1:n){
     temp <- refdata[which(refdata$id==samp.id[j]), ]
-    boot.dat <- rbind(boot.dat, cbind(id = j, temp[, -1]))
+    bootdat <- rbind(bootdat, cbind(id = j, temp[, -1]))
   }
 
-  joint2 <- np_fit4conditional(data=boot.dat, #got rid of formula
+  joint2 <- np_fit4conditional(data=bootdat, #got rid of formula
                              ai=ai, u1=x.grid$Time[2], u2=y.grid)
 
   if (x.grid$Time[1] == mintime) {
     conditional <- joint2[,3] / (1-ps2)
   } else {
-    joint1 <- np_fit4conditional(data=boot.dat,
+    joint1 <- np_fit4conditional(data=bootdat,
                           ai=ai, u1=x.grid$Time[1], u2=y.grid) #got rid of formula
     conditional <- (joint2[,3] - joint1[,3])/(ps1 - ps2)
   }
@@ -97,10 +97,10 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam_conditional <- function(res, given.interval, CI,yij) { #added yij parameter
+nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij parameter
 
   ####Extract items from results
-  marginal <- res$marginal.survival #marg result (res2)
+  marginal <- res$marginal_survival #marg result (res2)
   marginal$rounded <- round(marginal[,2], digits=2)
   ai <- res$ai
   new_data <- res$new_data #this is essentially the "fit_data"
@@ -129,7 +129,6 @@ nonparam_conditional <- function(res, given.interval, CI,yij) { #added yij param
     #print(paste("Sample", i, sep = " "))
     cond.prob[,i] <- bstp(seedi=i, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime = min(marginal$Time))
   }
-
 
   conf.lev = 1 - ((1-CI)/2)
   bootstrapCIs <- apply(cond.prob, 1, function(x) c(mean(x), sd(x), sort(x)[(1-conf.lev)*B], sort(x)[conf.lev*B]))

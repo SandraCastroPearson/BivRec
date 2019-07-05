@@ -8,7 +8,7 @@
 # Received from Xianghua Luo (May, 2018)                                       #
 #______________________________________________________________________________#
 
-r.onesamp <- function(n,gtime,ctime,mc,m,
+r_onesamp <- function(n,gtime,ctime,mc,m,
                        cen,ucen,nd,udt,tot,gap,event,
                        r,d,sest,std){
 
@@ -70,20 +70,20 @@ nonparam_marginal <- function(fit_data, CI) {
   r = d = sest = std = rep(0, nd)
 
 
-  surv <- r.onesamp(n,gtime,ctime,mc,m,
+  surv <- r_onesamp(n,gtime,ctime,mc,m,
                     cen,ucen,nd,udt,tot,gap,event,
                     r,d,sest,std)
 
-  conf.lev = 1 - ((1-CI)/2)
-  surv$lower <- surv[,2] - qnorm(conf.lev)*surv[,3]
-  surv$upper <- surv[,2] + qnorm(conf.lev)*surv[,3]
+  conf_lev = 1 - ((1-CI)/2)
+  surv$lower <- surv[,2] - qnorm(conf_lev)*surv[,3]
+  surv$upper <- surv[,2] + qnorm(conf_lev)*surv[,3]
   surv$lower[which(surv$lower<0)] <- 0
   surv$upper[which(surv$upper>1)] <- 1
 
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(surv) <- c("Time", "Marginal.Survival", "SE", low.string, up.string)
+  lowstring <- paste((1 - conf_lev), "%", sep="")
+  upstring <- paste(conf_lev, "%", sep="")
+  colnames(surv) <- c("Time", "Marginal_Survival", "SE", lowstring, upstring)
 
-  return(marg.survival = surv)
+  return(marg_survival = surv)
 
 }

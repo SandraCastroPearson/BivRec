@@ -4,18 +4,18 @@
 \alias{bivrecNP}
 \title{Non-Parametric Analysis of Bivariate Alternating Recurrent Event Gap Time Data}
 \usage{
-bivrecNP(response, CI, ai, u1, u2, conditional, given.interval)
+bivrecNP(response, ai, u1, u2, CI, conditional, given.interval)
 }
 \arguments{
 \item{response}{A response object of the \code{bivrecSurv} class.}
-
-\item{CI}{The level for confidence intervals for joint cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.}
 
 \item{ai}{A real non-negative function of censoring time. See details.}
 
 \item{u1}{A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.}
 
 \item{u2}{A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.}
+
+\item{CI}{The level for confidence intervals for joint cdf plot, marginal plot and conditional cdf. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. Default is 0.95.}
 
 \item{conditional}{A logical value. If TRUE, this function will calculate the conditional cdf for the type II gap time given an interval of the type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.}
 
@@ -40,13 +40,13 @@ library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-
-npresult <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-                     ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-                     conditional = FALSE, given.interval=c(0, 10))
+surv_data <- with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2))
+npresult <- bivrecNP(response = surv_data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
 plot(npresult)
 
 \dontrun{
 #This is an example with longer runtime (it runs the conditional graph)
+ npresult2 <- bivrecNP(bdat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+              conditional = TRUE, given.interval=c(0, 10))
 }
 }

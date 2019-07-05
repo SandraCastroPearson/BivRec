@@ -8,7 +8,7 @@
 # Received from Xianghua Luo (May, 2018)                                       #
 #______________________________________________________________________________#
 
-r.bivrecur <- function(n, gtime, ctime, mc, m,
+r_bivrecur <- function(n, gtime, ctime, mc, m,
                        cen, ucen, nd, udt, tot, gap, event,
                        r, d, sest, var, markvar1, markvar2,
                        mark1, mark2, u1, u2, Fest, tmpindex, prob, std){
@@ -53,11 +53,11 @@ r.bivrecur <- function(n, gtime, ctime, mc, m,
 #' A Function for non-parametric analysis on a biv.rec object for joint cdf
 #'
 #' @description
-#' This function calculates the joint CDF for bivariate recurrent events. Called from biv.rec.np(). No user interface.
-#' @param fit_data An object that has been reformatted using the biv.rec.reformat() function. Passed from biv.rec.np().
-#' @param u Passed from biv.rec.np().
-#' @param ai Passed from biv.rec.np().
-#' @param CI Passed from biv.rec.np().
+#' This function calculates the joint CDF for bivariate recurrent events. Called from bivrecNP(). No user interface.
+#' @param fit_data Passed from bivrecNP().
+#' @param u Passed from bivrecNP().
+#' @param ai Passed from bivrecNP().
+#' @param CI Passed from bivrecNP().
 #'
 #' @return A dataframe with the joint CDF
 #'
@@ -94,36 +94,36 @@ nonparam_cdf <- function(fit_data, u, ai, CI) {
 
   estcdf <- list()
 
-  for (u.count in 1:nrow(u)) {
-    u1 <- u[u.count, 1]
-    u2 <- u[u.count, 2]
+  for (u_count in 1:nrow(u)) {
+    u1 <- u[u_count, 1]
+    u2 <- u[u_count, 2]
 
 
     tmpindex <-sum(as.integer(udt<=(u1+u2)))  ### index ORINALLY PART OF BIVGAP FUNCTION
     if (tmpindex==0) {
       temp <- data.frame(u1, u2, prob=0, std=0)
       rownames(temp) <- "1"
-      estcdf[[u.count]] <- temp
+      estcdf[[u_count]] <- temp
     } else {
-      estimates <- r.bivrecur(n, gtime, ctime, mc, m,
+      estimates <- r_bivrecur(n, gtime, ctime, mc, m,
                               cen, ucen, nd, udt, tot, gap, event,
                               r, d, sest, var, markvar1, markvar2,
                               mark1, mark2, u1, u2, Fest, tmpindex, prob, std)
-      estcdf[[u.count]] <- data.frame(u1, u2, prob=estimates[1], std=estimates[2])
+      estcdf[[u_count]] <- data.frame(u1, u2, prob=estimates[1], std=estimates[2])
     }
   }
 
   out1 <- data.frame(matrix(unlist(estcdf), nrow=nrow(u), byrow=T))
 
-  conf.lev = 1 - ((1-CI)/2)
-  out1$lower <- out1[,3] - qnorm(conf.lev)*out1[,4]
-  out1$upper <- out1[,3] + qnorm(conf.lev)*out1[,4]
+  conf_lev = 1 - ((1-CI)/2)
+  out1$lower <- out1[,3] - qnorm(conf_lev)*out1[,4]
+  out1$upper <- out1[,3] + qnorm(conf_lev)*out1[,4]
   out1$lower[which(out1$lower<0)] <- 0
   out1$upper[which(out1$upper>1)] <- 1
 
-  low.string <- paste((1 - conf.lev), "%", sep="")
-  up.string <- paste(conf.lev, "%", sep="")
-  colnames(out1) <- c("x", "y", "Joint.Probability", "SE", low.string, up.string)
+  lowstring <- paste((1 - conf_lev), "%", sep="")
+  upstring <- paste(conf_lev, "%", sep="")
+  colnames(out1) <- c("x", "y", "Joint_Probability", "SE", lowstring, upstring)
 
   return(cdf=out1)
 

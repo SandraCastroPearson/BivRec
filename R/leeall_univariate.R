@@ -9,7 +9,7 @@
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 
-r2f.pro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
+r2f_pro_ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
   out1 <- .Fortran("xmproee",
                    n=as.integer(n),
                    nparams=as.integer(nparams),
@@ -26,7 +26,7 @@ r2f.pro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
   return(subsum)
 }
 
-r2f.pro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kcount){
+r2f_pro_ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kcount){
   out2 <- .Fortran("ymproee",
                    n=as.integer(n),
                    nparams=as.integer(nparams),
@@ -44,7 +44,7 @@ r2f.pro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kc
   return(subsum)
 }
 
-r2f.pro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
+r2f_pro_var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
                         expAx, expAy, subsumx, subsumy, dx, dy, mstar, mc){
   out <- .Fortran("mprovar",
                   n=as.integer(n),
@@ -71,12 +71,12 @@ r2f.pro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
 }
 
 ##------symmetric O function
-o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
+#o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
 
 ##-----estimation functions
 
 ##proposed method
-Pro.ee1=function(beta1,mdat, amat) {
+Pro_ee1=function(beta1,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   delta1=mdat$delta1
@@ -91,7 +91,7 @@ Pro.ee1=function(beta1,mdat, amat) {
     di <- delta1[i,1:mstar[i]]
     xmati <- xmat[i,1:mstar[i]]
     gmati <- g1mat[i,1:mstar[i]]
-    subsum <- r2f.pro.ee1(n, nparams=1, di, xmati, gmati, L=l1, expA, subsum = rep(0,n), kcount=mstar[i])
+    subsum <- r2f_pro_ee1(n, nparams=1, di, xmati, gmati, L=l1, expA, subsum = rep(0,n), kcount=mstar[i])
     #subsum=sapply(expA,function(x)mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     tmp.out=c(tmp.out,sum(A*subsum))
   }
@@ -99,18 +99,18 @@ Pro.ee1=function(beta1,mdat, amat) {
   return(out)
 }
 
-Pro.uf1=function(beta1,mdat, amat) {
-  tmp.out=Pro.ee1(beta1,mdat, amat)
+Pro_uf1=function(beta1,mdat, amat) {
+  tmp.out=Pro_ee1(beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-Pro.uest1=function(int,mdat, amat) {
-  res=optimize(Pro.uf1,interval=int,mdat=mdat, amat=amat)
+Pro_uest1=function(int,mdat, amat) {
+  res=optimize(Pro_uf1,interval=int,mdat=mdat, amat=amat)
   return(list(par=res$minimum,value=res$objective))
 }
 
-Pro.ee2=function(beta2,beta1,mdat, amat) {
+Pro_ee2=function(beta2,beta1,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -119,7 +119,7 @@ Pro.ee2=function(beta2,beta1,mdat, amat) {
   l2=mdat$l2
   mstar=mdat$mstar
 
-  tmp.out=NULL
+  tmp_out=NULL
   for (i in 1:n) {
     A=(amat)-amat[i]
     expA1=exp(A*beta1)
@@ -129,28 +129,28 @@ Pro.ee2=function(beta2,beta1,mdat, amat) {
     xmati <- xmat[i,1:mstar[i]]
     ymati <- ymat[i,1:mstar[i]]
     gmati <- g2mat[i,1:mstar[i]]
-    subsum <- r2f.pro.ee2(n, nparams=1, di, xmati, ymati, gmati, L=l2, expA, subsum = rep(0,n), kcount=mstar[i])
+    subsum <- r2f_pro_ee2(n, nparams=1, di, xmati, ymati, gmati, L=l2, expA, subsum = rep(0,n), kcount=mstar[i])
     # subsum=apply(expA,1,function(x)mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
-    tmp.out=c(tmp.out,sum(A*subsum))
+    tmp_out=c(tmp_out,sum(A*subsum))
   }
-  out=sum(tmp.out)/(n^2)
+  out=sum(tmp_out)/(n^2)
   return(out)
 }
 
-Pro.uf2=function(beta2,beta1,mdat, amat) {
-  tmp.out=Pro.ee2(beta2,beta1,mdat, amat)
+Pro_uf2=function(beta2,beta1,mdat, amat) {
+  tmp.out=Pro_ee2(beta2,beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-Pro.uest2=function(int,beta1,mdat, amat) {
-  res=optimize(Pro.uf2,interval=int,beta1=beta1,mdat=mdat, amat=amat)
+Pro_uest2=function(int,beta1,mdat, amat) {
+  res=optimize(Pro_uf2,interval=int,beta1=beta1,mdat=mdat, amat=amat)
   return(list(par=res$minimum,value=res$objective))
 }
 
 
 ##variance estimation
-var.est=function(beta1,beta2,mdat, amat) {
+var_est=function(beta1,beta2,mdat, amat) {
   n=mdat$n
   mc=mdat$mc
   xmat=mdat$xmat
@@ -179,13 +179,13 @@ var.est=function(beta1,beta2,mdat, amat) {
     gmati2 <- g2mat[i,1:mstar[i]]
 
     subsum <- rep(0,n)
-    sub1.xi1 <- r2f.pro.ee1(n, nparams=1, di=d1i, xmati, gmati=gmati1, L=l1, expA=expA1, subsum, kcount=mstar[i])
-    sub1.xi2 <- r2f.pro.ee2(n, nparams=1, di=d2i, xmati, ymati, gmati=gmati2, L=l2, expA, subsum, kcount=mstar[i])
+    sub1.xi1 <- r2f_pro_ee1(n, nparams=1, di=d1i, xmati, gmati=gmati1, L=l1, expA=expA1, subsum, kcount=mstar[i])
+    sub1.xi2 <- r2f_pro_ee2(n, nparams=1, di=d2i, xmati, ymati, gmati=gmati2, L=l2, expA, subsum, kcount=mstar[i])
 
     #sub1.xi1=sapply(expA1,function(x) mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     #sub1.xi2=apply(expA,1,function(x) mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
 
-    sub2 <- r2f.mpro.var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
+    sub2 <- r2f_mpro_var(n, nparams=1, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
                          expAx=expA1, expAy=expA2, subsumx=subsum, subsumy=subsum, dx=delta1, dy=delta2, mstar, mc)
     sub2.xi1 <- sub2[,1]
     sub2.xi2 <- sub2[,2]
@@ -250,15 +250,15 @@ var.est=function(beta1,beta2,mdat, amat) {
 #MAIN PROGRAM FOR univariate regression analysis
 
 #multivariable regression analysis
-leeall_univariate <- function(response, amat, cov_names, SE){
+leeall_univariate <- function(new_response, amat, cov_names, SE){
 
   print(paste("Fitting model with covariate", cov_names))
 
   #solve first equation to get beta1 values - related to xij
-  pro1 <- Pro.uest1(c(-2,2), mdat=response, amat=amat)[[1]]
+  pro1 <- Pro_uest1(c(-2,2), mdat=new_response, amat=amat)[[1]]
 
   #solve second equation to get beta2 values - related to yij
-  pro2 <- Pro.uest2(c(-2,2), pro1, mdat=response, amat=amat)[[1]]
+  pro2 <- Pro_uest2(c(-2,2), pro1, mdat=new_response, amat=amat)[[1]]
 
   if (is.null(SE)==TRUE) {
     #return point estimates only

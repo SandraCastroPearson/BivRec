@@ -61,7 +61,7 @@ simulate <- function(nsize,beta1,beta2,tau_c,set) {
   }
   if (set==1.2) {
     Sig=matrix(c(sg2,sqrt(sg2)*sqrt(sg2)*0.5,sqrt(sg2)*sqrt(sg2)*0.5,sg2),2,2)
-    gamma=mvrnorm(nsize,c(1,1),Sig)
+    gamma=MASS::mvrnorm(nsize,c(1,1),Sig)
     gamma1=gamma[,1]
     gamma2=gamma[,2]
   }

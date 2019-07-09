@@ -133,10 +133,11 @@ formarginal <- function(dat){
 #'
 #' @export
 #' @examples
+#' library(BivRec)
 #' set.seed(1234)
 #' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bivrec_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-#' is.bivrecSurv(bivrec_data)
+#' inherits(bivrec_data, "bivrecSurv")
 #'
 
 bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
@@ -166,7 +167,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   #ensure id's are numeric
   if (!is.numeric(id)) {
     if (is.character(id)) {id = as.numeric(as.factor(id))} else {
-      if (is.factor(id)) {id = as.numeric((id))}else {
+      if (is.factor(id)) {id = as.numeric((id))} else {
         stop("id vector must be numeric, character or factor.")}
     }
   }
@@ -253,7 +254,4 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
 }
 
-  is.bivrecSurv <- function(x) inherits(x, "bivrecSurv")
-  is.bivrecReg <- function(x) inherits(x, "bivrecReg")
-  is.bivrecNP <- function(x) inherits(x, "bivrecNP")
-  is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
+is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol

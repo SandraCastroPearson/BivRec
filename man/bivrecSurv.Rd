@@ -26,9 +26,10 @@ A bivrecSurv repsonse object ready for analysis using bivrecReg or bivrecNP.
 This function creates a bivariate recurrent response survival object (bivrecSurv object).
 }
 \examples{
+library(BivRec)
 set.seed(1234)
 sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 bivrec_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-is.bivrecSurv(bivrec_data)
+inherits(bivrec_data, "bivrecSurv")
 
 }

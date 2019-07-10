@@ -3,7 +3,7 @@
 #'
 #' @description
 #' This function plots joint cdf for recurrent event data.
-#'
+#' @noRd
 #' @param x must be an object of \code{bivrecNP} class.
 #'
 #' @return A contour plot of joint cdf.
@@ -21,6 +21,18 @@
 plotJoint <- function(x) {
   if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
   forplot <- x$joint.cdf
+
+
+  forplot <- x$joint_cdf
+
+  #####OLD MAY RE-USE LATTER: Wald CI and plot
+  # rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
+  #        main = "Joint cdf", ylab ="y", zlab = expression(P(X^0 <= x, Y^0 <= y)),  expand = 1.1, cex.lab = 1.5)
+  # for (i in 1:nrow(forplot)) {
+  #   rgl::rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
+  # }
+
+
   forplot <- forplot[1:3]
   colnames(forplot) <- c("X", "Y", "Cumm.Prob")
   myx <- as.factor(forplot$X)

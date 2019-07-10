@@ -65,3 +65,4 @@ summarize.bivrecReg <- function(object){
   class(ans) <- "summary.bivrecReg"
   ans
 }
+

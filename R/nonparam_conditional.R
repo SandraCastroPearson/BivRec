@@ -1,5 +1,5 @@
 np_dat <- function(dat, ai) {
-  
+
   id <- dat$id
   uid <- unique(id)   # vector of unique id's
   n.uid <- length(uid)   # scalar : number of unique IDs
@@ -7,45 +7,45 @@ np_dat <- function(dat, ai) {
   markvar1 <- dat$vij
   markvar2 <- dat$wij
   gap <- markvar1 + markvar2
-  
+
   m.uid <- as.integer(table(id))   # vector: number of observed pairs per id/subject (m)
   max.m <- max(m.uid, na.rm=T) # scalar : maximum number of repeated observations
-  
+
   ifelse (ai == 1, weight <- rep(1, n.uid), weight <- dat$ci[which(dat$epi == 1)]) #Set weights
-  
+
   tot <- length(gap) # total number of observations
   ugap <- sort(unique(gap[event == 1]))   # sorted unique uncensored X_0 gap times (support points for sum)
   n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
-  
+
   umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
   n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
-  
+
   # Space holders
   r <- sest <- Fest <- rep(0, n.ugap)
   d <- matrix(0, nrow = n.ugap, ncol = 2)
   prob <- var <- std <- 0
   gtime <- cen <- mark1 <- mark2 <- matrix(0, nrow = n.uid, ncol = max.m)
-  
+
   out <- list(n = n.uid, m = m.uid, mc = max.m, nd = n.ugap, tot=tot,
               gap =gap, event = event, markvar1 = markvar1, markvar2 =markvar2,
               udt = ugap,  ctime = weight, ucen = m.uid-1,
               r = r, d=d, sest = sest, Fest = Fest, var = var,
               prob = prob, std = std, gtime = gtime, cen = cen,
               mark1 = mark1, mark2 = mark2, umark1=umark1, nm1 = n.umark1)
-  
+
   return(out)
 }
 
 np_fit4conditional <- function(data, ai, u1, u2){
-  
+
   ### PULL INFORMATION FROM PARAMETERS TO SEND TO REFORMAT
   # identifier=xij=yij=c_indicatorY=c_indicatorX=episode=covariates=NULL
   # method <- "Non-Parametric"
   # condgx <- TRUE
-  
+
   ###Send to biv.rec.reformat and complete analysis
   #new_data <- biv.rec.reformat(identifier, xij, yij, c_indicatorY, c_indicatorX, episode, covariates, method, ai, condgx, data)
-  
+
   my_data = na.omit(data)
   forcdf <- np_dat(dat=my_data, ai=ai)
   new_data <- list(forcdf=forcdf, refdata = my_data)
@@ -53,7 +53,7 @@ np_fit4conditional <- function(data, ai, u1, u2){
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
   res1 <- nonparam_cdf(fit_data=new_data$forcdf, u, ai, CI=0.95)[,1:4]
-  
+
   return(res1)
 }
 
@@ -65,10 +65,10 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
     temp <- refdata[which(refdata$id==samp.id[j]), ]
     bootdat <- rbind(bootdat, cbind(id = j, temp[, -1]))
   }
-  
+
   joint2 <- np_fit4conditional(data=bootdat, #got rid of formula
                                ai=ai, u1=x.grid$Time[2], u2=y.grid)
-  
+
   if (x.grid$Time[1] == mintime) {
     conditional <- joint2[,3] / (1-ps2)
   } else {
@@ -76,7 +76,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
                                  ai=ai, u1=x.grid$Time[1], u2=y.grid) #got rid of formula
     conditional <- (joint2[,3] - joint1[,3])/(ps1 - ps2)
   }
-  
+
   return(conditional)
 }
 
@@ -98,7 +98,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #'
 
 nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij parameter
-  
+
   ####Extract items from results
   marginal <- res$marginal_survival #marg result (res2)
   marginal$rounded <- round(marginal[,2], digits=2)
@@ -107,7 +107,7 @@ nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij para
   margdata <- new_data$formarg
   refdata <- new_data$refdata
   n <- margdata$n
-  
+
   x.grid <- marginal[which(marginal$Time<=given.interval[2]), ] #this uses marginal result and is a param for bstp
   x.grid <- x.grid[which(x.grid$Time>=given.interval[1]), ]
   x.grid$diffs <- x.grid$rounded - x.grid$rounded[nrow(x.grid)]
@@ -119,24 +119,24 @@ nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij para
   y.grid <- seq(min(yij), max(yij), length.out = 200)
   ps1 <- x.grid[1,2]
   ps2 <- x.grid[3,2]
-  
+
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
   colnames(cond.prob) = seq(1,B,1)
   print(paste("Estimating conditional CDF with ", CI*100, "% CI using ", B, " Bootstrap samples", sep=""))
-  
+
   for (i in 1:B) {
     #print(paste("Sample", i, sep = " "))
     cond.prob[,i] <- bstp(seedi=i, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime = min(marginal$Time))
   }
-  
+
   conf.lev = 1 - ((1-CI)/2)
   bootstrapCIs <- apply(cond.prob, 1, function(x) c(mean(x), sd(x), sort(x)[(1-conf.lev)*B], sort(x)[conf.lev*B]))
   cond <- round(data.frame(y.grid, bootstrapCIs[1,], bootstrapCIs[2,], bootstrapCIs[3,], bootstrapCIs[4,]), digits = 4)
   low.string <- paste("Bootstrap ", (1 - conf.lev), "%", sep="")
   up.string <- paste("Bootstrap ", conf.lev, "%", sep="")
   colnames(cond) <- c("Time", "Conditional.Probability" , " Bootstrap SE", low.string, up.string)
-  
+
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
   #if (condiplot == TRUE) {
@@ -149,9 +149,9 @@ nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij para
   #)
   #graphics::lines(cond$Time, cond[,4], lty = 2)
   #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
-  
+
   #}
-  
+
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
   # cond$xgrid=x.grid
   # cond$ygrid=y.grid

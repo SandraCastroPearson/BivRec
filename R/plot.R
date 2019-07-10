@@ -251,3 +251,4 @@ plot.bivrecNP <-function(x, y=NULL,...) {
     plotCond(x)
   }
 }
+

@@ -43,7 +43,7 @@ vcov.bivrecReg <- function(object) {
   rownames(vcovmatrix) = covnames
   colnames(vcovmatrix) = covnames
   vcovmatrix
-  
+
 }
 
 ########################    confint     ########################

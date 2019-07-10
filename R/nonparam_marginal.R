@@ -11,7 +11,8 @@
 r_onesamp <- function(n,gtime,ctime,mc,m,
                       cen,ucen,nd,udt,tot,gap,event,
                       r,d,sest,std){
-  
+
+
   out1 <- .Fortran("onesamp",
                    n=as.integer(n),
                    gtime=as.double(gtime),
@@ -30,9 +31,9 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
                    d=as.double(d),
                    sest=as.double(sest),
                    std= as.double(std))
-  
+
   out2 <- data.frame(time = out1$udt, surv = out1$sest, std = out1$std)
-  
+
   return(out2)
 }
 
@@ -54,7 +55,6 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
 #'
 
 nonparam_marginal <- function(fit_data, CI) {
-  
   n <- fit_data$n
   m <- fit_data$m
   mc <- fit_data$mc
@@ -68,22 +68,33 @@ nonparam_marginal <- function(fit_data, CI) {
   gtime <- fit_data$mark1
   cen <- fit_data$cen
   r = d = sest = std = rep(0, nd)
-  
-  
+
   surv <- r_onesamp(n,gtime,ctime,mc,m,
                     cen,ucen,nd,udt,tot,gap,event,
                     r,d,sest,std)
-  
+
+  surv <- r_onesamp(n,gtime,ctime,mc,m,
+                    cen,ucen,nd,udt,tot,gap,event,
+                    r,d,sest,std)
+
   conf_lev = 1 - ((1-CI)/2)
   surv$lower <- surv[,2] - qnorm(conf_lev)*surv[,3]
   surv$upper <- surv[,2] + qnorm(conf_lev)*surv[,3]
   surv$lower[which(surv$lower<0)] <- 0
   surv$upper[which(surv$upper>1)] <- 1
-  
+
   lowstring <- paste((1 - conf_lev), "%", sep="")
   upstring <- paste(conf_lev, "%", sep="")
   colnames(surv) <- c("Time", "Marginal_Survival", "SE", lowstring, upstring)
-  
+
   return(marg_survival = surv)
-  
+
+}
+
+  lowstring <- paste((1 - conf_lev), "%", sep="")
+  upstring <- paste(conf_lev, "%", sep="")
+  colnames(surv) <- c("Time", "Marginal_Survival", "SE", lowstring, upstring)
+
+  return(marg_survival = surv)
+
 }

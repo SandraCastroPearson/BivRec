@@ -9,7 +9,7 @@
 # Received from Chihyun Lee (January, 2018)                                    #
 #_______________________________________________________________________________
 
-r2f_mpro_ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
+r2f.mpro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
   out1 <- .Fortran("xmproee",
                    n=as.integer(n),
                    nparams=as.integer(nparams),
@@ -26,7 +26,7 @@ r2f_mpro_ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
   return(subsum)
 }
 
-r2f_mpro_ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kcount){
+r2f.mpro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kcount){
   out2 <- .Fortran("ymproee",
                    n=as.integer(n),
                    nparams=as.integer(nparams),
@@ -44,7 +44,7 @@ r2f_mpro_ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, k
   return(subsum)
 }
 
-r2f_mpro_var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
+r2f.mpro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
                          expAx, expAy, subsumx, subsumy, dx, dy, mstar, mc){
   out <- .Fortran("mprovar",
                   n=as.integer(n),
@@ -71,11 +71,11 @@ r2f_mpro_var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
 }
 
 ##------symmetric O function
-#o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
+o.fun=function(t,s,L) {log(min(max(t,s),L))-log(L)}
 
 ##-----estimation functions
 ##proposed method
-MPro_ee1=function(beta1,mdat, amat) {
+MPro.ee1=function(beta1,mdat, amat) {
 
   n=mdat$n
   xmat=mdat$xmat
@@ -93,7 +93,7 @@ MPro_ee1=function(beta1,mdat, amat) {
     di <- delta1[i,1:mstar[i]]
     xmati <- xmat[i,1:mstar[i]]
     gmati <- g1mat[i,1:mstar[i]]
-    subsum <- r2f_mpro_ee1(n, nparams, di, xmati, gmati, L=l1, expA, subsum, kcount=mstar[i])
+    subsum <- r2f.mpro.ee1(n, nparams, di, xmati, gmati, L=l1, expA, subsum, kcount=mstar[i])
     #subsum=sapply(expA,function(x)mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     tmp.out=rbind(tmp.out,apply(A*subsum,2,sum))
   }
@@ -102,18 +102,18 @@ MPro_ee1=function(beta1,mdat, amat) {
   return(out)
 }
 
-MPro_uf1=function(beta1,mdat, amat) {
-  tmp.out=MPro_ee1(beta1,mdat, amat)
+MPro.uf1=function(beta1,mdat, amat) {
+  tmp.out=MPro.ee1(beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
-MPro_uest1=function(init,mdat, amat) {
-  res=optim(init, MPro_uf1, mdat=mdat, amat=amat, control=list(maxit=20000))
+MPro.uest1=function(init,mdat, amat) {
+  res=optim(init, MPro.uf1, mdat=mdat, amat=amat, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
-MPro_ee2=function(beta2,beta1,mdat,amat) {
+MPro.ee2=function(beta2,beta1,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -138,7 +138,7 @@ MPro_ee2=function(beta2,beta1,mdat,amat) {
     xmati <- xmat[i,1:mstar[i]]
     ymati <- ymat[i,1:mstar[i]]
     gmati <- g2mat[i,1:mstar[i]]
-    subsum <- r2f_mpro_ee2(n, nparams, di, xmati, ymati, gmati, L=l2, expA, subsum, kcount=mstar[i])
+    subsum <- r2f.mpro.ee2(n, nparams, di, xmati, ymati, gmati, L=l2, expA, subsum, kcount=mstar[i])
     #subsum=apply(expA,1,function(x)mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
     tmp.out=rbind(tmp.out,apply(A*subsum,2,sum))
   }
@@ -146,19 +146,19 @@ MPro_ee2=function(beta2,beta1,mdat,amat) {
   return(out)
 }
 
-MPro_uf2 <- function(beta2,beta1,mdat,amat) {
-  tmp.out <- MPro_ee2(beta2,beta1,mdat, amat)
+MPro.uf2 <- function(beta2,beta1,mdat, amat) {
+  tmp.out <- MPro.ee2(beta2,beta1,mdat, amat)
   out <- tmp.out%*%tmp.out
   return(out)
 }
 
-MPro_uest2 <- function(init,beta1,mdat, amat) {
-  res <- optim(init, MPro_uf2, beta1=beta1, mdat=mdat, amat=amat, control=list(maxit=20000))
+MPro.uest2 <- function(init, beta1, mdat, amat) {
+  res <- optim(init, MPro.uf2, beta1=beta1, mdat=mdat, amat=amat, control=list(maxit=20000))
   return(list(par=res$par,value=res$value,conv=res$convergence))
 }
 
 ##variance estimation
-Mvar_est=function(beta1,beta2,mdat, amat) {
+Mvar.est=function(beta1,beta2,mdat, amat) {
   n=mdat$n
   xmat=mdat$xmat
   ymat=mdat$ymat
@@ -190,13 +190,13 @@ Mvar_est=function(beta1,beta2,mdat, amat) {
 
     subsum <- rep(0,n)
 
-    sub1.xi1 <- r2f_mpro_ee1(n, nparams, di=d1i, xmati, gmati=gmati1, L=l1, expA=expA1, subsum, kcount=mstar[i])
-    sub1.xi2 <- r2f_mpro_ee2(n, nparams, di=d2i, xmati, ymati, gmati=gmati2, L=l2, expA, subsum, kcount=mstar[i])
+    sub1.xi1 <- r2f.mpro.ee1(n, nparams, di=d1i, xmati, gmati=gmati1, L=l1, expA=expA1, subsum, kcount=mstar[i])
+    sub1.xi2 <- r2f.mpro.ee2(n, nparams, di=d2i, xmati, ymati, gmati=gmati2, L=l2, expA, subsum, kcount=mstar[i])
 
     #sub1.xi1=sapply(expA1,function(x)mean(delta1[i,1:mstar[i]]*sapply(xmat[i,1:mstar[i]],function(t)o.fun(t,x*t,l1))/g1mat[i,1:mstar[i]]))
     #sub1.xi2=apply(expA,1,function(x)mean(delta2[i,1:mstar[i]]*apply(cbind(xmat[i,1:mstar[i]],ymat[i,1:mstar[i]]),1,function(t)o.fun(sum(t),x[1]*t[1]+x[2]*t[2],l2))/g2mat[i,1:mstar[i]]))
 
-    sub2 <- r2f_mpro_var(n, nparams, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
+    sub2 <- r2f.mpro.var(n, nparams, xmat, ymat, gmatx=g1mat, gmaty=g2mat, l1, l2,
                          expAx=expA1, expAy=expA2, subsumx=subsum, subsumy=subsum, dx=delta1, dy=delta2, mstar, mc)
     sub2.xi1 <- sub2[,1]
     sub2.xi2 <- sub2[,2]
@@ -231,7 +231,7 @@ Mvar_est=function(beta1,beta2,mdat, amat) {
 
   mat=solve(gamm)%*%xi%*%t(solve(gamm))
   se = sqrt(diag(mat)/n)
-  return(list(se, mat/n))
+  return(list(se, mat))
 }
 
 ###################################################################
@@ -258,27 +258,22 @@ Mvar_est=function(beta1,beta2,mdat, amat) {
 
 
 #multivariable regression analysis
-leeall_multivariate <- function(new_response, amat, cov_names, SE) {
+leeall_multivariate <- function(response, amat, cov_names, SE) {
 
   print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ","), sep=" "))
   n_params <- length(cov_names)
 
   #solve first equation to get beta1 values - related to xij
-  mpro1 <- MPro_uest1(init=rep(0, n_params), mdat=new_response, amat=amat)
+  mpro1 <- MPro.uest1(init=rep(0, n_params), mdat=response, amat=amat)
 
   #solve second equation to get beta2 values - related to yij
-  mpro2 <- MPro_uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=new_response, amat = amat)
+  mpro2 <- MPro.uest2(init=rep(0, n_params), beta1=mpro1$par, mdat=response, amat = amat)
 
-  if (is.null(SE)) {
-    #return point estimates only
-    fit <- data.frame(c(mpro1$par, mpro2$par))
-    colnames(fit) <- c("Estimate")
-    rownames(fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    result <- list(mpro1$par, mpro2$par, fit)
-  } else {
+  if (SE==TRUE) {
+
     print("Estimating standard errors")
     #estimate covariance matrix and get diagonal then std. errors
-    se_est <- Mvar_est(beta1=mpro1$par, beta2=mpro2$par, mdat=new_response, amat = amat)
+    se_est <- Mvar.est(beta1=mpro1$par, beta2=mpro2$par, mdat=response, amat = amat)
     #join all info and calculate CIs, put in nice table
     fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
     colnames(fit) <- c("Estimate", "SE")
@@ -286,6 +281,12 @@ leeall_multivariate <- function(new_response, amat, cov_names, SE) {
                        paste(cov_names, "type 2 gap time"))
     result <- list(fit = as.matrix(fit), vcovmat = se_est[[2]])
 
+  } else {
+    #return point estimates only
+    fit <- data.frame(c(mpro1$par, mpro2$par))
+    colnames(fit) <- c("Estimate")
+    rownames(fit) <- c(paste("xij", cov_names), paste("yij", cov_names))
+    result <- list(mpro1$par, mpro2$par, fit)
   }
   return(result)
 }

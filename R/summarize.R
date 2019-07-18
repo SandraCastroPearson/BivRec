@@ -9,8 +9,6 @@ significance <- function(pval) {
   return(sigcode)
 }
 
-is.summary.bivrecReg <- function(object) inherits(object, "summary.bivrecReg")
-
 print.summary.bivrecReg <- function(x) {
   if (!inherits(x, "summary.bivrecReg")) stop("Must be a summary.bivrecReg object")
   cat("\nCall:\n",

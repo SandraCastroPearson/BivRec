@@ -40,13 +40,13 @@ library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-surv_data <- with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-npresult <- bivrecNP(response = surv_data, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
-plot(npresult)
+npresult <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                     ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
 
 \dontrun{
 #This is an example with longer runtime (it runs the conditional graph)
- npresult2 <- bivrecNP(bdat, ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-              conditional = TRUE, given.interval=c(0, 10))
+ npresult2 <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                     ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+                     conditional = TRUE, given.interval=c(0, 10))
 }
 }

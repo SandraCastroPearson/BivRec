@@ -20,16 +20,14 @@ bivrecSurv(id, episode, xij, yij, Xcind, Ycind)
 \item{Ycind}{Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.}
 }
 \value{
-A bivrecSurv repsonse object ready for analysis using bivrecReg or bivrecNP.
+a BivRec repsonse object ready to put in a formula.
 }
 \description{
 This function creates a bivariate recurrent response survival object (bivrecSurv object).
 }
 \examples{
-library(BivRec)
 set.seed(1234)
 sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-bivrec_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-inherits(bivrec_data, "bivrecSurv")
+bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 
 }

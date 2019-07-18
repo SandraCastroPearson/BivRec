@@ -13,6 +13,13 @@ bivrecReg(formula, data, method)
 
 \item{method}{A string indicating which method to use to estimate effects of the covariates. See details.}
 }
+\value{
+A bivrecReg object containing:
+\itemize{
+  \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
+  \item \strong{formula:} The formula used to specify the model.
+}
+}
 \description{
 This function allows the user to evaluate covariate effects on two alternating recurrent events gap times (referred as type I and type II gap times)
 under the assumption that the two gap times follow accelerated failure time (AFT) models. See details for the estimation methods provided.
@@ -32,24 +39,23 @@ library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
-lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+lee_reg <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data = bivrec_data, method="Lee.et.al")
-summary(lee_reg)
-
+summarize(lee_reg)
 \dontrun{
-#This is an example with longer runtime.
+
+#To apply Chang (2004) method use method="Chang". This is an example with longer runtime.
 
 library(BivRec)
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 
-# Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
+# Apply Chang (2004) method using multiple covariates
 # and 99\% confidence intervals.
-chang_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+fit_chang <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data = bivrec_data, method = "Chang")
-summary(chang_reg)
-# To apply Chang (2004) method use method="Chang"
+summarize(fit_chang)
 }
 
 }

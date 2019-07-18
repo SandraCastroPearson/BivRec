@@ -9,9 +9,19 @@
 #' @return A contour plot of joint cdf.
 #'
 #' @importFrom stats ftable
-#' @keywords internal
+#' @examples
+#' library(BivRec)
+#'# Simulate bivariate alternating recurrent event data
+#' set.seed(1234)
+#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bdat <- is.bivrecSurv(bivrec_data)
+#' npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
+#' plotJoint(npresult)
 #'
 plotJoint <- function(x) {
+  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  forplot <- x$joint.cdf
+
 
   forplot <- x$joint_cdf
 
@@ -21,6 +31,7 @@ plotJoint <- function(x) {
   # for (i in 1:nrow(forplot)) {
   #   rgl::rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
   # }
+
 
   forplot <- forplot[1:3]
   colnames(forplot) <- c("X", "Y", "Cumm.Prob")

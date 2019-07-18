@@ -9,9 +9,7 @@ print <- function(object, ...){
 print.default <- function(object) {base::print(object)}
 
 print.bivrecReg <- function(object) {
-      if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
-      coeffs1 <- coef.bivrecReg(object)
-      print(coeffs1)
-    }
-
-
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
+  coeffs1 <- coef.bivrecReg(object)
+  print(coeffs1)
+}

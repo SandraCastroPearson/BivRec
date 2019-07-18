@@ -8,9 +8,19 @@
 #' @noRd
 #' @return A plot of marginal survival vs. first gap time with confidence interval.
 #'
-#' @keywords internal
-#'
+#' @examples
+#' library(BivRec)
+#'# Simulate bivariate alternating recurrent event data
+#' set.seed(1234)
+#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bdat <- is.bivrecSurv(bivrec_data)
+#' npresult <- bivrecNP(bdat,ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),conditional = FALSE, given.interval=c(0, 10))
+#' plotMarg(npresult)
+
 plotMarg <- function(x, CI) {
+  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
+  forplot <- x$marginal.survival[1:3]
+  xij <- x$df$xij
   forplot <- x$marginal_survival[1:3]
   #formula <- bivrec.nonparam.result$formula
 
@@ -22,7 +32,7 @@ plotMarg <- function(x, CI) {
   mx <- round(as.numeric(str_mx), digits=1)
   forplot <- rbind(c(0, 1, 0), forplot, c(mx, 0, forplot[nrow(forplot),3]))
 
-  #####95% Wald CI and plot
+  ##### Wald CI and plot
   conf.lev = 1 - ((1-x$CI)/2)
   forplot$lower <- forplot[,2] - qnorm(conf.lev)*forplot[,3]
   forplot$upper <- forplot[,2] + qnorm(conf.lev)*forplot[,3]

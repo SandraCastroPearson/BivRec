@@ -54,8 +54,8 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
   if (missing(CI)) {CI <- 0.95}
 
   if (CI > 0.99) {stop("Error CI > 0.99")} else {
-      if (CI<0.5) {stop("Error CI < 0.5")}
-    }
+    if (CI<0.5) {stop("Error CI < 0.5")}
+  }
 
   if (missing(u1)) {u1 <- round(seq(quantile(xij, probs = 0.4), max(xij), length.out=5))}
   if (missing(u2)) {u2 <- round(seq(quantile(yij, probs = 0.4), max(yij), length.out=4))}
@@ -71,10 +71,10 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
     }
 
   if (ai==2) {
-    new_data =
-    forcdf <- x$dat4np2$forcdf
-    formarg <- x$dat4np2$formarg
-    }
+    new_data = x$dat4np2
+    forcdf <- new_data$forcdf
+    formarg <- new_data$formarg
+  }
 
   cdf_res <- nonparam_cdf(forcdf, u, ai, CI)
   marg_res <- nonparam_marginal(formarg, CI)
@@ -83,7 +83,7 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
 
     final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
 
-    } else {
+  } else {
 
     if (missing(given.interval)) {
 
@@ -110,5 +110,3 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
   class(final_result) <- "bivrecNP"
   return(final_result)
 }
-
-

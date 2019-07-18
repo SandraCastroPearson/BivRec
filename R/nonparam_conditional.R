@@ -67,13 +67,13 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
   }
 
   joint2 <- np_fit4conditional(data=bootdat, #got rid of formula
-                             ai=ai, u1=x.grid$Time[2], u2=y.grid)
+                               ai=ai, u1=x.grid$Time[2], u2=y.grid)
 
   if (x.grid$Time[1] == mintime) {
     conditional <- joint2[,3] / (1-ps2)
   } else {
     joint1 <- np_fit4conditional(data=bootdat,
-                          ai=ai, u1=x.grid$Time[1], u2=y.grid) #got rid of formula
+                                 ai=ai, u1=x.grid$Time[1], u2=y.grid) #got rid of formula
     conditional <- (joint2[,3] - joint1[,3])/(ps1 - ps2)
   }
 
@@ -140,15 +140,15 @@ nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij para
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
   #if (condiplot == TRUE) {
-    #plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-         #xlim=c(0, round(max(y.grid), digits=1)),
-         #ylim=c(0, round(max(cond[,5]), digits=1)),
-         #main=substitute(
-           #paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
-           #list(gi1 = given.interval[1], gi2 = given.interval[2]))
-         #)
-    #graphics::lines(cond$Time, cond[,4], lty = 2)
-    #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  #plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
+  #xlim=c(0, round(max(y.grid), digits=1)),
+  #ylim=c(0, round(max(cond[,5]), digits=1)),
+  #main=substitute(
+  #paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
+  #list(gi1 = given.interval[1], gi2 = given.interval[2]))
+  #)
+  #graphics::lines(cond$Time, cond[,4], lty = 2)
+  #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
 
   #}
 

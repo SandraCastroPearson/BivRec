@@ -85,7 +85,24 @@ bivrecReg =function(formula, data, method){
   formula[[2]] <- NULL
   if (inherits(resp, "bivrecSurv")==FALSE) stop("Response must be a bivrecSurv object")
 
+  #else continue
+  #manage missingness
+  data_ref <- data
+  formula_preds[[2]] = NULL
+  mypreds <- as.matrix(model.frame(formula_preds, data, na.action=NULL))
+  which_missing <- unique(unlist(apply(mypreds, 2, function(x) which(is.na(x)==TRUE))))
+  if (length(which_missing)!=0) {
+    data2 <- data[-which_missing, ]
+  } else {data2=data}
 
+  #Get response
+  response <- eval(formula[[2]], data2)
+  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object")
+  lee_response = response$data4Lreg
+  chang_response = response$data4Creg
+
+  #Check if there are any covariates
+  formula[[2]] <- NULL
   if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
@@ -108,18 +125,18 @@ bivrecReg =function(formula, data, method){
                       formula = formula_ref, method="Lee.et.al",
                       data = list(response=resp$data4Lreg, predictors = amat, original = data))}
 
-    ### Chang Method
-  } else {
 
-    predictors <- data.frame(id = resp$id_ref, model.matrix(formula, data)[,-1])
-    colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
-    cov_names = colnames(predictors)[-1]
-    new_data <- rbind(as.data.frame(resp$dat4Creg), predictors, by="id")
-    orig_num <- length(unique(new_data$id))
-    new_data <- na.omit(new_data)
-    new_num <-length(unique(new_data$id))
-    message <- paste("Original number of subjects: ", orig_num, ". Subjects for Chang Analysis: ", new_num, sep="")
-    print(message)
+  }
+
+  ### Chang Method
+  if (method == "Chang") {
+
+    #predictor portion
+    predictors <- data.frame(id = chang_response$id, epi = chang_response$epi, model.matrix(formula, data2)[,-1])
+    colnames(predictors) <-  c("id", "epi", colnames(model.matrix(formula, data))[-1])
+    cov_names <- colnames(predictors)[-c(1,2)]
+    new_data <- merge(chang_response, predictors, c("id","epi"))
+    new_data <- new_data[order(new_data$id, decreasing = FALSE),]
 
     if (length(cov_names)==1) {
       results <- list(call = call,

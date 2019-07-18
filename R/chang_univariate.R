@@ -1,47 +1,47 @@
-  ###########################################################################
-  ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
-  ###########################################################################
+###########################################################################
+############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
+###########################################################################
 
-  ###                 changmdat FORTRAN subroutine and R call                    #
-  #______________________________________________________________________________#
-  # By Sandra Castro-Pearson (Last modified July, 2018)                          #
-  # Based on Chihyun Lee's R code                                                #
-  #______________________________________________________________________________#
+###                 changmdat FORTRAN subroutine and R call                    #
+#______________________________________________________________________________#
+# By Sandra Castro-Pearson (Last modified July, 2018)                          #
+# Based on Chihyun Lee's R code                                                #
+#______________________________________________________________________________#
 
-  r2f.changmdat <- function(tugap1r, tugap2r, tdatr, idcount,
-                            maxidcount, n, tmpr){
+r2f.changmdat <- function(tugap1r, tugap2r, tdatr, idcount,
+                          maxidcount, n, tmpr){
 
-    tmpstart = tmpend = tugapstart = tugapend = 0
+  tmpstart = tmpend = tugapstart = tugapend = 0
 
-    out <- .Fortran("changmdat",
-                    tugap1=as.double(tugap1r),
-                    tugap2=as.double(tugap2r),
-                    tdat=as.double(tdatr),
-                    tmpin=as.double(tmpr),
+  out <- .Fortran("changmdat",
+                  tugap1=as.double(tugap1r),
+                  tugap2=as.double(tugap2r),
+                  tdat=as.double(tdatr),
+                  tmpin=as.double(tmpr),
 
-                    ugapcols=as.integer(ncol(tugap1r)),
-                    tmpstart=as.integer(tmpstart),
-                    tmpend=as.integer(tmpend),
-                    tugapstart=as.integer(tugapstart),
-                    tugapend=as.integer(tugapend),
+                  ugapcols=as.integer(ncol(tugap1r)),
+                  tmpstart=as.integer(tmpstart),
+                  tmpend=as.integer(tmpend),
+                  tugapstart=as.integer(tugapstart),
+                  tugapend=as.integer(tugapend),
 
-                    idcount=as.integer(idcount),
-                    nrowtdat=as.integer(nrow(tdatr)),
-                    nrowugap=as.integer(nrow(tugap1r)),
-                    maxidcount=as.integer(maxidcount),
+                  idcount=as.integer(idcount),
+                  nrowtdat=as.integer(nrow(tdatr)),
+                  nrowugap=as.integer(nrow(tugap1r)),
+                  maxidcount=as.integer(maxidcount),
 
-                    n=as.integer(n),
-                    tmpcols=as.integer(ncol(tmpr)),
-                    tdatcols=as.integer(ncol(tdatr))
-    )
+                  n=as.integer(n),
+                  tmpcols=as.integer(ncol(tmpr)),
+                  tdatcols=as.integer(ncol(tdatr))
+  )
 
-    mytugap1 <- data.frame(matrix(out$tugap1, ncol=ncol(tugap1r)))
-    mytugap2 <- data.frame(matrix(out$tugap2, ncol=ncol(tugap2r)))
-    colnames(mytugap1) <- colnames(tugap1r)
-    colnames(mytugap2) <- colnames(tugap2r)
+  mytugap1 <- data.frame(matrix(out$tugap1, ncol=ncol(tugap1r)))
+  mytugap2 <- data.frame(matrix(out$tugap2, ncol=ncol(tugap2r)))
+  colnames(mytugap1) <- colnames(tugap1r)
+  colnames(mytugap2) <- colnames(tugap2r)
 
-    return(list(tugap1 = mytugap1, tugap2 = mytugap2))
-  }
+  return(list(tugap1 = mytugap1, tugap2 = mytugap2))
+}
 
 #           m.dat.chang1, all RE, v.est1 and sd.estpar1 FUNCTIONS              #
 #_______________________________________________________________________________

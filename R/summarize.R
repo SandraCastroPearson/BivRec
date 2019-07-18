@@ -64,4 +64,3 @@ summarize.bivrecReg <- function(object){
   ans
 }
 
-

@@ -97,7 +97,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam_conditional <- function(res, given.interval, CI, yij) { #added yij parameter
+nonparam_conditional <- function(res, given.interval, CI) {
 
   ####Extract items from results
   marginal <- res$marginal_survival #marg result (res2)

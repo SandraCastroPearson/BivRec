@@ -18,9 +18,8 @@
 #' plotMarg(npresult)
 
 plotMarg <- function(x, CI) {
-  if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
-  forplot <- x$marginal.survival[1:3]
-  xij <- x$df$xij
+  if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  xij <- x$
   forplot <- x$marginal_survival[1:3]
   #formula <- bivrec.nonparam.result$formula
 

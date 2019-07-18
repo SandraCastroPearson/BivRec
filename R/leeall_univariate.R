@@ -19,7 +19,9 @@ r2f.pro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
                    L=as.double(L),
                    expA=as.double(expA),
                    subsum=as.double(subsum),
-                   kcount=as.integer(kcount))
+                   kcount=as.integer(kcount),
+                   NAOK = FALSE,
+                   PACKAGE="BivRec")
 
   subsum <- out1$subsum
 
@@ -37,7 +39,9 @@ r2f.pro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, kc
                    L=as.double(L),
                    expA=as.double(expA),
                    subsum=as.double(subsum),
-                   kcount=as.integer(kcount))
+                   kcount=as.integer(kcount),
+                   NAOK = FALSE,
+                   PACKAGE="BivRec")
 
   subsum <- out2$subsum
 
@@ -62,7 +66,9 @@ r2f.pro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
                   dx=as.double(dx),
                   dy=as.double(dy),
                   mstar=as.double(mstar),
-                  mc=as.integer(mc))
+                  mc=as.integer(mc),
+                  NAOK = FALSE,
+                  PACKAGE="BivRec")
 
   subsum1 <- out$subsumx
   subsum2 <- out$subsumy
@@ -244,7 +250,7 @@ var.est=function(beta1, beta2, mdat, amat) {
 #' @importFrom stats qnorm
 #' @importFrom stringr str_c
 #'
-#' @useDynLib BivRec xmproee ymproee mprovar
+#' @useDynLib BivRec, .registration = TRUE
 #' @keywords internal
 
 #MAIN PROGRAM FOR univariate regression analysis

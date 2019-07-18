@@ -20,8 +20,6 @@
 #'
 plotJoint <- function(x) {
   if (!is.bivrecNP(x)) stop("Object must be a bivrecNP class")
-  forplot <- x$joint.cdf
-
 
   forplot <- x$joint_cdf
 

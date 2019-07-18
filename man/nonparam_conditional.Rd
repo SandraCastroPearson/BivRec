@@ -4,7 +4,7 @@
 \alias{nonparam_conditional}
 \title{A Function for additional non-parametric analysis of bivariate recurrent event data.}
 \usage{
-nonparam_conditional(res, given.interval, CI, yij)
+nonparam_conditional(res, given.interval, CI)
 }
 \arguments{
 \item{res}{List with joint.cdf and marginal.survival. Passed from biv.rec.np()}

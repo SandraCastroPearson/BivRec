@@ -79,30 +79,14 @@ bivrecReg =function(formula, data, method){
   if (missing(data)) {stop("data argument missing")}
 
   variables = all.vars(formula)
+  ref_data <- data
   data = na.omit(data[ , colnames(data) %in% variables])
 
   resp <- eval(formula[[2]], data)
-  formula[[2]] <- NULL
   if (inherits(resp, "bivrecSurv")==FALSE) stop("Response must be a bivrecSurv object")
-
-  #else continue
-  #manage missingness
-  data_ref <- data
-  formula_preds[[2]] = NULL
-  mypreds <- as.matrix(model.frame(formula_preds, data, na.action=NULL))
-  which_missing <- unique(unlist(apply(mypreds, 2, function(x) which(is.na(x)==TRUE))))
-  if (length(which_missing)!=0) {
-    data2 <- data[-which_missing, ]
-  } else {data2=data}
-
-  #Get response
-  response <- eval(formula[[2]], data2)
-  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object")
-  lee_response = response$data4Lreg
-  chang_response = response$data4Creg
+  formula[[2]] <- NULL
 
   #Check if there are any covariates
-  formula[[2]] <- NULL
   if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
 
   #Lee et all Method
@@ -118,12 +102,12 @@ bivrecReg =function(formula, data, method){
       results <- list(call = call,
                       leefit = leeall_univariate(response=resp$data4Lreg, amat, cov_names, SE=TRUE),
                       formula=formula_ref, method="Lee.et.al",
-                      data = list(response=resp$data4Lreg, predictors = amat, original = data))
+                      data = list(response=resp$data4Lreg, predictors = amat, original = ref_data))
     } else {
       results <- list(call = call,
                       leefit = leeall_multivariate(response=resp$data4Lreg, amat, cov_names, SE=TRUE),
                       formula = formula_ref, method="Lee.et.al",
-                      data = list(response=resp$data4Lreg, predictors = amat, original = data))}
+                      data = list(response=resp$data4Lreg, predictors = amat, original = ref_data))}
 
 
   }
@@ -132,7 +116,8 @@ bivrecReg =function(formula, data, method){
   if (method == "Chang") {
 
     #predictor portion
-    predictors <- data.frame(id = chang_response$id, epi = chang_response$epi, model.matrix(formula, data2)[,-1])
+    predictors <- data.frame(id = resp$data4Creg$id, epi = resp$data4Creg$epi,
+                             model.matrix(formula, data)[,-1])
     colnames(predictors) <-  c("id", "epi", colnames(model.matrix(formula, data))[-1])
     cov_names <- colnames(predictors)[-c(1,2)]
     new_data <- merge(chang_response, predictors, c("id","epi"))
@@ -141,11 +126,11 @@ bivrecReg =function(formula, data, method){
     if (length(cov_names)==1) {
       results <- list(call = call,
                       chang_fit = chang_univariate(new_data, cov_names, SE=TRUE),
-                      formula = formula_ref, method = "Chang", data = list(new_data, original = data))
+                      formula = formula_ref, method = "Chang", data = list(new_data, original = ref_data))
     } else {
       results <- list(call = call,
                       chang_fit = chang_multivariate(new_data, cov_names, SE=TRUE),
-                      formula=formula_ref, method="Chang", data = list(new_data, original = data))}
+                      formula=formula_ref, method="Chang", data = list(new_data, original = ref_data))}
   }
 
   class(results) <- "bivrecReg"

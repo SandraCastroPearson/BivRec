@@ -57,6 +57,9 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
     if (CI<0.5) {stop("Error CI < 0.5")}
   }
 
+  xij <- x$data4Creg$xij
+  yij <- x$data4Creg$yij
+
   if (missing(u1)) {u1 <- round(seq(quantile(xij, probs = 0.4), max(xij), length.out=5))}
   if (missing(u2)) {u2 <- round(seq(quantile(yij, probs = 0.4), max(yij), length.out=4))}
   temp <- rep(u1, each = length(u2))

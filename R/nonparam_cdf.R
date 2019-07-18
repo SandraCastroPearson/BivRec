@@ -40,7 +40,9 @@ r_bivrecur <- function(n, gtime, ctime, mc, m,
                    Fest=as.double(Fest),
                    tmpindex=as.integer(tmpindex),
                    prob=as.double(prob),
-                   std= as.double(std))
+                   std= as.double(std),
+                   NAOK = FALSE,
+                   PACKAGE="BivRec")
 
   out2 <- c(prob = out1$prob, std = out1$std)
 
@@ -61,7 +63,7 @@ r_bivrecur <- function(n, gtime, ctime, mc, m,
 #'
 #' @return A dataframe with the joint CDF
 #'
-#' @useDynLib BivRec bivrecur
+#' @useDynLib BivRec, .registration = TRUE
 #'
 #' @keywords internal
 #'

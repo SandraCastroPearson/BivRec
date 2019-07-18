@@ -30,7 +30,9 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
                    r=as.double(r),
                    d=as.double(d),
                    sest=as.double(sest),
-                   std= as.double(std))
+                   std= as.double(std),
+                   NAOK = FALSE,
+                   PACKAGE="BivRec")
 
   out2 <- data.frame(time = out1$udt, surv = out1$sest, std = out1$std)
 
@@ -49,7 +51,7 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
 #'
 #' @return A data frame with marginal survival
 #'
-#' @useDynLib BivRec onesamp
+#' @useDynLib BivRec, .registration = TRUE
 #'
 #' @keywords internal
 #'
@@ -82,14 +84,6 @@ nonparam_marginal <- function(fit_data, CI) {
   surv$upper <- surv[,2] + qnorm(conf_lev)*surv[,3]
   surv$lower[which(surv$lower<0)] <- 0
   surv$upper[which(surv$upper>1)] <- 1
-
-  lowstring <- paste((1 - conf_lev), "%", sep="")
-  upstring <- paste(conf_lev, "%", sep="")
-  colnames(surv) <- c("Time", "Marginal_Survival", "SE", lowstring, upstring)
-
-  return(marg_survival = surv)
-
-}
 
   lowstring <- paste((1 - conf_lev), "%", sep="")
   upstring <- paste(conf_lev, "%", sep="")

@@ -43,7 +43,9 @@
 #'                      conditional = TRUE, given.interval=c(0, 10))
 #' }
 
-bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
+bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval) UseMethod("bivrecNP")
+
+bivrecNP.default <- function(response, ai, u1, u2, CI, conditional, given.interval){
 
   x <- response
 

@@ -34,9 +34,8 @@ print.summary.bivrecReg <- function(x) {
 #' @param object a bivrecReg object obtained by using bivrecReg() function
 #'
 #' @export
-summarize <- function(object) {UseMethod("summarize")}
 
-summarize.bivrecReg <- function(object){
+summary.bivrecReg <- function(object){
 
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
 

@@ -5,9 +5,6 @@
 #' @title coef
 #' @param object A bivrecReg object obtained by using bivrecReg() function
 #' @export
-coef <- function(object) {UseMethod("coef")}
-
-coef.default <- function(object) stats::coef(object)
 
 coef.bivrecReg <- function(object) {
   #add chang
@@ -31,9 +28,6 @@ coef.bivrecReg <- function(object) {
 #' @param object A bivrecReg object obtained by using bivrecReg() function
 #'
 #' @export
-vcov <- function(object) UseMethod("vcov")
-
-vcov.default <- function(object) stats::vcov(object)
 
 vcov.bivrecReg <- function(object) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
@@ -46,6 +40,18 @@ vcov.bivrecReg <- function(object) {
 
 }
 
+########################    print     ########################
+#' @title print
+#' @param object An object to print
+#' @keywords internal
+#'
+
+print.bivrecReg <- function(object) {
+  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
+  coeffs1 <- coef.bivrecReg(object)
+  print(coeffs1)
+}
+
 ########################    confint     ########################
 #' Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg
 #'
@@ -56,9 +62,6 @@ vcov.bivrecReg <- function(object) {
 #' @param level Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.
 #'
 #' @export
-confint <- function(object, parm, level) UseMethod("confint")
-
-confint.default <- function(object, parm, level) stats::confint(object)
 
 confint.bivrecReg <- function(object, parm, level) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")

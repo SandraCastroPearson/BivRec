@@ -69,7 +69,9 @@
 #'
 #' @keywords bivrecReg
 
-bivrecReg =function(formula, data, method){
+bivrecReg <- function(formula, data, method) UseMethod("bivrecReg")
+
+bivrecReg.default <- function(formula, data, method){
 
   call = match.call()
 

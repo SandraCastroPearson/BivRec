@@ -33,12 +33,6 @@
 #' plot(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data, main="Example")
 #'
 
-plot <- function(x, y, data, ...) {UseMethod("plot")}
-
-plot.default <- function(x, y, data,...) {
-  data=NULL
-  graphics::plot(x, y,...)}
-
 plot.formula <- function(x, y=NULL, data,...) {
   if (!inherits(x, "formula")) stop("Object must be a formula")
   formula <- x

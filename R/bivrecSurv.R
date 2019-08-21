@@ -24,7 +24,11 @@
 #' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
-bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
+#'
+
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) UseMethod("bivrecSurv")
+
+bivrecSurv.default <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check if anything is missing
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")

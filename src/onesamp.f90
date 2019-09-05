@@ -1,22 +1,22 @@
-c------------------------------------------------------------
-c     n             I  the # of subjects
-c     gtime(n,mc)   I  ragged array  - make N x max(count) for completeness
-c                      jth gap time for ith subject
-c                      gap = the time between two successive evnts
-c     ctime(n)      I  the final gap time of each subject (always censored)
-c     count(n)      I  the # of gap times for per subject
-c     mc            I  max count
-c     cen(n,mc)     I  the censoring indicator for gtime(k,n)
-c                        cen(.,.)=1, if uncensored
-c                        cen(.,.)=0, if censored 
-c     ucen(n)       I  the # of uncensored gap times per subject
-c     nd            I  number of unique support points
-c     udt(nd)       I  *unique and ordered* support points
-c     r(nd)         O  risk set at time T
-c     d(nd)         O  # events at time T
-c     sest(nd)      O  the estimated survival function
-c     std(nd)       O  the aymptotic standard error estimate
-c------------------------------------------------------------
+!c------------------------------------------------------------
+!c     n             I  the # of subjects
+!c     gtime(n,mc)   I  ragged array  - make N x max(count) for completeness
+!c                      jth gap time for ith subject
+!c                      gap = the time between two successive evnts
+!c     ctime(n)      I  the final gap time of each subject (always censored)
+!c     count(n)      I  the # of gap times for per subject
+!c     mc            I  max count
+!c     cen(n,mc)     I  the censoring indicator for gtime(k,n)
+!c                        cen(.,.)=1, if uncensored
+!c                        cen(.,.)=0, if censored
+!c     ucen(n)       I  the # of uncensored gap times per subject
+!c     nd            I  number of unique support points
+!c     udt(nd)       I  *unique and ordered* support points
+!c     r(nd)         O  risk set at time T
+!c     d(nd)         O  # events at time T
+!c     sest(nd)      O  the estimated survival function
+!c     std(nd)       O  the aymptotic standard error estimate
+!c------------------------------------------------------------
 
       subroutine onesamp(n,gtime,ctime,count,mc,m,
      +cen,ucen,nd,udt,tot,gap,event,
@@ -30,18 +30,18 @@ c------------------------------------------------------------
       double precision sest(nd),std(nd)
       double precision hai,fai,phi,w
 
-c     cumni is a counter : m(i-1) where m(0) = 0
-c     curj is a counter within a counter
+!c     cumni is a counter : m(i-1) where m(0) = 0
+!c     curj is a counter within a counter
 
-      cumni=0 
+      cumni=0
       do 11 i=1,n
          do 10 j=1,m(i)
             curj = cumni + j
             gtime(i,j) = gap(curj)
-            cen(i,j) = event(curj)   
+            cen(i,j) = event(curj)
  10      continue
          cumni=cumni+m(i)
- 11   continue 
+ 11   continue
 
       do 30 k=1,nd
          r(k)=0.
@@ -64,13 +64,13 @@ c     curj is a counter within a counter
  25      continue
  30   continue
 
-c Calculate survivor estimate at time T (i.e. time nd)
+!c Calculate survivor estimate at time T (i.e. time nd)
       sest(1)=1.-d(1)/r(1)
       do 50 i=2,nd
          sest(i)=sest(i-1)*(1.-d(i)/r(i))
  50   continue
 
-c Calculate standard error
+!c Calculate standard error
       do 180 k=1,nd
          phi=0.
          do 170 i=1,n

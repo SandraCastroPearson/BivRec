@@ -20,7 +20,7 @@ r2f.mpro.ee1 <- function(n, nparams, di, xmati, gmati, L, expA, subsum, kcount){
                    expA=as.double(expA),
                    subsum=as.double(subsum),
                    kcount=as.integer(kcount),
-                   NAOK = FALSE)
+                   NAOK = FALSE, PACKAGE = "BivRec")
 
   subsum <- out1$subsum
 
@@ -38,7 +38,8 @@ r2f.mpro.ee2 <- function(n, nparams, di, xmati, ymati, gmati, L, expA, subsum, k
                    L=as.double(L),
                    expA=as.double(expA),
                    subsum=as.double(subsum),
-                   kcount=as.integer(kcount))
+                   kcount=as.integer(kcount),
+                   NAOK=FALSE, PACKAGE = "BivRec")
 
   subsum <- out2$subsum
 
@@ -64,7 +65,7 @@ r2f.mpro.var <- function(n, nparams, xmat, ymat, gmatx, gmaty, l1, l2,
                   dy=as.double(dy),
                   mstar=as.double(mstar),
                   mc=as.integer(mc),
-                  NAOK = FALSE)
+                  NAOK = FALSE, PACKAGE = "BivRec")
 
   subsum1 <- out$subsumx
   subsum2 <- out$subsumy

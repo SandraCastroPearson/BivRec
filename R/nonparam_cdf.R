@@ -41,7 +41,7 @@ r_bivrecur <- function(n, gtime, ctime, mc, m,
                    tmpindex=as.integer(tmpindex),
                    prob=as.double(prob),
                    std= as.double(std),
-                   NAOK = FALSE)
+                   NAOK = FALSE, PACKAGE = "BivRec")
 
   out2 <- c(prob = out1$prob, std = out1$std)
 

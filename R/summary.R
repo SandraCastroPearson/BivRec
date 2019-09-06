@@ -9,7 +9,7 @@ significance <- function(pval) {
   return(sigcode)
 }
 
-print.summary.bivrecReg <- function(x) {
+print.summary.bivrecReg <- function(x, ...) {
   if (!inherits(x, "summary.bivrecReg")) stop("Must be a summary.bivrecReg object")
   cat("\nCall:\n",
       paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
@@ -35,7 +35,7 @@ print.summary.bivrecReg <- function(x) {
 #'
 #' @export
 
-summary.bivrecReg <- function(object){
+summary.bivrecReg <- function(object, ...){
 
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
 

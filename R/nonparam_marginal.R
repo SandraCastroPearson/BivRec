@@ -31,8 +31,7 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
                    d=as.double(d),
                    sest=as.double(sest),
                    std= as.double(std),
-                   NAOK = FALSE,
-                   PACKAGE="BivRec")
+                   NAOK = FALSE)
 
   out2 <- data.frame(time = out1$udt, surv = out1$sest, std = out1$std)
 
@@ -50,8 +49,6 @@ r_onesamp <- function(n,gtime,ctime,mc,m,
 #' @param CI Passed from biv.rec.np().
 #'
 #' @return A data frame with marginal survival
-#'
-#' @useDynLib BivRec, .registration = TRUE
 #'
 #' @keywords internal
 #'

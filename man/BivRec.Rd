@@ -30,4 +30,5 @@ set.seed(1234)
 sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 
+
 }

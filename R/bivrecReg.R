@@ -102,7 +102,7 @@ bivrecReg <- function(formula, data, method) {
     if (ncol(amat)==1) {
       results <- list(call = call,
                       leefit = leeall_univariate(response=resp$data4Lreg, amat, cov_names, SE=TRUE),
-                      formula=formula_ref, method="Lee.et.al",
+                      formula = formula_ref, method="Lee.et.al",
                       data = list(response=resp$data4Lreg, predictors = amat, original = ref_data))
     } else {
       results <- list(call = call,
@@ -121,7 +121,7 @@ bivrecReg <- function(formula, data, method) {
                              model.matrix(formula, data)[,-1])
     colnames(predictors) <-  c("id", "epi", colnames(model.matrix(formula, data))[-1])
     cov_names <- colnames(predictors)[-c(1,2)]
-    new_data <- merge(chang_response, predictors, c("id","epi"))
+    new_data <- merge(resp$data4Creg, predictors, c("id","epi"))
     new_data <- new_data[order(new_data$id, decreasing = FALSE),]
 
     if (length(cov_names)==1) {

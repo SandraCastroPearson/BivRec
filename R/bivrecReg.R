@@ -50,7 +50,8 @@
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
 #' lee_reg <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method="Lee.et.al")
-#' summarize(lee_reg)
+#' summary(lee_reg)
+#' plot(lee_reg)
 #' \dontrun{
 #'
 #' #To apply Chang (2004) method use method="Chang". This is an example with longer runtime.
@@ -64,14 +65,12 @@
 #' # and 99% confidence intervals.
 #'fit_chang <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
 #'                     data = bivrec_data, method = "Chang")
-#'summarize(fit_chang)
+#'summary(fit_chang)
 #'}
 #'
 #' @keywords bivrecReg
 
-bivrecReg <- function(formula, data, method) UseMethod("bivrecReg")
-
-bivrecReg.default <- function(formula, data, method){
+bivrecReg <- function(formula, data, method) {
 
   call = match.call()
 

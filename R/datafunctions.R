@@ -11,7 +11,6 @@
 #' This function reformats data for Lee fit
 #'
 #' @importFrom stats na.omit
-#' @import survival
 #'
 #' @param dat A data frame
 #'
@@ -26,8 +25,8 @@ mdat <- function(dat) {
   g2dat=cbind(dat[dat$epi==1,]$zij,1-dat[dat$epi==1,]$d2)
   l1=max(g1dat[g1dat[,2]==0,1])-(1e-07)
   l2=max(g2dat[g2dat[,2]==0,1])-(1e-07)
-  g1surv=survfit(Surv(g1dat[,1],g1dat[,2])~1)
-  g2surv=survfit(Surv(g2dat[,1],g2dat[,2])~1)
+  g1surv=survival::survfit(Surv(g1dat[,1],g1dat[,2])~1)
+  g2surv=survival::survfit(Surv(g2dat[,1],g2dat[,2])~1)
 
   xmat=ymat=zmat=delta1=delta2=g1mat=g2mat=matrix(0,n,mc,byrow=TRUE)
   mstar=ctime=NULL

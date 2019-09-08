@@ -4,10 +4,12 @@
 \alias{vcov.bivrecReg}
 \title{vcov}
 \usage{
-\method{vcov}{bivrecReg}(object)
+\method{vcov}{bivrecReg}(object, ...)
 }
 \arguments{
 \item{object}{A bivrecReg object obtained by using bivrecReg() function}
+
+\item{...}{additional parameters if needed}
 }
 \description{
 Obtain variance-covariance matrix from semi-parametric regression fit using bivrecReg

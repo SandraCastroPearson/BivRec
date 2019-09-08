@@ -2,47 +2,6 @@
 ############## FUNCTIONS FOR REFERENCE BY MAIN - NOT FOR USER #############
 ###########################################################################
 
-###                 changmdat FORTRAN subroutine and R call                    #
-#______________________________________________________________________________#
-# By Sandra Castro-Pearson (Last modified July, 2018)                          #
-# Based on Chihyun Lee's R code                                                #
-#______________________________________________________________________________#
-
-# r2f.changmdat <- function(tugap1r, tugap2r, tdatr, idcount,
-#                           maxidcount, n, tmpr){
-#
-#   tmpstart = tmpend = tugapstart = tugapend = 0
-#
-#   out <- .Fortran("changmdat",
-#                   tugap1=as.double(tugap1r),
-#                   tugap2=as.double(tugap2r),
-#                   tdat=as.double(tdatr),
-#                   tmpin=as.double(tmpr),
-#
-#                   ugapcols=as.integer(ncol(tugap1r)),
-#                   tmpstart=as.integer(tmpstart),
-#                   tmpend=as.integer(tmpend),
-#                   tugapstart=as.integer(tugapstart),
-#                   tugapend=as.integer(tugapend),
-#
-#                   idcount=as.integer(idcount),
-#                   nrowtdat=as.integer(nrow(tdatr)),
-#                   nrowugap=as.integer(nrow(tugap1r)),
-#                   maxidcount=as.integer(maxidcount),
-#
-#                   n=as.integer(n),
-#                   tmpcols=as.integer(ncol(tmpr)),
-#                   tdatcols=as.integer(ncol(tdatr))
-#   )
-#
-#   mytugap1 <- data.frame(matrix(out$tugap1, ncol=ncol(tugap1r)))
-#   mytugap2 <- data.frame(matrix(out$tugap2, ncol=ncol(tugap2r)))
-#   colnames(mytugap1) <- colnames(tugap1r)
-#   colnames(mytugap2) <- colnames(tugap2r)
-#
-#   return(list(tugap1 = mytugap1, tugap2 = mytugap2))
-# }
-
 #           m.dat.chang1, all RE, v.est1 and sd.estpar1 FUNCTIONS              #
 #_______________________________________________________________________________
 # Original by Chihyun Lee (August, 2017)                                       #
@@ -54,32 +13,54 @@
 ##-----reformat dataset
 m.dat.chang1=function(dat,beta) {
   n = length(unique(dat$id))
-  mc = max(dat$epi)-1
   beta1 = beta[1]
   beta2 = beta[2]
   maxb = apply(cbind(beta1,beta2), 1, max)
-  amat_indexes <- which(substr(colnames(dat), 1,1)=="a")
   amat = dat$a1
   dat$txij = dat$xij*exp(-amat*beta1)
   dat$tzij = dat$txij + dat$yij*exp(-amat*beta2)
   dat$tci = dat$ci*exp(-amat*maxb)
 
-  tdatr <- as.matrix(dat[,c(1:2, 11:13, amat_indexes)])
-  tugap1r = tugap2r = matrix(rep(0, n*max(dat$epi)*(3+length(amat_indexes))), ncol=5)
-  colnames(tugap1r) = c("tgtime", "delta", "mstar", "a1")
-  colnames(tugap2r) = c("tgtime", "delta", "mstar", "a1")
-  idcount = as.vector(table(dat$id))
-  maxidcount = max(idcount)
-  tmpr <- matrix(rep(0, maxidcount*(9 + length(amat_indexes))), ncol=9 + length(amat_indexes))
-  colnames(tmpr) = c(colnames(tdatr)[1:5], "uxij" , "uzij", "udx", "udz", "a1")
+  all.t.xij = all.t.zij = all.t.d1 = all.t.d2 = all.mstar = all.a = NULL
 
-  f.ugaps <- r2f.changmdat(tugap1r, tugap2r, tdatr, idcount,
-                           maxidcount, n, tmpr)
-  tugap1 <- f.ugaps$tugap1
-  tugap2 <- f.ugaps$tugap2
+  for (i in unique(dat$id)) {
+    tmp=dat[dat$id==i,]
 
-  ugap1 = data.frame(tugap1[-which(tugap1$tgtime==0),])
-  ugap2 = data.frame(tugap2[-which(tugap2$tgtime==0),])
+    t.xij=min(tmp$txij[1],tmp$tci[1])
+    t.zij=min(tmp$tzij[1],tmp$tci[1])
+    t.d1=(t.xij<tmp$tci[1])
+    t.d2=(t.zij<tmp$tci[1])
+
+    if (nrow(tmp)>1) {
+      td1=t.d1
+      td2=t.d2
+      j=2
+      while (td1==1 & td2==1 & j<=nrow(tmp)) {
+        tsum=sum(t.zij[1:(j-1)])
+        txij=min(tmp$txij[j],tmp$tci[j]-tsum)
+        tzij=min(tmp$tzij[j],tmp$tci[j]-tsum)
+        td1=(txij+tsum)<tmp$tci[j]
+        td2=(tzij+tsum)<tmp$tci[j]
+        if (td1==1 & td2==1) {
+          t.xij=c(t.xij,txij)
+          t.zij=c(t.zij,tzij)
+          t.d1=c(t.d1,td1)
+          t.d2=c(t.d2,td2)
+        }
+        j=j+1
+      }
+    }
+    all.t.xij = c(all.t.xij,t.xij)
+    all.t.zij = c(all.t.zij,t.zij)
+    all.t.d1 = c(all.t.d1,t.d1)
+    all.t.d2 = c(all.t.d2,t.d2)
+    all.mstar = c(all.mstar,rep(length(t.xij),length(t.xij)))
+    all.a = c(all.a, cbind(tmp[1:length(t.xij), which(colnames(dat)=="a1")]))
+
+  }
+
+  ugap1 = data.frame(tgtime = all.t.xij, delta = all.t.d1, a1 = all.a, mstar=all.mstar)
+  ugap2 = data.frame(tgtime = all.t.zij, delta = all.t.d2, a1 = all.a, mstar=all.mstar)
 
   #order
   ugap1=ugap1[order(ugap1$tgtime,decreasing=TRUE),]

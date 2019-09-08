@@ -4,9 +4,11 @@
 #'
 #' @title coef
 #' @param object A bivrecReg object obtained by using bivrecReg() function
+#' @param ... additional parameters if needed
+#'
 #' @export
 
-coef.bivrecReg <- function(object) {
+coef.bivrecReg <- function(object, ...) {
   #add chang
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   coeffs <- object$leefit$fit
@@ -26,10 +28,11 @@ coef.bivrecReg <- function(object) {
 #'
 #' @title vcov
 #' @param object A bivrecReg object obtained by using bivrecReg() function
+#' @param ... additional parameters if needed
 #'
 #' @export
 
-vcov.bivrecReg <- function(object) {
+vcov.bivrecReg <- function(object, ...) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   #do for Chang
   vcovmatrix <- object$leefit$vcovmat
@@ -43,6 +46,7 @@ vcov.bivrecReg <- function(object) {
 ########################    print     ########################
 #' @title print
 #' @param object An object to print
+#'
 #' @keywords internal
 #'
 
@@ -60,10 +64,11 @@ print.bivrecReg <- function(object) {
 #' @param object A bivrecReg object obtained by using bivrecReg() function
 #' @param parm The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.
 #' @param level Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.
+#' @param ... additional parameters if needed
 #'
 #' @export
 
-confint.bivrecReg <- function(object, parm, level) {
+confint.bivrecReg <- function(object, parm, level, ...) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
   #do for Chang
   coeffs <- object$leefit$fit

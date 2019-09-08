@@ -1,3 +1,4 @@
+PKG_LIBS = -L$(XML_DIR)/bin
 all: $(SHLIB)
 
 bivrecur.o: bivrecur.f

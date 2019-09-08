@@ -4,7 +4,7 @@
 \alias{confint.bivrecReg}
 \title{confint}
 \usage{
-\method{confint}{bivrecReg}(object, parm, level)
+\method{confint}{bivrecReg}(object, parm, level, ...)
 }
 \arguments{
 \item{object}{A bivrecReg object obtained by using bivrecReg() function}
@@ -12,6 +12,8 @@
 \item{parm}{The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.}
 
 \item{level}{Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.}
+
+\item{...}{additional parameters if needed}
 }
 \description{
 Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg

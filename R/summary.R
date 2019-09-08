@@ -28,10 +28,11 @@ print.summary.bivrecReg <- function(x, ...) {
 
 }
 
-#' Summarize bivrecReg object
+#' Summary of a bivrecReg object
 #'
-#' @title summarize
+#' @title summary
 #' @param object a bivrecReg object obtained by using bivrecReg() function
+#' @param ... additional parameters if needed
 #'
 #' @export
 

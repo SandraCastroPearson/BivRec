@@ -4,10 +4,12 @@
 \alias{coef.bivrecReg}
 \title{coef}
 \usage{
-\method{coef}{bivrecReg}(object)
+\method{coef}{bivrecReg}(object, ...)
 }
 \arguments{
 \item{object}{A bivrecReg object obtained by using bivrecReg() function}
+
+\item{...}{additional parameters if needed}
 }
 \description{
 Obtain coefficients from semi-parametric regression fit using bivrecReg

@@ -26,9 +26,7 @@
 #'
 #'
 
-bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) UseMethod("bivrecSurv")
-
-bivrecSurv.default <- function(id, episode, xij, yij, Xcind, Ycind) {
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
   #Check if anything is missing
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")

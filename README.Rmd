@@ -52,27 +52,34 @@ plot(bivrec_data)
 
 # Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
 
-# To save plots in a pdf file un-comment the following line of code: 
-# pdf("nonparamplots.pdf")
-# 
-# nonpar.result <- biv.rec.np(formula = id + epi + xij + yij + d1 + d2 ~ 1,
-#            data=biv.rec.data, ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1),
-#            conditional = TRUE, given.interval=c(0, 10), jointplot=TRUE,
-#            marginalplot = TRUE, condiplot = TRUE)
 
-# To close the pdf file with the saved plots un-comment the following line of code
+nonpar_result <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+                      conditional = TRUE, given.interval=c(0, 10))
+
+head(nonpar_result$joint.cdf)
+head(nonpar_result$marginal.survival)
+head(nonpar_result$conditional.cdf)
+plot(nonpar_result)
+
+# To save individual plots in a pdf file un-comment the following line of code: 
+# pdf("nonparam_jointcdfplot.pdf")
+# plotJoint(nonpar_result)
 # dev.off()
-# 
-# head(nonpar.result$joint.cdf)
-# head(nonpar.result$marginal.survival)
-# head(nonpar.result$conditional.cdf)
+# pdf("nonparam_marginalplot.pdf")
+# plotMarg(nonpar_result)
+# dev.off()
+# pdf("nonparam_conditionaplot.pdf")
+# plotCond(nonpar_result)
+# dev.off()
 
 # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
-fitlee <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+fitlee <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                      data = simdata, method="Lee.et.al")
-summarize(fitlee)
+summary(fitlee)
+plot(fitlee)
 
 # To apply Chang (2004) method use method="Chang".
-# biv.rec.chang<- biv.rec.fit(formula = id + epi + xij + yij + d1 + d2 ~ a1 + a2, 
-# data=biv.rec.data, method="Chang", CI=0.99)
+# biv.rec.chang<- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#                     data = simdata, method="Chang")
 ```

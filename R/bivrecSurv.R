@@ -21,8 +21,8 @@
 #' @export
 #' @examples
 #' set.seed(1234)
-#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bivrecsurv_obj <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 #'
 

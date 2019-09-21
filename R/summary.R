@@ -28,6 +28,21 @@ print.summary.bivrecReg <- function(x, ...) {
 
 }
 
+#' Print bivrecNP object
+#' @title print
+#' @param object of a bivrecNP object obtained by using the bivrecNP() function
+#' @export
+
+print.bivrecNP <- function(object){
+  if (!inherits(object, "bivrecNP")) stop("Must be a bivrecNP object")
+  head(object$joint_cdf)
+  head(object$marginal_survival)
+  if (object$conditional==TRUE) {
+    head(object$conditional_cdf$conditional)
+  }
+  print(paste("Confidence Interval:",npresult2$CI))
+}
+
 #' Summary of a bivrecReg object
 #'
 #' @title summary

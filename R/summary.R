@@ -1,44 +1,27 @@
-significance <- function(pval) {
-  sigcode <- ifelse(pval < 0.001, "***",
-                    ifelse(pval < 0.01, "**",
-                           ifelse(pval < 0.05, "*",
-                                  ifelse(pval < 0.1, ".", " ")
-                           )
-                    )
-  )
-  return(sigcode)
-}
-
 #' Print the summary of a bivrecReg object.
 #'
 #' @param x a summary.bivrecReg object
 #' @param ... additional parameters if needed
+#' @importFrom stats printCoefmat
 #'
 #' @export
 #'
 print.summary.bivrecReg <- function(x, ...) {
   if (!inherits(x, "summary.bivrecReg")) stop("Must be a bivrecReg summary object")
-  call <- x$call
-  n <- x$n
-  coefficients <- x$coefficients
-  signifcodes <- x$signifcodes
-  OddRatios <- x$OddRatios
 
-  cat("\nCall:\n",
-      paste(deparse(call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  cat("\nCall:\n")
+  dput(x$call)
 
-  cat("\nNumber of Subjects:\n",
-      paste(deparse(n), sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  cat("\nNumber of Subjects:\n")
+  dput(x$n)
 
   cat("\nCoefficients:\n", " ", sep = "")
-  print(coefficients)
-
-  cat("\n---\n",
-      paste(signifcodes, sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  printCoefmat(x$coefficients, digits = max(3, getOption("digits") - 2),
+               signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
 
   cat("\nOdd Ratios:\n", " ", sep = "")
-  print(OddRatios)
-
+  printCoefmat(x$OddRatios, digits = max(3, getOption("digits") - 2),
+               signif.stars=FALSE, P.values=FALSE, has.Pvalue=FALSE)
 }
 
 #' Summary of a bivrecReg object.
@@ -58,22 +41,21 @@ summary.bivrecReg <- function(object, ...){
     coeffs <- object$chang_fit$fit
   } else {coeffs <- object$leefit$fit}
 
-  coeffs_df <- as.data.frame(cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
-                                rep(0, nrow(coeffs)), rep(0, nrow(coeffs))))
-  for (i in 1:nrow(coeffs_df)) {
-    coeffs_df[i,4] <- round(pnorm(abs(coeffs_df[i,3]), lower.tail = FALSE), digits=5)
-    coeffs_df[i,5] <- significance(coeffs_df[i,4])
+  coeffs<- cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
+                                rep(0, nrow(coeffs)))
+  for (i in 1:nrow(coeffs)) {
+    coeffs[i,4] <- round(pnorm(abs(coeffs[i,3]), lower.tail = FALSE), digits=5)
+    #coeffs_df[i,5] <- significance(coeffs_df[i,4])
   }
-  colnames(coeffs_df) <- c("Estimates", "SE", "z", "Pr(>|z|)", "")
+  colnames(coeffs) <- c("Estimates", "SE", "z", "Pr(>|z|)")
   conf_lev = 1 - ((1-0.95)/2)
-  CIcalc <- t(apply(coeffs_df[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
+  CIcalc <- t(apply(coeffs[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
 
-  expcoeffs <- data.frame(exp(coeffs_df[,1]), exp(-coeffs_df[,1]), exp(CIcalc))
-  colnames(expcoeffs) <- c("exp(coef)", "exp(-coef)", "lower .95", "upper .95")
+  expcoeffs <- data.frame(exp(coeffs[,1]), exp(-coeffs[,1]), exp(CIcalc))
+  colnames(expcoeffs) <- c("Odds Ratio", "Inverse OR", "lower .95", "upper .95")
 
   ans <- list(call = object$call, n=object$data$response$n,
-              coefficients = coeffs_df,
-              signifcodes = "Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+              coefficients = coeffs,
               OddRatios = expcoeffs)
 
   class(ans) <- "summary.bivrecReg"

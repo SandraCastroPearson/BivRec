@@ -34,13 +34,15 @@
 #' set.seed(1234)
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' npresult <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-#'                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
+#'                      ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1))
+#' plot(npresult)
 #'
 #' \dontrun{
 #' #This is an example with longer runtime (it runs the conditional graph)
 #'  npresult2 <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-#'                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+#'                      ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1),
 #'                      conditional = TRUE, given.interval=c(0, 10))
+#'  plot(npresult2)
 #' }
 
 bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
@@ -50,7 +52,6 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
   if (!inherits(x, "bivrecSurv")) stop("Response must be a bivrecSurv class")
   if (missing(ai)) {ai<-1}
   if (missing(conditional)) {conditional <- FALSE}
-
   if (missing(CI)) {CI <- 0.95}
 
   if (CI > 0.99) {stop("Error CI > 0.99")} else {
@@ -69,8 +70,9 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
   print("Estimating joint cdf and marginal survival")
 
   if (ai==1) {
-    forcdf <- x$dat4np1$forcdf
-    formarg <- x$dat4np1$formarg
+    new_data = x$dat4np1
+    forcdf <- new_data$forcdf
+    formarg <- new_data$formarg
     }
 
   if (ai==2) {
@@ -84,23 +86,26 @@ bivrecNP <- function(response, ai, u1, u2, CI, conditional, given.interval){
 
   if (conditional==FALSE) {
 
-    final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
+    final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai,
+                         xij=xij, yij=yij, new_data=new_data)
 
   } else {
 
     if (missing(given.interval)) {
 
-      print("Error for conditional calculation given.interval argument missing.")
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
 
     } else {
+
+      print("Estimating condition distribution")
+
       partial_result <- list(cdf = cdf_res, marginal_survival = marg_res,
                              ai=ai, new_data=new_data)
 
-      ccdf_res <- nonparam_conditional(partial_result, given.interval, CI)
+      ccdf_res <- nonparam_conditional(res=partial_result, given.interval, CI, yij)
 
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
-                           conditional_cdf = ccdf_res,ai=ai)
+                           conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij, new_data=new_data)
 
       final_result$given.interval <-given.interval
     }

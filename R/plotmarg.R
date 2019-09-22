@@ -5,18 +5,17 @@
 #'
 #' @param x must be an object of \code{bivrecNP} class.
 #' @param CI passed from object
-#' @noRd
 #' @return A plot of marginal survival vs. first gap time with confidence interval.
+#' @keywords internal
 
 
 plotMarg <- function(x, CI) {
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
-  xij <- x$
+  xij <- x$xij
   forplot <- x$marginal_survival[1:3]
   #formula <- bivrec.nonparam.result$formula
 
   #variables <- all.vars(formula)
-  xij <- x$data4Creg$xij
   mx <- round(max(xij), digits = 0)
   str_mx <- substring(as.character(mx), 1, nchar(as.character(mx))-1)
   str_mx <- paste(as.numeric(str_mx)+1, 0, sep="")

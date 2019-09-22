@@ -1,9 +1,8 @@
 ########################    COEF     ########################
 
-#' Obtain coefficients from semi-parametric regression fit using bivrecReg
+#' Extract the coefficients of a semi-parametric regression fit obtained from bivrecReg
 #'
-#' @title coef
-#' @param object A bivrecReg object obtained by using bivrecReg() function
+#' @param object A bivrecReg object
 #' @param ... additional parameters if needed
 #'
 #' @export
@@ -24,10 +23,9 @@ coef.bivrecReg <- function(object, ...) {
 
 ########################    VCOV     ########################
 
-#' Obtain variance-covariance matrix from semi-parametric regression fit using bivrecReg
+#' Extract the variance-covariance matrix of a semi-parametric regression fit from bivrecReg
 #'
-#' @title vcov
-#' @param object A bivrecReg object obtained by using bivrecReg() function
+#' @param object A bivrecReg object
 #' @param ... additional parameters if needed
 #'
 #' @export
@@ -44,8 +42,8 @@ vcov.bivrecReg <- function(object, ...) {
 }
 
 ########################    print     ########################
-#' @title print
-#' @param object An object to print
+#' Print an object of class bivrecReg
+#' @param object An object of class bivrecReg
 #'
 #' @keywords internal
 #'
@@ -59,9 +57,8 @@ print.bivrecReg <- function(object) {
 ########################    confint     ########################
 #' Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg
 #'
-#' @title confint
 #' @importFrom stats pnorm
-#' @param object A bivrecReg object obtained by using bivrecReg() function
+#' @param object A bivrecReg object
 #' @param parm The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.
 #' @param level Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.
 #' @param ... additional parameters if needed

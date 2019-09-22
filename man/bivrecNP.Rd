@@ -41,12 +41,14 @@ library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 npresult <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-                     ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15))
+                     ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1))
+plot(npresult)
 
 \dontrun{
 #This is an example with longer runtime (it runs the conditional graph)
  npresult2 <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-                     ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+                     ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1),
                      conditional = TRUE, given.interval=c(0, 10))
+ plot(npresult2)
 }
 }

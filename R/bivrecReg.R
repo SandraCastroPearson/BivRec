@@ -14,11 +14,6 @@
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
 #' @return A bivrecReg object containing:
-#' \itemize{
-#'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
-#'   \item \strong{formula:} The formula used to specify the model.
-#' }
-#'
 #' @details
 #' Two different estimation methods are available:
 #' \itemize{
@@ -52,6 +47,7 @@
 #'                     data = bivrec_data, method="Lee.et.al")
 #' summary(lee_reg)
 #' plot(lee_reg)
+#' confint(lee_reg, level=0.99)
 #' \dontrun{
 #'
 #' #To apply Chang (2004) method use method="Chang". This is an example with longer runtime.

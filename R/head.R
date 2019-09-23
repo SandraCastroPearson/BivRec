@@ -4,7 +4,6 @@
 #'
 #' @param x A bivrecNP object
 #' @param ... additional parameters if needed
-#' @importFrom utils head
 #'
 #' @export
 

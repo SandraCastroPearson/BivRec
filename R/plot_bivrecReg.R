@@ -1,8 +1,8 @@
 ########################    plot.bivrecSurv     ########################
-#' Plot Bivariate Alternating Recurrent Series from a bivrecReg object
+#' Plot Bivariate Alternating Recurrent Series from Formula
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times from a bivrecReg object. For examples see \code{bivrecReg}.
+#' This function plots bivariate recurrent event gap times from a formula. For examples see \code{bivrecReg}.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -10,8 +10,8 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x An object of class \code{bivrecReg}.
-#' @param y Either empty or NULL
+#' @param x an object of class \code{bivrecReg}.
+#' @param y either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Gap Times".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".

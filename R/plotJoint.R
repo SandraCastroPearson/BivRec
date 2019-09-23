@@ -4,12 +4,12 @@
 #' @description
 #' This function plots joint cdf for recurrent event data. For example see \code{bivrecNP}.
 #'
+#' @noRd
 #' @param x must be an object of \code{bivrecNP} class.
 #'
 #' @return A contour plot of joint cdf.
 #'
 #' @importFrom stats ftable
-#' @keywords internal
 #'
 #'
 plotJoint <- function(x) {

@@ -2,12 +2,12 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{confint.bivrecReg}
 \alias{confint.bivrecReg}
-\title{Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg}
+\title{confint}
 \usage{
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object}
+\item{object}{A bivrecReg object obtained by using bivrecReg() function}
 
 \item{parm}{The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.}
 

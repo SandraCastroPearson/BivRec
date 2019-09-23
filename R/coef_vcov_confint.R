@@ -1,78 +1,67 @@
 ########################    COEF     ########################
 
-#' Extract the coefficients of a semi-parametric regression fit obtained from bivrecReg
+#' Obtain coefficients from semi-parametric regression fit using bivrecReg
 #'
-#' @param object A bivrecReg object
+#' @title coef
+#' @param object A bivrecReg object obtained by using bivrecReg() function
 #' @param ... additional parameters if needed
-#'
-#' @importFrom stats printCoefmat
 #'
 #' @export
 
 coef.bivrecReg <- function(object, ...) {
   #add chang
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
-
-  if (object$method=="Chang") {
-    coeffs <- object$chang_fit$fit
-  } else {coeffs <- object$leefit$fit}
-
-  coeffs<- cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
-                 rep(0, nrow(coeffs)))
+  coeffs <- object$leefit$fit
+  coeffs <- as.data.frame(cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
+                                rep(0, nrow(coeffs)), rep(0, nrow(coeffs))))
   for (i in 1:nrow(coeffs)) {
     coeffs[i,4] <- round(pnorm(abs(coeffs[i,3]), lower.tail = FALSE), digits=5)
-    #coeffs_df[i,5] <- significance(coeffs_df[i,4])
+    coeffs[i,5] <- significance(coeffs[i,4])
   }
-
-  colnames(coeffs) <- c("Estimates", "SE", "z", "Pr(>|z|)")
-  printCoefmat(coeffs, digits = max(3, getOption("digits") - 2),
-               signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
+  colnames(coeffs) <- c("Estimates", "SE", "z", "Pr(>|z|)", "")
+  coeffs
 }
 
 ########################    VCOV     ########################
 
-#' Extract the variance-covariance matrix of a semi-parametric regression fit from bivrecReg
+#' Obtain variance-covariance matrix from semi-parametric regression fit using bivrecReg
 #'
-#' @param object A bivrecReg object
+#' @title vcov
+#' @param object A bivrecReg object obtained by using bivrecReg() function
 #' @param ... additional parameters if needed
 #'
 #' @export
 
 vcov.bivrecReg <- function(object, ...) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
-
-  if (object$method=="Chang") {
-    vcovmatrix <- object$chang_fit$vcovmat
-    covnames <- rownames(object$chang_fit$fit)
-  } else {
-    vcovmatrix <- object$leefit$vcovmat
-    covnames <- rownames(object$leefit$fit)}
-
-  rownames(vcovmatrix) = colnames(vcovmatrix) =covnames
+  #do for Chang
+  vcovmatrix <- object$leefit$vcovmat
+  covnames <- rownames(object$leefit$fit)
+  rownames(vcovmatrix) = covnames
+  colnames(vcovmatrix) = covnames
   vcovmatrix
 
 }
 
 ########################    print     ########################
-#' Print an object of class bivrecReg
-#' @param object An object of class bivrecReg
+#' @title print
+#' @param object An object to print
 #'
-#' @importFrom stats printCoefmat
 #' @keywords internal
 #'
 
 print.bivrecReg <- function(object) {
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
   coeffs1 <- coef.bivrecReg(object)
-  printCoefmat(coeffs1, digits = max(3, getOption("digits") - 2),
-               signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
+  print(coeffs1)
 }
 
 ########################    confint     ########################
 #' Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg
 #'
+#' @title confint
 #' @importFrom stats pnorm
-#' @param object A bivrecReg object
+#' @param object A bivrecReg object obtained by using bivrecReg() function
 #' @param parm The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.
 #' @param level Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.
 #' @param ... additional parameters if needed
@@ -80,16 +69,11 @@ print.bivrecReg <- function(object) {
 #' @export
 
 confint.bivrecReg <- function(object, parm, level, ...) {
-
   if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
-
-  if (object$method=="Chang") {
-    coeffs <- object$chang_fit$fit
-  } else {coeffs <- object$leefit$fit}
-
+  #do for Chang
+  coeffs <- object$leefit$fit
   if (missing(level)) {level = 0.95}
   if (missing(parm)) {parm = rownames(coeffs)}
-
   conf_lev = 1 - ((1-level)/2)
   CIcalc <- t(apply(coeffs, 1, function(x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
   ans  <- cbind(coeffs, CIcalc)

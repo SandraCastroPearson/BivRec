@@ -15,7 +15,7 @@
 #' @param d1 Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
 #' @param d2 Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
 #'
-#' @return A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
+#' @return a BivRec repsonse object ready to put in a formula.
 #'
 #' @rdname BivRec
 #' @export

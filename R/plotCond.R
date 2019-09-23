@@ -9,7 +9,7 @@
 #' @return A plot of conditional cdf in the given interval.
 #'
 #' @importFrom stats ftable
-#' @keywords internal
+#'
 
 plotCond <- function(x) {
   cond <-x$conditional_cdf$conditional

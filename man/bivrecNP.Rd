@@ -47,6 +47,10 @@ npresult <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1,
 #This is an example with longer runtime (it runs the conditional graph)
  npresult2 <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+<<<<<<< HEAD
  plot(npresult2)
+=======
+                     conditional = TRUE, given.interval=c(0, 10))
+>>>>>>> parent of 1b4c340... Merge branch 'In-development-updated-f' of https://github.com/SandraCastroPearson/BivRec into In-development-updated-f
 }
 }

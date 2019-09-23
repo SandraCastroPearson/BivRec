@@ -2,15 +2,15 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{vcov.bivrecReg}
 \alias{vcov.bivrecReg}
-\title{Extract the variance-covariance matrix of a semi-parametric regression fit from bivrecReg}
+\title{vcov}
 \usage{
 \method{vcov}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object}
+\item{object}{A bivrecReg object obtained by using bivrecReg() function}
 
 \item{...}{additional parameters if needed}
 }
 \description{
-Extract the variance-covariance matrix of a semi-parametric regression fit from bivrecReg
+Obtain variance-covariance matrix from semi-parametric regression fit using bivrecReg
 }

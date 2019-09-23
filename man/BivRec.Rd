@@ -20,7 +20,7 @@ bivrecSurv(id, episode, xij, yij, d1, d2)
 \item{d2}{Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.}
 }
 \value{
-A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
+a BivRec repsonse object ready to put in a formula.
 }
 \description{
 This function creates a bivariate recurrent response survival object (bivrecSurv object).

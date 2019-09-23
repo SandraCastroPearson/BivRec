@@ -15,7 +15,7 @@
 #' @return A dataframe with the joint CDF
 #'
 #' @keywords internal
-#' @useDynLib BivRec
+#'
 
 nonparam_cdf <- function(fit_data, u, ai, CI) {
 

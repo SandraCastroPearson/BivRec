@@ -2,25 +2,25 @@
 
 S3method(coef,bivrecReg)
 S3method(confint,bivrecReg)
-S3method(head,bivrecNP)
 S3method(plot,bivrecNP)
 S3method(plot,bivrecReg)
 S3method(plot,bivrecSurv)
 S3method(plot,formula)
 <<<<<<< HEAD
 S3method(print,bivrecNP)
+<<<<<<< HEAD
 S3method(print,summary.bivrecReg)
 =======
 >>>>>>> parent of 55f1da9... sandra's stuff
+=======
+>>>>>>> parent of 1b4c340... Merge branch 'In-development-updated-f' of https://github.com/SandraCastroPearson/BivRec into In-development-updated-f
 S3method(summary,bivrecReg)
 S3method(vcov,bivrecReg)
 export(bivrecNP)
 export(bivrecReg)
 export(bivrecSurv)
 export(simulate)
-import(Rcpp)
 import(graphics)
-import(survival)
 importFrom(MASS,mvrnorm)
 importFrom(dplyr,filter)
 importFrom(stats,cov)
@@ -31,7 +31,6 @@ importFrom(stats,na.omit)
 importFrom(stats,optim)
 importFrom(stats,optimize)
 importFrom(stats,pnorm)
-importFrom(stats,printCoefmat)
 importFrom(stats,qnorm)
 importFrom(stats,quantile)
 importFrom(stats,rbinom)

@@ -2,12 +2,16 @@
 % Please edit documentation in R/summary.R
 \name{summary.bivrecReg}
 \alias{summary.bivrecReg}
+<<<<<<< HEAD
 \title{Summary of a bivrecReg object}
+=======
+\title{summary}
+>>>>>>> parent of 1b4c340... Merge branch 'In-development-updated-f' of https://github.com/SandraCastroPearson/BivRec into In-development-updated-f
 \usage{
 \method{summary}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{a bivrecReg object}
+\item{object}{a bivrecReg object obtained by using bivrecReg() function}
 
 \item{...}{additional parameters if needed}
 }

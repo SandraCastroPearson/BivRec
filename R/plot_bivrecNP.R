@@ -27,17 +27,23 @@ plot.bivrecNP <-function(x, y=NULL, type = NULL,
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
 
+  #check arguments for labels
+  if (missing(type)) {type=c("Type 1","Type 2")}
+  if (missing(xlab)) {xlab="Gap Times"}
+  if (missing(ylab)) {ylab="Individual"}
+  if (missing(main)) {main=""}
+
+  args = c(main, xlab, ylab, type)
   cond=x$conditional #boolean saying if conditional is in bivrecNP object
 
   if (cond==FALSE){
-    par(mar=c(5,4,4,2)+0.1)
     plotJoint(x)
-    par(mar=c(5,4,4,2)+0.1)
     plotMarg(x)
   }
   else {
     plotJoint(x)
-    par(mar=c(5,4,4,2)+0.1, mfrow=c(1,2))
+    par(mar=c(1,1,1,1))
+    par(mfrow=c(1,2))
     plotMarg(x)
     plotCond(x)
     par(mfrow=c(1, 1))

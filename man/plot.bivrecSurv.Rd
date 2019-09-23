@@ -8,7 +8,7 @@
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
-\item{x}{An object of class \code{bivrecSurv}.}
+\item{x}{either coordinates for a plot or an object of class \code{bivrecSurv}.}
 
 \item{y}{either empty or NULL}
 
@@ -23,7 +23,7 @@
 \item{...}{arguments to be passed to graphical methods as needed.}
 }
 \description{
-This function plots bivariate recurrent event gap times from a bivrecSurv object.
+This function plots bivariate recurrent event gap times
 }
 \examples{
 # Simulate bivariate alternating recurrent event data

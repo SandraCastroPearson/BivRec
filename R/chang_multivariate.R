@@ -202,7 +202,7 @@ sd.estpar=function(init, dat, v, B) {
   }
   var_est=cov(A,A) #cov compute the cov between columns
   out=sqrt(diag(var_est))
-  return(sd=out, covmat=var_est)
+  return(list(sd=out, covmat=var_est))
 }
 
 ###################################################################

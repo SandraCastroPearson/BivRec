@@ -4,7 +4,7 @@
 \alias{bivrecSurv}
 \title{A function to create a bivrecSurv object}
 \usage{
-bivrecSurv(id, episode, xij, yij, Xcind, Ycind)
+bivrecSurv(id, episode, xij, yij, d1, d2)
 }
 \arguments{
 \item{id}{Vector of subject's unique identifier (i).}
@@ -15,9 +15,9 @@ bivrecSurv(id, episode, xij, yij, Xcind, Ycind)
 
 \item{yij}{vector with the lengths of time spent in event of type Y for individual i in episode j.}
 
-\item{Xcind}{Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.}
+\item{d1}{Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.}
 
-\item{Ycind}{Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.}
+\item{d2}{Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.}
 }
 \value{
 A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.

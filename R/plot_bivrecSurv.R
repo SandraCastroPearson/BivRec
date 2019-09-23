@@ -35,7 +35,7 @@ plot.bivrecSurv <- function(x, y=NULL, type = NULL,
 
   #check arguments for labels
   if (missing(type)) {type=c("Type 1","Type 2")}
-  if (missing(xlab)) {xlab="Gap Times"}
+  if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}
 

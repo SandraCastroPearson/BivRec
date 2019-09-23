@@ -35,12 +35,12 @@ print.summary.bivrecReg <- function(x, ...) {
 
 print.bivrecNP <- function(object){
   if (!inherits(object, "bivrecNP")) stop("Must be a bivrecNP object")
-  head(object$joint_cdf)
-  head(object$marginal_survival)
+  print(head(object$joint_cdf))
+  print(head(object$marginal_survival))
   if (object$conditional==TRUE) {
-    head(object$conditional_cdf$conditional)
+    print(head(object$conditional_cdf$conditional))
   }
-  print(paste("Confidence Interval:",npresult2$CI))
+  print(paste("Confidence Level:",object$CI))
 }
 
 #' Summary of a bivrecReg object

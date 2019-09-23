@@ -14,11 +14,6 @@
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
 #' @return A bivrecReg object containing:
-#' \itemize{
-#'   \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
-#'   \item \strong{formula:} The formula used to specify the model.
-#' }
-#'
 #' @details
 #' Two different estimation methods are available:
 #' \itemize{
@@ -46,12 +41,13 @@
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 #' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
 #' lee_reg <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-#'                     data = sim_data, method="Lee.et.al")
+#'                     data = bivrec_data, method="Lee.et.al")
 #' summary(lee_reg)
 #' plot(lee_reg)
+#' confint(lee_reg, level=0.99)
 #' \dontrun{
 #'
 #' #To apply Chang (2004) method use method="Chang". This is an example with longer runtime.
@@ -110,7 +106,9 @@ bivrecReg <- function(formula, data, method) {
                       formula = formula_ref, method="Lee.et.al",
                       data = list(response=resp$data4Lreg, predictors = amat, original = ref_data))}
 
+
   }
+
   ### Chang Method
   if (method == "Chang") {
 

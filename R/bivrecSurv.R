@@ -12,24 +12,22 @@
 #' @param episode Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
 #' @param xij Vector with the lengths of time spent in event of type X for individual i in episode j.
 #' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j.
-#' @param d1 Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
-#' @param d2 Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
+#' @param Ycind Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
+#' @param Xcind Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
 #'
-#' @return a BivRec repsonse object ready to put in a formula.
+#' @return A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
 #'
 #' @rdname BivRec
 #' @export
 #' @examples
 #' set.seed(1234)
-#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' bivrecsurv_obj <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
+#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 #'
 
-bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
+bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
 
-  Xcind = d1
-  Ycind = d2
   #Check if anything is missing
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")
   if (missing(yij)) stop("Missing - gap times for type 2 event (yij).")

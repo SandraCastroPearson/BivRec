@@ -98,8 +98,8 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam_conditional <- function(res, given.interval, CI) {
-  yij= res$new_data$refdata$wij #this is the yij that is needed for y.grid
+nonparam_conditional <- function(res, given.interval, CI, yij) {
+
   ####Extract items from results
   marginal <- res$marginal_survival #marg result (res2)
   marginal$rounded <- round(marginal[,2], digits=2)

@@ -2,14 +2,14 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{print.bivrecReg}
 \alias{print.bivrecReg}
-\title{print}
+\title{Print an object of class bivrecReg}
 \usage{
 \method{print}{bivrecReg}(object)
 }
 \arguments{
-\item{object}{An object to print}
+\item{object}{An object of class bivrecReg}
 }
 \description{
-print
+Print an object of class bivrecReg
 }
 \keyword{internal}

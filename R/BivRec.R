@@ -1,4 +1,4 @@
-#' BivRec
+#' Bivariate Alternating Recurrent Event Data Analysis
 #'
 #' @description Alternating recurrent event data arise frequently in biomedical and social sciences where 2 types of events such as hospital admissions and discharge occur alternatively over time.
 #' As such we implement a collection of non-parametric and semiparametric methods to analyze such data.
@@ -6,14 +6,27 @@
 #' Use \code{bivrecNP}() for estimation of the joint cumulative distribution function (cdf) for the two alternating events gap times (xij and yij) as well as the marginal survival function for type I gap times (xij) and the conditional cdf of the type II gap times (yij) given an interval of type I gap times (xij) in a non-parametric fashion.
 #' The package also provides options to simulate and visualize the data and results of analysis.
 #'
+#' @aliases BivRec-package
+#' @references
+#' \enumerate{
+#' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.
+#' \url{https://doi.org/10.1023/B:LIDA.0000030202.20842.c9}
+#'
+#' \item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
+#' \url{https://doi.org/10.1002/sim.7563}
+#'
+#' \item Parzen MI, Wei LJ, Ying Z (1994). A resampling method based on pivotal estimating functions. Biometrika, 81: 341-350.
+#' \url{https://doi.org/10.1093/biomet/81.2.341}
+#'
+#' \item Huang CY, Wang MC (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
+#' \url{doi.org/10.1111/j.1541-0420.2005.00328.x}
+#' }
+#'
 #' @docType package
-#' @author Sandra Castro-Pearson
+#' @author Sandra Castro-Pearson, Aparajita Sur, Chi-Hyun Lee, Chiung-Yu Huang, Xianghua Luo
 #' @import Rcpp
 #' @import survival
 #' @import graphics
-#' @useDynLib BivRec "bivrecur", .registration = TRUE
-#' @useDynLib BivRec "mprovar", .registration = TRUE
-#' @useDynLib BivRec "onesamp", .registration = TRUE
-#' @useDynLib BivRec "xmproee", .registration = TRUE
-#' @useDynLib BivRec "ymproee", .registration = TRUE
-#' @name BivRec
+#' @useDynLib BivRec
+"_PACKAGE"
+NULL

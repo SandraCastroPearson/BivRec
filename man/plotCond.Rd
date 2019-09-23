@@ -15,3 +15,4 @@ A plot of conditional cdf in the given interval.
 \description{
 This function plots conditional cdf for recurrent event data. For example see \code{bivrecNP}.
 }
+\keyword{internal}

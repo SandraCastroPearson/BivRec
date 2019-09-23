@@ -2,15 +2,15 @@
 % Please edit documentation in R/plot_bivrecReg.R
 \name{plot.bivrecReg}
 \alias{plot.bivrecReg}
-\title{Plot Bivariate Alternating Recurrent Series from Formula}
+\title{Plot Bivariate Alternating Recurrent Series from a bivrecReg object}
 \usage{
 \method{plot}{bivrecReg}(x, y = NULL, type = NULL, main = NULL,
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
-\item{x}{an object of class \code{bivrecReg}.}
+\item{x}{An object of class \code{bivrecReg}.}
 
-\item{y}{either empty or NULL}
+\item{y}{Either empty or NULL}
 
 \item{type}{Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").}
 
@@ -23,5 +23,5 @@
 \item{...}{arguments to be passed to graphical methods as needed.}
 }
 \description{
-This function plots bivariate recurrent event gap times from a formula. For examples see \code{bivrecReg}.
+This function plots bivariate recurrent event gap times from a bivrecReg object. For examples see \code{bivrecReg}.
 }

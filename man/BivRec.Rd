@@ -20,7 +20,7 @@ bivrecSurv(id, episode, xij, yij, Xcind, Ycind)
 \item{Ycind}{Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.}
 }
 \value{
-a BivRec repsonse object ready to put in a formula.
+A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
 }
 \description{
 This function creates a bivariate recurrent response survival object (bivrecSurv object).

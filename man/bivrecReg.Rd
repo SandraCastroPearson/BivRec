@@ -15,10 +15,6 @@ bivrecReg(formula, data, method)
 }
 \value{
 A bivrecReg object containing:
-\itemize{
-  \item \strong{covariate.effects:} A data frame summarizing effects of the covariates including the point estimate, standard error and confidence interval.
-  \item \strong{formula:} The formula used to specify the model.
-}
 }
 \description{
 This function allows the user to evaluate covariate effects on two alternating recurrent events gap times (referred as type I and type II gap times)
@@ -43,6 +39,7 @@ lee_reg <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data = sim_data, method="Lee.et.al")
 summary(lee_reg)
 plot(lee_reg)
+confint(lee_reg, level=0.99)
 \dontrun{
 
 #To apply Chang (2004) method use method="Chang". This is an example with longer runtime.

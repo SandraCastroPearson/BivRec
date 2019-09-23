@@ -47,6 +47,13 @@ npresult <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1,
 #This is an example with longer runtime (it runs the conditional graph)
  npresult2 <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
+plot(npresult)
+
+\dontrun{
+#This is an example with longer runtime (it runs the conditional graph)
+ npresult2 <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                     ai=1, u1 = seq(2, 25, 1), u2 = seq(1, 20, 1),
                      conditional = TRUE, given.interval=c(0, 10))
+ plot(npresult2)
 }
 }

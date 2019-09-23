@@ -191,7 +191,7 @@ sd.estpar1=function(init,dat,v, B) {
     A[i,]=est.R$par
   }
   var_est=cov(A,A) #cov compute the cov between columns
-  out=sqrt(diag(var.est))
+  out=sqrt(diag(var_est))
   return(sd=out, covmat=var_est)
 }
 
@@ -247,11 +247,11 @@ chang_univariate <- function(new_data, cov_names, SE) {
     chang1v <- v.est1(chang1$par,new_data, R=100)
     chang1sd <- sd.estpar1(beta, new_data, chang1v ,B=50)
 
-    #calculate CIs, join all info, put in nice table
+    #join all info, put in nice table
     changfit <- data.frame(chang1$par, chang1sd$sd)
     colnames(changfit) <- c("Estimate", "SE")
     rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    return(list(fit=changfit, vcovmatrix = chang1sd$covmat))
+    return(list(fit=changfit, vcovmat = chang1sd$covmat))
   }
 
 }

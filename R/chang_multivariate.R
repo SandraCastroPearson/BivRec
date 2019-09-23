@@ -200,9 +200,9 @@ sd.estpar=function(init, dat, v, B) {
     i=i+1
     A[i,]=est.R$par
   }
-  varest=cov(A,A) #cov compute the cov between columns
-  out=sqrt(diag(var.est))
-  return(sd=out, covmat=varest)
+  var_est=cov(A,A) #cov compute the cov between columns
+  out=sqrt(diag(var_est))
+  return(sd=out, covmat=var_est)
 }
 
 ###################################################################
@@ -255,13 +255,13 @@ chang_multivariate <- function(new_data, cov_names, SE) {
 
     #estimate covariance matrix / std. errors using Parzen's method
     changv <- v.est(chang$par,new_data,R=50)
-    changsd <- sd.estpar(beta, new_data, v = changv, B=30)
+    changsd <- sd.estpar(init = beta, dat = new_data, v = changv, B=30)
 
     #Join all info, put in nice table
     changfit <- data.frame(chang$par, changsd$sd)
     colnames(changfit) <- c("Estimate", "SE")
     rownames(changfit) <- c(paste("xij", cov_names), paste("yij", cov_names))
-    return(list(fit = as.matrix(changfit), vcovmatrix = changsd$covmat))
+    return(list(fit = as.matrix(changfit), vcovmat = changsd$covmat))
 
   }
 

@@ -31,7 +31,7 @@ This function plots bivariate recurrent event gap times by the categorical covar
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(1234)
-bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
      main = "Example", type = c("In Hospital", "Out of Hospital"))
 

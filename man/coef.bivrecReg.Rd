@@ -2,7 +2,7 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{coef.bivrecReg}
 \alias{coef.bivrecReg}
-\title{Extract the Coefficients of a Semiparametric Regression Fit Obtained from \code{bivrecReg} object}
+\title{Extract the Coefficients of a Semiparametric Regression Fit Obtained from a \code{bivrecReg} object}
 \usage{
 \method{coef}{bivrecReg}(object, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-Extract the Coefficients of a Semiparametric Regression Fit Obtained from \code{bivrecReg} object
+Extract the Coefficients of a Semiparametric Regression Fit Obtained from a \code{bivrecReg} object
 }

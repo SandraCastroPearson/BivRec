@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{A bivrecReg object.}
 
-\item{parm}{The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.}
+\item{parm}{The parameters for which to run confidence interval. Default gets CI for all the covariates in the model.}
 
 \item{level}{Significance level. Default is 0.95.}
 

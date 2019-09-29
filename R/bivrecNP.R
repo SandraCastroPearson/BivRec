@@ -1,7 +1,7 @@
 #' Nonparametric Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
-#' This function allows the user to obtain the joint and conditional cumulative distributions and the marginal survival functions of the two types of gap times ($X_{ij}$ and $Y_{ij}$, referred to as Type I and Type I gap times) of a bivariate alternating recurrent event process.
+#' This function allows the user to obtain the joint and conditional cumulative distributions and the marginal survival functions of the two types of gap times (xij and yij, referred to as Type I and Type II gap times) of a bivariate alternating recurrent event process.
 #' See details for the estimation methods provided.
 #'
 #' @importFrom stats model.frame
@@ -57,7 +57,7 @@
 #' #This is an example with longer runtime (it runs the conditional graph)
 #'  npresult2 <- bivrecNP(response = bivrecsurv_data, ai=1,
 #'                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
-#'                given.interval=c(0, 10), level=0.99)
+#'                given.interval = c(0, 10), level = 0.99)
 #'  head(npresult2)
 #'  plot(npresult2)
 #' }

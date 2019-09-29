@@ -113,7 +113,7 @@ plotCond <- function(object) {
 }
 
 ########################    plot.bivrecNP     ########################
-#' Plot Results of Non-Parametric Analysis of Bivariate Recurrent Events
+#' Plot Results of Nonparametric Analysis of Bivariate Recurrent Events
 #'
 #' @description
 #' This function plots all the estimated functions (joint CDF, marginal survival and/or conditioncal cdf) from a \code{bivrecNP}() object in one step.
@@ -125,7 +125,7 @@ plotCond <- function(object) {
 #' @importFrom stats model.matrix
 #'
 #' @param x An object of class \code{bivrecNP}.
-#' @param y Either empty or NULL
+#' @param y Either empty or NULL.
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis.
 #' @param ylab Optional string with label for vertical axis.

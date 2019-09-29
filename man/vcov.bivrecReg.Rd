@@ -7,9 +7,9 @@
 \method{vcov}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object}
+\item{object}{A bivrecReg object.}
 
-\item{...}{Additional parameters if needed}
+\item{...}{Additional parameters if needed.}
 }
 \description{
 Extract the Variance-Covariance Matrix of a Semiparametric Regression Fit from a \code{bivrecReg} object

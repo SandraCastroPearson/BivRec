@@ -23,7 +23,7 @@ bivrecNP(response, ai, u1, u2, level, conditional, given.interval)
 If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.}
 }
 \value{
-A bivrecNP class object containing:
+An object of class bivrecNP containing:
 \itemize{
   \item joint_cdf
   \item marginal_survival
@@ -50,7 +50,6 @@ See details for the estimation methods provided.
 Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
 }
 \examples{
-
 library(BivRec)
 
 # Simulate bivariate alternating recurrent event data
@@ -64,10 +63,10 @@ plot(npresult)
 
 \dontrun{
 #This is an example with longer runtime (it runs the conditional graph)
- npresult2 <- bivrecNP(response = with(bivrec_data,
-               bivrecSurv(id, epi, xij, yij, d1, d2)), ai=1,
+ npresult2 <- bivrecNP(response = bivrecsurv_data, ai=1,
                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
                given.interval=c(0, 10), level=0.99)
+ head(npresult2)
  plot(npresult2)
 }
 }

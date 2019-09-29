@@ -7,9 +7,9 @@
 \method{coef}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object}
+\item{object}{A bivrecReg object.}
 
-\item{...}{Additional parameters if needed}
+\item{...}{Additional parameters if needed.}
 }
 \description{
 Extract the Coefficients of a Semiparametric Regression Fit Obtained from \code{bivrecReg} object

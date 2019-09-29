@@ -7,13 +7,13 @@
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object}
+\item{object}{A bivrecReg object.}
 
 \item{parm}{The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.}
 
 \item{level}{Significance level. Default is 0.95.}
 
-\item{...}{Additional parameters if needed}
+\item{...}{Additional parameters if needed.}
 }
 \description{
 Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object

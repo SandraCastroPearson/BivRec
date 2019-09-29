@@ -164,9 +164,9 @@ Mvar.est=function(beta1,beta2,mdat, amat) {
   return(list(se, mat))
 }
 
-###################################################################
-##################### FUNCTION NOT FOR USER #######################
-###################################################################
+##################################################################
+##################### FUNCTION NOT FOR USER ######################
+##################################################################
 #' A Function for multivariate fits using semiparametric regression method on a bivrecSurv object
 #'
 #' @description

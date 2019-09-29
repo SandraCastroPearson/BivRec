@@ -1,10 +1,10 @@
 #################### CREATE A BIVREC OBJECT ######################
 
 #####
-#' A function to create a bivrecSurv object
+#' Create a Bivariate Recurrent Survival Object
 #'
 #' @description
-#' This function creates a bivariate recurrent response survival object (bivrecSurv object).
+#' This function creates a bivariate recurrent survival object to be used as a response variable in a model formula.
 #'
 #' @importFrom stats na.omit
 #'
@@ -12,8 +12,8 @@
 #' @param episode Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
 #' @param xij Vector with the lengths of time spent in event of type X for individual i in episode j.
 #' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j.
-#' @param Ycind Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
-#' @param Xcind Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
+#' @param d2 Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
+#' @param d1 Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
 #'
 #' @return A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
 #'
@@ -21,24 +21,26 @@
 #' @export
 #' @examples
 #' set.seed(1234)
-#' sim_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
-#' bivrecsurv_data <-with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
-#'
+#' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #'
 
-bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
+bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
 
   #Check if anything is missing
   if (missing(xij)) stop("Missing - gap times for type 1 event (xij).")
   if (missing(yij)) stop("Missing - gap times for type 2 event (yij).")
   if (missing(id)) stop("Missing - subject identifiers (id).")
   if (missing(episode)) stop("Missing - episodes for each subject (episode).")
-  if (missing(Ycind)) stop("Missing - censoring indicator for type 2 event (Ycind).")
-  if (missing(Xcind)) stop("Missing - censoring indicator for type 1 event (Xcind).")
+  if (missing(d2)) stop("Missing - censoring indicator for type 2 event (d2).")
+  if (missing(d1)) stop("Missing - censoring indicator for type 1 event (d1).")
+
+  Xcind <- d1
+  Ycind <- d2
 
   #Check all vectors have same length
   all_lengths <- c(length(id),length(episode),length(xij),length(yij),length(Ycind),length(Xcind))
-  if (length(unique(all_lengths)) != 1) stop("One or more input vectors (id, episode, xij, yij, Ycind, Xcind) differs in length from the rest.")
+  if (length(unique(all_lengths)) != 1) stop("One or more input vectors (id, episode, xij, yij, d1, d2) differs in length from the rest.")
 
   #Check xij > 0 and yij >=0 both numeric vectors
   if (!is.numeric(xij)) stop("Time arguments (xij and yij) must be numeric.")
@@ -47,8 +49,8 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   if (any(yij < 0)) stop("Time arguments for event type 2 (yij) must be non-negative")
 
   #Check censoring indicators are made of only 0 or 1 values
-  if (any(Xcind!=0 & Xcind!=1)) stop("Indicator vector for type 1 gap times (Xcind) must be made of 0 or 1 values only.")
-  if (any(Ycind!=0 & Ycind!=1)) stop("Indicator vector for type 2 gap times (Ycind) must be made of 0 or 1 values only.")
+  if (any(Xcind!=0 & Xcind!=1)) stop("Indicator vector for type 1 gap times (d1) must be made of 0 or 1 values only.")
+  if (any(Ycind!=0 & Ycind!=1)) stop("Indicator vector for type 2 gap times (d2) must be made of 0 or 1 values only.")
 
   #ensure id's are numeric
   if (!is.numeric(id)) {
@@ -92,7 +94,7 @@ bivrecSurv <- function(id, episode, xij, yij, Xcind, Ycind) {
   if (length(error_subjects>0)){
     errmsg <- paste(error_subjects, collapse = ", ")
     msg <- paste("Subjects with id", errmsg,
-                 "removed becuase of gaps in episodes or incorrect values for Xcind, Ycind.",
+                 "removed becuase of gaps in episodes or incorrect values for d1, d2.",
                  sep=" ")
     print(msg)
     df4mdat <- inputdf[-which(inputdf$id %in% error_subjects), ]

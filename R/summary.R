@@ -1,33 +1,7 @@
-#' Print the summary of a bivrecReg object.
+#' Summary of a \code{bivrecReg} Object.
 #'
-#' @param x a summary.bivrecReg object
-#' @param ... additional parameters if needed
-#' @importFrom stats printCoefmat
-#'
-#' @export
-#'
-print.summary.bivrecReg <- function(x, ...) {
-  if (!inherits(x, "summary.bivrecReg")) stop("Must be a bivrecReg summary object")
-
-  cat("\nCall:\n")
-  dput(x$call)
-
-  cat("\nNumber of Subjects:\n")
-  dput(x$n)
-
-  cat("\nCoefficients:\n", " ", sep = "")
-  printCoefmat(x$coefficients, digits = max(3, getOption("digits") - 2),
-               signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
-
-  cat("\nOdd Ratios:\n", " ", sep = "")
-  printCoefmat(x$OddRatios, digits = max(3, getOption("digits") - 2),
-               signif.stars=FALSE, P.values=FALSE, has.Pvalue=FALSE)
-}
-
-#' Summary of a bivrecReg object.
-#'
-#' @param object a bivrecReg object
-#' @param ... additional parameters if needed
+#' @param object A \code{bivrecReg} object
+#' @param ... Additional parameters if needed
 #'
 #' @export
 
@@ -51,12 +25,12 @@ summary.bivrecReg <- function(object, ...){
   conf_lev = 1 - ((1-0.95)/2)
   CIcalc <- t(apply(coeffs[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
 
-  expcoeffs <- data.frame(exp(coeffs[,1]), exp(-coeffs[,1]), exp(CIcalc))
-  colnames(expcoeffs) <- c("Odds Ratio", "Inverse OR", "lower .95", "upper .95")
+  expcoeffs <- data.frame(exp(coeffs[,1]), exp(CIcalc))
+  colnames(expcoeffs) <- c("exp(coefficients)", "lower .95", "upper .95")
 
   ans <- list(call = object$call, n=object$data$response$n,
               coefficients = coeffs,
-              OddRatios = expcoeffs)
+              expcoeffs = expcoeffs)
 
   class(ans) <- "summary.bivrecReg"
 

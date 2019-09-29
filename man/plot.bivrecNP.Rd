@@ -8,21 +8,20 @@
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
-\item{x}{an object of class \code{bivrecNP}.}
+\item{x}{An object of class \code{bivrecNP}.}
 
-\item{y}{either empty or NULL}
+\item{y}{Either empty or NULL}
 
-\item{type}{Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").}
+\item{type}{Optional vector of strings to label type 1 and type 2 gap times. Default is c("Type 1", "Type 2").}
 
 \item{main}{Optional string with plot title. Default is no title.}
 
-\item{xlab}{Optional string with label for horizontal axis. Default is "Gap Times".}
+\item{xlab}{Optional string with label for horizontal axis.}
 
-\item{ylab}{Optional string with label for vertical axis. Default is "Individual".}
+\item{ylab}{Optional string with label for vertical axis.}
 
-\item{...}{arguments to be passed to graphical methods as needed.}
+\item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots the joint CDF, marginal survival and conditioncal cdf obtained from \code{bivrecNP}().
-For examples see \code{bivrecNP}.
+This function plots all the estimated functions (joint CDF, marginal survival and/or conditioncal cdf) from a \code{bivrecNP}() object in one step.
 }

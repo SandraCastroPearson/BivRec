@@ -1,7 +1,7 @@
-#' Semi-Parametric Accelerated Failure Time Analysis of Bivariate Alternating Recurrent Event Gap Time Data
+#' Semiparametric Accelerated Failure Time Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
-#' This function allows the user to evaluate covariate effects on two alternating recurrent events gap times (referred as type I and type II gap times)
+#' This function allows the user to evaluate covariate effects on two alternating recurrent events gap times (referred as Type I and Type II gap times)
 #' under the assumption that the two gap times follow accelerated failure time (AFT) models. See details for the estimation methods provided.
 #'
 #' @importFrom stats model.frame
@@ -9,20 +9,28 @@
 #' @importFrom stats model.matrix
 #' @importFrom dplyr filter
 #'
-#' @param formula A formula with a bivrecSurv object as response.
-#' @param data A data frame that includes all the covariates listed in the formula.
+#' @param formula A formula with a \code{bivrecSurv} object as response.
+#' @param data A data frame that includes the vectors needed for the \code{bivrecSurv} response and the covariates in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
 #' @return A bivrecReg object containing:
+#' \itemize{
+#'   \item call
+#'   \item lee_fit or chang_fit
+#'   \item formula
+#'   \item data
+#' }
+#'
 #' @details
 #' Two different estimation methods are available:
 #' \itemize{
 #' \item  method = "Lee.et.al" (default) is a U-statistics-based smooth estimating function approach. See Lee CH, Huang C-Y, Xu G, Luo X (2017) for further details.
 #' \item  method = "Chang" is a rank-based estimating function approach.  See Chang (2004) for further details.
 #' Note that following the Chang method, the variances of the estimated regression coefficients are approximated using the resampling techniques developed by Parzen, Wei and Ying (1994).
-#' This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients.
+#' This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients and user may get the message, "Error: Max Iterations reached. Did not converge.".
 #' }
 #'
+#' Related methods: \code{coef.bivrecReg}, \code{confint.bivrecReg}, \code{plot.bivrecReg}, \code{print.bivrecReg}, \code{summary.bivrecReg}, \code{vcov.bivrecReg}.
 #' @references
 #' \enumerate{
 #' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.
@@ -41,27 +49,23 @@
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' # Apply Lee C, Huang CY, Xu G, Luo X (2017) method using one covariate
-#' lee_reg <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-#'                     data = bivrec_data, method="Lee.et.al")
+#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' # Apply Lee, Huang, Xu, Luo (2017) method using two covariates
+#' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#'                      bivrec_data, "Lee.et.al")
 #' summary(lee_reg)
 #' plot(lee_reg)
 #' confint(lee_reg, level=0.99)
+#' vcov(lee_reg)
+#'
 #' \dontrun{
-#'
 #' #To apply Chang (2004) method use method="Chang". This is an example with longer runtime.
-#'
-#' library(BivRec)
-#'# Simulate bivariate alternating recurrent event data
-#' set.seed(1234)
-#' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#'
-#' # Apply Chang (2004) method using multiple covariates
-#' # and 99% confidence intervals.
 #'fit_chang <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-#'                     data = bivrec_data, method = "Chang")
+#'                       bivrec_data, method = "Chang")
 #'summary(fit_chang)
+#'plot(fit_chang)
+#'confint(fit_chang, level=0.99)
+#'vcov(fit_chang)
 #'}
 #'
 #' @keywords bivrecReg

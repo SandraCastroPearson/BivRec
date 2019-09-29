@@ -95,6 +95,8 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #'
 #' @return A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.
 #' @importFrom stats sd
+#'
+#' @noRd
 #' @keywords internal
 #'
 

@@ -10,6 +10,7 @@
 #'
 #' @return A data frame with marginal survival
 #'
+#' @noRd
 #' @keywords internal
 #'
 

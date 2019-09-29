@@ -1,4 +1,16 @@
+#' Basis for all bivrec plot functions
+#'
+#' @param parameters pass from plot fcts
+#' @param ctimes pass from plot fcts
+#' @param nsubject pass from plot fcts
+#' @param temp pass from plot fcts
+#' @param args pass from plot fcts
+#' @param a pass from plot fcts
+#' @param b pass from plot fcts
+#'
 #' @keywords internal
+#' @noRd
+
 basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
 
   #### Reformat data to start-stop times ########

@@ -14,6 +14,7 @@
 #'
 #' @return A dataframe with the joint CDF
 #'
+#' @noRd
 #' @keywords internal
 #' @useDynLib BivRec
 

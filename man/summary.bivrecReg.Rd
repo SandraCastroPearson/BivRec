@@ -2,15 +2,15 @@
 % Please edit documentation in R/summary.R
 \name{summary.bivrecReg}
 \alias{summary.bivrecReg}
-\title{Summary of a bivrecReg object.}
+\title{Summary of a \code{bivrecReg} Object.}
 \usage{
 \method{summary}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{a bivrecReg object}
+\item{object}{A \code{bivrecReg} object}
 
-\item{...}{additional parameters if needed}
+\item{...}{Additional parameters if needed}
 }
 \description{
-Summary of a bivrecReg object.
+Summary of a \code{bivrecReg} Object.
 }

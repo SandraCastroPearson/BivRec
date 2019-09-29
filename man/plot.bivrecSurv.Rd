@@ -12,15 +12,15 @@
 
 \item{y}{either empty or NULL}
 
-\item{type}{Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").}
+\item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
 \item{main}{Optional string with plot title. Default is no title.}
 
-\item{xlab}{Optional string with label for horizontal axis. Default is "Gap Times".}
+\item{xlab}{Optional string with label for horizontal axis. Default is "Times".}
 
 \item{ylab}{Optional string with label for vertical axis. Default is "Individual".}
 
-\item{...}{arguments to be passed to graphical methods as needed.}
+\item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
 This function plots bivariate recurrent event gap times from a bivrecSurv object.
@@ -30,6 +30,7 @@ This function plots bivariate recurrent event gap times from a bivrecSurv object
 library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example")
+plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
+     type = c("In Hospital", "Out of Hospital"))
 
 }

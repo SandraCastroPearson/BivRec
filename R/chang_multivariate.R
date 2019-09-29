@@ -226,6 +226,7 @@ sd.estpar=function(init, dat, v, B) {
 #' @importFrom MASS mvrnorm
 #' @importFrom survival Surv
 #'
+#' @noRd
 #' @keywords internal
 
 #multivariable regression analysis-Chang's method
@@ -238,7 +239,7 @@ chang_multivariate <- function(new_data, cov_names, SE) {
   chang <- RE.uest(init = beta, dat=new_data)
 
   if (chang$conv!=0) {
-    print("Error: Max Iterations reached. Did not converge. Estimates are not accurate.")
+    print("Error: Max Iterations reached. Did not converge.")
     stop()
   }
 

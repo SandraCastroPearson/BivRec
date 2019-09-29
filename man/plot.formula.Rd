@@ -2,30 +2,30 @@
 % Please edit documentation in R/plot_formula.R
 \name{plot.formula}
 \alias{plot.formula}
-\title{Plot Bivariate Alternating Recurrent Series from Formula}
+\title{Plot Bivariate Alternating Recurrent Series by up to Six Categorical Covariates}
 \usage{
 \method{plot}{formula}(x, y = NULL, data, type = NULL, main = NULL,
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
-\item{x}{either coordinates for a plot or an object of class formula.}
+\item{x}{Either coordinates for a plot or an object of class formula.}
 
-\item{y}{either empty or NULL}
+\item{y}{Either empty or NULL}
 
-\item{data}{required argument when x is a formula. Should indicate the data frame that contains categorical covariates and/or vectors to create the response indicate in the given formula.}
+\item{data}{Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.}
 
-\item{type}{Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").}
+\item{type}{Optional vector of strings to label Type 1 and Type II gap times. Default is c("Type I", "Type II").}
 
 \item{main}{Optional string with plot title. Default is no title.}
 
-\item{xlab}{Optional string with label for horizontal axis. Default is "Gap Times".}
+\item{xlab}{Optional string with label for horizontal axis. Default is "Times".}
 
 \item{ylab}{Optional string with label for vertical axis. Default is "Individual".}
 
-\item{...}{arguments to be passed to graphical methods as needed.}
+\item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots bivariate recurrent event gap times from a formula
+This function plots bivariate recurrent event gap times by the categorical covariates indicated in a formula with a bivrecSurv object as the response variable.
 }
 \examples{
 # Simulate bivariate alternating recurrent event data
@@ -33,6 +33,6 @@ library(BivRec)
 set.seed(1234)
 bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
-     main="Example", xlab="type 1", ylab="type 2")
+     main = "Example", type = c("In Hospital", "Out of Hospital"))
 
 }

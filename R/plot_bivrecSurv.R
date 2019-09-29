@@ -13,10 +13,10 @@
 #' @param x An object of class \code{bivrecSurv}.
 #' @param y either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
-#' @param xlab Optional string with label for horizontal axis. Default is "Gap Times".
+#' @param xlab Optional string with label for horizontal axis. Default is "Times".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
-#' @param type Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").
-#' @param ... arguments to be passed to graphical methods as needed.
+#' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
+#' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export
 #'
@@ -25,7 +25,8 @@
 #' library(BivRec)
 #' set.seed(1234)
 #' bivrec_data <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-#' plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example")
+#' plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
+#'      type = c("In Hospital", "Out of Hospital"))
 #'
 
 plot.bivrecSurv <- function(x, y=NULL, type = NULL,
@@ -34,8 +35,8 @@ plot.bivrecSurv <- function(x, y=NULL, type = NULL,
   object <- x
 
   #check arguments for labels
-  if (missing(type)) {type=c("Type 1","Type 2")}
-  if (missing(xlab)) {xlab="Gap Times"}
+  if (missing(type)) {type=c("Type I","Type II")}
+  if (missing(xlab)) {xlab="Times"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}
 

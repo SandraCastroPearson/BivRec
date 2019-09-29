@@ -216,6 +216,7 @@ sd.estpar1=function(init,dat,v, B) {
 #' @importFrom MASS mvrnorm
 #' @importFrom survival Surv
 #'
+#' @noRd
 #' @keywords internal
 
 
@@ -229,7 +230,7 @@ chang_univariate <- function(new_data, cov_names, SE) {
   chang1 <- RE.uest1(beta, new_data)
 
   if (chang1$conv!=0) {
-    print("Error - No Convergence")
+    print("Error: Max Iterations reached. Did not converge.")
     stop()
   }
 

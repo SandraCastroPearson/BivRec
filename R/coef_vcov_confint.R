@@ -1,9 +1,9 @@
 ########################    COEF     ########################
 
-#' Extract the coefficients of a semi-parametric regression fit obtained from bivrecReg
+#' Extract the Coefficients of a Semiparametric Regression Fit Obtained from \code{bivrecReg} object
 #'
 #' @param object A bivrecReg object
-#' @param ... additional parameters if needed
+#' @param ... Additional parameters if needed
 #'
 #' @importFrom stats printCoefmat
 #'
@@ -31,10 +31,10 @@ coef.bivrecReg <- function(object, ...) {
 
 ########################    VCOV     ########################
 
-#' Extract the variance-covariance matrix of a semi-parametric regression fit from bivrecReg
+#' Extract the Variance-Covariance Matrix of a Semiparametric Regression Fit from a \code{bivrecReg} object
 #'
 #' @param object A bivrecReg object
-#' @param ... additional parameters if needed
+#' @param ... Additional parameters if needed
 #'
 #' @export
 
@@ -53,29 +53,14 @@ vcov.bivrecReg <- function(object, ...) {
 
 }
 
-########################    print     ########################
-#' Print an object of class bivrecReg
-#' @param object An object of class bivrecReg
-#'
-#' @importFrom stats printCoefmat
-#' @keywords internal
-#'
-
-print.bivrecReg <- function(object) {
-  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg object")
-  coeffs1 <- coef.bivrecReg(object)
-  printCoefmat(coeffs1, digits = max(3, getOption("digits") - 2),
-               signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
-}
-
 ########################    confint     ########################
-#' Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg
+#' Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
 #'
 #' @importFrom stats pnorm
 #' @param object A bivrecReg object
 #' @param parm The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.
-#' @param level Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.
-#' @param ... additional parameters if needed
+#' @param level Significance level. Default is 0.95.
+#' @param ... Additional parameters if needed
 #'
 #' @export
 
@@ -91,6 +76,7 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   if (missing(parm)) {parm = rownames(coeffs)}
 
   conf_lev = 1 - ((1-level)/2)
+
   CIcalc <- t(apply(coeffs, 1, function(x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
   ans  <- cbind(coeffs, CIcalc)
   lowstring <- paste((1 - conf_lev), "%", sep="")

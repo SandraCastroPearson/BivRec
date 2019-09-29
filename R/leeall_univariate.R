@@ -172,6 +172,7 @@ var.est=function(beta1, beta2, mdat, amat) {
 #' @importFrom stats qnorm
 #' @importFrom stringr str_c
 #'
+#' @noRd
 #' @keywords internal
 
 #MAIN PROGRAM FOR univariate regression analysis

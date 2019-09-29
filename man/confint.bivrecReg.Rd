@@ -2,7 +2,7 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{confint.bivrecReg}
 \alias{confint.bivrecReg}
-\title{Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg}
+\title{Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object}
 \usage{
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }
@@ -11,10 +11,10 @@
 
 \item{parm}{The parameters for which to run confidence interval. Default is giving CI for all the covariates in the model.}
 
-\item{level}{Significance level. Example: 0.99 for a 99\% confidence interval. Default is 0.95.}
+\item{level}{Significance level. Default is 0.95.}
 
-\item{...}{additional parameters if needed}
+\item{...}{Additional parameters if needed}
 }
 \description{
-Obtain confidence interval for exponentiated coefficients of semi-parametric regression fit using bivrecReg
+Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
 }

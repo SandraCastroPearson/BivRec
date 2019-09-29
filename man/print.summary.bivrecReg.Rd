@@ -2,7 +2,7 @@
 % Please edit documentation in R/printMethods.R
 \name{print.summary.bivrecReg}
 \alias{print.summary.bivrecReg}
-\title{Print the Summary of a \code{bivrecReg} Object}
+\title{Print the Summary of a \code{summary.bivrecReg} Object}
 \usage{
 \method{print}{summary.bivrecReg}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-Print the Summary of a \code{bivrecReg} Object
+This function prints an object of class \code{summary.bivrecReg}.
 }

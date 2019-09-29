@@ -2,15 +2,15 @@
 % Please edit documentation in R/summary.R
 \name{summary.bivrecReg}
 \alias{summary.bivrecReg}
-\title{Summary of a \code{bivrecReg} Object.}
+\title{Summary of a \code{bivrecReg} Object}
 \usage{
 \method{summary}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A \code{bivrecReg} object}
+\item{object}{A \code{bivrecReg} object.}
 
-\item{...}{Additional parameters if needed}
+\item{...}{Additional parameters if needed.}
 }
 \description{
-Summary of a \code{bivrecReg} Object.
+This function provides a summary for the fit from semiparametric regression analysis.
 }

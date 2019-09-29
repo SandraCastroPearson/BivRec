@@ -12,5 +12,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-Print an Object of Class \code{bivrecNP}
+This function prints an object of class \code{bivrecNP}.
 }

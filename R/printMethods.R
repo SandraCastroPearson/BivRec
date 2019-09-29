@@ -1,6 +1,7 @@
 #########################################################################
 #' Print an Object of Class \code{bivrecReg}
 #'
+#' @description This function prints an object of class \code{bivrecReg}.
 #' @param x An object of class \code{bivrecReg}.
 #' @param ... Additional parameters if needed.
 #'
@@ -35,6 +36,7 @@ print.bivrecReg <- function(x, ...) {
 #########################################################################
 #' Print an Object of Class \code{bivrecNP}
 #'
+#' @description This function prints an object of class \code{bivrecNP}.
 #' @param x An object of class \code{bivrecNP}.
 #' @param ... Additional parameters if needed.
 #'
@@ -69,8 +71,9 @@ print.bivrecNP <- function(x, ...) {
 }
 
 #########################################################################
-#' Print the Summary of a \code{bivrecReg} Object
+#' Print the Summary of a \code{summary.bivrecReg} Object
 #'
+#' @description This function prints an object of class \code{summary.bivrecReg}.
 #' @param x A \code{summary.bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'

@@ -1,7 +1,8 @@
-#' Summary of a \code{bivrecReg} Object.
+#' Summary of a \code{bivrecReg} Object
 #'
-#' @param object A \code{bivrecReg} object
-#' @param ... Additional parameters if needed
+#' @description This function provides a summary for the fit from semiparametric regression analysis.
+#' @param object A \code{bivrecReg} object.
+#' @param ... Additional parameters if needed.
 #'
 #' @export
 

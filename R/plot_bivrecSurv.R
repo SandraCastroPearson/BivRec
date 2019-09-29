@@ -11,7 +11,7 @@
 #' @importFrom stats model.matrix
 #'
 #' @param x An object of class \code{bivrecSurv}.
-#' @param y either empty or NULL
+#' @param y Either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Times".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".

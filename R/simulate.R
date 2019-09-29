@@ -7,11 +7,11 @@
 #' @param beta2 True coefficients for Type II gap times in the accelerated failure time model (AFT).
 #' @param tau_c Maximum support of censoring time. For example, it can take values as follows:
 #' \itemize{
-#' \item tau_c=63: corresponds to a 15% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
-#' \item tau_c=30: corresponds to a 30% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
+#' \item tau_c=63: corresponds to a 15\% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
+#' \item tau_c=30: corresponds to a 30\% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
 #' }
 #'
-#' @param set Simulation setting based on scenarios outlined in tables 1 and 2 in Lee CH, Huang C-Y, Xu G, Luo X (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.
+#' @param set Simulation setting based on scenarios outlined in tables 1 and 2 in Lee, Huang, Xu, Luo (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.
 #'
 #' @return Data frame with alternating recurrent event data and one continuous and one binary covariate.
 #'

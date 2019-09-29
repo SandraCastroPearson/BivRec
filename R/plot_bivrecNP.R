@@ -116,7 +116,7 @@ plotCond <- function(object) {
 #' Plot Results of Nonparametric Analysis of Bivariate Recurrent Events
 #'
 #' @description
-#' This function plots all the estimated functions (joint CDF, marginal survival and/or conditioncal cdf) from a \code{bivrecNP}() object in one step.
+#' This function plots all the estimated functions (joint CDF, marginal survival and/or conditional cdf) from a \code{bivrecNP}() object in one step.
 #'
 #' @import graphics
 #' @importFrom utils tail

@@ -24,7 +24,7 @@ head.bivrecNP <- function(x, ...) {
   print(marg_suvr[1:6, ])
 
   if (x$conditional==TRUE) {
-    cond_cdf = x$conditional_cdf
+    cond_cdf <- x$conditional_cdf
 
     cat("\nConditional CDF:\n", " ", sep = "")
 

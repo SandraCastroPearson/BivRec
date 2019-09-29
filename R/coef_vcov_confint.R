@@ -31,7 +31,9 @@ coef.bivrecReg <- function(object, ...) {
 
 ########################    VCOV     ########################
 
-#' Extract the Variance-Covariance Matrix of a Semiparametric Regression Fit from a \code{bivrecReg} object
+#' Extract the Variance-Covariance Matrix from a \code{bivrecReg} object
+#'
+#' @description Extract the variance-covariance matrix from the fit of a semiparametric regression analysis.
 #'
 #' @param object A bivrecReg object.
 #' @param ... Additional parameters if needed.

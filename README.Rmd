@@ -42,44 +42,46 @@ This is an example using a simulated data set.
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(1234)
-simdata <- simulate(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
-head(simdata)
+sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+head(sim_data)
 
 # Create a bivrecSurv object
-bivrec_data <- with(simdata, bivrecSurv(id, epi, xij, yij, d1, d2))
+bivrec_object <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 # Plot gap times
-plot(bivrec_data)
+plot(bivrec_object)
 
-# Apply the non-parametric method of Huang and Wang (2005) and visualize marginal and conditional results
+# Apply the non-parametric method of Huang and Wang (2005) and visualize joint, marginal and conditional results
 
+npresult <- bivrecNP(response = bivrec_object, ai=1,
+                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
+                given.interval = c(0, 10), level = 0.99)
 
-nonpar_result <- bivrecNP(response = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
-                      ai=1, u1 = c(2, 5, 10, 20), u2 = c(1, 5, 10, 15),
-                      conditional = TRUE, given.interval=c(0, 10))
-
-head(nonpar_result$joint.cdf)
-head(nonpar_result$marginal.survival)
-head(nonpar_result$conditional.cdf)
-plot(nonpar_result)
+head(npresult)
+plot(npresult)
 
 # To save individual plots in a pdf file un-comment the following line of code: 
 # pdf("nonparam_jointcdfplot.pdf")
-# plotJoint(nonpar_result)
+# plotJoint(npresult)
 # dev.off()
 # pdf("nonparam_marginalplot.pdf")
-# plotMarg(nonpar_result)
+# plotMarg(npresult)
 # dev.off()
 # pdf("nonparam_conditionaplot.pdf")
-# plotCond(nonpar_result)
+# plotCond(npresult)
 # dev.off()
 
-# Apply Lee C, Huang CY, Xu G, Luo X (2017) method using multiple covariates
-fitlee <- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-                     data = simdata, method="Lee.et.al")
-summary(fitlee)
-plot(fitlee)
+#Explore how the response changes by levels of a categorical covariate using a plot.
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
+     main = "Recurrent Event Times", type = c("In Hospital", "Out of Hospital"))
+
+# Apply Lee, Huang, Xu, Luo (2017) method using multiple covariates.
+lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+                    data= sim_data, "Lee.et.al")
+
+summary(lee_fit)
+plot(lee_fit)
 
 # To apply Chang (2004) method use method="Chang".
-# biv.rec.chang<- bivrecReg(formula = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-#                     data = simdata, method="Chang")
+# chang_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
+#                    data= sim_data, "Chang")
 ```

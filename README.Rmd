@@ -56,10 +56,10 @@ Nonparametric Analysis
 ```{r BivRecExample2}
 # Apply the nonparametric method of Huang and Wang (2005) and visualize joint, marginal and conditional results
 
+library(BivRec)
 npresult <- bivrecNP(response = bivrec_object, ai=1,
                 u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
                 given.interval = c(0, 10), level = 0.99)
-
 head(npresult)
 plot(npresult)
 
@@ -87,7 +87,6 @@ lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data= sim_data, "Lee.et.al")
 
 summary(lee_fit)
-plot(lee_fit)
 
 # To apply Chang (2004) method use method="Chang".
 # chang_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

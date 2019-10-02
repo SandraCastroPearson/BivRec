@@ -64,7 +64,7 @@ print.bivrecNP <- function(x, ...) {
   if (x$conditional==TRUE) {
     cat("\nConditional CDF:\n", " ", sep = "")
 
-    printCoefmat(x$conditional_cdf, digits = max(3, getOption("digits") - 2),
+    printCoefmat(x$conditional_cdf$conditional, digits = max(3, getOption("digits") - 2),
                  signif.stars=FALSE, P.values=FALSE, has.Pvalue=FALSE)
   }
 

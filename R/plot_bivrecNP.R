@@ -6,12 +6,12 @@
 #'
 #' @param object An object of \code{bivrecNP} class.
 #' @importFrom stats ftable
-#' @keywords internal
+#' @export
 #'
 
 #@return A contour plot of joint cdf.
 
-plotJoint <- function(object) {
+plotJoint <- function(object, type) {
 
   x = object
 
@@ -52,16 +52,18 @@ plotJoint <- function(object) {
 #' This function plots the marginal survival for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class.
-#' @keywords internal
+#' @export
 
 #@return A plot of marginal survival vs. first gap time with confidence interval.
 
-plotMarg <- function(object) {
+plotMarg <- function(object, type) {
   x <- object
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+
   xij <- x$xij
   forplot <- x$marginal_survival[1:3]
+
   #formula <- bivrec.nonparam.result$formula
 
   #variables <- all.vars(formula)
@@ -95,11 +97,11 @@ plotMarg <- function(object) {
 #'
 #' @param object An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.
 #' @importFrom stats ftable
-#' @keywords internal
+#' @export
 
 #@return A plot of conditional cdf in the given interval.
 
-plotCond <- function(object) {
+plotCond <- function(object, type) {
   x=object
   cond <-x$conditional_cdf$conditional
   plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)",
@@ -126,9 +128,9 @@ plotCond <- function(object) {
 #'
 #' @param x An object of class \code{bivrecNP}.
 #' @param y Either empty or NULL.
-#' @param main Optional string with plot title. Default is no title.
-#' @param xlab Optional string with label for horizontal axis.
-#' @param ylab Optional string with label for vertical axis.
+#' @param main NULL
+#' @param xlab NULL
+#' @param ylab NULL
 #' @param type Optional vector of strings to label type 1 and type 2 gap times. Default is c("Type 1", "Type 2").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
@@ -144,15 +146,16 @@ plot.bivrecNP <-function(x, y=NULL, type = NULL,
 
   if (cond==FALSE){
     par(mar=c(5,4,4,2)+0.1)
-    plotJoint(x)
+    plotJoint(x, type)
     par(mar=c(5,4,4,2)+0.1)
-    plotMarg(x)
+    plotMarg(x, type)
   }
   else {
-    plotJoint(x)
+    par(mar=c(5,4,4,2)+0.1)
+    plotJoint(x, type)
     par(mar=c(5,4,4,2)+0.1, mfrow=c(1,2))
-    plotMarg(x)
-    plotCond(x)
+    plotMarg(x, type)
+    plotCond(x, type)
     par(mfrow=c(1, 1))
   }
 }

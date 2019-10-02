@@ -24,7 +24,7 @@ head.bivrecNP <- function(x, ...) {
 
     cat("\nConditional CDF:\n", " ", sep = "")
 
-    print(x$conditional_cdf[1:6, ])
+    print(x$conditional_cdf$conditional[1:6, ])
   }
 
 }

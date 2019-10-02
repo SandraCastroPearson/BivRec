@@ -114,8 +114,6 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 
     } else {
 
-      print("Estimating conditional distribution")
-
       partial_result <- list(cdf = cdf_res, marginal_survival = marg_res,
                              ai=ai, new_data=new_data)
 

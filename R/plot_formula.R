@@ -93,6 +93,7 @@ plot.formula <- function(x, y=NULL, data, type = NULL,
       #Plot for one level of covariate
       args2 = args
       args2[1] = new_main
+      par(mar=c(5,4,4,2)+0.1)
       basicplot(parameters, ctimes, nsubject, temp=NULL, args = args2, a = 2/5, b=1/4)
     }
     if (p == length(pred_levels)) { par(mfrow=c(1, 1)) }

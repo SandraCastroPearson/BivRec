@@ -95,7 +95,7 @@ print.summary.bivrecReg <- function(x, ...) {
   printCoefmat(x$coefficients, digits = max(3, getOption("digits") - 2),
                signif.stars=TRUE, P.values=TRUE, has.Pvalue=TRUE)
 
-  cat("\nOdd Ratios:\n", " ", sep = "")
+  cat("\nexp(coefficients):\n", " ", sep = "")
   printCoefmat(x$expcoeffs, digits = max(3, getOption("digits") - 2),
                signif.stars=FALSE, P.values=FALSE, has.Pvalue=FALSE)
 }

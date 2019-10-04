@@ -4,12 +4,13 @@
 \alias{plotJoint}
 \title{Plot Joint CDF After Nonparametric Analysis}
 \usage{
-plotJoint(object)
+plotJoint(object, type)
 }
 \arguments{
 \item{object}{An object of \code{bivrecNP} class.}
+
+\item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 }
 \description{
 This function plots the joint CDF for a \code{bivrecNP} object.
 }
-\keyword{internal}

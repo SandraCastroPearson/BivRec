@@ -14,7 +14,11 @@ summary.bivrecReg <- function(object, ...){
 
   if (object$method=="Chang") {
     coeffs <- object$chang_fit$fit
-  } else {coeffs <- object$leefit$fit}
+    n=length(unique(object$data[[1]]$id))
+  } else {
+    coeffs <- object$leefit$fit
+    n=object$data$response$n
+    }
 
   coeffs<- cbind(coeffs[,1:2], coeffs[,1] / coeffs[,2],
                                 rep(0, nrow(coeffs)))
@@ -29,7 +33,7 @@ summary.bivrecReg <- function(object, ...){
   expcoeffs <- data.frame(exp(coeffs[,1]), exp(CIcalc))
   colnames(expcoeffs) <- c("exp(coeff)", "lower .95", "upper .95")
 
-  ans <- list(call = object$call, n=object$data$response$n,
+  ans <- list(call = object$call, n=n,
               coefficients = coeffs,
               expcoeffs = expcoeffs)
 

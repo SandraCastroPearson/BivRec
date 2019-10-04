@@ -4,12 +4,13 @@
 \alias{plotCond}
 \title{Plot Conditional CDF After Nonparametric Analysis}
 \usage{
-plotCond(object)
+plotCond(object, type)
 }
 \arguments{
 \item{object}{An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.}
+
+\item{type}{Optional string to label the Type II gap time. Default is "Type II".}
 }
 \description{
 This function plots conditional cdf for a \code{bivrecNP} object.
 }
-\keyword{internal}

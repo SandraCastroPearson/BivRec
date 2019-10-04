@@ -5,6 +5,7 @@
 #' This function plots the joint CDF for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class.
+#' @param type  Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @importFrom stats ftable
 #' @export
 #'
@@ -16,6 +17,7 @@ plotJoint <- function(object, type) {
   x = object
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  if (missing(type)) {type = c("Type I", "Type II")}
 
   forplot <- x$joint_cdf
 
@@ -41,7 +43,8 @@ plotJoint <- function(object, type) {
 
   graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
                            forplot2, color.palette = grDevices::heat.colors, cex.main=1.5,
-                           xlab="x", ylab="y", main = expression(P(X^0 <= x, Y^0 <= y)))
+                           xlab=paste(type[1], " (x)", sep = ""), ylab=paste(type[2], " (y)", sep = ""),
+                           main = expression(P(X^0 <= x, Y^0 <= y)))
 
 }
 
@@ -52,6 +55,7 @@ plotJoint <- function(object, type) {
 #' This function plots the marginal survival for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class.
+#' @param type Optional string to label the Type I gap time. Default is "Type I".
 #' @export
 
 #@return A plot of marginal survival vs. first gap time with confidence interval.
@@ -60,6 +64,7 @@ plotMarg <- function(object, type) {
   x <- object
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  if (missing(type)) {type = "Type I"}
 
   xij <- x$xij
   forplot <- x$marginal_survival[1:3]
@@ -80,7 +85,7 @@ plotMarg <- function(object, type) {
   index <- which(forplot$lower<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
 
-  plot(forplot$Time, forplot$Marginal_Survival, type = "l", xlab = "Type I Gap Times (x)",
+  plot(forplot$Time, forplot$Marginal_Survival, type = "l", xlab = paste(type, " (x)", sep = ""),
        ylab = "Marginal Survival", yaxp  = c(0, 1, 10),
        xaxp  = round(c(0, mx, 10), digits=1), main = expression(1 - P(X^0 <= x))
   )
@@ -96,6 +101,8 @@ plotMarg <- function(object, type) {
 #' This function plots conditional cdf for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.
+#' @param type Optional string to label the Type II gap time. Default is "Type II".
+#'
 #' @importFrom stats ftable
 #' @export
 
@@ -104,7 +111,10 @@ plotMarg <- function(object, type) {
 plotCond <- function(object, type) {
   x=object
   cond <-x$conditional_cdf$conditional
-  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)",
+  if (missing(type)) {type = "Type II"}
+
+
+  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = paste(type, " (y)", sep = ""),
        ylab = "Conditional Probability", xlim=c(0, round(max(x$conditional_cdf$ygrid), digits=1)),
        ylim=c(0, round(max(cond[,5]), digits=1)),
        main=substitute(paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
@@ -148,14 +158,14 @@ plot.bivrecNP <-function(x, y=NULL, type = NULL,
     par(mar=c(5,4,4,2)+0.1)
     plotJoint(x, type)
     par(mar=c(5,4,4,2)+0.1)
-    plotMarg(x, type)
+    plotMarg(x, type[1])
   }
   else {
     par(mar=c(5,4,4,2)+0.1)
     plotJoint(x, type)
     par(mar=c(5,4,4,2)+0.1, mfrow=c(1,2))
-    plotMarg(x, type)
-    plotCond(x, type)
+    plotMarg(x, type[1])
+    plotCond(x, type[2])
     par(mfrow=c(1, 1))
   }
 }

@@ -131,7 +131,8 @@ bivrecReg <- function(formula, data, method) {
     } else {
       results <- list(call = call,
                       chang_fit = chang_multivariate(new_data, cov_names, SE=TRUE),
-                      formula=formula_ref, method="Chang", data = list(new_data, original = ref_data))}
+                      formula=formula_ref, method="Chang",
+                      data = list(new_data = new_data, original = ref_data))}
   }
 
   class(results) <- "bivrecReg"

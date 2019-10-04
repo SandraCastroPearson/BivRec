@@ -206,7 +206,7 @@ plot.bivrecReg <- function (x, y = NULL, type = NULL,
       #Plot for one level of covariate
       args2 = args
       args2[1] = new_main
-      basicplot(parameters, ctimes, nsubject, temp=NULL, args = args2, a = 2/5, b=1/4)
+      basicplot(parameters, ctimes, nsubject, temp=NULL, args = args2, a = 2/6, b=1/5, c=0.5)
     }
     if (p == length(pred_levels)) { par(mfrow=c(1, 1)) }
   }

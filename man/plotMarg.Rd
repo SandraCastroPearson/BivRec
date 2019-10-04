@@ -4,12 +4,13 @@
 \alias{plotMarg}
 \title{Plot Marginal Survival After Nonparametric Analysis}
 \usage{
-plotMarg(object)
+plotMarg(object, type)
 }
 \arguments{
 \item{object}{An object of \code{bivrecNP} class.}
+
+\item{type}{Optional string to label the Type I gap time. Default is "Type I".}
 }
 \description{
 This function plots the marginal survival for a \code{bivrecNP} object.
 }
-\keyword{internal}

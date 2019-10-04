@@ -80,7 +80,7 @@ Semiparametric Regression Analysis
 ```{r BivRecExample3}
 #Explore how the response changes by levels of a categorical covariate using a plot.
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
-     main = "Recurrent Event Times", type = c("In Hospital", "Out of Hospital"))
+     main = "Recurrent Event Times", type = c("Type I", "Type II"))
 
 # Apply Lee, Huang, Xu, Luo (2017) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

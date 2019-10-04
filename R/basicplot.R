@@ -7,11 +7,14 @@
 #' @param args pass from plot fcts
 #' @param a pass from plot fcts
 #' @param b pass from plot fcts
+#' @param c optional
 #'
 #' @keywords internal
 #' @noRd
 
-basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
+basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b, c) {
+
+  if (missing(c)) {c = 0.6}
 
   #### Reformat data to start-stop times ########
   for (iter in 1:nsubject) {
@@ -55,8 +58,9 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b) {
   title(main=args[1], xlab=args[2], ylab=args[3])
   legendtext = c(args[4], args[5])
 
-  legend(xrange[2]*a, yrange[2]*b, legend=legendtext, box.lty=0,
-         col = c("blue", "red"), lty = 1, cex=0.6)
+  legend(xrange[2]*a, yrange[2]*b, bg="transparent",
+         legend=legendtext, box.lty=0,
+         col = c("blue", "red"), lty = 1, cex=c)
 
   # add line segments
   newid = 0

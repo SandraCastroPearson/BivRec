@@ -14,11 +14,11 @@
 
 \item{type}{Optional vector of strings to label type 1 and type 2 gap times. Default is c("Type 1", "Type 2").}
 
-\item{main}{Optional string with plot title. Default is no title.}
+\item{main}{NULL}
 
-\item{xlab}{Optional string with label for horizontal axis.}
+\item{xlab}{NULL}
 
-\item{ylab}{Optional string with label for vertical axis.}
+\item{ylab}{NULL}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }

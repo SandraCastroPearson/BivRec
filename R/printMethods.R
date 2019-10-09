@@ -89,7 +89,7 @@ print.summary.bivrecReg <- function(x, ...) {
   dput(x$call)
 
   cat("\nNumber of Subjects:\n")
-  dput(x$n)
+  dput(as.double(x$n))
 
   cat("\nCoefficients:\n", " ", sep = "")
   printCoefmat(x$coefficients, digits = max(3, getOption("digits") - 2),

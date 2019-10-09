@@ -75,7 +75,6 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   } else {coeffs <- object$leefit$fit}
 
   if (missing(level)) {level = 0.95}
-  if (missing(parm)) {parm = rownames(coeffs)}
 
   conf_lev = 1 - ((1-level)/2)
 
@@ -84,6 +83,15 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   lowstring <- paste((1 - conf_lev), "%", sep="")
   upstring <- paste(conf_lev, "%", sep="")
   colnames(ans) <- c("Estimate", "SE", lowstring, upstring)
-  rownames(ans) <- rownames(coeffs)
-  ans
+
+  if (missing(parm)) {
+    parm = rownames(coeffs)
+    rownames(ans) <- parm
+    ans2 <- ans} else {
+      parm_res <- stringr::str_extract(rownames(ans), parm)
+      ans2 <- ans[-which(is.na(parm_res)),]
+      rownames(ans2) <- parm
+    }
+
+  ans2
 }

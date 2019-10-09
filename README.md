@@ -78,7 +78,6 @@ npresult <- bivrecNP(response = bivrec_object, ai=1,
                 u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
                 given.interval = c(0, 10), level = 0.99)
 #> [1] "Estimating joint CDF and marginal survival"
-#> [1] "Estimating conditional distribution"
 #> [1] "Estimating conditional CDF with 99% CI using 200 Bootstrap samples"
 head(npresult)
 #> 
@@ -140,7 +139,7 @@ Analysis
 ``` r
 #Explore how the response changes by levels of a categorical covariate using a plot.
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
-     main = "Recurrent Event Times", type = c("In Hospital", "Out of Hospital"))
+     main = "Recurrent Event Times", type = c("Type I", "Type II"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
 #> [1] "Original number of subjects: 150. Subjects for plots: 150"
 ```
@@ -173,20 +172,12 @@ summary(lee_fit)
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
-#> Odd Ratios:
-#>                     exp(coefficients) lower .95 upper .95
-#> a1 type 1 gap time           1.77614   1.37479    2.2946
-#> a2 type 1 gap time           1.66997   0.98230    2.8390
-#> a1 type 2 gap time           1.33487   0.90457    1.9698
-#> a2 type 2 gap time           0.53755   0.25312    1.1416
-plot(lee_fit)
-#> [1] "a2 not used - either continuous or had more than 6 levels."
-#> [1] "Original number of subjects: 150. Subjects for plots: 150"
-```
-
-![](man/figures/README-BivRecExample3-2.png)<!-- -->
-
-``` r
+#> exp(coefficients):
+#>                     exp(coeff) lower .95 upper .95
+#> a1 type 1 gap time    1.77614   1.37479    2.2946
+#> a2 type 1 gap time    1.66997   0.98230    2.8390
+#> a1 type 2 gap time    1.33487   0.90457    1.9698
+#> a2 type 2 gap time    0.53755   0.25312    1.1416
 
 # To apply Chang (2004) method use method="Chang".
 # chang_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

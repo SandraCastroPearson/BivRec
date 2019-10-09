@@ -161,7 +161,7 @@ summary(lee_fit)
 #>     a2, data = sim_data, method = "Lee.et.al")
 #> 
 #> Number of Subjects:
-#> 150L
+#> 150
 #> 
 #> Coefficients:
 #>                     Estimates       SE       z Pr(>|z|)    

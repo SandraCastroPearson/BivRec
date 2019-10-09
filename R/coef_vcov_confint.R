@@ -59,6 +59,7 @@ vcov.bivrecReg <- function(object, ...) {
 #' Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
 #'
 #' @importFrom stats pnorm
+#' @importFrom stringr str_extract
 #' @param object A bivrecReg object.
 #' @param parm The parameters for which to run confidence interval. Default gets CI for all the covariates in the model.
 #' @param level Significance level. Default is 0.95.
@@ -79,19 +80,18 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   conf_lev = 1 - ((1-level)/2)
 
   CIcalc <- t(apply(coeffs, 1, function(x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
-  ans  <- cbind(coeffs, CIcalc)
-  lowstring <- paste((1 - conf_lev), "%", sep="")
-  upstring <- paste(conf_lev, "%", sep="")
-  colnames(ans) <- c("Estimate", "SE", lowstring, upstring)
+  lowstring <- paste((1 - conf_lev)*100, "%", sep="")
+  upstring <- paste(conf_lev*100, "%", sep="")
+  colnames(CIcalc) <- c(lowstring, upstring)
 
   if (missing(parm)) {
     parm = rownames(coeffs)
-    rownames(ans) <- parm
-    ans2 <- ans} else {
-      parm_res <- stringr::str_extract(rownames(ans), parm)
-      ans2 <- ans[-which(is.na(parm_res)),]
-      rownames(ans2) <- parm
+    rownames(CIcalc) <- parm
+    ans <- CIcalc} else {
+      parm_res <- str_extract(rownames(coeffs), parm)
+      ans <- CIcalc[-which(is.na(parm_res)),]
+      rownames(ans) <- rownames(coeffs)[-which(is.na(parm_res))]
     }
 
-  ans2
+  ans
 }

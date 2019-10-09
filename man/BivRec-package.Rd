@@ -25,11 +25,18 @@ The package also provides options to simulate and visualize the data and the res
 
 \item Huang CY, Wang MC (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
 \url{doi.org/10.1111/j.1541-0420.2005.00328.x}
+
+\item Therneau T (2015). survival: A Package for Survival Analysis in S. version 2.38.
+\url{https://CRAN.R-project.org/package=survival}
+
+\item Chiou Sy Han, Huang CY (2018). Package reReg: Recurrent Event Regression. version 1.16.
+\url{https://CRAN.R-project.org/package=reReg}
 }
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/SandraCastroPearson/BivRec}
   \item Report bugs at \url{https://github.com/SandraCastroPearson/BivRec/issues}
 }
 

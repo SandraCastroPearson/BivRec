@@ -71,7 +71,7 @@ print.bivrecNP <- function(x, ...) {
 }
 
 #########################################################################
-#' Print the Summary of a \code{summary.bivrecReg} Object
+#' Print a \code{summary.bivrecReg} Object
 #'
 #' @description This function prints an object of class \code{summary.bivrecReg}.
 #' @param x A \code{summary.bivrecReg} object.

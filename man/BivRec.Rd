@@ -11,16 +11,16 @@ bivrecSurv(id, episode, xij, yij, d1, d2)
 
 \item{episode}{Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.}
 
-\item{xij}{Vector with the lengths of time spent in event of type X for individual i in episode j.}
+\item{xij}{Vector with the lengths of time spent in event of Type I for individual i in episode j.}
 
-\item{yij}{vector with the lengths of time spent in event of type Y for individual i in episode j.}
+\item{yij}{vector with the lengths of time spent in event of Type II for individual i in episode j.}
 
-\item{d1}{Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.}
+\item{d1}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for uncensored gap times.}
 
-\item{d2}{Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.}
+\item{d2}{Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for uncensored gap times.}
 }
 \value{
-A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
+A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
 }
 \description{
 This function creates a bivariate recurrent survival object to be used as a response variable in a model formula.

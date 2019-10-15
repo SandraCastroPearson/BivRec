@@ -1,8 +1,8 @@
 ########################    plot.formula     ########################
-#' Plot Bivariate Alternating Recurrent Series by up to Six Categorical Covariates
+#' Plot Bivariate Alternating Recurrent Series by Categorical Covariates
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times by the categorical covariates indicated in a formula with a bivrecSurv object as the response variable.
+#' This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{bivrecSurv} object as the response variable.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -10,13 +10,13 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x Either coordinates for a plot or an object of class formula.
-#' @param y Either empty or NULL
+#' @param x An object of class formula.
+#' @param y Either empty or NULL.
 #' @param data Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.
 #' @param main Optional string with plot title. Default is no title.
-#' @param xlab Optional string with label for horizontal axis. Default is "Times".
+#' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
-#' @param type Optional vector of strings to label Type 1 and Type II gap times. Default is c("Type I", "Type II").
+#' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export
@@ -25,19 +25,20 @@
 #'# Simulate bivariate alternating recurrent event data
 #' library(BivRec)
 #' set.seed(1234)
-#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+#'                tau_c=63, set=1.1)
 #' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
 #'      main = "Example", type = c("In Hospital", "Out of Hospital"))
 #'
 
-plot.formula <- function(x, y=NULL, data, type = NULL,
-                         main = NULL, xlab = NULL, ylab = NULL, ...) {
+plot.formula <- function(x, y=NULL, data, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...) {
+
   if (!inherits(x, "formula")) stop("Object must be a formula")
   formula <- x
 
   #check arguments for labels
   if (missing(type)) {type=c("Type I","Type II")}
-  if (missing(xlab)) {xlab="Times"}
+  if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}
 
@@ -133,24 +134,23 @@ plot.formula <- function(x, y=NULL, data, type = NULL,
 #' @param x An object of class \code{bivrecReg}.
 #' @param y Either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
-#' @param xlab Optional string with label for horizontal axis. Default is "Gap Times".
+#' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
-#' @param type Optional vector of strings to label type 1and type 2 gap times. Default is c("Type 1", "Type 2").
+#' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type 1", "Type 2").
 #' @param ... arguments to be passed to graphical methods as needed.
 #'
 #' @noRd
 #' @export
 #'
 
-plot.bivrecReg <- function (x, y = NULL, type = NULL,
-                            main = NULL, xlab = NULL, ylab = NULL, ...){
+plot.bivrecReg <- function (x, y = NULL, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...){
 
   if (!inherits(x, "bivrecReg")) stop("Object must be a bivrecReg class")
   object <- x
   formula = object$formula
   data = object$data$original
   if (missing(type)) {type=c("Type 1","Type 2")}
-  if (missing(xlab)) {xlab="Gap Times"}
+  if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}
 

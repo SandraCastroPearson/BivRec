@@ -1,7 +1,8 @@
 ########################    COEF     ########################
 
-#' Extract the Coefficients of a Semiparametric Regression Fit Obtained from a \code{bivrecReg} object
+#' Extract the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} Object
 #'
+#' @description This function extracts the coefficients of a semiparametric regression fit object.
 #' @param object A bivrecReg object.
 #' @param ... Additional parameters if needed.
 #'
@@ -33,9 +34,9 @@ coef.bivrecReg <- function(object, ...) {
 
 #' Extract the Variance-Covariance Matrix from a \code{bivrecReg} object
 #'
-#' @description Extract the variance-covariance matrix from the fit of a semiparametric regression analysis.
+#' @description This function extracts the variance-covariance matrix from the fit of a semiparametric regression analysis.
 #'
-#' @param object A bivrecReg object.
+#' @param object A \code{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
 #' @export
@@ -58,6 +59,7 @@ vcov.bivrecReg <- function(object, ...) {
 ########################    confint     ########################
 #' Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
 #'
+#' @description This function obtains the confidence interval for the coefficients of a semiparametric regression fit object.
 #' @importFrom stats pnorm
 #' @importFrom stringr str_extract
 #' @param object A bivrecReg object.

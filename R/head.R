@@ -1,11 +1,11 @@
 ########################    Head     ########################
 
-#' Print top elements of the Joint CDF, Marginal Survival, and Conditional CDF from a bivrecNP object
+#' Print the Top Elements of the Joint CDF, Marginal Survival, and Conditional CDF from a \code{bivrecNP} Object
 #'
+#' @description This function prints the top elements of the joint cdf, marginal survival, and conditional cdf from a \code{bivrecNP} object.
 #' @param x A bivrecNP object
 #' @param ... additional parameters if needed
 #'
-#' @noRd
 #' @export
 
 head.bivrecNP <- function(x, ...) {

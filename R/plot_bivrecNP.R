@@ -2,7 +2,7 @@
 #' Plot Joint CDF After Nonparametric Analysis
 #'
 #' @description
-#' This function plots the joint CDF for a \code{bivrecNP} object.
+#' This function plots the joint cdf for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class.
 #' @param type  Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
@@ -43,7 +43,7 @@ plotJoint <- function(object, type) {
 
   graphics::filled.contour(x=as.numeric(levels(myx)), y= as.numeric(levels(myy)),
                            forplot2, color.palette = grDevices::heat.colors, cex.main=1.5,
-                           xlab=paste(type[1], " (x)", sep = ""), ylab=paste(type[2], " (y)", sep = ""),
+                           xlab=type[1], ylab=type[2],
                            main = expression(P(X^0 <= x, Y^0 <= y)))
 
 }
@@ -85,7 +85,7 @@ plotMarg <- function(object, type) {
   index <- which(forplot$lower<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
 
-  plot(forplot$Time, forplot$Marginal_Survival, type = "l", xlab = paste(type, " (x)", sep = ""),
+  plot(forplot$Time, forplot$Marginal_Survival, type = "l", xlab = type,
        ylab = "Marginal Survival", yaxp  = c(0, 1, 10),
        xaxp  = round(c(0, mx, 10), digits=1), main = expression(1 - P(X^0 <= x))
   )
@@ -98,7 +98,7 @@ plotMarg <- function(object, type) {
 #' Plot Conditional CDF After Nonparametric Analysis
 #'
 #' @description
-#' This function plots conditional cdf for a \code{bivrecNP} object.
+#' This function plots the conditional cdf for a \code{bivrecNP} object.
 #'
 #' @param object An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.
 #' @param type Optional string to label the Type II gap time. Default is "Type II".
@@ -114,7 +114,7 @@ plotCond <- function(object, type) {
   if (missing(type)) {type = "Type II"}
 
 
-  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = paste(type, " (y)", sep = ""),
+  plot(cond$Time, cond[,5], type="l", lty = 2, xlab = type,
        ylab = "Conditional Probability", xlim=c(0, round(max(x$conditional_cdf$ygrid), digits=1)),
        ylim=c(0, round(max(cond[,5]), digits=1)),
        main=substitute(paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
@@ -138,17 +138,16 @@ plotCond <- function(object, type) {
 #'
 #' @param x An object of class \code{bivrecNP}.
 #' @param y Either empty or NULL.
-#' @param main NULL
-#' @param xlab NULL
-#' @param ylab NULL
-#' @param type Optional vector of strings to label type 1 and type 2 gap times. Default is c("Type 1", "Type 2").
+#' @param main Either empty or NULL.
+#' @param xlab Either empty or NULL.
+#' @param ylab Either empty or NULL.
+#' @param type Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export
 #'
 
-plot.bivrecNP <-function(x, y=NULL, type = NULL,
-                         main = NULL, xlab = NULL, ylab = NULL, ...){
+plot.bivrecNP <-function(x, y=NULL, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...){
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
 

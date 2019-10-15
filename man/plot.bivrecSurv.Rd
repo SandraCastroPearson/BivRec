@@ -16,7 +16,7 @@
 
 \item{main}{Optional string with plot title. Default is no title.}
 
-\item{xlab}{Optional string with label for horizontal axis. Default is "Times".}
+\item{xlab}{Optional string with label for horizontal axis. Default is "Time".}
 
 \item{ylab}{Optional string with label for vertical axis. Default is "Individual".}
 
@@ -29,7 +29,8 @@ This function plots bivariate recurrent event gap times from a bivrecSurv object
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(1234)
-bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
+               set=1.1)
 plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
      type = c("In Hospital", "Out of Hospital"))
 

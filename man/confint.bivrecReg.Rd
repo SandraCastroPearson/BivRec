@@ -16,5 +16,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
+This function obtains the confidence interval for the coefficients of a semiparametric regression fit object.
 }

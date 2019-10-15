@@ -12,5 +12,5 @@ plotCond(object, type)
 \item{type}{Optional string to label the Type II gap time. Default is "Type II".}
 }
 \description{
-This function plots conditional cdf for a \code{bivrecNP} object.
+This function plots the conditional cdf for a \code{bivrecNP} object.
 }

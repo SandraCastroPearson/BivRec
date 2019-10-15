@@ -12,5 +12,5 @@ plotJoint(object, type)
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 }
 \description{
-This function plots the joint CDF for a \code{bivrecNP} object.
+This function plots the joint cdf for a \code{bivrecNP} object.
 }

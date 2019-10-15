@@ -12,13 +12,13 @@
 
 \item{y}{Either empty or NULL.}
 
-\item{type}{Optional vector of strings to label type 1 and type 2 gap times. Default is c("Type 1", "Type 2").}
+\item{type}{Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").}
 
-\item{main}{NULL}
+\item{main}{Either empty or NULL.}
 
-\item{xlab}{NULL}
+\item{xlab}{Either empty or NULL.}
 
-\item{ylab}{NULL}
+\item{ylab}{Either empty or NULL.}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }

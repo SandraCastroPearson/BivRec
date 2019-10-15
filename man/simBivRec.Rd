@@ -15,28 +15,29 @@ simBivRec(nsize, beta1, beta2, tau_c, set)
 
 \item{tau_c}{Maximum support of censoring time. For example, it can take values as follows:
 \itemize{
-\item tau_c=63: corresponds to a 15\% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
-\item tau_c=30: corresponds to a 30\% censoring rate for each scenario in tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
+\item tau_c=63: corresponds to a 15\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
+\item tau_c=30: corresponds to a 30\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2017).
 }}
 
-\item{set}{Simulation setting based on scenarios outlined in tables 1 and 2 in Lee, Huang, Xu, Luo (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
+\item{set}{Simulation setting based on scenarios outlined in Tables 1 and 2 in Lee, Huang, Xu, Luo (2017). Choose 1.1 (default) for scenario 1 with \eqn{\rho=1} in the covariance matrix of the frailty vector, 1.2 for scenario 1 with \eqn{\rho=0.5}, 1.3 for scenario 1 with \eqn{\rho=0} and 2.0 for scenario 2.}
 }
 \value{
-Data frame with alternating recurrent event data and one continuous and one binary covariate.
+Data frame with the alternating recurrent event data and one continuous and one binary covariate.
 }
 \description{
-This function simulates a series of alternating recurrent events based on simulations in Lee CH, Huang C-Y, Xu G, Luo X (2017).
+This function simulates a series of alternating recurrent events based on the simulation setting in Lee, Huang, Xu, Luo (2017).
 }
 \examples{
 library(BivRec)
 set.seed(1234)
-sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
+sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+            tau_c=63, set=1.1)
 head(sim_data)
 
 }
 \references{
 \enumerate{
-\item Lee C, Huang CY, Xu G, Luo X (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
+\item Lee C, Huang CY, Xu G, Luo X. (2017). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
 \url{https://doi.org/10.1002/sim.7563}
 }
 }

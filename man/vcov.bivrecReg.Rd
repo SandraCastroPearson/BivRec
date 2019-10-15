@@ -7,10 +7,10 @@
 \method{vcov}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object.}
+\item{object}{A \code{bivrecReg} object.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-Extract the variance-covariance matrix from the fit of a semiparametric regression analysis.
+This function extracts the variance-covariance matrix from the fit of a semiparametric regression analysis.
 }

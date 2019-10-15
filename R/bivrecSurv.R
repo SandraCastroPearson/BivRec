@@ -10,16 +10,17 @@
 #'
 #' @param id Vector of subject's unique identifier (i).
 #' @param episode Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
-#' @param xij Vector with the lengths of time spent in event of type X for individual i in episode j.
-#' @param yij vector with the lengths of time spent in event of type Y for individual i in episode j.
-#' @param d2 Vector of indicators, with values of 0 for the last episode for subject i or 1 otherwise. A subject with only one episode will have one 0.
-#' @param d1 Vector of indicators, with values of 0 if the last episode for subject i occurred for event of type X or 1 otherwise. A subject with only one episode could have either one 1 (if he was censored at event Y) or one 0 (if he was censored at event X). A subject with censoring in event Y will have a vector of 1's.
+#' @param xij Vector with the lengths of time spent in event of Type I for individual i in episode j.
+#' @param yij vector with the lengths of time spent in event of Type II for individual i in episode j.
+#' @param d2 Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.
+#' @param d1 Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.
 #'
-#' @return A bivrecSurv object ready to be used as the response for analysis using bivrecReg or bivrecNP.
+#' @return A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
 #'
 #' @rdname BivRec
 #' @export
 #' @examples
+#' library(BivRec)
 #' set.seed(1234)
 #' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 #' bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))

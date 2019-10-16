@@ -126,7 +126,7 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
   colnames(cond.prob) = seq(1,B,1)
-  print(paste("Estimating conditional CDF with ", CI*100, "% CI using ", B, " Bootstrap samples", sep=""))
+  print(paste("Estimating conditional cdf with ", CI*100, "% confidence interval using ", B, " bootstrap samples", sep=""))
 
   for (i in 1:B) {
     #print(paste("Sample", i, sep = " "))
@@ -136,9 +136,9 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
   conf.lev = 1 - ((1-CI)/2)
   bootstrapCIs <- apply(cond.prob, 1, function(x) c(mean(x), sd(x), sort(x)[(1-conf.lev)*B], sort(x)[conf.lev*B]))
   cond <- round(data.frame(y.grid, bootstrapCIs[1,], bootstrapCIs[2,], bootstrapCIs[3,], bootstrapCIs[4,]), digits = 4)
-  low.string <- paste("Bootstrap ", (1 - conf.lev), "%", sep="")
-  up.string <- paste("Bootstrap ", conf.lev, "%", sep="")
-  colnames(cond) <- c("Time", "Conditional.Probability" , " Bootstrap SE", low.string, up.string)
+  low.string <- paste("Bootstrap Lower", substr(as.character(CI), 2,4), sep=" ")
+  up.string <- paste("Bootstrap Upper", substr(as.character(CI), 2,4), sep=" ")
+  colnames(cond) <- c("Time", "Conditional Probability" , " Bootstrap SE", low.string, up.string)
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}

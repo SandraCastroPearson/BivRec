@@ -73,9 +73,9 @@ nonparam_cdf <- function(fit_data, u, ai, CI) {
   out1$lower[which(out1$lower<0)] <- 0
   out1$upper[which(out1$upper>1)] <- 1
 
-  lowstring <- paste((1 - conf_lev), "%", sep="")
-  upstring <- paste(conf_lev, "%", sep="")
-  colnames(out1) <- c("x", "y", "Joint_Probability", "SE", lowstring, upstring)
+  lowstring <-   lowstring <- paste("Lower", substr(as.character(CI), 2,4), sep=" ")
+  upstring <- paste("Upper", substr(as.character(CI), 2,4), sep=" ")
+  colnames(out1) <- c("x", "y", "Joint Probability", "SE", lowstring, upstring)
 
   return(cdf=out1)
 

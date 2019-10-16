@@ -2,7 +2,7 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{confint.bivrecReg}
 \alias{confint.bivrecReg}
-\title{Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object}
+\title{Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit}
 \usage{
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }

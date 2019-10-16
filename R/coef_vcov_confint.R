@@ -1,6 +1,6 @@
 ########################    COEF     ########################
 
-#' Extract the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} Object
+#' Extract the Coefficients of a Semiparametric Regression Fit
 #'
 #' @description This function extracts the coefficients of a semiparametric regression fit object.
 #' @param object A bivrecReg object.
@@ -32,7 +32,7 @@ coef.bivrecReg <- function(object, ...) {
 
 ########################    VCOV     ########################
 
-#' Extract the Variance-Covariance Matrix from a \code{bivrecReg} object
+#' Extract the Variance-Covariance Matrix from a Semiparametric Regression Fit
 #'
 #' @description This function extracts the variance-covariance matrix from the fit of a semiparametric regression analysis.
 #'
@@ -57,7 +57,7 @@ vcov.bivrecReg <- function(object, ...) {
 }
 
 ########################    confint     ########################
-#' Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit from a \code{bivrecReg} object
+#' Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit
 #'
 #' @description This function obtains the confidence interval for the coefficients of a semiparametric regression fit object.
 #' @importFrom stats pnorm
@@ -82,8 +82,8 @@ confint.bivrecReg <- function(object, parm, level, ...) {
   conf_lev = 1 - ((1-level)/2)
 
   CIcalc <- t(apply(coeffs, 1, function(x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
-  lowstring <- paste((1 - conf_lev)*100, "%", sep="")
-  upstring <- paste(conf_lev*100, "%", sep="")
+  lowstring <- paste("Lower", substr(as.character(level), 2,4), sep=" ")
+  upstring <- paste("Upper", substr(as.character(level), 2,4), sep=" ")
   colnames(CIcalc) <- c(lowstring, upstring)
 
   if (missing(parm)) {

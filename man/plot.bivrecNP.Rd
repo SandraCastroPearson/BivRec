@@ -10,15 +10,9 @@
 \arguments{
 \item{x}{An object of class \code{bivrecNP}.}
 
-\item{y}{Either empty or NULL.}
+\item{y, }{main, xlab, ylab  Either empty or NULL.}
 
 \item{type}{Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").}
-
-\item{main}{Either empty or NULL.}
-
-\item{xlab}{Either empty or NULL.}
-
-\item{ylab}{Either empty or NULL.}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }

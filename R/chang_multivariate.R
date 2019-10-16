@@ -232,14 +232,14 @@ sd.estpar=function(init, dat, v, B) {
 #multivariable regression analysis-Chang's method
 chang_multivariate <- function(new_data, cov_names, SE) {
 
-  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ","), sep=" "))
+  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ", "), sep=" "))
   beta <- rep(0, length(cov_names)*2)
 
   #solve to get all  estimates
   chang <- RE.uest(init = beta, dat=new_data)
 
   if (chang$conv!=0) {
-    print("Error: Max Iterations reached. Did not converge.")
+    print("Error: Max iterations reached. Did not converge.")
     stop()
   }
 
@@ -252,7 +252,7 @@ chang_multivariate <- function(new_data, cov_names, SE) {
 
   } else {
 
-    print("Point Estimates complete. Estimating Standard Errors.")
+    print("Estimating standard errors")
 
     #estimate covariance matrix / std. errors using Parzen's method
     changv <- v.est(chang$par,new_data,R=50)

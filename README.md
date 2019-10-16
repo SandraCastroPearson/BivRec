@@ -78,11 +78,11 @@ npresult <- bivrecNP(response = bivrec_object, ai=1,
                 u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
                 given.interval = c(0, 10), level = 0.99)
 #> [1] "Estimating joint CDF and marginal survival"
-#> [1] "Estimating conditional CDF with 99% CI using 200 Bootstrap samples"
+#> [1] "Estimating conditional cdf with 99% confidence interval using 200 bootstrap samples"
 head(npresult)
 #> 
 #> Joint CDF:
-#>    x y Joint_Probability         SE     0.005%    0.995%
+#>    x y Joint Probability         SE  Lower .99 Upper .99
 #> 1 2 1        0.07765854 0.01916368 0.02829617 0.1270209
 #> 2 2 2        0.12390735 0.02288661 0.06495534 0.1828594
 #> 3 2 3        0.13381917 0.02345172 0.07341153 0.1942268
@@ -91,7 +91,7 @@ head(npresult)
 #> 6 2 6        0.13928503 0.02373745 0.07814140 0.2004287
 #> 
 #> Marginal Survival:
-#>         Time Marginal_Survival           SE    0.005%    0.995%
+#>         Time Marginal Survival           SE Lower .99 Upper .99
 #> 1 0.2697386         0.9998851 9.383939e-06 0.9998609 0.9999092
 #> 2 0.2759313         0.9997701 1.149293e-04 0.9994741 1.0000000
 #> 3 0.2912704         0.9996552 2.292833e-04 0.9990646 1.0000000
@@ -100,20 +100,20 @@ head(npresult)
 #> 6 0.3229318         0.9993103 5.728047e-04 0.9978349 1.0000000
 #> 
 #> Conditional CDF:
-#>      Time Conditional.Probability  Bootstrap SE Bootstrap 0.005%
-#> 1 0.0000                  0.0000        0.0000                0
-#> 2 0.0744                  0.0000        0.0000                0
-#> 3 0.1487                  0.0055        0.0044                0
-#> 4 0.2231                  0.0133        0.0094                0
-#> 5 0.2975                  0.0194        0.0117                0
-#> 6 0.3718                  0.0247        0.0134                0
-#>   Bootstrap 0.995%
-#> 1             0.00
-#> 2             0.00
-#> 3             0.02
-#> 4             0.04
-#> 5             0.05
-#> 6             0.06
+#>      Time Conditional Probability  Bootstrap SE Bootstrap Lower .99
+#> 1 0.0000                  0.0000        0.0000                   0
+#> 2 0.0744                  0.0000        0.0000                   0
+#> 3 0.1487                  0.0055        0.0044                   0
+#> 4 0.2231                  0.0133        0.0094                   0
+#> 5 0.2975                  0.0194        0.0117                   0
+#> 6 0.3718                  0.0247        0.0134                   0
+#>   Bootstrap Upper .99
+#> 1                0.00
+#> 2                0.00
+#> 3                0.02
+#> 4                0.04
+#> 5                0.05
+#> 6                0.06
 plot(npresult)
 ```
 
@@ -151,7 +151,7 @@ plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
 # Apply Lee, Huang, Xu, Luo (2017) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data= sim_data, "Lee.et.al")
-#> [1] "Fitting model with covariates: a1,a2"
+#> [1] "Fitting model with covariates: a1, a2"
 #> [1] "Estimating standard errors"
 
 summary(lee_fit)
@@ -164,20 +164,20 @@ summary(lee_fit)
 #> 150
 #> 
 #> Coefficients:
-#>                     Estimates       SE       z Pr(>|z|)    
-#> a1 type 1 gap time   0.57444  0.13068  4.3956    1e-05 ***
-#> a2 type 1 gap time   0.51281  0.27075  1.8940  0.02911 *  
-#> a1 type 2 gap time   0.28883  0.19854  1.4548  0.07286 .  
-#> a2 type 2 gap time  -0.62074  0.38427 -1.6154  0.05311 .  
+#>         Estimates       SE       z Pr(>|z|)    
+#> xij a1   0.57444  0.13068  4.3956    1e-05 ***
+#> xij a2   0.51281  0.27075  1.8940  0.02911 *  
+#> yij a1   0.28883  0.19854  1.4548  0.07286 .  
+#> yij a2  -0.62074  0.38427 -1.6154  0.05311 .  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> exp(coefficients):
-#>                     exp(coeff) lower .95 upper .95
-#> a1 type 1 gap time    1.77614   1.37479    2.2946
-#> a2 type 1 gap time    1.66997   0.98230    2.8390
-#> a1 type 2 gap time    1.33487   0.90457    1.9698
-#> a2 type 2 gap time    0.53755   0.25312    1.1416
+#>         exp(coeff) Lower .95 Upper .95
+#> xij a1    1.77614   1.37479    2.2946
+#> xij a2    1.66997   0.98230    2.8390
+#> yij a1    1.33487   0.90457    1.9698
+#> yij a2    0.53755   0.25312    1.1416
 
 # To apply Chang (2004) method use method="Chang".
 # chang_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

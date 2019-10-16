@@ -2,7 +2,7 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{vcov.bivrecReg}
 \alias{vcov.bivrecReg}
-\title{Extract the Variance-Covariance Matrix from a \code{bivrecReg} object}
+\title{Extract the Variance-Covariance Matrix from a Semiparametric Regression Fit}
 \usage{
 \method{vcov}{bivrecReg}(object, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/head.R
 \name{head.bivrecNP}
 \alias{head.bivrecNP}
-\title{Print top elements of the Joint CDF, Marginal Survival, and Conditional CDF from a \code{bivrecNP} object}
+\title{Print the Top Elements of the Joint CDF, Marginal Survival, and Conditional CDF After Nonparametric Analysis}
 \usage{
 \method{head}{bivrecNP}(x, ...)
 }

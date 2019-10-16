@@ -15,9 +15,9 @@ bivrecSurv(id, episode, xij, yij, d1, d2)
 
 \item{yij}{vector with the lengths of time spent in event of Type II for individual i in episode j.}
 
-\item{d1}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for uncensored gap times.}
+\item{d1}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.}
 
-\item{d2}{Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for uncensored gap times.}
+\item{d2}{Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.}
 }
 \value{
 A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
@@ -26,6 +26,7 @@ A bivrecSurv object ready to be used as the response for analysis using \code{bi
 This function creates a bivariate recurrent survival object to be used as a response variable in a model formula.
 }
 \examples{
+library(BivRec)
 set.seed(1234)
 sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
 bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))

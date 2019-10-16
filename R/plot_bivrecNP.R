@@ -67,7 +67,7 @@ plotMarg <- function(object, type) {
   if (missing(type)) {type = "Type I"}
 
   xij <- x$xij
-  forplot <- x$marginal_survival[1:3]
+  forplot <- x$marginal_survival
 
   #formula <- bivrec.nonparam.result$formula
 
@@ -76,21 +76,18 @@ plotMarg <- function(object, type) {
   str_mx <- substring(as.character(mx), 1, nchar(as.character(mx))-1)
   str_mx <- paste(as.numeric(str_mx)+1, 0, sep="")
   mx <- round(as.numeric(str_mx), digits=1)
-  forplot <- rbind(c(0, 1, 0), forplot, c(mx, 0, forplot[nrow(forplot),3]))
+  forplot <- rbind(c(0, 1, 0, 1, 1), forplot, c(mx, 0, forplot[nrow(forplot),3], 0, 0))
 
   ##### Wald CI and plot
-  conf.lev = 1 - ((1-x$level)/2)
-  forplot$lower <- forplot[,2] - qnorm(conf.lev)*forplot[,3]
-  forplot$upper <- forplot[,2] + qnorm(conf.lev)*forplot[,3]
-  index <- which(forplot$lower<0)
+  index <- which(forplot$`Lower .99`<0)
   forplot[index, -1] <- forplot[index[1]-1, -1]
 
-  plot(forplot$Time, forplot$Marginal_Survival, type = "l", xlab = type,
+  plot(forplot[,1], forplot[,2], type = "l", xlab = type,
        ylab = "Marginal Survival", yaxp  = c(0, 1, 10),
        xaxp  = round(c(0, mx, 10), digits=1), main = expression(1 - P(X^0 <= x))
   )
-  graphics::lines(forplot$Time, forplot$lower, lty = 2)
-  graphics::lines(forplot$Time, forplot$upper, lty = 2)
+  graphics::lines(forplot[,1], forplot[,4], lty = 2)
+  graphics::lines(forplot[,1], forplot[,5], lty = 2)
 
 }
 
@@ -121,7 +118,7 @@ plotCond <- function(object, type) {
                        list(gi1 = x$given.interval[1], gi2 = x$given.interval[2]))
   )
   graphics::lines(cond$Time, cond[,4], lty = 2)
-  graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
+  graphics::lines(cond$Time, cond[,2], lty = 1)
 }
 
 ########################    plot.bivrecNP     ########################
@@ -137,10 +134,7 @@ plotCond <- function(object, type) {
 #' @importFrom stats model.matrix
 #'
 #' @param x An object of class \code{bivrecNP}.
-#' @param y Either empty or NULL.
-#' @param main Either empty or NULL.
-#' @param xlab Either empty or NULL.
-#' @param ylab Either empty or NULL.
+#' @param y, main, xlab, ylab  Either empty or NULL.
 #' @param type Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'

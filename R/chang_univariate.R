@@ -230,7 +230,7 @@ chang_univariate <- function(new_data, cov_names, SE) {
   chang1 <- RE.uest1(beta, new_data)
 
   if (chang1$conv!=0) {
-    print("Error: Max Iterations reached. Did not converge.")
+    print("Error: Max iterations reached. Did not converge.")
     stop()
   }
 
@@ -242,7 +242,7 @@ chang_univariate <- function(new_data, cov_names, SE) {
 
   } else {
 
-    print("Point Estimates complete. Estimating Standard Errors/Confidence Intervals.")
+    print("Estimating standard errors")
 
     #estimate covariance matrix / std. errors
     chang1v <- v.est1(chang1$par,new_data, R=100)

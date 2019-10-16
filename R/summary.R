@@ -31,7 +31,7 @@ summary.bivrecReg <- function(object, ...){
   CIcalc <- t(apply(coeffs[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
 
   expcoeffs <- data.frame(exp(coeffs[,1]), exp(CIcalc))
-  colnames(expcoeffs) <- c("exp(coeff)", "lower .95", "upper .95")
+  colnames(expcoeffs) <- c("exp(coeff)", "Lower .95", "Upper .95")
 
   ans <- list(call = object$call, n=n,
               coefficients = coeffs,

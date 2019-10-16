@@ -190,7 +190,7 @@ Mvar.est=function(beta1,beta2,mdat, amat) {
 #multivariable regression analysis
 leeall_multivariate <- function(response, amat, cov_names, SE) {
 
-  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ","), sep=" "))
+  print(paste("Fitting model with covariates:", stringr::str_c(cov_names, collapse = ", "), sep=" "))
   n_params <- length(cov_names)
 
   #solve first equation to get beta1 values - related to xij
@@ -207,8 +207,8 @@ leeall_multivariate <- function(response, amat, cov_names, SE) {
     #join all info and calculate CIs, put in nice table
     fit <- data.frame(c(mpro1$par, mpro2$par), se_est[[1]])
     colnames(fit) <- c("Estimate", "SE")
-    rownames(fit) <- c(paste(cov_names, "type 1 gap time"),
-                       paste(cov_names, "type 2 gap time"))
+    rownames(fit) <- c(paste("xij", cov_names),
+                       paste("yij", cov_names))
     result <- list(fit = as.matrix(fit), vcovmat = se_est[[2]])
 
   } else {

@@ -4,18 +4,17 @@
 \alias{plot.bivrecNP}
 \title{Plot Results of Nonparametric Analysis of Bivariate Recurrent Events}
 \usage{
-\method{plot}{bivrecNP}(x, y = NULL, type = NULL, main = NULL,
-  xlab = NULL, ylab = NULL, ...)
+\method{plot}{bivrecNP}(x, y = NULL, type = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{bivrecNP}.}
 
-\item{y, }{main, xlab, ylab  Either empty or NULL.}
+\item{y}{Either empty or NULL.}
 
 \item{type}{Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots all the estimated functions (joint CDF, marginal survival and/or conditional cdf) from a \code{bivrecNP}() object in one step.
+This function plots all the estimated functions (joint cdf, marginal survival and/or conditional cdf) from a \code{bivrecNP} object in one step.
 }

@@ -125,7 +125,7 @@ plotCond <- function(object, type) {
 #' Plot Results of Nonparametric Analysis of Bivariate Recurrent Events
 #'
 #' @description
-#' This function plots all the estimated functions (joint CDF, marginal survival and/or conditional cdf) from a \code{bivrecNP}() object in one step.
+#' This function plots all the estimated functions (joint cdf, marginal survival and/or conditional cdf) from a \code{bivrecNP} object in one step.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -134,14 +134,14 @@ plotCond <- function(object, type) {
 #' @importFrom stats model.matrix
 #'
 #' @param x An object of class \code{bivrecNP}.
-#' @param y, main, xlab, ylab  Either empty or NULL.
+#' @param y  Either empty or NULL.
 #' @param type Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export
 #'
 
-plot.bivrecNP <-function(x, y=NULL, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...){
+plot.bivrecNP <-function(x, y=NULL, type=NULL, ...){
 
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
 
@@ -149,16 +149,15 @@ plot.bivrecNP <-function(x, y=NULL, type = NULL, main = NULL, xlab = NULL, ylab 
 
   if (cond==FALSE){
     par(mar=c(5,4,4,2)+0.1)
-    plotJoint(x, type)
+    if (is.null(type)) {plotJoint(x)} else {plotJoint(x, type)}
     par(mar=c(5,4,4,2)+0.1)
-    plotMarg(x, type[1])
-  }
-  else {
+    if (is.null(type)) {plotMarg(x)} else {plotMarg(x, type[1])}
+  } else {
     par(mar=c(5,4,4,2)+0.1)
-    plotJoint(x, type)
+    if (is.null(type)) {plotJoint(x)} else {plotJoint(x, type)}
     par(mar=c(5,4,4,2)+0.1, mfrow=c(1,2))
-    plotMarg(x, type[1])
-    plotCond(x, type[2])
+    if (is.null(type)) {plotMarg(x)} else {plotMarg(x, type[1])}
+    if (is.null(type)) {plotCond(x)} else {plotCond(x, type[2])}
     par(mfrow=c(1, 1))
   }
 }

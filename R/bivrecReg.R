@@ -98,6 +98,10 @@ bivrecReg <- function(formula, data, method) {
     amat = dplyr::filter(predictors, !(duplicated(predictors$id)))
     amat = as.matrix(amat)[,-1]
 
+    if(is.vector(amat)==TRUE) {
+      amat = matrix(amat, nrow=1, byrow = TRUE)
+    }
+
     if (ncol(amat)==1) {
       results <- list(call = call,
                       leefit = leeall_univariate(response=resp$data4Lreg, amat, cov_names, SE=TRUE),

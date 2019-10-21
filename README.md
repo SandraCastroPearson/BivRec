@@ -5,8 +5,8 @@ Bivariate Alternating Recurrent Event Data Analysis (BivRec)
 
 Alternating recurrent event data arise frequently in biomedical and
 social sciences where two types of events such as hospital admissions
-and discharge occur alternatively over time. BivRec implements a
-collection of non-parametric and semiparametric methods to analyze such
+and discharges occur alternatively over time. BivRec implements a
+collection of nonparametric and semiparametric methods to analyze such
 data.
 
 The main functions are:  
@@ -17,7 +17,7 @@ The method options are “Lee.et.al” and “Chang”.
 funtion (cdf) for the two alternating events gap times (Xij and Yij) as
 well as the marginal survival function for type I gap times (Xij) and
 the conditional cdf of the type II gap times (Yij) given an interval of
-type I gap times (Xij) in a non-parametric fashion.
+type I gap times (Xij) in a nonparametric fashion.
 
 The package also provides options to simulate and visualize the data and
 results of analysis.
@@ -62,7 +62,7 @@ head(sim_data)
 # Create a bivrecSurv object
 bivrec_object <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 # Plot gap times
-plot(bivrec_object)
+plot(bivrec_object, main="Example", type = c("Type I", "Type II"))
 ```
 
 ![](man/figures/README-BivRecExample-1.png)<!-- -->
@@ -139,7 +139,7 @@ Analysis
 ``` r
 #Explore how the response changes by levels of a categorical covariate using a plot.
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
-     main = "Recurrent Event Times", type = c("Type I", "Type II"))
+    type = c("Type I", "Type II"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
 #> [1] "Original number of subjects: 150. Subjects for plots: 150"
 ```
@@ -148,7 +148,7 @@ plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
 
 ``` r
 
-# Apply Lee, Huang, Xu, Luo (2017) method using multiple covariates.
+# Apply Lee, Huang, Xu, Luo (2018) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data= sim_data, "Lee.et.al")
 #> [1] "Fitting model with covariates: a1, a2"
@@ -164,7 +164,7 @@ summary(lee_fit)
 #> 150
 #> 
 #> Coefficients:
-#>         Estimates       SE       z Pr(>|z|)    
+#>         Estimates     SE       z   Pr(>|z|)    
 #> xij a1   0.57444  0.13068  4.3956    1e-05 ***
 #> xij a2   0.51281  0.27075  1.8940  0.02911 *  
 #> yij a1   0.28883  0.19854  1.4548  0.07286 .  

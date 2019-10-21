@@ -1,7 +1,7 @@
 #################### CREATE A BIVREC OBJECT ######################
 
 #####
-#' Create a Bivariate Recurrent Survival Object
+#' Create a Bivariate Alternating Recurrent Event Object
 #'
 #' @description
 #' This function creates a bivariate recurrent survival object to be used as a response variable in a model formula.
@@ -12,8 +12,8 @@
 #' @param episode Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
 #' @param xij Vector with the lengths of time spent in event of Type I for individual i in episode j.
 #' @param yij vector with the lengths of time spent in event of Type II for individual i in episode j.
-#' @param d2 Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.
-#' @param d1 Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.
+#' @param d1 Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.
+#' @param d2 Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.
 #'
 #' @return A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
 #'

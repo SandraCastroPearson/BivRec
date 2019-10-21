@@ -13,11 +13,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Alternating recurrent event data arise frequently in biomedical and social sciences where two types of events such as hospital admissions and discharge occur alternatively over time. BivRec implements a collection of non-parametric and semiparametric methods to analyze such data. 
+Alternating recurrent event data arise frequently in biomedical and social sciences where two types of events such as hospital admissions and discharges occur alternatively over time. BivRec implements a collection of nonparametric and semiparametric methods to analyze such data. 
 
 The main functions are:  
 - bivrecReg: Use for the estimation of covariate effects on the two alternating event gap times (Xij and Yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".  
-- bivrecNP:  Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a non-parametric fashion.    
+- bivrecNP:  Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a nonparametric fashion.    
 
 The package also provides options to simulate and visualize the data and results of analysis. 
 
@@ -48,7 +48,7 @@ head(sim_data)
 # Create a bivrecSurv object
 bivrec_object <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 # Plot gap times
-plot(bivrec_object)
+plot(bivrec_object, main="Example", type = c("Type I", "Type II"))
 ```
 
 Nonparametric Analysis
@@ -80,9 +80,9 @@ Semiparametric Regression Analysis
 ```{r BivRecExample3}
 #Explore how the response changes by levels of a categorical covariate using a plot.
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
-     main = "Recurrent Event Times", type = c("Type I", "Type II"))
+    type = c("Type I", "Type II"))
 
-# Apply Lee, Huang, Xu, Luo (2017) method using multiple covariates.
+# Apply Lee, Huang, Xu, Luo (2018) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data= sim_data, "Lee.et.al")
 

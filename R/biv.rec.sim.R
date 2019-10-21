@@ -1,6 +1,7 @@
-#' Bivariate Alternating Recurrent Event Response and Covariate Data Simulation
+#' Deprecated: Use \code{simBivRec}
 #'
-#' @description This function simulates a series of alternating recurrent events based on the simulation setting in Lee, Huang, Xu, Luo (2018).
+#' @description
+#' Deprecated function from previous version. Use \code{simBivRec}.
 #'
 #' @param nsize Sample size which refers to the number of subjects in the data set where each subject could have multiple episodes of events.
 #' @param beta1 True coefficients for Type I gap times in the accelerated failure time model (AFT).
@@ -15,6 +16,7 @@
 #'
 #' @return Data frame with the alternating recurrent event data and one continuous and one binary covariate.
 #'
+#'
 #' @importFrom MASS mvrnorm
 #' @importFrom stats qnorm
 #' @importFrom stats rbinom
@@ -23,22 +25,16 @@
 #' @importFrom stats runif
 #' @importFrom utils tail
 #'
-#'
-#' @examples
-#' library(BivRec)
-#' set.seed(1234)
-#' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
-#'             tau_c=63, set=1.1)
-#' head(sim_data)
-#'
 #' @references
 #'  Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
 #' \url{https://doi.org/10.1002/sim.7563}
-
+#'
 #' @export
 
 ##-----data generation
-simBivRec <- function(nsize, beta1, beta2, tau_c, set) {
+biv.rec.sim <- function(nsize,beta1,beta2,tau_c,set) {
+
+  .Deprecated("simBivRec")
 
   if (missing(tau_c)) {tau_c <- 63}
   if (missing(set)) {set <- 1.1}
@@ -60,7 +56,7 @@ simBivRec <- function(nsize, beta1, beta2, tau_c, set) {
   }
   if (set==1.2) {
     Sig=matrix(c(sg2,sqrt(sg2)*sqrt(sg2)*0.5,sqrt(sg2)*sqrt(sg2)*0.5,sg2),2,2)
-    gamma=MASS::mvrnorm(nsize,c(1,1),Sig)
+    gamma=mvrnorm(nsize,c(1,1),Sig)
     gamma1=gamma[,1]
     gamma2=gamma[,2]
   }

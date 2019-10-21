@@ -1,6 +1,6 @@
 ########################    Head     ########################
 
-#' Print the Top Elements of the Joint CDF, Marginal Survival, and Conditional CDF After Nonparametric Analysis
+#' Print the Top Elements of the Joint CDF, Marginal Survival, and Conditional CDF after Nonparametric Analysis
 #'
 #' @description This function prints the top elements of the joint cdf, marginal survival, and conditional cdf from a \code{bivrecNP} object.
 #' @param x A bivrecNP object

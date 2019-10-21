@@ -2,7 +2,7 @@
 % Please edit documentation in R/bivrecSurv.R
 \name{bivrecSurv}
 \alias{bivrecSurv}
-\title{Create a Bivariate Recurrent Survival Object}
+\title{Create a Bivariate Alternating Recurrent Event Object}
 \usage{
 bivrecSurv(id, episode, xij, yij, d1, d2)
 }
@@ -15,9 +15,9 @@ bivrecSurv(id, episode, xij, yij, d1, d2)
 
 \item{yij}{vector with the lengths of time spent in event of Type II for individual i in episode j.}
 
-\item{d1}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.}
+\item{d1}{Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.}
 
-\item{d2}{Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.}
+\item{d2}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.}
 }
 \value{
 A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.

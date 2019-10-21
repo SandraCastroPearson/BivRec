@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_bivrecNP.R
 \name{plot.bivrecNP}
 \alias{plot.bivrecNP}
-\title{Plot Results of Nonparametric Analysis of Bivariate Recurrent Events}
+\title{Plot Results of Nonparametric Analysis}
 \usage{
 \method{plot}{bivrecNP}(x, y = NULL, type = NULL, ...)
 }
@@ -11,7 +11,7 @@
 
 \item{y}{Either empty or NULL.}
 
-\item{type}{Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").}
+\item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }

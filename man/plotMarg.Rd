@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_bivrecNP.R
 \name{plotMarg}
 \alias{plotMarg}
-\title{Plot Marginal Survival After Nonparametric Analysis}
+\title{Plot Marginal Survival after Nonparametric Analysis}
 \usage{
 plotMarg(object, type)
 }

@@ -1,5 +1,5 @@
 #######################    plotJoint     ########################
-#' Plot Joint CDF After Nonparametric Analysis
+#' Plot Joint CDF after Nonparametric Analysis
 #'
 #' @description
 #' This function plots the joint cdf for a \code{bivrecNP} object.
@@ -49,7 +49,7 @@ plotJoint <- function(object, type) {
 }
 
 ########################    plotMarg     ########################
-#' Plot Marginal Survival After Nonparametric Analysis
+#' Plot Marginal Survival after Nonparametric Analysis
 #'
 #' @description
 #' This function plots the marginal survival for a \code{bivrecNP} object.
@@ -92,12 +92,12 @@ plotMarg <- function(object, type) {
 }
 
 ########################    plotCond     ########################
-#' Plot Conditional CDF After Nonparametric Analysis
+#' Plot Conditional CDF after Nonparametric Analysis
 #'
 #' @description
 #' This function plots the conditional cdf for a \code{bivrecNP} object.
 #'
-#' @param object An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.
+#' @param object An object of \code{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.
 #' @param type Optional string to label the Type II gap time. Default is "Type II".
 #'
 #' @importFrom stats ftable
@@ -122,10 +122,10 @@ plotCond <- function(object, type) {
 }
 
 ########################    plot.bivrecNP     ########################
-#' Plot Results of Nonparametric Analysis of Bivariate Recurrent Events
+#' Plot Results of Nonparametric Analysis
 #'
 #' @description
-#' This function plots all the estimated functions (joint cdf, marginal survival and/or conditional cdf) from a \code{bivrecNP} object in one step.
+#' This function plots all the estimated functions (joint cdf, marginal survival and conditional cdf if \verb{conditional=TRUE} during analysis) from a \code{bivrecNP} object in one step.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -135,7 +135,7 @@ plotCond <- function(object, type) {
 #'
 #' @param x An object of class \code{bivrecNP}.
 #' @param y  Either empty or NULL.
-#' @param type Optional vector of strings to label Type 1 and Type 2 gap times. Default is c("Type 1", "Type 2").
+#' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export

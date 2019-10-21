@@ -4,6 +4,16 @@
 #' @param object A \code{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
+#' @references
+#'
+#' \enumerate{
+#' \item Therneau T. (2015). survival: A Package for Survival Analysis in S. Version 2.38.
+#' \url{https://CRAN.R-project.org/package=survival}
+#'
+#' \item Chiou SH, Huang CY. (2018). Package reReg: Recurrent Event Regression. Version 1.16.
+#' \url{https://CRAN.R-project.org/package=reReg}
+#' }
+#'
 #' @export
 
 summary.bivrecReg <- function(object, ...){
@@ -26,7 +36,7 @@ summary.bivrecReg <- function(object, ...){
     coeffs[i,4] <- round(pnorm(abs(coeffs[i,3]), lower.tail = FALSE), digits=5)
     #coeffs_df[i,5] <- significance(coeffs_df[i,4])
   }
-  colnames(coeffs) <- c("Estimates", "SE", "z", "Pr(>|z|)")
+  colnames(coeffs) <- c("Estimates", "SE  ", "z ", "Pr(>|z|)")
   conf_lev = 1 - ((1-0.95)/2)
   CIcalc <- t(apply(coeffs[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
 

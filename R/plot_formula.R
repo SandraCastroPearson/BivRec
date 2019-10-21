@@ -13,7 +13,6 @@
 #' @param x An object of class formula.
 #' @param y Either empty or NULL.
 #' @param data Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.
-#' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
@@ -28,10 +27,10 @@
 #' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 #'                tau_c=63, set=1.1)
 #' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
-#'      main = "Example", type = c("In Hospital", "Out of Hospital"))
+#'      type = c("In Hospital", "Out of Hospital"))
 #'
 
-plot.formula <- function(x, y=NULL, data, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...) {
+plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL, ...) {
 
   if (!inherits(x, "formula")) stop("Object must be a formula")
   formula <- x
@@ -40,7 +39,7 @@ plot.formula <- function(x, y=NULL, data, type = NULL, main = NULL, xlab = NULL,
   if (missing(type)) {type=c("Type I","Type II")}
   if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
-  if (missing(main)) {main=""}
+  main=""
 
   args = c(main, xlab, ylab, type)
 

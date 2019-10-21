@@ -4,8 +4,8 @@
 \alias{plot.formula}
 \title{Plot Bivariate Alternating Recurrent Series by Categorical Covariates}
 \usage{
-\method{plot}{formula}(x, y = NULL, data, type = NULL, main = NULL,
-  xlab = NULL, ylab = NULL, ...)
+\method{plot}{formula}(x, y = NULL, data, type = NULL, xlab = NULL,
+  ylab = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class formula.}
@@ -15,8 +15,6 @@
 \item{data}{Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.}
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
-
-\item{main}{Optional string with plot title. Default is no title.}
 
 \item{xlab}{Optional string with label for horizontal axis. Default is "Time".}
 
@@ -34,6 +32,6 @@ set.seed(1234)
 bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
                tau_c=63, set=1.1)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
-     main = "Example", type = c("In Hospital", "Out of Hospital"))
+     type = c("In Hospital", "Out of Hospital"))
 
 }

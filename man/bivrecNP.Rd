@@ -53,7 +53,8 @@ library(BivRec)
 
 # Simulate bivariate alternating recurrent event data
 set.seed(1234)
-sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+            tau_c=63, set=1.1)
 bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 npresult <- bivrecNP(response = bivrecsurv_data, ai=1,
                      u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), level=0.99)
@@ -68,4 +69,9 @@ plot(npresult)
  head(npresult2)
  plot(npresult2)
 }
+
+}
+\references{
+Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
+\url{doi.org/10.1111/j.1541-0420.2005.00328.x}
 }

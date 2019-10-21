@@ -1,7 +1,7 @@
 #' Nonparametric Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description
-#' This function allows users to estimate the joint cumulative distribution function (cdf) for the two types of gap times(xij, yij), the marginal survival function for the Type I gap times (xij), and the conditional cdf for the Type II gap times (yij) given the Type I gap times (xij). See details for the estimation methods provided.
+#' This function allows users to estimate the joint cumulative distribution function (cdf) for the two types of gap times (xij, yij), the marginal survival function for the Type I gap times (xij), and the conditional cdf for the Type II gap times (yij) given the Type I gap times (xij). See details for the estimation methods provided.
 #'
 #' @importFrom stats model.frame
 #' @importFrom stats na.omit
@@ -39,13 +39,18 @@
 #'   \item \verb{new_data}
 #' }
 #'
+#' @references
+#' Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
+#' \url{doi.org/10.1111/j.1541-0420.2005.00328.x}
+#'
 #' @export
 #' @examples
 #' library(BivRec)
 #'
 #' # Simulate bivariate alternating recurrent event data
 #' set.seed(1234)
-#' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5))
+#' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+#'             tau_c=63, set=1.1)
 #' bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #' npresult <- bivrecNP(response = bivrecsurv_data, ai=1,
 #'                      u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), level=0.99)
@@ -60,6 +65,7 @@
 #'  head(npresult2)
 #'  plot(npresult2)
 #' }
+#'
 
 bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_bivrecNP.R
 \name{plotJoint}
 \alias{plotJoint}
-\title{Plot Joint CDF After Nonparametric Analysis}
+\title{Plot Joint CDF after Nonparametric Analysis}
 \usage{
 plotJoint(object, type)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_bivrecNP.R
 \name{plotCond}
 \alias{plotCond}
-\title{Plot Conditional CDF After Nonparametric Analysis}
+\title{Plot Conditional CDF after Nonparametric Analysis}
 \usage{
 plotCond(object, type)
 }

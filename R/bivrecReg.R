@@ -48,8 +48,8 @@
 #' @examples
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
-#' set.seed(1234)
-#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+
+#' bivrec_data <- simBivRec(nsize=5, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 #'                tau_c=63, set=1.1)
 #' # Apply Lee, Huang, Xu, Luo (2018) method using two covariates
 #' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

@@ -151,7 +151,7 @@ var.est=function(beta1, beta2, mdat, amat) {
 
   se1=sqrt(diag(mat)/n)[1]
   se2=sqrt(diag(mat)/n)[2]
-  return(list(se1=se1,se2=se2, vcovmat=mat))
+  return(list(se1=se1,se2=se2, vcovmat=mat/n))
 }
 
 ##################### FUNCTION NOT FOR USER #######################

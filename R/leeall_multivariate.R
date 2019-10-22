@@ -161,7 +161,7 @@ Mvar.est=function(beta1,beta2,mdat, amat) {
 
   mat=solve(gamm)%*%xi%*%t(solve(gamm))
   se = sqrt(diag(mat)/n)
-  return(list(se, mat))
+  return(list(se, mat/n))
 }
 
 ##################################################################

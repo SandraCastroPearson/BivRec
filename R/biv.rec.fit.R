@@ -25,7 +25,7 @@
 #' @details
 #' Two different estimation methods are available:
 #' \itemize{
-#' \item  method = "Lee.et.al" (default) is a U-statistics-based smooth estimating function approach. See Lee CH, Huang C-Y, Xu G, Luo X (2018) for further details.
+#' \item  method = "Lee.et.al" (default) is a U-statistics-based smooth estimating function approach. See Lee, Huang, Xu, Luo (2018) for further details.
 #' \item  method = "Chang" is a rank-based estimating function approach.  See Chang (2004) for further details.
 #' Note that following the Chang method, the variances of the estimated regression coefficients are approximated using the resampling techniques developed by Parzen, Wei and Ying (1994).
 #' This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients.

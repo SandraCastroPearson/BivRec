@@ -77,6 +77,6 @@ nonparam_cdf <- function(fit_data, u, ai, CI) {
   upstring <- paste("Upper", substr(as.character(CI), 2,4), sep=" ")
   colnames(out1) <- c("x", "y", "Joint Probability", "SE", lowstring, upstring)
 
-  return(cdf=out1)
+  return(cdf=na.omit(out1))
 
 }

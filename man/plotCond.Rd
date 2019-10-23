@@ -7,7 +7,7 @@
 plotCond(object, type)
 }
 \arguments{
-\item{object}{An object of \code{bivrecNP} class where the analysis has specified conditional = TRUE.}
+\item{object}{An object of \code{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.}
 
 \item{type}{Optional string to label the Type II gap time. Default is "Type II".}
 }

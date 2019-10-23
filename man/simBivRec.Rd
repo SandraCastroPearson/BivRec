@@ -13,7 +13,7 @@ simBivRec(nsize, beta1, beta2, tau_c, set)
 
 \item{beta2}{True coefficients for Type II gap times in the accelerated failure time model (AFT).}
 
-\item{tau_c}{Maximum support of censoring time. For example, it can take values as follows:
+\item{tau_c}{Maximum support of censoring time. Default is 63. For example, it can take values as follows:
 \itemize{
 \item tau_c=63: corresponds to a 15\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2018).
 \item tau_c=30: corresponds to a 30\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2018).
@@ -36,6 +36,6 @@ head(sim_data)
 
 }
 \references{
-Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
+Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008. Default is 1.1.
 \url{https://doi.org/10.1002/sim.7563}
 }

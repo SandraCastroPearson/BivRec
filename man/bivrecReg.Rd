@@ -7,7 +7,7 @@
 bivrecReg(formula, data, method)
 }
 \arguments{
-\item{formula}{A formula with a \code{bivrecSurv} object as response.}
+\item{formula}{A formula with a \code{bivrecSurv} object on the left of a ’∼’ operator as response, and the covariate(s) on the right.}
 
 \item{data}{A data frame that includes the vectors needed for the \code{bivrecSurv} response and the covariates in the formula.}
 

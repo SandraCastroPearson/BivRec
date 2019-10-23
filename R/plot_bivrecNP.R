@@ -107,9 +107,8 @@ plotMarg <- function(object, type) {
 
 plotCond <- function(object, type) {
   x=object
-  cond <-x$conditional_cdf$conditional
+  cond <- x$conditional_cdf$conditional
   if (missing(type)) {type = "Type II"}
-
 
   plot(cond$Time, cond[,5], type="l", lty = 2, xlab = type,
        ylab = "Conditional Probability", xlim=c(0, round(max(x$conditional_cdf$ygrid), digits=1)),

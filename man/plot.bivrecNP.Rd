@@ -16,5 +16,5 @@
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots all the estimated functions (joint cdf, marginal survival and/or conditional cdf) from a \code{bivrecNP} object in one step.
+This function plots all the estimated functions (joint cdf, marginal survival and conditional cdf if \verb{conditional=TRUE} during analysis) from a \code{bivrecNP} object in one step.
 }

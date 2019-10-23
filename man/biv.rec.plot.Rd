@@ -7,12 +7,12 @@
 biv.rec.plot(formula, data)
 }
 \arguments{
-\item{formula}{Formula of the form \strong{ID + episode ~ xij + yij}.
+\item{formula}{Formula of the form \verb{id + episode ~ xij + yij}.
 \itemize{
-  \item ID: A vector of subjects' unique identifier which can be numeric or character.
-  \item episode: A vector indicating the episode of the bivariate alternating gap time pairs.
-  \item xij: A vector with the lengths of the Type I gap times.
-  \item yij: A vector with the lengths of the Type II gap times.
+  \item \verb{id}: A vector of subjects' unique identifier which can be numeric or character.
+  \item \verb{episode}: A vector indicating the episode of the bivariate alternating gap time pairs.
+  \item \verb{xij}: A vector with the lengths of the Type I gap times.
+  \item \verb{yij}: A vector with the lengths of the Type II gap times.
 }}
 
 \item{data}{A data frame that contains all the vectors listed in the formula}

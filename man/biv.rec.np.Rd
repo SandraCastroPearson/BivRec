@@ -8,7 +8,7 @@ biv.rec.np(formula, data, CI, ai, u1, u2, conditional, given.interval)
 }
 \arguments{
 \item{formula}{A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-The six variables on the left must have the same length and be given as \verb{ID + episode +  xij + yij + d1 + d2 ~ 1}, where
+The six variables on the left must have the same length and be given as \verb{id + episode +  xij + yij + d1 + d2 ~ 1}, where:
 \itemize{
  \item \verb{id}: Vector of subject's unique identifier (i).
  \item \verb{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
@@ -22,23 +22,29 @@ The six variables on the left must have the same length and be given as \verb{ID
 
 \item{CI}{The level for confidence intervals the joint cdf, marginal survival and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.}
 
-\item{ai}{A real non-negative function of censoring time. See details.}
+\item{ai}{See details.}
 
-\item{u1}{A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.}
+\item{u1}{A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.}
 
-\item{u2}{A vector or single number to be used for estimation of joint cdf \eqn{P(X0 \le u1, Y0 \le u2)} in the non-parametric method.}
+\item{u2}{A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.}
 
-\item{conditional}{A logical value. If TRUE, this function will calculate the conditional cdf for the type II gap time given an interval of the type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.}
+\item{conditional}{A logical value. If TRUE, this function will calculate the conditional cdf for the Type II gap time given an interval of the Type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.}
 
-\item{given.interval}{A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the type I gap time to use for estimation of the cdf of the type II gap time given this interval.
-If given.interval = c(v1, v2), the function calculates \eqn{P(Y0 \le y | v1 \le X0 \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
-Valid values for these times are given in the "Time" column of the marginal survival data frame that results from biv.rec.np().}
+\item{given.interval}{A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the Type I gap time to use for the estimation of the cdf of the Type II gap time given this interval.
+If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.}
 }
 \value{
 See \code{bivrecNP}
 }
 \description{
 Deprecated function from previous version. Use \code{bivrecNP}.
+}
+\details{
+\strong{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
+\itemize{
+\item 1: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+\item 2: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
+}
 }
 \references{
 Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.

@@ -37,7 +37,7 @@ A bivrecNP object that contains:
 }
 }
 \description{
-This function allows users to estimate the joint cumulative distribution function (cdf) for the two types of gap times(xij, yij), the marginal survival function for the Type I gap times (xij), and the conditional cdf for the Type II gap times (yij) given the Type I gap times (xij). See details for the estimation methods provided.
+This function allows users to estimate the joint cumulative distribution function (cdf) for the two types of gap times (xij, yij), the marginal survival function for the Type I gap times (xij), and the conditional cdf for the Type II gap times (yij) given the Type I gap times (xij). See details for the estimation methods provided.
 }
 \details{
 \strong{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:

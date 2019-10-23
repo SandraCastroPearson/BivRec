@@ -9,7 +9,7 @@
 #' @importFrom stats model.matrix
 #' @importFrom dplyr filter
 #'
-#' @param formula A formula with a \code{bivrecSurv} object as response.
+#' @param formula A formula with a \code{bivrecSurv} object on the left of a ’∼’ operator as response, and the covariate(s) on the right.
 #' @param data A data frame that includes the vectors needed for the \code{bivrecSurv} response and the covariates in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
@@ -48,8 +48,8 @@
 #' @examples
 #' library(BivRec)
 #'# Simulate bivariate alternating recurrent event data
-
-#' bivrec_data <- simBivRec(nsize=5, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+#' set.seed(1234)
+#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 #'                tau_c=63, set=1.1)
 #' # Apply Lee, Huang, Xu, Luo (2018) method using two covariates
 #' lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
@@ -76,25 +76,49 @@ bivrecReg <- function(formula, data, method) {
   #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
-  if (missing(data)) {stop("data argument missing")}
+  if (missing(data)) {stop("Data argument missing.")}
 
-  variables = all.vars(formula)
+  variables <- all.vars(formula)
   ref_data <- data
-  data = na.omit(data[ , colnames(data) %in% variables])
+  data <- na.omit(data[ , colnames(data) %in% variables])
+  data <- data[order(eval(parse(text = paste("data$", variables[1], sep="")))),]
+  iden1 <- eval(parse(text = paste("ref_data$", variables[1], sep="")))
+  iden2 <- eval(parse(text = paste("data$", variables[1], sep="")))
+  num_missing = length(unique(iden1)) - length(unique(iden2))
+
+  if (num_missing > 0) {
+    msg <- paste("Warning: Missing values. ", num_missing, " subjects removed.", sep="")
+    print(msg)
+  }
+
+  d2check <- unique(eval(parse(text = paste("data$", variables[6], sep=""))))
+  if (length(d2check)==1 & d2check==0) {
+    stop("All episodes provided are censored. Data not suitable for bivrecReg.")}
 
   resp <- eval(formula[[2]], data)
-  if (inherits(resp, "bivrecSurv")==FALSE) stop("Response must be a bivrecSurv object")
+  if (inherits(resp, "bivrecSurv")==FALSE) stop("Response must be a bivrecSurv object.")
   formula[[2]] <- NULL
 
   #Check if there are any covariates
-  if (ncol(model.matrix(formula, data)) == 1) {stop("This is a non-parametric analysis use non-parametric functions")}
+  if (ncol(model.matrix(formula, data)) == 1) {stop("No covariates in formula. This is a nonparametric analysis use bivrecNP.")}
 
   #Lee et all Method
   if (method == "Lee.et.al") {
+    cov_names <- all.vars(formula[[2]])
     predictors <- data.frame(id = resp$data4Creg$id,
                              model.matrix(formula, data)[,-1])
-    colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
-    cov_names <- colnames(predictors)[-1]
+    colnames(predictors) <-  c("id", cov_names)
+
+    for (i in unique(predictors$id)) {
+      pred_sub <- predictors[which(predictors$id == i),]
+      for (j in 2:ncol(predictors)) {
+        unik <- unique(pred_sub[,j])
+        if (length(unik) > 1) {
+          stop("Time-varying covariates not allowed.")
+        }
+      }
+    }
+
     amat = dplyr::filter(predictors, !(duplicated(predictors$id)))
     amat = as.matrix(amat)[,-1]
 
@@ -112,8 +136,6 @@ bivrecReg <- function(formula, data, method) {
                       leefit = leeall_multivariate(response=resp$data4Lreg, amat, cov_names, SE=TRUE),
                       formula = formula_ref, method="Lee.et.al",
                       data = list(response=resp$data4Lreg, predictors = amat, original = ref_data))}
-
-
   }
 
   ### Chang Method

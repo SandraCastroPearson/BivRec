@@ -71,20 +71,20 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 
   x <- response
 
-  if (!inherits(x, "bivrecSurv")) stop("Response must be a bivrecSurv class")
+  if (!inherits(x, "bivrecSurv")) stop("Response must be a bivrecSurv object.")
   if (missing(ai)) {ai <- 1}
   if (missing(conditional)) {conditional <- FALSE}
   if (missing(level)) {CI <- 0.95} else {CI = level}
 
-  if (CI > 0.99) {stop("Error: level is higher than 0.99")} else {
-    if (CI<0.5) {stop("Error: level is less than 0.5")}
+  if (CI > 0.99) {stop("Level is higher than 0.99")} else {
+    if (CI<0.5) {stop("Level is less than 0.5")}
   }
 
   xij <- x$data4Creg$xij
   yij <- x$data4Creg$yij
 
-  if (missing(u1)) {u1 <- round(seq(quantile(xij, probs = 0.4), max(xij), length.out=5))}
-  if (missing(u2)) {u2 <- round(seq(quantile(yij, probs = 0.4), max(yij), length.out=4))}
+  if (missing(u1)) {u1 <- round(seq(quantile(xij, probs = 0.4), quantile(xij, probs = 0.8), length.out=5))}
+  if (missing(u2)) {u2 <- round(seq(quantile(yij, probs = 0.4), quantile(yij, probs = 0.8), length.out=4))}
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
@@ -114,7 +114,7 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
   } else {
 
     if (missing(given.interval)) {
-
+      print("Error: Missing given.interval while conditional=TRUE.")
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
 
     } else {

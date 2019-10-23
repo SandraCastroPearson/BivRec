@@ -47,6 +47,6 @@ nonparam_marginal <- function(fit_data, CI) {
   upstring <- paste("Upper", substr(as.character(CI), 2,4), sep=" ")
   colnames(surv) <- c("Time", "Marginal Survival", "SE", lowstring, upstring)
 
-  return(marg_survival = na.omit(surv))
+  return(marg_survival = surv)
 
 }

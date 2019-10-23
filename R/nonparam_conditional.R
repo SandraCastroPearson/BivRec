@@ -168,6 +168,6 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
   # cond$ygrid=y.grid
   # cond$data=data
   # cond$cond.prob
-  return(conditional=na.omit(cond))
+  return(list(conditional=cond, ygrid=y.grid))
   #return(list(conditional=cond,xgrid=x.grid,ygrid=y.grid,data=data,condprob=cond.prob,yij=yij))
 }

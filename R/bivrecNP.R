@@ -127,7 +127,7 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
                            conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij, new_data=new_data)
 
-      final_result$given.interval <-given.interval
+      final_result$given.interval <- given.interval
     }
   }
 

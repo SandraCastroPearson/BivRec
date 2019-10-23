@@ -19,7 +19,7 @@ plotJoint <- function(object, type) {
   if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
   if (missing(type)) {type = c("Type I", "Type II")}
 
-  forplot <- x$joint_cdf
+  forplot <- na.omit(x$joint_cdf)
 
   #####OLD MAY RE-USE LATTER: Wald CI and plot
   # rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
@@ -67,7 +67,7 @@ plotMarg <- function(object, type) {
   if (missing(type)) {type = "Type I"}
 
   xij <- x$xij
-  forplot <- x$marginal_survival
+  forplot <- na.omit(x$marginal_survival)
 
   #formula <- bivrec.nonparam.result$formula
 
@@ -107,7 +107,9 @@ plotMarg <- function(object, type) {
 
 plotCond <- function(object, type) {
   x=object
-  cond <- x$conditional_cdf$conditional
+
+  cond <- na.omit(x$conditional_cdf$conditional)
+
   if (missing(type)) {type = "Type II"}
 
   plot(cond$Time, cond[,5], type="l", lty = 2, xlab = type,

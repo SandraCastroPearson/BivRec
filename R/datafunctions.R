@@ -99,7 +99,6 @@ np.dat <- function(dat, ai) {
     n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
     umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
     n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
-
   } else {
     event <- dat$d1
     ugap <- sort(unique(gap))   # sorted X_0 times support points for sum are all X_0 points

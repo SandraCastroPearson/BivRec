@@ -151,6 +151,8 @@ plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
 # Apply Lee, Huang, Xu, Luo (2018) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                     data= sim_data, "Lee.et.al")
+#> Warning in if (length(d2check) == 1 & d2check == 0) {: the condition has
+#> length > 1 and only the first element will be used
 #> [1] "Fitting model with covariates: a1, a2"
 #> [1] "Estimating standard errors"
 
@@ -164,7 +166,7 @@ summary(lee_fit)
 #> 150
 #> 
 #> Coefficients:
-#>         Estimates     SE       z   Pr(>|z|)    
+#>         Estimates     SE        z  Pr(>|z|)    
 #> xij a1   0.57444  0.13068  4.3956    1e-05 ***
 #> xij a2   0.51281  0.27075  1.8940  0.02911 *  
 #> yij a1   0.28883  0.19854  1.4548  0.07286 .  

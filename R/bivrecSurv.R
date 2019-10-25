@@ -152,8 +152,7 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
   if (length(d2check)>1) {
     result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
   } else {
-      print("Warning: Data not cleaned. All episodes provided are censored (all d2=0).")
-      print("The bivrecSurv object will not be suitable for bivrecReg.")
+      stop("Data not cleaned. All episodes provided are censored (all d2=0).")
     }
 
   result$data4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)

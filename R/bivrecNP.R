@@ -18,10 +18,10 @@
 #' If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #'
 #' @details
-#' \strong{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
+#' \code{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
 #' \itemize{
-#' \item 1: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
-#' \item 2: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
+#' \item \code{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+#' \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 #' }
 #'
 #' Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
@@ -95,13 +95,15 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
     new_data = x$dat4np1
     forcdf <- new_data$forcdf
     formarg <- new_data$formarg
+  } else {
+    if (ai==2) {
+      new_data = x$dat4np2
+      forcdf <- new_data$forcdf
+      formarg <- new_data$formarg
+      } else {stop("ai must equal either 1 or 2.")}
     }
 
-  if (ai==2) {
-    new_data = x$dat4np2
-    forcdf <- new_data$forcdf
-    formarg <- new_data$formarg
-  }
+
 
   cdf_res <- nonparam_cdf(forcdf, u, ai, CI)
   marg_res <- nonparam_marginal(formarg, CI)

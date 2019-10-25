@@ -14,19 +14,12 @@ np_dat <- function(dat, ai) {
   ifelse (ai == 1, weight <- rep(1, n.uid), weight <- dat$ci[which(dat$epi == 1)]) #Set weights
 
   tot <- length(gap) # total number of observations
-  if (length(unique(event))>1) {
-    ugap <- sort(unique(gap[event == 1]))   # sorted unique uncensored X_0 gap times (support points for sum)
-    n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
-    umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
-    n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
 
-  } else {
-    event <- dat$d1
-    ugap <- sort(unique(gap))   # sorted X_0 times support points for sum are all X_0 points
-    n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
-    umark1 <- sort(unique(markvar1))   # sorted V_0 times (support points for marginal)
-    n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
-  }
+  ugap <- sort(unique(gap[event == 1]))   # sorted unique uncensored X_0 gap times (support points for sum)
+  n.ugap <- length(ugap)   # number of unique X_0 gap times (or support points for sum)
+  umark1 <- sort(unique(markvar1[event == 1]))   # sorted unique uncensored V_0 times (support points for marginal)
+  n.umark1 <- length(umark1) # number of unique V_0 gap times (or support points for marginal)
+
 
   # Space holders
   r <- sest <- Fest <- rep(0, n.ugap)

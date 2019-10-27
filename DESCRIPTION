@@ -21,3 +21,5 @@ RoxygenNote: 6.1.1
 LinkingTo: Rcpp
 NeedsCompilation: yes
 LazyLoad: yes
+Suggests: 
+    testthat

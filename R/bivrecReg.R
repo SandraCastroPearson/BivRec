@@ -94,7 +94,8 @@ bivrecReg <- function(formula, data, method) {
   d2check <- unique(eval(parse(text = paste("data$", variables[6], sep=""))))
   if (length(d2check)==1) {
     if (d2check==0) {
-    stop("All episodes provided are censored. Data not suitable for bivrecReg.")}
+      stop("Data not cleaned. All episodes provided are censored (all d2=0).")
+    }
   }
 
   resp <- eval(formula[[2]], data)

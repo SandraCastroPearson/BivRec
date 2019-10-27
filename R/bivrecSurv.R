@@ -147,14 +147,16 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
   result <- list()
   result$id_ref = id_ref
   result$error_ids <- error_subjects
-  d2check <- unique(d2)
+  d2check <- unique(Ycind)
 
-  if (length(d2check)>1) {
-    result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
-  } else {
+  if (length(d2check)==1) {
+    if (d2check==0) {
       stop("Data not cleaned. All episodes provided are censored (all d2=0).")
     }
+  }
 
+
+  result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
   result$data4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)
   #####ADD data for cdf and marginal of NP model
   df4np <- df4mdat

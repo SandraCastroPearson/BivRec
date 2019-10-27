@@ -239,8 +239,7 @@ chang_multivariate <- function(new_data, cov_names, SE) {
   chang <- RE.uest(init = beta, dat=new_data)
 
   if (chang$conv!=0) {
-    print("Error: Max iterations reached. Did not converge.")
-    stop()
+    stop("Max iterations reached. Did not converge.")
   }
 
   if (is.null(SE)==TRUE) {

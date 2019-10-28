@@ -28,10 +28,10 @@
 #' @param CI The level for confidence intervals the joint cdf, marginal survival and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.
 #'
 #' @details
-#' \strong{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
+#' \verb{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
 #' \itemize{
-#' \item 1: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
-#' \item 2: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
+#' \item \verb{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+#' \item \verb{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 #' }
 #'
 #' @return See \code{bivrecNP}

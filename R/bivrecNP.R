@@ -8,7 +8,7 @@
 #' @importFrom stats quantile
 #' @importFrom stats model.matrix
 #'
-#' @param response A response object of class \code{\link{bivrecSurv}}.
+#' @param response A response object of class \code{bivrecSurv}.
 #' @param level The confidence level for confidence intervals for joint cdf, marginal survival probability and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.
 #' @param ai See details.
 #' @param u1 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.

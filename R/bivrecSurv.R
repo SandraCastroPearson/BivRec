@@ -25,7 +25,7 @@
 #'  \item No missing values. If a subject has missing values in any variables, the whole subject's data will not be used.
 #' }
 #'
-#' @return A bivrecSurv object ready to be used as the response for analysis using \code{\link{bivrecReg}} or \code{\link{bivrecNP}}.
+#' @return A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
 #'
 #' @rdname BivRec
 #' @export
@@ -88,7 +88,7 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
     last_cx <- temp_by_subject$d1[sub_n]
     last_cy <- temp_by_subject$d2[sub_n]
     if (last_cy!=0) {err_yind <- c(err_yind, sub_id)}
-    if (last_cx==0) {if (last_cy==1) {err_yind <- c(err_yind, sub_id)}}
+    if (last_cx==0) {if (last_cy==1) {err_yind <- c(err_yind, sub_id)}
 
     if (sub_n > 1) {
       other_cx <- temp_by_subject$d1[-sub_n]

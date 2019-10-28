@@ -4,7 +4,7 @@
 #'
 #' @description This function extracts the coefficients of a semiparametric regression fit.
 #'
-#' @param object A \code{\link{bivrecReg}} object.
+#' @param object A \code{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
 #' @importFrom stats printCoefmat
@@ -37,7 +37,7 @@ coef.bivrecReg <- function(object, ...) {
 #'
 #' @description This function extracts the variance-covariance matrix from the fit of a semiparametric regression analysis.
 #'
-#' @param object A \code{\link{bivrecReg}} object.
+#' @param object A \code{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
 #' @export
@@ -62,7 +62,7 @@ vcov.bivrecReg <- function(object, ...) {
 #'
 #' @description This function obtains the confidence interval for the coefficients of a semiparametric regression fit.
 #'
-#' @param object A \code{\link{bivrecReg}} object.
+#' @param object A \code{bivrecReg} object.
 #' @param parm The parameters for which to run confidence interval. Default gets CI for all the covariates in the model.
 #' @param level Significance level. Default is 0.95.
 #' @param ... Additional parameters if needed.

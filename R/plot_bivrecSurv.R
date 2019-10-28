@@ -2,7 +2,7 @@
 #' Plot Bivariate Alternating Recurrent Series
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times from a \code{\link{bivrecSurv}} object.
+#' This function plots bivariate recurrent event gap times from a \code{bivrecSurv} object.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -10,7 +10,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x An \code{\link{bivrecSurv}} object.
+#' @param x An \code{bivrecSurv} object.
 #' @param y Either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".

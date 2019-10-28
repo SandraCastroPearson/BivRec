@@ -2,7 +2,7 @@
 #' Plot Bivariate Alternating Recurrent Series by Categorical Covariates
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{\link{bivrecSurv}} object as the response variable.
+#' This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{bivrecSurv} object as the response variable.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -10,7 +10,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x A formula with a \code{\link{bivrecSurv}} object on the left of a '∼' operator as response, and the covariate(s) of interest on the right.
+#' @param x A formula with a \code{bivrecSurv} object on the left of a '∼' operator as response, and the covariate(s) of interest on the right.
 #' @param y Either empty or NULL.
 #' @param data Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".

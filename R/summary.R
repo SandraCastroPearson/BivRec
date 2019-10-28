@@ -1,7 +1,7 @@
 #' Summary of a Semiparametric Regression Fit
 #'
 #' @description This function provides a summary for the fit from semiparametric regression analysis.
-#' @param object A \code{\link{bivrecReg}} object.
+#' @param object A \code{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
 #' @references

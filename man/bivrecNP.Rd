@@ -7,7 +7,7 @@
 bivrecNP(response, ai, u1, u2, level, conditional, given.interval)
 }
 \arguments{
-\item{response}{A response object of the \code{\link{bivrecSurv}} class.}
+\item{response}{A response object of class \code{\link{bivrecSurv}}.}
 
 \item{ai}{See details.}
 
@@ -42,7 +42,7 @@ This function allows users to estimate the joint cumulative distribution functio
 \details{
 \code{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
 \itemize{
-\item \code{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+\item \code{ai=1} (default): the weights are simply 1 for all subjects, \eqn{a(Ci) = 1}.
 \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 }
 

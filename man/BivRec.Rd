@@ -20,7 +20,7 @@ bivrecSurv(id, episode, xij, yij, d1, d2)
 \item{d2}{Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times. Note that in the last episode (or pair) of gap times, yij is always censored, i.e., d2 = 0.}
 }
 \value{
-A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
+A bivrecSurv object ready to be used as the response for analysis using \code{\link{bivrecReg}} or \code{\link{bivrecNP}}.
 }
 \description{
 This function creates a bivariate recurrent survival object to be used as a response variable in a model formula.

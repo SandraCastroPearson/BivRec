@@ -134,7 +134,7 @@ plotCond <- function(object, type) {
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x An object of class \code{\link{bivrecNP}}.
+#' @param x A \code{\link{bivrecNP}} object.
 #' @param y  Either empty or NULL.
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @param ... Additional arguments to be passed to graphical methods if needed.

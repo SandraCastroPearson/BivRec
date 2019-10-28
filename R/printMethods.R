@@ -2,7 +2,7 @@
 #' Print a Semiparametric Regression Fit
 #'
 #' @description This function prints an object of class \code{\link{bivrecReg}}.
-#' @param x An object of class \code{bivrecReg}.
+#' @param x An object of class \code{\link{bivrecReg}}.
 #' @param ... Additional parameters if needed.
 #'
 #' @importFrom stats printCoefmat

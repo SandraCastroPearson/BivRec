@@ -7,7 +7,7 @@
 \method{plot}{bivrecNP}(x, y = NULL, type = NULL, ...)
 }
 \arguments{
-\item{x}{An object of class \code{\link{bivrecNP}}.}
+\item{x}{A \code{\link{bivrecNP}} object.}
 
 \item{y}{Either empty or NULL.}
 

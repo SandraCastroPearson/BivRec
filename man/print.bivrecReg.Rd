@@ -7,7 +7,7 @@
 \method{print}{bivrecReg}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{bivrecReg}.}
+\item{x}{An object of class \code{\link{bivrecReg}}.}
 
 \item{...}{Additional parameters if needed.}
 }

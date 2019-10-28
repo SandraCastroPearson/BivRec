@@ -34,10 +34,10 @@ The six variables on the left must have the same length and be given as \code{id
 If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.}
 }
 \value{
-See \code{bivrecNP}
+See \code{\link{bivrecNP}}.
 }
 \description{
-Deprecated function from the previous version. Use \code{bivrecNP}.
+Deprecated function from the previous version. Use \code{\link{bivrecNP}}.
 }
 \details{
 \code{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:

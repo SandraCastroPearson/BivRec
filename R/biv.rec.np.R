@@ -1,7 +1,7 @@
 #' Deprecated: Use \code{\link{bivrecNP}}
 #'
 #' @description
-#' Deprecated function from the previous version. Use \code{bivrecNP}.
+#' Deprecated function from the previous version. Use \code{\link{bivrecNP}}.
 #'
 #' @importFrom stats as.formula
 #' @importFrom stats na.omit
@@ -34,7 +34,7 @@
 #' \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 #' }
 #'
-#' @return See \code{bivrecNP}
+#' @return See \code{\link{bivrecNP}}.
 #'
 #' @references
 #' Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.

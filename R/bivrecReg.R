@@ -30,7 +30,7 @@
 #' This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients and user may get the message, "Error: Max Iterations reached. Did not converge.".
 #' }
 #'
-#' Related methods: \code{\link{coef.bivrecReg}}, \code{\link{confint.bivrecReg}}, \code{plot.bivrecReg}, \code{\link{print.bivrecReg}}, \code{\link{summary.bivrecReg}}, \code{\link{vcov.bivrecReg}}.
+#' Related methods: \code{\link{coef.bivrecReg}}, \code{\link{confint.bivrecReg}}, \code{\link{plot.bivrecReg}}, \code{\link{print.bivrecReg}}, \code{\link{summary.bivrecReg}}, \code{\link{vcov.bivrecReg}}.
 #' @references
 #' \enumerate{
 #' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.

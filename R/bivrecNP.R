@@ -24,7 +24,7 @@
 #' \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 #' }
 #'
-#' Related methods: \code{\link{plot}}, \code{\link{head}}, \code{\link{print}}.
+#' Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
 #'
 #' @return A bivrecNP object that contains:
 #' \itemize{

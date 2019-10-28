@@ -46,7 +46,7 @@ This function allows users to estimate the joint cumulative distribution functio
 \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 }
 
-Related methods: \code{\link{plot}}, \code{\link{head}}, \code{\link{print}}.
+Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
 }
 \examples{
 library(BivRec)

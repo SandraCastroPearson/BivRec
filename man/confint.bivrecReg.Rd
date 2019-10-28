@@ -2,12 +2,12 @@
 % Please edit documentation in R/coef_vcov_confint.R
 \name{confint.bivrecReg}
 \alias{confint.bivrecReg}
-\title{Obtain the Confidence Interval for the Coefficients of a Semiparametric Regression Fit}
+\title{Confidence Interval for the Coefficients of a Semiparametric Regression Fit}
 \usage{
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }
 \arguments{
-\item{object}{A bivrecReg object.}
+\item{object}{A \code{\link{bivrecReg}} object.}
 
 \item{parm}{The parameters for which to run confidence interval. Default gets CI for all the covariates in the model.}
 
@@ -16,5 +16,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function obtains the confidence interval for the coefficients of a semiparametric regression fit object.
+This function obtains the confidence interval for the coefficients of a semiparametric regression fit.
 }

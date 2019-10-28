@@ -2,7 +2,7 @@
 % Please edit documentation in R/printMethods.R
 \name{print.bivrecReg}
 \alias{print.bivrecReg}
-\title{Print an Object of Class \code{bivrecReg}}
+\title{Print a Semiparametric Regression Fit}
 \usage{
 \method{print}{bivrecReg}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints an object of class \code{bivrecReg}.
+This function prints an object of class \code{\link{bivrecReg}}.
 }

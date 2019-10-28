@@ -7,10 +7,10 @@
 \method{head}{bivrecNP}(x, ...)
 }
 \arguments{
-\item{x}{A bivrecNP object}
+\item{x}{A \code{\link{bivrecNP}} object}
 
 \item{...}{additional parameters if needed}
 }
 \description{
-This function prints the top elements of the joint cdf, marginal survival, and conditional cdf from a \code{bivrecNP} object.
+This function prints the top elements of the joint cdf, marginal survival, and conditional cdf from a \code{\link{bivrecNP}} object.
 }

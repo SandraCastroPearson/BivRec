@@ -8,7 +8,7 @@
 #' @importFrom stats quantile
 #' @importFrom stats model.matrix
 #'
-#' @param response A response object of the \code{bivrecSurv} class.
+#' @param response A response object of the \code{\link{bivrecSurv}} class.
 #' @param level The confidence level for confidence intervals for joint cdf, marginal survival probability and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.
 #' @param ai See details.
 #' @param u1 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.
@@ -18,25 +18,25 @@
 #' If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #'
 #' @details
-#' \verb{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
+#' \code{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
 #' \itemize{
-#' \item \verb{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
-#' \item \verb{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
+#' \item \code{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+#' \item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 #' }
 #'
-#' Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
+#' Related methods: \code{\link{plot.bivrecNP}}, \code{\link{head.bivrecNP}}, \code{\link{print.bivrecNP}}.
 #'
 #' @return A bivrecNP object that contains:
 #' \itemize{
-#'   \item \verb{joint_cdf}
-#'   \item \verb{marginal_survival}
-#'   \item \verb{conditional_cdf} (when conditional = TRUE)
-#'   \item \verb{formula}
-#'   \item \verb{ai}
-#'   \item \verb{level}
-#'   \item \verb{given.interval} (when conditional = TRUE)
-#'   \item \verb{xij, yij}
-#'   \item \verb{new_data}
+#'   \item \code{joint_cdf}
+#'   \item \code{marginal_survival}
+#'   \item \code{conditional_cdf} (when conditional = TRUE)
+#'   \item \code{formula}
+#'   \item \code{ai}
+#'   \item \code{level}
+#'   \item \code{given.interval} (when conditional = TRUE)
+#'   \item \code{xij, yij}
+#'   \item \code{new_data}
 #' }
 #'
 #' @references

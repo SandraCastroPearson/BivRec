@@ -2,15 +2,15 @@
 % Please edit documentation in R/printMethods.R
 \name{print.bivrecNP}
 \alias{print.bivrecNP}
-\title{Print an Object of Class \code{bivrecNP}}
+\title{Print the Joint CDF, Marginal Survival, and Conditional CDF after Nonparametric Analysis}
 \usage{
 \method{print}{bivrecNP}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{bivrecNP}.}
+\item{x}{An object of class \code{\link{bivrecNP}}.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints an object of class \code{bivrecNP}.
+This function prints a \code{\link{bivrecNP}} object.
 }

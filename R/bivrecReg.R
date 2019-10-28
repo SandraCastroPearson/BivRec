@@ -9,28 +9,28 @@
 #' @importFrom stats model.matrix
 #' @importFrom dplyr filter
 #'
-#' @param formula A formula with a \code{bivrecSurv} object on the left of a ’∼’ operator as response, and the covariate(s) on the right.
-#' @param data A data frame that includes the vectors needed for the \code{bivrecSurv} response and the covariates in the formula.
+#' @param formula A formula with a \code{\link{bivrecSurv}} object on the left of a '∼' operator as response, and the covariate(s) on the right.
+#' @param data A data frame that includes the vectors needed for the \code{\link{bivrecSurv}} response and the covariates in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'
 #' @return A bivrecReg object that contains:
 #' \itemize{
-#'   \item \verb{call}
-#'   \item \verb{lee_fit} or \verb{chang_fit}
-#'   \item \verb{formula}
-#'   \item \verb{data}
+#'   \item \code{call}
+#'   \item \code{lee_fit} or \code{chang_fit}
+#'   \item \code{formula}
+#'   \item \code{data}
 #' }
 #'
 #' @details
 #' Two different estimation methods are available:
 #' \itemize{
-#' \item  method = "Lee.et.al" (default) is a U-statistics-based smooth estimating function approach. See Lee, Huang, Xu, Luo (2018) for further details.
-#' \item  method = "Chang" is a rank-based estimating function approach.  See Chang (2004) for further details.
+#' \item  \code{method = "Lee.et.al"} (default) is a U-statistics-based smooth estimating function approach. See Lee, Huang, Xu, Luo (2018) for further details.
+#' \item  \code{method = "Chang"} is a rank-based estimating function approach.  See Chang (2004) for further details.
 #' Note that following the Chang method, the variances of the estimated regression coefficients are approximated using the resampling techniques developed by Parzen, Wei, Ying (1994).
 #' This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients and user may get the message, "Error: Max Iterations reached. Did not converge.".
 #' }
 #'
-#' Related methods: \code{coef.bivrecReg}, \code{confint.bivrecReg}, \code{plot.bivrecReg}, \code{print.bivrecReg}, \code{summary.bivrecReg}, \code{vcov.bivrecReg}.
+#' Related methods: \code{\link{coef.bivrecReg}}, \code{\link{confint.bivrecReg}}, \code{plot.bivrecReg}, \code{\link{print.bivrecReg}}, \code{\link{summary.bivrecReg}}, \code{\link{vcov.bivrecReg}}.
 #' @references
 #' \enumerate{
 #' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.

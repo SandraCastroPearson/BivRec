@@ -7,7 +7,7 @@
 bivrecNP(response, ai, u1, u2, level, conditional, given.interval)
 }
 \arguments{
-\item{response}{A response object of the \code{bivrecSurv} class.}
+\item{response}{A response object of the \code{\link{bivrecSurv}} class.}
 
 \item{ai}{See details.}
 
@@ -25,28 +25,28 @@ If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times 
 \value{
 A bivrecNP object that contains:
 \itemize{
-  \item \verb{joint_cdf}
-  \item \verb{marginal_survival}
-  \item \verb{conditional_cdf} (when conditional = TRUE)
-  \item \verb{formula}
-  \item \verb{ai}
-  \item \verb{level}
-  \item \verb{given.interval} (when conditional = TRUE)
-  \item \verb{xij, yij}
-  \item \verb{new_data}
+  \item \code{joint_cdf}
+  \item \code{marginal_survival}
+  \item \code{conditional_cdf} (when conditional = TRUE)
+  \item \code{formula}
+  \item \code{ai}
+  \item \code{level}
+  \item \code{given.interval} (when conditional = TRUE)
+  \item \code{xij, yij}
+  \item \code{new_data}
 }
 }
 \description{
 This function allows users to estimate the joint cumulative distribution function (cdf) for the two types of gap times (xij, yij), the marginal survival function for the Type I gap times (xij), and the conditional cdf for the Type II gap times (yij) given the Type I gap times (xij). See details for the estimation methods provided.
 }
 \details{
-\verb{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
+\code{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
 \itemize{
-\item \verb{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
-\item \verb{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
+\item \code{ai=1}: the weights are simply 1 for all subjects, \eqn{a(Ci) = 1} (default).
+\item \code{ai=2}: the weight for each subject is the subject's censoring time, \eqn{a(Ci) = Ci}.
 }
 
-Related methods: \code{plot.bivrecNP}, \code{head.bivrecNP}, \code{print.bivrecNP}.
+Related methods: \code{\link{plot.bivrecNP}}, \code{\link{head.bivrecNP}}, \code{\link{print.bivrecNP}}.
 }
 \examples{
 library(BivRec)

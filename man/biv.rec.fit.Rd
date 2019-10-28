@@ -2,20 +2,20 @@
 % Please edit documentation in R/biv.rec.fit.R
 \name{biv.rec.fit}
 \alias{biv.rec.fit}
-\title{Deprecated: Use \code{bivrecReg}}
+\title{Deprecated: Use \code{\link{bivrecReg}}}
 \usage{
 biv.rec.fit(formula, data, method, CI)
 }
 \arguments{
 \item{formula}{A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-The six variables on the left must have the same length and be given as \verb{ID + episode +  xij + yij + d1 + d2 ~ covariates}, where
+The six variables on the left must have the same length and be given as \code{ID + episode + xij + yij + d1 + d2 ~ covariates}, where
 \itemize{
- \item \verb{id}: Vector of subject's unique identifier (i).
- \item \verb{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
- \item \verb{xij}: Vector with the lengths of time spent in event of Type I for individual i in episode j.
- \item \verb{yij}: vector with the lengths of time spent in event of Type II for individual i in episode j.
- \item \verb{d1}: Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.
- \item \verb{d2}: Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.
+ \item \code{id}: Vector of subject's unique identifier (i).
+ \item \code{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
+ \item \code{xij}: Vector with the lengths of time spent in event of Type I for individual i in episode j.
+ \item \code{yij}: Vector with the lengths of time spent in event of Type II for individual i in episode j.
+ \item \code{d1}: Vector of censoring indicator corresponding to Type I gap times (xij): = 1 for uncensored, and = 0 for censored gap times.
+ \item \code{d2}: Vector of censoring indicator corresponding to Type II gap times (yij): = 1 for uncensored, and = 0 for censored gap times.
  \item covariates: the names of the covariates in the form covariate_1 + ... + covariate_p.
 }}
 
@@ -23,13 +23,13 @@ The six variables on the left must have the same length and be given as \verb{ID
 
 \item{method}{A string indicating which method to use to estimate effects of the covariates. See details.}
 
-\item{CI}{The level to be used for confidence intervals. Must be between 0.50 and 0.99, where 0.99 would give 99\% CI. The default is 0.95. CI=NULL gives point estimates without confidence intervals.}
+\item{CI}{The level to be used for confidence intervals. Must be between 0.50 and 0.99. The default is 0.95.}
 }
 \value{
-See \code{bivrecReg}.
+See \code{\link{bivrecReg}}
 }
 \description{
-Deprecated function from previous version. Use \code{bivrecReg}.
+Deprecated function from the previous version. Use \code{\link{bivrecReg}}.
 }
 \details{
 Two different estimation methods are available:

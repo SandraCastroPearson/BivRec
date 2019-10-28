@@ -7,10 +7,10 @@
 plotMarg(object, type)
 }
 \arguments{
-\item{object}{An object of \code{bivrecNP} class.}
+\item{object}{An object of \code{\link{bivrecNP}} class.}
 
 \item{type}{Optional string to label the Type I gap time. Default is "Type I".}
 }
 \description{
-This function plots the marginal survival for a \code{bivrecNP} object.
+This function plots the marginal survival for a \code{\link{bivrecNP}} object.
 }

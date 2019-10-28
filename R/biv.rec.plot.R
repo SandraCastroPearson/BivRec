@@ -1,15 +1,15 @@
-#' Deprecated: Use \code{plot.bivrecSurv}
+#' Deprecated: Use \code{\link{plot.bivrecSurv}}
 #'
 #' @description
-#' Deprecated function from previous version. Use \code{plot.bivrecSurv}.
+#' Deprecated function from the previous version. Use \code{\link{plot.bivrecSurv}}.
 
 #'
-#' @param formula Formula of the form \verb{id + episode ~ xij + yij}.
+#' @param formula Formula of the form \code{id + episode ~ xij + yij}.
 #' \itemize{
-#'   \item \verb{id}: A vector of subjects' unique identifier which can be numeric or character.
-#'   \item \verb{episode}: A vector indicating the episode of the bivariate alternating gap time pairs.
-#'   \item \verb{xij}: A vector with the lengths of the Type I gap times.
-#'   \item \verb{yij}: A vector with the lengths of the Type II gap times.
+#'   \item \code{id}: A vector of subjects' unique identifier which can be numeric or character.
+#'   \item \code{episode}: A vector indicating the episode of the bivariate alternating gap time pairs.
+#'   \item \code{xij}: A vector with the lengths of the Type I gap times.
+#'   \item \code{yij}: A vector with the lengths of the Type II gap times.
 #' }
 #' @param data A data frame that contains all the vectors listed in the formula
 #'

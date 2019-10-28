@@ -2,15 +2,15 @@
 % Please edit documentation in R/printMethods.R
 \name{print.summary.bivrecReg}
 \alias{print.summary.bivrecReg}
-\title{Print a \code{summary.bivrecReg} Object}
+\title{Print the Summary of a Semiparametric Regression Fit}
 \usage{
 \method{print}{summary.bivrecReg}(x, ...)
 }
 \arguments{
-\item{x}{A \code{summary.bivrecReg} object.}
+\item{x}{A \code{\link{summary.bivrecReg}} object.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints an object of class \code{summary.bivrecReg}.
+This function prints a \code{\link{summary.bivrecReg}} object.
 }

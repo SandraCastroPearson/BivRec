@@ -1,7 +1,7 @@
 #########################################################################
-#' Print an Object of Class \code{bivrecReg}
+#' Print a Semiparametric Regression Fit
 #'
-#' @description This function prints an object of class \code{bivrecReg}.
+#' @description This function prints an object of class \code{\link{bivrecReg}}.
 #' @param x An object of class \code{bivrecReg}.
 #' @param ... Additional parameters if needed.
 #'
@@ -34,10 +34,11 @@ print.bivrecReg <- function(x, ...) {
 }
 
 #########################################################################
-#' Print an Object of Class \code{bivrecNP}
+#' Print the Joint CDF, Marginal Survival, and Conditional CDF after Nonparametric Analysis
 #'
-#' @description This function prints an object of class \code{bivrecNP}.
-#' @param x An object of class \code{bivrecNP}.
+#' @description This function prints a \code{\link{bivrecNP}} object.
+#'
+#' @param x An object of class \code{\link{bivrecNP}}.
 #' @param ... Additional parameters if needed.
 #'
 #' @importFrom stats printCoefmat
@@ -71,10 +72,11 @@ print.bivrecNP <- function(x, ...) {
 }
 
 #########################################################################
-#' Print a \code{summary.bivrecReg} Object
+#' Print the Summary of a Semiparametric Regression Fit
 #'
-#' @description This function prints an object of class \code{summary.bivrecReg}.
-#' @param x A \code{summary.bivrecReg} object.
+#' @description This function prints a \code{\link{summary.bivrecReg}} object.
+#'
+#' @param x A \code{\link{summary.bivrecReg}} object.
 #' @param ... Additional parameters if needed.
 #'
 #' @importFrom stats printCoefmat

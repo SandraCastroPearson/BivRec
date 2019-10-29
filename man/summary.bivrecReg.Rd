@@ -7,7 +7,7 @@
 \method{summary}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A \code{\link{bivrecReg}} object.}
+\item{object}{A \code{bivrecReg} object.}
 
 \item{...}{Additional parameters if needed.}
 }

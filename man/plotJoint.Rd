@@ -7,10 +7,10 @@
 plotJoint(object, type)
 }
 \arguments{
-\item{object}{A \code{\link{bivrecNP}} object.}
+\item{object}{A \code{bivrecNP} object.}
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 }
 \description{
-This function plots the joint cdf for a \code{\link{bivrecNP}} object.
+This function plots the joint cdf for a \code{bivrecNP} object.
 }

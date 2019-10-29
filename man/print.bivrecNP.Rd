@@ -7,10 +7,10 @@
 \method{print}{bivrecNP}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{\link{bivrecNP}}.}
+\item{x}{An object of class \code{bivrecNP}.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints a \code{\link{bivrecNP}} object.
+This function prints a \code{bivrecNP} object.
 }

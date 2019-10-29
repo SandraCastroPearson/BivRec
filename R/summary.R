@@ -38,7 +38,9 @@ summary.bivrecReg <- function(object, ...){
   }
   colnames(coeffs) <- c("Estimates", "SE  ", "z ", "Pr(>|z|)")
   conf_lev = 1 - ((1-0.95)/2)
-  CIcalc <- t(apply(coeffs[,1:2], 1, function (x) c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
+  CIcalc <- t(apply(coeffs[,1:2], 1,
+                    function (x)
+                      c(x[1]+qnorm(1-conf_lev)*x[2], x[1]+qnorm(conf_lev)*x[2])))
 
   expcoeffs <- data.frame(exp(coeffs[,1]), exp(CIcalc))
   colnames(expcoeffs) <- c("exp(coeff)", "Lower .95", "Upper .95")
@@ -51,4 +53,3 @@ summary.bivrecReg <- function(object, ...){
 
   return(ans)
 }
-

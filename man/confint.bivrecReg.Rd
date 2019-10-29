@@ -7,7 +7,7 @@
 \method{confint}{bivrecReg}(object, parm, level, ...)
 }
 \arguments{
-\item{object}{A \code{\link{bivrecReg}} object.}
+\item{object}{A \code{bivrecReg} object.}
 
 \item{parm}{The parameters for which to run confidence interval. Default gets CI for all the covariates in the model.}
 

@@ -8,7 +8,7 @@
   ylab = NULL, ...)
 }
 \arguments{
-\item{x}{A formula with a \code{\link{bivrecSurv}} object on the left of a '∼' operator as response, and the covariate(s) of interest on the right.}
+\item{x}{A formula with a \code{bivrecSurv} object on the left of a '∼' operator as response, and the covariate(s) of interest on the right.}
 
 \item{y}{Either empty or NULL.}
 
@@ -23,7 +23,7 @@
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{\link{bivrecSurv}} object as the response variable.
+This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{bivrecSurv} object as the response variable.
 }
 \examples{
 # Simulate bivariate alternating recurrent event data

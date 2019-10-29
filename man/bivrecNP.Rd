@@ -7,7 +7,7 @@
 bivrecNP(response, ai, u1, u2, level, conditional, given.interval)
 }
 \arguments{
-\item{response}{A response object of class \code{\link{bivrecSurv}}.}
+\item{response}{A response object of class \code{bivrecSurv}.}
 
 \item{ai}{See details.}
 

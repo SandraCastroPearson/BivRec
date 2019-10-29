@@ -7,10 +7,10 @@
 \method{print}{summary.bivrecReg}(x, ...)
 }
 \arguments{
-\item{x}{A \code{\link{summary.bivrecReg}} object.}
+\item{x}{A \code{summary.bivrecReg} object.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints a \code{\link{summary.bivrecReg}} object.
+This function prints a \code{summary.bivrecReg} object.
 }

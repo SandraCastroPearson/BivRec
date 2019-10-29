@@ -56,17 +56,17 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
   #Check xij > 0 and yij >=0 both numeric vectors
   if (!is.numeric(xij)) stop("Data not cleaned. Time arguments (xij and yij) must be numeric.")
   if (!is.numeric(yij)) stop("Data not cleaned. Time arguments (xij and yij) must be numeric.")
-  if (any(xij <= 0)) stop("Data not cleaned. Time arguments for event type 1 (xij) must be positive.")
-  if (any(yij < 0)) stop("Data not cleaned. Time arguments for event type 2 (yij) must be non-negative")
+  if (any(xij <= 0)) stop("Data not cleaned. Time arguments for event Type I (xij) must be positive.")
+  if (any(yij < 0)) stop("Data not cleaned. Time arguments for event Type II (yij) must be non-negative")
 
   #Check censoring indicators are made of only 0 or 1 values
-  if (any(Xcind!=0 & Xcind!=1)) stop("Data not cleaned. Indicator vector for type 1 gap times (d1) must be made of 0 or 1 values only.")
-  if (any(Ycind!=0 & Ycind!=1)) stop("Data not cleaned. Indicator vector for type 2 gap times (d2) must be made of 0 or 1 values only.")
+  if (any(Xcind!=0 & Xcind!=1)) stop("Data not cleaned. Indicator vector for Type I gap times (d1) must be made of 0 or 1 values only.")
+  if (any(Ycind!=0 & Ycind!=1)) stop("Data not cleaned. Indicator vector for Type II gap times (d2) must be made of 0 or 1 values only.")
 
   #ensure id's are numeric
   if (!is.numeric(id)) {
     if (is.character(id)) {id = as.numeric(as.factor(id))} else {
-      if (is.factor(id)) {id = as.numeric((id))}else {
+      if (is.factor(id)) {id = as.numeric((id))} else {
         stop("Data not cleaned. The id vector must be numeric, character or factor.")}
     }
   }
@@ -125,6 +125,7 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
     print(msg)
     df4mdat <- inputdf[-which(inputdf$id %in% error_subjects), ]
   } else {df4mdat <- inputdf}
+  }
 
   #calculate censoring time
   ci=id2=NULL
@@ -154,7 +155,6 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
       stop("Data not cleaned. All episodes provided are censored (all d2=0).")
     }
   }
-
 
   result$data4Lreg <- mdat(dat=df4mdat) #data for Lee regression
   result$data4Creg <- df4mdat #data for Chang regression (this is also the df that is used in bivrecPlot)

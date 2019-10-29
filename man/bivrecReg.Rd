@@ -7,9 +7,9 @@
 bivrecReg(formula, data, method)
 }
 \arguments{
-\item{formula}{A formula with a \code{\link{bivrecSurv}} object on the left of a '∼' operator as response, and the covariate(s) on the right.}
+\item{formula}{A formula with a \code{bivrecSurv} object on the left of a '∼' operator as response, and the covariate(s) on the right.}
 
-\item{data}{A data frame that includes the vectors needed for the \code{\link{bivrecSurv}} response and the covariates in the formula.}
+\item{data}{A data frame that includes the vectors needed for the \code{bivrecSurv} response and the covariates in the formula.}
 
 \item{method}{A string indicating which method to use to estimate effects of the covariates. See details.}
 }
@@ -35,7 +35,7 @@ Note that following the Chang method, the variances of the estimated regression 
 This approximation requires extensive computing time for a relatively small sample size. In addition, using the Chang method does not guarantee convergence for the estimation of the coefficients and user may get the message, "Error: Max Iterations reached. Did not converge.".
 }
 
-Related methods: \code{coef.bivrecReg}, \code{confint.bivrecReg}, \code{\link{plot}}, \code{\link{print}}, \code{summary.bivrecReg}, \code{vcov.bivrecReg}.
+Related methods: \code{coef.bivrecReg}, \code{confint.bivrecReg}, \code{plot}, \code{print}, \code{summary.bivrecReg}, \code{vcov.bivrecReg}.
 }
 \examples{
 library(BivRec)

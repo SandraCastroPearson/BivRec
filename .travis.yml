@@ -4,9 +4,12 @@ language: r
 rvm:
  - 3.5.0
 sudo: false
+before_install:
+  - tlmgr install index
 warnings_are_errors: true
-notes_are_errors: true
 cache: packages
+repos:
+  CRAN: https://cloud.r-project.org
 
 
 

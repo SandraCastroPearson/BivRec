@@ -65,6 +65,3 @@ test_that("np check 3", {
                        ai=1, u1 = seq(2, 15, 1), u2 = seq(1, 10, 1), conditional = TRUE,
                        given.interval = c(0, 10), level = 0.90))
 })
-
-#analysis for only one d2=1 dataset
-#bivrec_data3$d2[1] <- 1

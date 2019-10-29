@@ -43,8 +43,8 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
   if (missing(yij)) stop("Missing gap times for Type II event (yij).")
   if (missing(id)) stop("Missing subject identifiers (id).")
   if (missing(episode)) stop("Missing episodes for each subject (episode).")
-  if (missing(d2)) stop("Missing censoring indicator for Type I event (d2).")
-  if (missing(d1)) stop("Missing censoring indicator for Type II event (d1).")
+  if (missing(d2)) stop("Missing censoring indicator for Type I event (d1).")
+  if (missing(d1)) stop("Missing censoring indicator for Type II event (d2).")
 
   Xcind <- d1
   Ycind <- d2

@@ -1,7 +1,7 @@
-#' Deprecated: Use \code{\link{simBivRec}}
+#' Deprecated: Use \code{simBivRec}
 #'
 #' @description
-#' Deprecated function from the previous version. Use \code{\link{simBivRec}}.
+#' Deprecated function from the previous version. Use \code{simBivRec}.
 #'
 #' @param nsize Sample size which refers to the number of subjects in the data set where each subject could have multiple episodes of events.
 #' @param beta1 True coefficients for Type I gap times in the accelerated failure time model (AFT).

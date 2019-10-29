@@ -2,7 +2,7 @@
 % Please edit documentation in R/biv.rec.sim.R
 \name{biv.rec.sim}
 \alias{biv.rec.sim}
-\title{Deprecated: Use \code{\link{simBivRec}}}
+\title{Deprecated: Use \code{simBivRec}}
 \usage{
 biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 }
@@ -25,7 +25,7 @@ biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 Data frame with the alternating recurrent event data and one continuous and one binary covariate.
 }
 \description{
-Deprecated function from the previous version. Use \code{\link{simBivRec}}.
+Deprecated function from the previous version. Use \code{simBivRec}.
 }
 \references{
 Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.

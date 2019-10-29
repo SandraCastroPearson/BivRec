@@ -7,10 +7,10 @@
 \method{print}{summary.bivrecReg}(x, ...)
 }
 \arguments{
-\item{x}{A \code{summary.bivrecReg} object.}
+\item{x}{A \verb{summary.bivrecReg} object.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints a \code{summary.bivrecReg} object.
+This function prints a \verb{summary.bivrecReg} object.
 }

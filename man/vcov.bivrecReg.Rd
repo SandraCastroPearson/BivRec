@@ -7,7 +7,7 @@
 \method{vcov}{bivrecReg}(object, ...)
 }
 \arguments{
-\item{object}{A \code{bivrecReg} object.}
+\item{object}{A \verb{bivrecReg} object.}
 
 \item{...}{Additional parameters if needed.}
 }

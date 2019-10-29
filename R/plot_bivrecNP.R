@@ -2,9 +2,9 @@
 #' Plot Joint CDF after Nonparametric Analysis
 #'
 #' @description
-#' This function plots the joint cdf for a \code{bivrecNP} object.
+#' This function plots the joint cdf for a \verb{bivrecNP} object.
 #'
-#' @param object A \code{bivrecNP} object.
+#' @param object A \verb{bivrecNP} object.
 #' @param type  Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @importFrom stats ftable
 #' @export
@@ -52,9 +52,9 @@ plotJoint <- function(object, type) {
 #' Plot Marginal Survival after Nonparametric Analysis
 #'
 #' @description
-#' This function plots the marginal survival for a \code{bivrecNP} object.
+#' This function plots the marginal survival for a \verb{bivrecNP} object.
 #'
-#' @param object An object of \code{bivrecNP} class.
+#' @param object An object of \verb{bivrecNP} class.
 #' @param type Optional string to label the Type I gap time. Default is "Type I".
 #' @export
 
@@ -95,9 +95,9 @@ plotMarg <- function(object, type) {
 #' Plot Conditional CDF after Nonparametric Analysis
 #'
 #' @description
-#' This function plots the conditional cdf for a \code{bivrecNP} object.
+#' This function plots the conditional cdf for a \verb{bivrecNP} object.
 #'
-#' @param object An object of \code{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.
+#' @param object An object of \verb{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.
 #' @param type Optional string to label the Type II gap time. Default is "Type II".
 #'
 #' @importFrom stats ftable
@@ -126,7 +126,7 @@ plotCond <- function(object, type) {
 #' Plot Results of Nonparametric Analysis
 #'
 #' @description
-#' This function plots all the estimated functions (joint cdf, marginal survival and conditional cdf if \verb{conditional=TRUE} during analysis) from a \code{bivrecNP} object in one step.
+#' This function plots all the estimated functions (joint cdf, marginal survival and conditional cdf if \verb{conditional=TRUE} during analysis) from a \verb{bivrecNP} object in one step.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -134,7 +134,7 @@ plotCond <- function(object, type) {
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x A \code{bivrecNP} object.
+#' @param x A \verb{bivrecNP} object.
 #' @param y  Either empty or NULL.
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @param ... Additional arguments to be passed to graphical methods if needed.

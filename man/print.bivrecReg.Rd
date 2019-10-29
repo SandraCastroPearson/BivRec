@@ -7,10 +7,10 @@
 \method{print}{bivrecReg}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{bivrecReg}.}
+\item{x}{An object of class \verb{bivrecReg}.}
 
 \item{...}{Additional parameters if needed.}
 }
 \description{
-This function prints an object of class \code{bivrecReg}.
+This function prints an object of class \verb{bivrecReg}.
 }

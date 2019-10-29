@@ -7,10 +7,10 @@
 plotCond(object, type)
 }
 \arguments{
-\item{object}{An object of \code{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.}
+\item{object}{An object of \verb{bivrecNP} class where the analysis has specified \verb{conditional = TRUE}.}
 
 \item{type}{Optional string to label the Type II gap time. Default is "Type II".}
 }
 \description{
-This function plots the conditional cdf for a \code{bivrecNP} object.
+This function plots the conditional cdf for a \verb{bivrecNP} object.
 }

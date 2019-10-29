@@ -2,7 +2,7 @@
 #' Plot Bivariate Alternating Recurrent Series by Categorical Covariates
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \code{bivrecSurv} object as the response variable.
+#' This function plots bivariate recurrent event gap times by the categorical covariates (with up to 6 categories) indicated in a formula with a \verb{bivrecSurv} object as the response variable.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -10,7 +10,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x A formula with a \code{bivrecSurv} object on the left of a '∼' operator as response, and the covariate(s) of interest on the right.
+#' @param x A formula with a \verb{bivrecSurv} object on the left of a '~' operator as response, and the covariate(s) of interest on the right.
 #' @param y Either empty or NULL.
 #' @param data Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
@@ -119,10 +119,10 @@ plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL,
 }
 
 
-#' Plot Bivariate Alternating Recurrent Series by up to six covariates after analysis using \code{bivrecReg}.
+#' Plot Bivariate Alternating Recurrent Series by up to six covariates after analysis using \verb{bivrecReg}.
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times from a bivrecReg object. For examples see \code{bivrecReg}.
+#' This function plots bivariate recurrent event gap times from a bivrecReg object. For examples see \verb{bivrecReg}.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -130,7 +130,7 @@ plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL,
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x An object of class \code{bivrecReg}.
+#' @param x An object of class \verb{bivrecReg}.
 #' @param y Either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".

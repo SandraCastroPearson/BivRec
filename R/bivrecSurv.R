@@ -25,7 +25,7 @@
 #'  \item No missing values. If a subject has missing values in any variables, the whole subject's data will not be used.
 #' }
 #'
-#' @return A bivrecSurv object ready to be used as the response for analysis using \code{bivrecReg} or \code{bivrecNP}.
+#' @return A bivrecSurv object ready to be used as the response for analysis using \verb{bivrecReg} or \verb{bivrecNP}.
 #'
 #' @rdname BivRec
 #' @export

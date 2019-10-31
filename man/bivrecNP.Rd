@@ -62,6 +62,7 @@ head(npresult)
 plot(npresult)
 
 \dontrun{
+
 #This is an example with longer runtime (it runs the conditional graph)
  npresult2 <- bivrecNP(response = bivrecsurv_data, ai=1,
                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,

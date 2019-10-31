@@ -28,13 +28,13 @@ Pro.ee1=function(beta1, mdat, amat) {
 }
 
 Pro.uf1=function(beta1, mdat, amat) {
-  tmp.out=Pro.ee1(beta1,mdat)
+  tmp.out=Pro.ee1(beta1,mdat, amat)
   out=tmp.out%*%tmp.out
   return(out)
 }
 
 Pro.uest1=function(int, mdat, amat) {
-  res=optimize(Pro.uf1,interval=int,mdat=mdat)
+  res=optimize(Pro.uf1,interval=int,mdat=mdat, amat=amat)
   return(list(par=res$minimum,value=res$objective))
 }
 

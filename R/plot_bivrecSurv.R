@@ -10,7 +10,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x An \verb{bivrecSurv} object.
+#' @param x A \verb{bivrecSurv} object.
 #' @param y Either empty or NULL
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".

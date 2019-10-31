@@ -8,7 +8,7 @@
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
-\item{x}{An \verb{bivrecSurv} object.}
+\item{x}{A \verb{bivrecSurv} object.}
 
 \item{y}{Either empty or NULL}
 

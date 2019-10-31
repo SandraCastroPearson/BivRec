@@ -32,7 +32,7 @@
 #' head(sim_data)
 #'
 #' @references
-#'  Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008. Default is 1.1.
+#'  Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
 #' \url{https://doi.org/10.1002/sim.7563}
 
 #' @export
@@ -61,29 +61,40 @@ simBivRec <- function(nsize, beta1, beta2, tau_c, set) {
         gamma1=gamma[1]
         gamma2=gamma[2]
       }
-  }
-
-  if (set==1.2) {
-    Sig=matrix(c(sg2,sqrt(sg2)*sqrt(sg2)*0.5,sqrt(sg2)*sqrt(sg2)*0.5,sg2),2,2)
-    gamma=MASS::mvrnorm(nsize,c(1,1),Sig)
-    if (nsize > 1) {
-      gamma1=gamma[,1]
-      gamma2=gamma[,2]} else {
-        gamma1=gamma[1]
-        gamma2=gamma[2]
+  } else {
+    if (set==1.2) {
+      Sig=matrix(c(sg2,sqrt(sg2)*sqrt(sg2)*0.5,sqrt(sg2)*sqrt(sg2)*0.5,sg2),2,2)
+      gamma=MASS::mvrnorm(nsize,c(1,1),Sig)
+      if (nsize > 1) {
+        gamma1=gamma[,1]
+        gamma2=gamma[,2]} else {
+          gamma1=gamma[1]
+          gamma2=gamma[2]
+        }
+    } else {
+      if (set==1.3) {
+        gamma1=rnorm(nsize,1,sqrt(sg2))
+        gamma2=rnorm(nsize,1,sqrt(sg2))
+      } else {
+        if (set==2.0) {
+          gamma1=rnorm(nsize,1,sqrt(sg2))
+          gamma2=rgamma(nsize,shape=1/sg2,rate=1/sg2)
+        } else {
+          stop("Invalid value for set. Must be 1.1, 1.2, 1.3, or 2.0.")
+        }
+      }
     }
-  }
-  if (set==1.3) {
-    gamma1=rnorm(nsize,1,sqrt(sg2))
-    gamma2=rnorm(nsize,1,sqrt(sg2))
-  }
-  if (set==2.0) {
-    gamma1=rnorm(nsize,1,sqrt(sg2))
-    gamma2=rgamma(nsize,shape=1/sg2,rate=1/sg2)
   }
 
   dat=NULL
   deltas=NULL
+
+  if (tau_c != 63) {
+    if (tau_c != 30) {
+     stop("Invalid value for tau_c. Must be 63 or 30.")
+    }
+  }
+
   for (i in id) {
     x.tmp=exp(gamma1[i]+A[i,]%*%beta1)
     y.tmp=exp(gamma2[i]+A[i,]%*%beta2)

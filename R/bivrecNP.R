@@ -104,8 +104,6 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
       } else {stop("ai must equal either 1 or 2.")}
     }
 
-
-
   cdf_res <- nonparam_cdf(forcdf, u, ai, CI)
   marg_res <- nonparam_marginal(formarg, CI)
 
@@ -113,12 +111,22 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 
     final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai,
                          xij=xij, yij=yij, new_data=new_data)
+    final_result$level <- CI
+    final_result$conditional <- conditional
+
+    class(final_result) <- "bivrecNP"
+    return(final_result)
 
   } else {
 
     if (missing(given.interval)) {
       print("Error: Missing given.interval while conditional=TRUE.")
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
+      final_result$level <- CI
+      final_result$conditional <- conditional
+
+      class(final_result) <- "bivrecNP"
+      return(final_result)
 
     } else {
 
@@ -131,12 +139,14 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
                            conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij, new_data=new_data)
 
       final_result$given.interval <- given.interval
+
+      final_result$level <- CI
+      final_result$conditional <- conditional
+
+      class(final_result) <- "bivrecNP"
+      return(final_result)
     }
   }
 
-  final_result$level <- CI
-  final_result$conditional <- conditional
 
-  class(final_result) <- "bivrecNP"
-  return(final_result)
 }

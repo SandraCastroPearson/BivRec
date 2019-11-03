@@ -34,5 +34,5 @@ test_that("np check", {
   expect_is(npresult$joint_cdf, "data.frame")
   expect_is(npresult$marginal_survival, "data.frame")
   expect_is(npresult$conditional_cdf, "NULL")
-#note that conditional SE and CI's are bootstrap based so cannot create those for a sample of 1
+#note that conditional SE and CI's are bootstrap based so cannot run conditional for a sample of 1
 })

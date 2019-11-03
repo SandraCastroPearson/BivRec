@@ -225,6 +225,8 @@ chang_univariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariate", cov_names))
   beta <- rep(0, 2)
+  a_index <- which(colnames(new_data)==cov_names)
+  colnames(new_data) = c(colnames(new_data)[-a_index], "a1")
 
   #solve first equation to get all  estimates
   chang1 <- RE.uest1(beta, new_data)
@@ -244,7 +246,7 @@ chang_univariate <- function(new_data, cov_names, SE) {
     print("Estimating standard errors")
 
     #estimate covariance matrix / std. errors
-    chang1v <- v.est1(chang1$par,new_data, R=100)
+    chang1v <- v.est1(chang1$par, new_data, R=100)
     chang1sd <- sd.estpar1(beta, new_data, chang1v ,B=50)
 
     #join all info, put in nice table

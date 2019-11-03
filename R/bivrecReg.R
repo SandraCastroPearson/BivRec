@@ -73,7 +73,6 @@ bivrecReg <- function(formula, data, method) {
 
   call = match.call()
 
-  #Manage missing information by method
   formula_ref = formula
   if (missing(method)) {method <- "Lee.et.al"}
   if (missing(data)) {stop("Data argument missing.")}

@@ -109,7 +109,7 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
     }
 
     #Check episodes don't have gaps
-    if (!is.numeric(episode) & !is.integer(episode)) {stop("episode variable must be numeric.")}
+    if (!is.numeric(episode) & !is.integer(episode)) {stop("Episode variable must be numeric.")}
     for (j in 1:sub_n){
       if (temp_by_subject$epi[j]!=j) {
         err_epi <- c(err_epi, sub_id)}

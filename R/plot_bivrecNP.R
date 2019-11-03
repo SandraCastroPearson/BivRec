@@ -16,7 +16,7 @@ plotJoint <- function(object, type) {
 
   x = object
 
-  if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  if (!inherits(x, "bivrecNP")) stop("Must be a bivrecNP object.")
   if (missing(type)) {type = c("Type I", "Type II")}
 
   forplot <- x$joint_cdf
@@ -63,7 +63,7 @@ plotJoint <- function(object, type) {
 plotMarg <- function(object, type) {
   x <- object
 
-  if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  if (!inherits(x, "bivrecNP")) stop("Must be a bivrecNP object.")
   if (missing(type)) {type = "Type I"}
 
   xij <- x$xij
@@ -144,7 +144,7 @@ plotCond <- function(object, type) {
 
 plot.bivrecNP <-function(x, y=NULL, type=NULL, ...){
 
-  if (!inherits(x, "bivrecNP")) stop("Object must be a bivrecNP class")
+  if (!inherits(x, "bivrecNP")) stop("Must be a bivrecNP object.")
 
   cond=x$conditional #boolean saying if conditional is in bivrecNP object
 

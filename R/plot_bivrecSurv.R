@@ -32,7 +32,7 @@
 
 plot.bivrecSurv <- function(x, y=NULL, type = NULL,
                             main = NULL, xlab = NULL, ylab = NULL, ...){
-  if (!inherits(x, "bivrecSurv")) stop("Object must be a bivrecSurv class")
+  if (!inherits(x, "bivrecSurv")) stop("Must be a bivrecSurv object.")
   object <- x
 
   #check arguments for labels

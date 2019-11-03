@@ -46,8 +46,8 @@ plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL,
   #pull objects out of formula
   formula_ref = formula
   if (!missing(data)) {response <- eval(formula[[2]], data)
-  } else {stop("data argument missing")}
-  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object")
+  } else {stop("Data argument missing.")}
+  if (!inherits(response, "bivrecSurv")) stop("Response must be a bivrecSurv object.")
   formula[[2]] <- NULL
   predictors <- data.frame(id = response$id_ref, model.matrix(formula, data)[,-1])
   colnames(predictors) <-  c("id", colnames(model.matrix(formula, data))[-1])
@@ -71,7 +71,7 @@ plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL,
   new_num <-length(unique(new_data$id))
 
   message <- paste("Original number of subjects: ", orig_num,
-                   ". Subjects for plots: ", new_num, sep="")
+                   ". Subjects for plots: ", new_num, ".", sep="")
   print(message)
 
   #plot each predictor

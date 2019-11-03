@@ -13,7 +13,7 @@
 
 coef.bivrecReg <- function(object, ...) {
   #add chang
-  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Object must be bivrecReg")
 
   if (object$method=="Chang") {
     coeffs <- object$chang_fit$fit
@@ -43,7 +43,7 @@ coef.bivrecReg <- function(object, ...) {
 #' @export
 
 vcov.bivrecReg <- function(object, ...) {
-  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Object must be bivrecReg")
 
   if (object$method=="Chang") {
     vcovmatrix <- object$chang_fit$vcovmat
@@ -74,7 +74,7 @@ vcov.bivrecReg <- function(object, ...) {
 
 confint.bivrecReg <- function(object, parm, level, ...) {
 
-  if (!inherits(object, "bivrecReg")) stop("Must be a bivrecReg")
+  if (!inherits(object, "bivrecReg")) stop("Object must be bivrecReg")
 
   if (object$method=="Chang") {
     coeffs <- object$chang_fit$fit

@@ -184,6 +184,7 @@ sd.estpar1=function(init,dat,v, B) {
   i=0
   while (i < B)
   {
+    set.seed(i)
     R=mvrnorm(1,rep(0,p),v)
     est.R=RE.uestR1(init,dat,R)
     if (est.R$conv!=0) next
@@ -220,7 +221,7 @@ sd.estpar1=function(init,dat,v, B) {
 #' @keywords internal
 
 
-#multivariable regression analysis-Chang's method
+#one variable regression analysis-Chang's method
 chang_univariate <- function(new_data, cov_names, SE) {
 
   print(paste("Fitting model with covariate", cov_names))

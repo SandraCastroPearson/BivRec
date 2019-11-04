@@ -194,6 +194,7 @@ sd.estpar=function(init, dat, v, B) {
   i=0
   while (i < B)
   {
+    set.seed(i)
     R=MASS::mvrnorm(1,rep(0,p),v)
     est.R=RE.uestR(init,dat,R)
     if (est.R$conv!=0) next

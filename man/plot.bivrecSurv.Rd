@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{A \verb{bivrecSurv} object.}
 
-\item{y}{Either empty or NULL}
+\item{y}{Either empty or NULL.}
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 

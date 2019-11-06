@@ -14,7 +14,7 @@ The main functions are:
 alternating event gap times (Xij and Yij) using semiparametric methods.
 The method options are “Lee.et.al” and “Chang”.  
 \- bivrecNP: Use for the estimation of the joint cumulative distribution
-funtion (cdf) for the two alternating events gap times (Xij and Yij) as
+function (cdf) for the two alternating events gap times (Xij and Yij) as
 well as the marginal survival function for type I gap times (Xij) and
 the conditional cdf of the type II gap times (Yij) given an interval of
 type I gap times (Xij) in a nonparametric fashion.
@@ -141,7 +141,7 @@ Analysis
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
     type = c("Type I", "Type II"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
-#> [1] "Original number of subjects: 100. Subjects for plots: 100"
+#> [1] "Original number of subjects: 100. Subjects for plots: 100."
 ```
 
 ![](man/figures/README-BivRecExample3-1.png)<!-- -->

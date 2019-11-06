@@ -17,7 +17,7 @@ Alternating recurrent event data arise frequently in biomedical and social scien
 
 The main functions are:  
 - bivrecReg: Use for the estimation of covariate effects on the two alternating event gap times (Xij and Yij) using semiparametric methods. The method options are "Lee.et.al" and "Chang".  
-- bivrecNP:  Use for the estimation of the joint cumulative distribution funtion (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a nonparametric fashion.    
+- bivrecNP:  Use for the estimation of the joint cumulative distribution function (cdf) for the two alternating events gap times (Xij and Yij) as well as the marginal survival function for type I gap times (Xij) and the conditional cdf of the type II gap times (Yij) given an interval of type I gap times (Xij) in a nonparametric fashion.    
 
 The package also provides options to simulate and visualize the data and results of analysis. 
 

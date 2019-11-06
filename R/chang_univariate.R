@@ -184,7 +184,6 @@ sd.estpar1=function(init,dat,v, B) {
   i=0
   while (i < B)
   {
-    set.seed(i)
     R=mvrnorm(1,rep(0,p),v)
     est.R=RE.uestR1(init,dat,R)
     if (est.R$conv!=0) next

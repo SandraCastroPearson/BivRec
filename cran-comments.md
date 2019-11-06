@@ -12,6 +12,17 @@
 *Travis-ci results (https://travis-ci.org/SandraCastroPearson/BivRec):*   
 Done. Your build exited with 0.
 
+*check_rhub() results:*
+
+3 NOTES:
+
+- 2 NOTES for Examples with CPU (user + system) or elapsed time > 5s
+  The longest example took less than 15s.
+
+- 3rd NOTE
+  Found the following (possibly) invalid URLs:
+    URL: https://doi.org/10.1093/biomet/81.2.341
+This is the correct URL
 
 ## Reverse dependencies
 Previous functions deprecated but in working order.

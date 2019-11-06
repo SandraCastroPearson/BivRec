@@ -71,11 +71,8 @@ plotMarg <- function(object, type) {
 
   #formula <- bivrec.nonparam.result$formula
 
-  #variables <- all.vars(formula)
-  mx <- round(max(xij), digits = 0)
-  str_mx <- substring(as.character(mx), 1, nchar(as.character(mx))-1)
-  str_mx <- paste(as.numeric(str_mx)+1, 0, sep="")
-  mx <- round(as.numeric(str_mx), digits=1)
+  ## variables <- all.vars(formula)
+  mx <- 10 * (max(xij) %/% 10 + 1)
   forplot <- rbind(c(0, 1, 0, 1, 1), forplot, c(mx, 0, forplot[nrow(forplot),3], 0, 0))
 
   ##### Wald CI and plot

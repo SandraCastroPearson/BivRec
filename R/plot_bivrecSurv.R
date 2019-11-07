@@ -2,7 +2,7 @@
 #' Plot Bivariate Alternating Recurrent Series
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object.
+#' This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to break plots by categorical covariates.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -12,6 +12,7 @@
 #'
 #' @param x A \verb{bivrecSurv} object.
 #' @param y Either empty or NULL.
+#' @param by A vector with the names of categorical variables
 #' @param main Optional string with plot title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
@@ -30,7 +31,7 @@
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
 
-plot.bivrecSurv <- function(x, y=NULL, type = NULL,
+plot.bivrecSurv <- function(x, y=NULL, by, type = NULL,
                             main = NULL, xlab = NULL, ylab = NULL, ...){
   if (!inherits(x, "bivrecSurv")) stop("Must be a bivrecSurv object.")
   object <- x

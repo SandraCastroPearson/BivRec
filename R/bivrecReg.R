@@ -1,3 +1,5 @@
+
+
 #' Semiparametric Regression Analysis of Bivariate Alternating Recurrent Event Gap Time Data
 #'
 #' @description

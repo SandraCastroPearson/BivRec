@@ -1,4 +1,4 @@
-########################    plot.formula     ########################
+########################    plot.bivrecFormula     ########################
 #' Plot Bivariate Alternating Recurrent Series by Categorical Covariates
 #'
 #' @description
@@ -10,7 +10,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #'
-#' @param x A formula with a \verb{bivrecSurv} object on the left of a '~' operator as response, and the covariate(s) of interest on the right.
+#' @param x A bivrecFormula object.
 #' @param y Either empty or NULL.
 #' @param data Required argument when x is a formula. Should indicate the data frame that contains the vectors to create the response and the categorical covariates indicated in the given formula.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
@@ -26,14 +26,17 @@
 #' set.seed(1234)
 #' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 #'                tau_c=63, set=1.1)
-#' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = bivrec_data,
+#' bivrecfoo <- bivrecFormula(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2)
+#' plot(x = bivrecfoo, data = bivrec_data,
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
 
-plot.formula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL, ...) {
+plot.bivrecFormula <- function(x, y=NULL, data, type = NULL, xlab = NULL, ylab = NULL, ...) {
 
-  if (!inherits(x, "formula")) stop("Object must be a formula")
-  formula <- x
+  if (is.bivrecFormula(x)==FALSE) {
+    stop("Object must be a formula with a bivrecSurv object as response.")}
+
+  formula <- as.formula(x)
 
   #check arguments for labels
   if (missing(type)) {type=c("Type I","Type II")}

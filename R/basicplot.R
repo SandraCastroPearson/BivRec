@@ -5,16 +5,16 @@
 #' @param nsubject pass from plot fcts
 #' @param temp pass from plot fcts
 #' @param args pass from plot fcts
-#' @param a pass from plot fcts
-#' @param b pass from plot fcts
 #' @param c optional
+#' @param cm optional
 #'
 #' @keywords internal
 #' @noRd
 
-basicplot <- function(parameters, ctimes, nsubject, temp, args, c) {
+basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm) {
 
   if (missing(c)) {c = 0.6}
+  if (missing(cm)) {cm = 1}
 
   #### Reformat data to start-stop times ########
   for (iter in 1:nsubject) {
@@ -55,13 +55,12 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c) {
   plot.new( )
   plot.window(xlim=xrange, ylim=yrange)
   axis(side=1, at=seq(0, xrange[2], 10))
-  title(main=args[1], xlab=args[2], ylab=args[3])
+  title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
   legendtext = c(args[4], args[5])
 
-  legend(xrange[2], 2, bg="transparent",
-         legend=legendtext, box.lty=0, y.intersp = 0.5,
-         xjust=1, yjust=0, col = c("blue", "red"), lty = 1,
-         cex=c, inset = 0, seg.len = 2)
+  legend("bottomright", legend=legendtext, col = c("blue", "red"),
+         lty = 1, cex=c, inset=c(0,1), xpd=TRUE, seg.len = 0.75,
+         horiz=TRUE, bty="n")
 
   # add line segments
   newid = 0

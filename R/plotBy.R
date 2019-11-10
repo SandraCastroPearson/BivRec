@@ -140,14 +140,15 @@ plotBy <- function(df, args) {
           parameters$id2[parameters$id == unik_ids[i]]=i
       }
       parameters2 <- cbind(parameters[,6], parameters[,2:5])
-      colnames(parameters2) <- colnames(parameters)[-6]
       parameters <- data.frame(parameters2)
+      colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")
 
       #Plot for one level of covariate
       args2 = args
       args2[1] = new_main
       par(mar=c(5,4,4,2)+0.1)
-      basicplot(parameters, ctimes, nsubject=nsubject2, temp=NULL, args = args2)
+      basicplot(parameters, ctimes, nsubject=nsubject2,
+                temp=NULL, args = args2, c=0.25, cm=0.5)
     }
     if (p == length(pred_levels)) {
       mtext(args[1], outer = TRUE, cex = 1.5)

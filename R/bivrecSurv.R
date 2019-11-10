@@ -172,6 +172,8 @@ bivrecSurv <- function(id, episode, xij, yij, d1, d2) {
   result$dat4np1 <- list(forcdf=forcdf1, formarg=formarg1,refdata = df4np) #for ai=1
   result$dat4np2 <- list(forcdf=forcdf2, formarg=formarg2,refdata = df4np) #for ai=2
 
+  result$call <- match.call()
+
   class(result) <- "bivrecSurv"
   return(result)
 

@@ -2,7 +2,7 @@
 #' Plot Bivariate Alternating Recurrent Series
 #'
 #' @description
-#' This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to break plots by categorical covariates.
+#' This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to create separate plots based on categorical covariates.
 #'
 #' @import graphics
 #' @importFrom utils tail
@@ -12,8 +12,8 @@
 #'
 #' @param x A \verb{bivrecSurv} object.
 #' @param y Either empty or NULL.
-#' @param by A vector with the names of categorical variables
-#' @param main Optional string with plot title. Default is no title.
+#' @param by A vector or data frame with variables to create plots by categories.
+#' @param main Optional string with plot Title. Default is no title.
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
@@ -27,12 +27,17 @@
 #' set.seed(1234)
 #' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
 #'                set=1.1)
-#' plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
+#' plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
+#' attach(bivrec_data)
+#' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
+#'      main="Example by a1", type = c("In Hospital", "Out of Hospital"))
+#' detach(bivrec_data)
 
-plot.bivrecSurv <- function(x, y=NULL, by, type = NULL,
-                            main = NULL, xlab = NULL, ylab = NULL, ...){
+plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
+                            xlab = NULL, ylab = NULL, ...){
+
   if (!inherits(x, "bivrecSurv")) stop("Must be a bivrecSurv object.")
   object <- x
 
@@ -41,16 +46,43 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL,
   if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
   if (missing(main)) {main=""}
-
   args = c(main, xlab, ylab, type)
 
-  ##EXTRACT VECTORS FOR PLOTTING FUNCTION
-  parameters <- object$data4Creg[-(5:7)]
+  if (missing(by)) {
+    ##EXTRACT VECTORS FOR PLOTTING FUNCTION
+  parameters <- object$data4Creg[,-(5:7)]
   colnames(parameters) <- c("id", "episode", "xij", "yij", "ci")
   ctimes <- object$data4Lreg$ctime
   nsubject <- object$data4Lreg$n
-  temp <- NULL
 
-  basicplot(parameters, ctimes, nsubject, temp, args, a = 1/2, b = 1/3)
+  basicplot(parameters=parameters, ctimes=ctimes,
+            nsubject=nsubject, temp = NULL, args = args,
+            c=0.7)
+
+  } else {
+
+    if (is.data.frame(by)) {
+      nrows_c <-  c(nrow(object$data4Creg), nrow(by))
+      if (nrows_c[1]!= nrows_c[2]) {
+        stop("Non-conformable arguments. Variables to create bivrecSurv object and categorical variables to split plots must have the same length and no missingness.")
+      }
+    } else {
+      if (is.vector(by)) {
+        nrows_c <-  c(nrow(object$data4Creg), length(by))
+        if (nrows_c[1]!= nrows_c[2]) {
+          stop("Non-conformable arguments. Vector variables to create bivrecSurv object and categorical variables to plot by must have the same length.")
+        }
+      } else {stop("Parameter by must be a vector or data frame.")}
+      }
+
+    #colnames(df) <- c("id", "episode", "xij", "yij", "ci")
+    df = as.data.frame(cbind(object$data4Creg[,-(5:7)], by))
+    plotBy(df, args)
+
+  }
+
+
+
+
 
 }

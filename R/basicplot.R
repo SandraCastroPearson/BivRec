@@ -12,7 +12,7 @@
 #' @keywords internal
 #' @noRd
 
-basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b, c) {
+basicplot <- function(parameters, ctimes, nsubject, temp, args, c) {
 
   if (missing(c)) {c = 0.6}
 
@@ -48,19 +48,20 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, a, b, c) {
 
   ###### PLOT ########
   # get the range for the x and y axis
-  xrange <- c(0, max(ctimes)+ 10) #Time
-  yrange <- c(0, nsubject) #subjects
+  xrange <- c(0, round(max(ctimes), digits = -1) + 10) #Time
+  yrange <- c(0, nsubject+2) #subjects
 
   # set up the plot
   plot.new( )
   plot.window(xlim=xrange, ylim=yrange)
-  axis(side=1)
+  axis(side=1, at=seq(0, xrange[2], 10))
   title(main=args[1], xlab=args[2], ylab=args[3])
   legendtext = c(args[4], args[5])
 
-  legend(xrange[2]*a, yrange[2]*b, bg="transparent",
-         legend=legendtext, box.lty=0,
-         col = c("blue", "red"), lty = 1, cex=c)
+  legend(xrange[2], 2, bg="transparent",
+         legend=legendtext, box.lty=0, y.intersp = 0.5,
+         xjust=1, yjust=0, col = c("blue", "red"), lty = 1,
+         cex=c, inset = 0, seg.len = 2)
 
   # add line segments
   newid = 0

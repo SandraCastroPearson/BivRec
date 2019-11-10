@@ -4,13 +4,15 @@
 \alias{plot.bivrecSurv}
 \title{Plot Bivariate Alternating Recurrent Series}
 \usage{
-\method{plot}{bivrecSurv}(x, y = NULL, type = NULL, main = NULL,
+\method{plot}{bivrecSurv}(x, y = NULL, by, type = NULL, main = NULL,
   xlab = NULL, ylab = NULL, ...)
 }
 \arguments{
 \item{x}{A \verb{bivrecSurv} object.}
 
 \item{y}{Either empty or NULL.}
+
+\item{by}{A vector or data frame with variables to create plots by categories.}
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
@@ -23,7 +25,7 @@
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }
 \description{
-This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object.
+This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to create separate plots based on categorical covariates.
 }
 \examples{
 # Simulate bivariate alternating recurrent event data
@@ -31,7 +33,11 @@ library(BivRec)
 set.seed(1234)
 bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
                set=1.1)
-plot(x = with(bivrec_data, bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
+plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
      type = c("In Hospital", "Out of Hospital"))
 
+attach(bivrec_data)
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
+     main="Example by a1", type = c("In Hospital", "Out of Hospital"))
+detach(bivrec_data)
 }

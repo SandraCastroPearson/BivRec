@@ -14,7 +14,7 @@
 basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm) {
 
   if (missing(c)) {c = 0.6}
-  if (missing(cm)) {cm = 1}
+  if (missing(cm)) {cm = 2}
 
   #### Reformat data to start-stop times ########
   for (iter in 1:nsubject) {

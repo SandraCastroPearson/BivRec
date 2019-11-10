@@ -125,6 +125,7 @@ plotBy <- function(df, args) {
   to_delete <- which(num_levs > 6) + 5
 
   ploteach <- function(pred_levels, plotdat, rdim, cov_name, args) {
+    plot.new()
     par(mar=c(1,1,1,1))
     par(mfrow=c(rdim, 2))
     for (p in 1:length(pred_levels)) {
@@ -148,10 +149,10 @@ plotBy <- function(df, args) {
       args2[1] = new_main
       par(mar=c(5,4,4,2)+0.1)
       basicplot(parameters, ctimes, nsubject=nsubject2,
-                temp=NULL, args = args2, c=0.25, cm=0.5)
+                temp=NULL, args = args2, c=0.25, cm=0.9)
     }
+
     if (p == length(pred_levels)) {
-      mtext(args[1], outer = TRUE, cex = 1.5)
       par(mfrow=c(1, 1)) }
   }
 

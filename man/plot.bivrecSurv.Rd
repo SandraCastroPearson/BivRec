@@ -16,7 +16,7 @@
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
-\item{main}{Optional string with plot title. Default is no title.}
+\item{main}{Optional string with plot title. Default is no title (will go to default when using by option).}
 
 \item{xlab}{Optional string with label for horizontal axis. Default is "Time".}
 

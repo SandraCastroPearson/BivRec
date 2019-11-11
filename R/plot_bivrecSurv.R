@@ -13,7 +13,7 @@
 #' @param x A \verb{bivrecSurv} object.
 #' @param y Either empty or NULL.
 #' @param by A vector or data frame with variables to create plots by categories.
-#' @param main Optional string with plot title. Default is no title (will go to default when using by option).
+#' @param main Optional string with plot title. Default is no title (will go to default when using \verb{by} argument).
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").

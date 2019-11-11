@@ -11,9 +11,9 @@
 #' @keywords internal
 #' @noRd
 
-basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm) {
+basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
 
-  if (missing(c)) {c = 0.6}
+  if (missing(c)) {c = 0.7}
   if (missing(cm)) {cm = 2}
 
   #### Reformat data to start-stop times ########
@@ -49,7 +49,7 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm) {
   ###### PLOT ########
   # get the range for the x and y axis
   xrange <- c(0, round(max(ctimes), digits = -1) + 10) #Time
-  yrange <- c(0, nsubject+2) #subjects
+  yrange <- c(0, nsubject) #subjects
 
   # set up the plot
   plot.new( )
@@ -58,9 +58,17 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm) {
   title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
   legendtext = c(args[4], args[5])
 
-  legend("bottomright", legend=legendtext, col = c("blue", "red"),
-         lty = 1, cex=c, inset=c(0,1), xpd=TRUE, seg.len = 0.75,
-         horiz=TRUE, bty="n")
+  if (byp == FALSE) {
+      legend("bottomright", legend=legendtext, col = c("blue", "red"),
+         lty = 1, cex=c, inset=c(0,1), xpd=TRUE, seg.len = 0.7,
+         bty="n", horiz = TRUE)
+  } else {
+    legend("bottomright", legend=legendtext, col = c("blue", "red"),
+           lty = 1, cex=c, inset=c(0,1), xpd=TRUE, seg.len = 0.7,
+         bty="n", x.intersp=0.9, y.intersp = 0.7)
+  }
+
+
 
   # add line segments
   newid = 0

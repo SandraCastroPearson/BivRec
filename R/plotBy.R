@@ -149,7 +149,7 @@ plotBy <- function(df, args) {
       args2[1] = new_main
       par(mar=c(5,4,4,2)+0.1)
       basicplot(parameters, ctimes, nsubject=nsubject2,
-                temp=NULL, args = args2, c=0.25, cm=0.9)
+                temp=NULL, args = args2, c=0.6, cm=0.9, byp=TRUE)
     }
 
     if (p == length(pred_levels)) {

@@ -57,7 +57,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
 
   basicplot(parameters=parameters, ctimes=ctimes,
             nsubject=nsubject, temp = NULL, args = args,
-            c=0.7)
+            c=0.7, cm=1.5, byp=FALSE)
 
   } else {
 

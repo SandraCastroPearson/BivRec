@@ -151,9 +151,8 @@ plotBy <- function(df, args) {
       basicplot(parameters, ctimes, nsubject=nsubject2,
                 temp=NULL, args = args2, c=0.6, cm=0.9, byp=TRUE)
     }
-
     if (p == length(pred_levels)) {
-      par(mfrow=c(1, 1)) }
+      par(mfrow=c(1, 1))}
   }
 
   message1 <- paste(colnames(df)[to_delete], " not used - either continuous or had more than 6 levels.", sep="")

@@ -16,7 +16,7 @@
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
-\item{main}{Optional string with plot title. Default is no title (will go to default when using by option).}
+\item{main}{Optional string with plot title. Default is no title (will go to default when using \verb{by} argument).}
 
 \item{xlab}{Optional string with label for horizontal axis. Default is "Time".}
 
@@ -38,6 +38,6 @@ plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example"
 
 attach(bivrec_data)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
-     main="Example by a1", type = c("In Hospital", "Out of Hospital"))
+     type = c("In Hospital", "Out of Hospital"))
 detach(bivrec_data)
 }

@@ -52,11 +52,11 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
   yrange <- c(0, nsubject) #subjects
 
   # set up the plot
-  plot.new( )
-  plot.window(xlim=xrange, ylim=yrange)
-  axis(side=1, at=seq(0, xrange[2], 10))
-  title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
+  plot.new()
   legendtext = c(args[4], args[5])
+  plot.window(xlim=xrange, ylim=yrange)
+  axis(side=1)
+  title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
 
   if (byp == FALSE) {
       legend("bottomright", legend=legendtext, col = c("blue", "red"),
@@ -67,8 +67,6 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
            lty = 1, cex=c, inset=c(0,1), xpd=TRUE, seg.len = 0.7,
          bty="n", x.intersp=0.9, y.intersp = 0.7)
   }
-
-
 
   # add line segments
   newid = 0

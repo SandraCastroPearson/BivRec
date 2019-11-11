@@ -32,7 +32,7 @@
 #'
 #' attach(bivrec_data)
 #' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
-#'      main="Example by a1", type = c("In Hospital", "Out of Hospital"))
+#'      type = c("In Hospital", "Out of Hospital"))
 #' detach(bivrec_data)
 
 plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
@@ -62,13 +62,13 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
   } else {
 
     if (is.data.frame(by)) {
-      nrows_c <-  c(nrow(object$data4Creg), nrow(by))
+      nrows_c <-  c(nrow(object$data4Creg), nrow(na.omit(by)))
       if (nrows_c[1]!= nrows_c[2]) {
         stop("Non-conformable arguments. Variables to create bivrecSurv object and categorical variables to split plots must have the same length and no missingness.")
       }
     } else {
       if (is.vector(by)) {
-        nrows_c <-  c(nrow(object$data4Creg), length(by))
+        nrows_c <-  c(nrow(object$data4Creg), length(na.omit(by)))
         if (nrows_c[1]!= nrows_c[2]) {
           stop("Non-conformable arguments. Vector variables to create bivrecSurv object and categorical variables to plot by must have the same length.")
         }
@@ -76,7 +76,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
       }
 
     #colnames(df) <- c("id", "episode", "xij", "yij", "ci")
-    df = as.data.frame(cbind(object$data4Creg[,-(5:7)], by))
+    df = as.data.frame(cbind(object$data4Creg[,-(5:7)], na.omit(by)))
     plotBy(df, args)
 
   }

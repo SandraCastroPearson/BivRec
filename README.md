@@ -45,9 +45,6 @@ This is an example using a simulated data set.
 ``` r
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
-#> Registered S3 method overwritten by 'BivRec':
-#>   method       from    
-#>   plot.formula graphics
 set.seed(288)
 sim_data <- simBivRec(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 head(sim_data)
@@ -137,16 +134,19 @@ Semiparametric Regression
 Analysis
 
 ``` r
-#Explore how the response changes by levels of a categorical covariate using a plot.
-plot(x = bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2, data = sim_data,
-    type = c("Type I", "Type II"))
+#Explore how the response changes by levels of a categorical covariate using a plot. Can use attach as follows or specifiy each vector using $ (sim_data$id, sim_data$epi, etc.)
+
+attach(sim_data)
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
+      type = c("In Hospital", "Out of Hospital"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
-#> [1] "Original number of subjects: 100. Subjects for plots: 100."
+#> [1] "Subjects for plots: 100."
 ```
 
-![](man/figures/README-BivRecExample3-1.png)<!-- -->
+![](man/figures/README-BivRecExample3-1.png)<!-- -->![](man/figures/README-BivRecExample3-2.png)<!-- -->
 
 ``` r
+detach(sim_data)
 
 # Apply Lee, Huang, Xu, Luo (2018) method using multiple covariates.
 lee_fit <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,

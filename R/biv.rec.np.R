@@ -1,4 +1,4 @@
-#' Deprecated: Use \verb{bivrecNP}
+#' Deprecated: Use bivrecNP
 #'
 #' @description
 #' Deprecated function from the previous version. Use \verb{bivrecNP}.
@@ -7,8 +7,14 @@
 #' @importFrom stats na.omit
 #' @importFrom stats quantile
 #'
-#' @param formula A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-#' The six variables on the left must have the same length and be given as \verb{id + episode + xij + yij + d1 + d2 ~ 1}, where:
+#' @param formula A formula with six variables indicating the bivariate alternating gap time
+#'
+#' response on the left of the ~ operator and the covariates on the right.
+#'
+#' The six variables on the left must have the same length and be given as
+#'
+#' \verb{id + episode + xij + yij + d1 + d2 ~ 1}, where:
+#'
 #' \itemize{
 #'  \item \verb{id}: Vector of subject's unique identifier (i).
 #'  \item \verb{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.
@@ -20,11 +26,11 @@
 #'
 #' @param data A data frame that includes all the vectors listed in the formula.
 #' @param ai See details.
-#' @param u1 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.
-#' @param u2 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.
+#' @param u1 A vector or single number to be used for the estimation of joint cdf P(Type I gap times \eqn{\le} u1, Type II gap times \eqn{\le} u2) in the nonparametric method.
+#' @param u2 A vector or single number to be used for the estimation of joint cdf P(Type I gap times \eqn{\le} u1, Type II gap times \eqn{\le} u2) in the nonparametric method.
 #' @param conditional A logical value. If TRUE, this function will calculate the conditional cdf for the Type II gap time given an interval of the Type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.
 #' @param given.interval A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the Type I gap time to use for the estimation of the cdf of the Type II gap time given this interval.
-#' If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
+#' If given.interval = c(v1, v2), the function calculates P(Type II gap times \eqn{\le} y | v1 \eqn{\le} Type I gap times \eqn{\le} v2). The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #' @param CI The level for confidence intervals the joint cdf, marginal survival and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.
 #'
 #' @details

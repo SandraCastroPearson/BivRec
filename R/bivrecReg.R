@@ -11,7 +11,7 @@
 #' @importFrom stats model.matrix
 #' @importFrom dplyr filter
 #'
-#' @param formula A formula with a \verb{bivrecSurv} object on the left of a '~' operator as response, and the covariate(s) on the right.
+#' @param formula A formula with a \verb{bivrecSurv} object on the left of a ~ operator as response, and the covariate(s) on the right.
 #' @param data A data frame that includes the vectors needed for the \verb{bivrecSurv} response and the covariates in the formula.
 #' @param method A string indicating which method to use to estimate effects of the covariates. See details.
 #'

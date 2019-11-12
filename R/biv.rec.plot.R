@@ -1,4 +1,4 @@
-#' Deprecated: Use \verb{plot.bivrecSurv}
+#' Deprecated: Use \plot.bivrecSurv
 #'
 #' @description
 #' Deprecated function from the previous version. Use \verb{plot.bivrecSurv}.
@@ -6,7 +6,7 @@
 #'
 #' @param formula Formula of the form \verb{id + episode ~ xij + yij}.
 #' \itemize{
-#'   \item \verb{id}: A vector of subjects' unique identifier which can be numeric or character.
+#'   \item \verb{id}: A numeric or character vector of subjects' unique identifier.
 #'   \item \verb{episode}: A vector indicating the episode of the bivariate alternating gap time pairs.
 #'   \item \verb{xij}: A vector with the lengths of the Type I gap times.
 #'   \item \verb{yij}: A vector with the lengths of the Type II gap times.

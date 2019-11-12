@@ -11,11 +11,11 @@
 #' @param response A response object of class \verb{bivrecSurv}.
 #' @param level The confidence level for confidence intervals for joint cdf, marginal survival probability and conditional cdf. Must be between 0.50 and 0.99. Default is 0.95.
 #' @param ai See details.
-#' @param u1 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.
-#' @param u2 A vector or single number to be used for the estimation of joint cdf \eqn{P(Type I gap times \le u1, Type II gap times \le u2)} in the nonparametric method.
+#' @param u1 A vector or single number to be used for the estimation of joint cdf P(Type I gap times \eqn{\le} u1, Type II gap times \eqn{\le} u2) in the nonparametric method.
+#' @param u2 A vector or single number to be used for the estimation of joint cdf P(Type I gap times \eqn{\le} u1, Type II gap times \eqn{\le} u2) in the nonparametric method.
 #' @param conditional A logical value. If TRUE, this function will calculate the conditional cdf for the Type II gap time given an interval of the Type I gap time and the bootstrap standard error and confidence interval at the specified confidence level. Default is FALSE.
 #' @param given.interval A vector c(v1, v2) that must be specified if conditional = TRUE. The vector indicates an interval for the Type I gap time to use for the estimation of the cdf of the Type II gap time given this interval.
-#' If given.interval = c(v1, v2), the function calculates \eqn{P(Type II gap times \le y | v1 \le Type I gap times \le v2)}. The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
+#' If given.interval = c(v1, v2), the function calculates P(Type II gap times \eqn{\le} y | v1 \eqn{\le} Type I gap times \eqn{\le} v2). The given values v1 and v2 must be in the range of gap times in the estimated marginal survival.
 #'
 #' @details
 #' \verb{ai} indicates a real non-negative function of censoring times to be used as weights in the nonparametric method. This variable can take on values of 1 or 2 which indicate:
@@ -148,6 +148,4 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
       return(final_result)
     }
   }
-
-
 }

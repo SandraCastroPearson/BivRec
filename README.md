@@ -134,7 +134,8 @@ Semiparametric Regression
 Analysis
 
 ``` r
-#Explore how the response changes by levels of a categorical covariate using a plot. Can use attach as follows or specifiy each vector using $ (sim_data$id, sim_data$epi, etc.)
+#Explore how the response changes by levels of a categorical covariate using a plot. 
+#Use attach as follows or specifiy each vector using the $ operator (sim_data$id, sim_data$epi, etc.)
 
 attach(sim_data)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
@@ -143,7 +144,7 @@ plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
 #> [1] "Subjects for plots: 100."
 ```
 
-![](man/figures/README-BivRecExample3-1.png)<!-- -->![](man/figures/README-BivRecExample3-2.png)<!-- -->
+![](man/figures/README-BivRecExample3-1.png)<!-- -->
 
 ``` r
 detach(sim_data)

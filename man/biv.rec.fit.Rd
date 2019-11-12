@@ -7,8 +7,12 @@
 biv.rec.fit(formula, data, method, CI)
 }
 \arguments{
-\item{formula}{A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-The six variables on the left must have the same length and be given as \verb{ID + episode + xij + yij + d1 + d2 ~ covariates}, where
+\item{formula}{A formula with six variables indicating the bivariate alternating gap time
+
+response on the left of the ~ operator and the covariates on the right. The six variables
+
+on the left must have the same length and be given as \verb{ID + episode + xij + yij + d1 + d2 ~ covariates}, where:
+
 \itemize{
  \item \verb{id}: Vector of subject's unique identifier (i).
  \item \verb{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.

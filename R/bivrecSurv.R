@@ -19,7 +19,7 @@
 #' All the following data requirements must be met to avoid errors or warnings:
 #' \enumerate{
 #'  \item All variables should have the same length.
-#'  \item The Type I (xij) and Type II (yij) gap times must be numeric and meet the requirements xij>0, yij>=0 respectively for all observations.
+#'  \item The Type I (xij) and Type II (yij) gap times must be numeric and meet the requirements xij\eqn{>}0, yij\eqn{\ge}0 respectively for all observations.
 #'  \item Only unique, positive, consecutive integers starting from 1, are allowed within each subject for episode (i.e., 1, 2, ...), but they should be allowed to be in any order in the raw data as long as they are unique and have no gap within each subject.
 #'  \item Censoring indicators d1 and d2 must be numeric. Only the last episode is allowed to have zero value for either, and for the last episode, the only combinations allowed are (d1, d2) = (0, 0) or (1, 0).
 #'  \item No missing values. If a subject has missing values in any variables, the whole subject's data will not be used.

@@ -12,7 +12,7 @@
 
 \item{y}{Either empty or NULL.}
 
-\item{by}{A vector or data frame with variables to create plots by categories.}
+\item{by}{A vector or data frame with categorical variables. See details.}
 
 \item{type}{Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").}
 
@@ -27,6 +27,11 @@
 \description{
 This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to create separate plots based on categorical covariates.
 }
+\details{
+\verb{by} must have one or several categorical variables (with up to 6 categories each) in either a vector or a data frame form.
+Plots of the bivariate alternating recurrent outcome will be created by category for each variable.
+When \verb{by} is used this overrides the \verb{main} argument to its default.
+}
 \examples{
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
@@ -36,6 +41,8 @@ bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
 plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
      type = c("In Hospital", "Out of Hospital"))
 
+#Present the data by subgroups
+#Note that the covariate a2 in the function will be dropped because it is continuous
 attach(bivrec_data)
 plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
      type = c("In Hospital", "Out of Hospital"))

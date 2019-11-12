@@ -12,7 +12,7 @@
 #'
 #' @param x A \verb{bivrecSurv} object.
 #' @param y Either empty or NULL.
-#' @param by A vector or data frame with variables to create plots by categories.
+#' @param by A vector or data frame with categorical variables. See details.
 #' @param main Optional string with plot title. Default is no title (will go to default when using \verb{by} argument).
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
@@ -20,6 +20,12 @@
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
 #' @export
+#'
+#' @details
+#' Argument \verb{by} must be a vector or data frame with one or several categorical variables (up to 6 categories each).
+#' Plots of the bivariate alternating recurrent outcome will be created by category for each variable.
+#' When the \verb{by} argument is used it overrides the \verb{main} argument and sets it to its default \verb{main=""}.
+#' To avoid errors make sure the vectors used for the \verb{bivrecSurv} object have the same length as the categorical variables and no missing values.
 #'
 #' @examples
 #'# Simulate bivariate alternating recurrent event data
@@ -30,6 +36,8 @@
 #' plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
+#' #Present the data by subgroups
+#' #Note that the covariate a2 in the function will be dropped because it is continuous
 #' attach(bivrec_data)
 #' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
 #'      type = c("In Hospital", "Out of Hospital"))

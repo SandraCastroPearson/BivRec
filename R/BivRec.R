@@ -24,7 +24,6 @@
 #'
 #' @docType package
 #' @author Sandra Castro-Pearson, Aparajita Sur, Chi Hyun Lee, Chiung-Yu Huang, Xianghua Luo
-#' @import Rcpp
 #' @import survival
 #' @import graphics
 #' @importFrom utils head

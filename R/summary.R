@@ -4,16 +4,6 @@
 #' @param object A \verb{bivrecReg} object.
 #' @param ... Additional parameters if needed.
 #'
-#' @references
-#'
-#' \enumerate{
-#' \item Therneau T. (2015). survival: A Package for Survival Analysis in S. Version 2.38.
-#' \url{https://CRAN.R-project.org/package=survival}
-#'
-#' \item Chiou SH, Huang CY. (2018). Package reReg: Recurrent Event Regression. Version 1.16.
-#' \url{https://CRAN.R-project.org/package=reReg}
-#' }
-#'
 #' @export
 
 summary.bivrecReg <- function(object, ...){

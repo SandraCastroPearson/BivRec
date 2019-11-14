@@ -2,13 +2,19 @@
 % Please edit documentation in R/biv.rec.np.R
 \name{biv.rec.np}
 \alias{biv.rec.np}
-\title{Deprecated: Use \verb{bivrecNP}}
+\title{Deprecated: Use bivrecNP}
 \usage{
 biv.rec.np(formula, data, CI, ai, u1, u2, conditional, given.interval)
 }
 \arguments{
-\item{formula}{A formula with six variables indicating the bivariate alternating gap time response on the left of the ~ operator and the covariates on the right.
-The six variables on the left must have the same length and be given as \verb{id + episode + xij + yij + d1 + d2 ~ 1}, where:
+\item{formula}{A formula with six variables indicating the bivariate alternating gap time
+
+response on the left of the ~ operator and the covariates on the right.
+
+The six variables on the left must have the same length and be given as
+
+\verb{id + episode + xij + yij + d1 + d2 ~ 1}, where:
+
 \itemize{
  \item \verb{id}: Vector of subject's unique identifier (i).
  \item \verb{episode}: Vector indicating the observation or episode (j) for a subject (i). This will determine order of events for each subject.

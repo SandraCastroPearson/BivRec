@@ -1,4 +1,4 @@
-#' Deprecated: Use \plot.bivrecSurv
+#' Deprecated: Use plot.bivrecSurv
 #'
 #' @description
 #' Deprecated function from the previous version. Use \verb{plot.bivrecSurv}.

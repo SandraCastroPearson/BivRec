@@ -2,14 +2,14 @@
 % Please edit documentation in R/biv.rec.plot.R
 \name{biv.rec.plot}
 \alias{biv.rec.plot}
-\title{Deprecated: Use \verb{plot.bivrecSurv}}
+\title{Deprecated: Use plot.bivrecSurv}
 \usage{
 biv.rec.plot(formula, data)
 }
 \arguments{
 \item{formula}{Formula of the form \verb{id + episode ~ xij + yij}.
 \itemize{
-  \item \verb{id}: A vector of subjects' unique identifier which can be numeric or character.
+  \item \verb{id}: A numeric or character vector of subjects' unique identifier.
   \item \verb{episode}: A vector indicating the episode of the bivariate alternating gap time pairs.
   \item \verb{xij}: A vector with the lengths of the Type I gap times.
   \item \verb{yij}: A vector with the lengths of the Type II gap times.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/biv.rec.sim.R
 \name{biv.rec.sim}
 \alias{biv.rec.sim}
-\title{Deprecated: Use \code{simBivRec}}
+\title{Deprecated: Use simBivRec}
 \usage{
 biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 }
@@ -13,7 +13,7 @@ biv.rec.sim(nsize, beta1, beta2, tau_c, set)
 
 \item{beta2}{True coefficients for Type II gap times in the accelerated failure time model (AFT).}
 
-\item{tau_c}{Maximum support of censoring time. Default is 63. For example, it can take values as follows:
+\item{tau_c}{Maximum support of censoring time. It can take values as follows:
 \itemize{
 \item \code{tau_c=63} (default): corresponds to a 15\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2018).
 \item \code{tau_c=30}: corresponds to a 30\% censoring rate for each scenario in Tables 1 and 2 of Lee, Huang, Xu, Luo (2018).

@@ -28,9 +28,10 @@
 This function plots bivariate recurrent event gap times from a \verb{bivrecSurv} object with an option to create separate plots based on categorical covariates.
 }
 \details{
-\verb{by} must have one or several categorical variables (with up to 6 categories each) in either a vector or a data frame form.
+Argument \verb{by} must be a vector or data frame with one or several categorical variables (up to 6 categories each).
 Plots of the bivariate alternating recurrent outcome will be created by category for each variable.
-When \verb{by} is used this overrides the \verb{main} argument to its default.
+When the \verb{by} argument is used it overrides the \verb{main} argument and sets it to its default \verb{main=""}.
+To avoid errors make sure the vectors used for the \verb{bivrecSurv} object have the same length as the categorical variables and no missing values.
 }
 \examples{
 # Simulate bivariate alternating recurrent event data

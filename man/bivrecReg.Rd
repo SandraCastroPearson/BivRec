@@ -69,7 +69,7 @@ vcov(chang_reg)
 \url{https://doi.org/10.1002/sim.7563}
 
 \item Parzen MI, Wei LJ, Ying Z. (1994). A resampling method based on pivotal estimating functions. Biometrika, 81: 341-350.
-\url{https://doi.org/10.1093/biomet/81.2.341}
+\url{http://www.people.fas.harvard.edu/~mparzen/published/parzen1.pdf}
 }
 }
 \keyword{bivrecReg}

@@ -36,14 +36,12 @@
 #' plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
-#'\dontrun{
 #' #Present the data by subgroups
 #' #Note that the covariate a2 in the function will be dropped because it is continuous
 #' attach(bivrec_data)
 #' plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
 #'      type = c("In Hospital", "Out of Hospital"))
 #' detach(bivrec_data)
-#' }
 
 plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
                             xlab = NULL, ylab = NULL, ...){

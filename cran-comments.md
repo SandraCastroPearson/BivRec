@@ -16,9 +16,10 @@ Done. Your build exited with 0.
 
 0 errors ??? | 0 warnings ??? | 2 notes x
 
-- 2 NOTES for Examples with CPU (user + system) or elapsed time > 5s
+- NOTE 1 for Examples with CPU (user + system) or elapsed time > 5s
   All examples take less than 5 minutes.
-
+  
+- Notes 2 seems to be related to the r-hub builder. Does not appear on CMD check or Travis.
 
 ## Reverse dependencies
 Previous functions deprecated but in working order.

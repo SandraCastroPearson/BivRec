@@ -60,12 +60,12 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
 
   if (byp == FALSE) {
       legend("bottomright", legend=legendtext, col = c("blue", "red"),
-         lty = 1, cex=c, xpd=TRUE, seg.len = 0.7,
-         bty="n", horiz = TRUE)
+         lty = 1, cex=c, inset=.02, bg = "white", bty='n', seg.len = 0.7,
+         x.intersp=0.9, y.intersp = 0.85)
   } else {
-    legend("bottomright", legend=legendtext, col = c("blue", "red"),
-           lty = 1, cex=c, xpd=TRUE, seg.len = 0.7,
-         bty="n", x.intersp=0.9, y.intersp = 0.9)
+    legend(xrange[2]/3, yrange[2]/2, legend=legendtext, col = c("blue", "red"),
+           lty = 1, cex=c, inset=.02, bg = "white", bty='n',seg.len = 0.7,
+           x.intersp=0.9, y.intersp = 0.7)
   }
 
   # add line segments

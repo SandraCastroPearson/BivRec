@@ -35,7 +35,7 @@ ploteach <- function(pred_levels, plotdat, cov_name, args) {
     #draw p_iter plot in mfrow
     basicplot(parameters = dfs[[p_iter]], ctimes = unique(dfs[[p_iter]]$ci),
               nsubject=max(unique(dfs[[p_iter]]$id)), temp=NULL,
-              args = args_new[[p_iter]], c=0.6, cm=0.9, byp=TRUE)
+              args = args_new[[p_iter]], c=0.8, cm=0.9, byp=TRUE)
   }
   par(mfrow=c(1,1))
 }

@@ -16,7 +16,7 @@ Imports: stats, survival, MASS, stringr, utils, graphics, grDevices, dplyr
 Suggests: testthat, knitr, rmarkdown, Rcpp
 SystemRequirements: GNU make
 License: GPL-3
-Encoding: ASCII
+Encoding: UTF-8
 LazyData: TRUE
 Language: en-US
 RoxygenNote: 6.1.1

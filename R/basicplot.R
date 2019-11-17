@@ -63,9 +63,9 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
          lty = 1, cex=c, inset=.02, bg = "white", bty='n', seg.len = 0.7,
          x.intersp=0.9, y.intersp = 0.85)
   } else {
-    legend(xrange[2]/3, yrange[2]/2, legend=legendtext, col = c("blue", "red"),
-           lty = 1, cex=c, inset=.02, bg = "white", bty='n',seg.len = 0.7,
-           x.intersp=0.9, y.intersp = 0.7)
+    legend("bottomright", legend=legendtext, col = c("blue", "red"),
+           lty = 1, cex=c, inset=.01, bg = "white", bty='n',seg.len = 0.7,
+           x.intersp=0.9, y.intersp = 0.7, xjust = 1, yjust = 1)
   }
 
   # add line segments

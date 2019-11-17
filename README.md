@@ -138,8 +138,7 @@ Analysis
 #Use attach as follows or specifiy each vector using the $ operator (sim_data$id, sim_data$epi, etc.)
 
 attach(sim_data)
-plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2),
-      type = c("In Hospital", "Out of Hospital"))
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2), type = c("Type I", "Type II"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
 #> [1] "Subjects for plots: 100."
 ```

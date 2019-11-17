@@ -14,12 +14,12 @@ Done. Your build exited with 0.
 
 *check_rhub() results:*
 
-0 errors ??? | 0 warnings ??? | 2 notes x
+0 errors | 0 warnings| 2 notes x
 
 - NOTE 1 for Examples with CPU (user + system) or elapsed time > 5s
   All examples take less than 5 minutes.
   
-- Notes 2 seems to be related to the r-hub builder. Does not appear on CMD check or Travis.
+- Notes 2 only appears for Windows builds seems to be related to the r-hub builder. Does not appear on local check with Windows machine.
 
 ## Reverse dependencies
 Previous functions deprecated but in working order.

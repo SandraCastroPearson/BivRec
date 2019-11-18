@@ -13,7 +13,7 @@
 
 basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
 
-  if (missing(c)) {c = 0.7}
+  if (missing(c)) {c = 1}
   if (missing(cm)) {cm = 2}
 
   #### Reformat data to start-stop times ########
@@ -57,15 +57,10 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
   plot.window(xlim=xrange, ylim=yrange)
   axis(side=1)
   title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
-
   if (byp == FALSE) {
-      legend("bottomright", legend=legendtext, col = c("blue", "red"),
-         lty = 1, cex=c, inset=.02, bg = "white", bty='n', seg.len = 0.7,
-         x.intersp=0.9, y.intersp = 0.85)
-  } else {
     legend("bottomright", legend=legendtext, col = c("blue", "red"),
-           lty = 1, cex=c, inset=.01, bg = "white", bty='n',seg.len = 0.7,
-           x.intersp=0.9, y.intersp = 0.7, xjust = 1, yjust = 1)
+         lty = 1, cex=c, inset=.02, bg = "white", bty='n', seg.len = 0.7,
+         x.intersp=0.9, y.intersp = 0.85, xjust = 0, yjust = 0)
   }
 
   # add line segments

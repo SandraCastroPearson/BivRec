@@ -1,10 +1,11 @@
-#' Lop through basicplot for each categorical variable
+#' Loop through basicplot for each categorical variable
 #'
 #' @param pred_levels pass from plot fcts
 #' @param plotdat pass from plot fcts
 #' @param cov_name pass from plot fcts
 #' @param args pass from plot fcts
 #'
+#' @impor graphics
 #' @keywords internal
 #' @noRd
 #'
@@ -28,16 +29,25 @@ ploteach <- function(pred_levels, plotdat, cov_name, args) {
     args2[1] = new_main
     args_new[[p]] <- args2
   }
-  rdim = ceiling(length(pred_levels) / 2)
-  par(mfrow=c(rdim, 2))
+  rdim <- ceiling(length(pred_levels)/2) + 1
+  layoutvect <- c(seq(1, length(pred_levels)),
+                  rep(length(pred_levels)+1, 2))
+  layout(matrix(layoutvect, nrow=rdim, byrow=TRUE),
+         heights = (c(rep(4,rdim-1), 1)))
   par(mar=c(5,4,4,2)+0.1)
   for (p_iter in 1:length(pred_levels)) {
     #draw p_iter plot in mfrow
     basicplot(parameters = dfs[[p_iter]], ctimes = unique(dfs[[p_iter]]$ci),
               nsubject=max(unique(dfs[[p_iter]]$id)), temp=NULL,
-              args = args_new[[p_iter]], c=0.9, cm=0.9, byp=TRUE)
+              args = args_new[[p_iter]], c=0.75, cm=0.9, byp=TRUE)
   }
-  par(mfrow=c(1,1))
+  legendtext = c(args[4], args[5])
+  #xlim2 = round(max(ctimes), digits = -1) + 10
+  par(mar=c(1,1,1,1)+0.1)
+  plot(0:1, 0:1, xaxt='n',yaxt='n',bty='n',ylab='',xlab='',
+       col="white")
+  legend("center", legend=legendtext, col = c("blue", "red"),
+         lty = 1, bg = "white", bty='n', horiz=TRUE)
 }
 
 #' Plot by function

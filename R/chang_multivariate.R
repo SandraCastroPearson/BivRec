@@ -18,17 +18,17 @@ m.dat.chang=function(dat,beta) {
   beta1=beta[1:p]
   beta2=beta[(p+1):(2*p)]
   maxb=apply(cbind(beta1,beta2),1,max)
+  #amat=cbind(dat$a1,dat$a2,dat$a3)  changed below
   amat_indexes <- c(9:ncol(dat))
   amat <- as.matrix(dat[,amat_indexes])
   dat$txij=dat$xij*exp(-amat%*%beta1)
   dat$tzij=dat$txij+dat$yij*exp(-amat%*%beta2)
   dat$tci=dat$ci*exp(-amat%*%maxb)
 
-  all.t.xij = all.t.zij = all.t.d1 = all.t.d2 = all.mstar = all.a = NULL
+  all.t.xij=all.t.zij=all.t.d1=all.t.d2=all.mstar=all.a=NULL
 
   for (i in unique(dat$id)) {
     tmp=dat[dat$id==i,]
-
     t.xij=min(tmp$txij[1],tmp$tci[1])
     t.zij=min(tmp$tzij[1],tmp$tci[1])
     t.d1=(t.xij<tmp$tci[1])
@@ -53,17 +53,16 @@ m.dat.chang=function(dat,beta) {
         j=j+1
       }
     }
-    all.t.xij = c(all.t.xij,t.xij)
-    all.t.zij = c(all.t.zij,t.zij)
-    all.t.d1 = c(all.t.d1,t.d1)
-    all.t.d2 = c(all.t.d2,t.d2)
-    all.mstar = c(all.mstar,rep(length(t.xij),length(t.xij)))
-    all.a = rbind(all.a, cbind(tmp[1:length(t.xij), amat_indexes]))
-
+    all.t.xij=c(all.t.xij,t.xij)
+    all.t.zij=c(all.t.zij,t.zij)
+    all.t.d1=c(all.t.d1,t.d1)
+    all.t.d2=c(all.t.d2,t.d2)
+    all.mstar=c(all.mstar,rep(length(t.xij),length(t.xij)))
+    all.a=rbind(all.a, tmp[1:length(t.xij), amat_indexes])
   }
 
-  ugap1 = cbind(tgtime = all.t.xij, delta = all.t.d1, all.a, mstar=all.mstar)
-  ugap2 = cbind(tgtime = all.t.zij, delta = all.t.d2, all.a, mstar=all.mstar)
+  ugap1 = cbind(tgtime = all.t.xij, delta = as.integer(all.t.d1), all.a, mstar=all.mstar)
+  ugap2 = cbind(tgtime = all.t.zij, delta = as.integer(all.t.d2), all.a, mstar=all.mstar)
 
   #order
   ugap1=ugap1[order(ugap1$tgtime,decreasing=TRUE),]
@@ -84,11 +83,17 @@ RE.biv=function(beta,dat) {
   a_indexes1 = a_indexes2 = seq(3, 2+ncov, 1)
 
   ss10=cumsum(1/ugap1$mstar/n)
+  #ss11=apply(cbind(ugap1$a1,ugap1$a2,ugap1$a3)/ugap1$mstar/n,2,cumsum)
+  #sub1=ugap1$delta*(cbind(ugap1$a1,ugap1$a2,ugap1$a3)-ss11/ss10)/ugap1$mstar/sqrt(n)
+  #changed below
   ss11=apply(ugap1[, a_indexes1]/ugap1$mstar/n,2,cumsum)
   sub1=ugap1$delta*(ugap1[, a_indexes1]-ss11/ss10)/ugap1$mstar/sqrt(n)
 
   ss20=cumsum(1/ugap2$mstar/n)
-  ss21=apply(ugap2[, a_indexes1]/ugap2$mstar/n,2,cumsum)
+  #ss21=apply(cbind(ugap2$a1,ugap2$a2,ugap2$a3)/ugap2$mstar/n,2,cumsum)
+  #sub2=ugap2$delta*(cbind(ugap2$a1,ugap2$a2,ugap2$a3)-ss21/ss20)/ugap2$mstar/sqrt(n)
+  #changed below
+  ss21=apply(ugap2[, a_indexes2]/ugap2$mstar/n,2,cumsum)
   sub2=ugap2$delta*(ugap2[, a_indexes2]-ss21/ss20)/ugap2$mstar/sqrt(n)
 
   out1=apply(sub1,2,sum)
@@ -141,8 +146,9 @@ v.est=function(beta,dat,R)
       newid=c(newid,rep(id[index[s[ss]]+(1:freq[s[ss]])],times=w[ss])+rep(((1:w[ss])-1)*1000,each=freq[s[ss]]))
     }
     dat.boot=dat[location,]
+    #cbind(dat.boot,newid=newid)
     dat.boot$id=newid
-    A[i,]=RE.biv(beta, dat.boot)
+    A[i,]=RE.biv(beta,dat.boot)
   }
   v=cov(A)
   return(v)
@@ -160,14 +166,19 @@ RE.bivR=function(beta,dat,R) {
   p=length(beta)
   ugap1=mdat$ugap1
   ugap2=mdat$ugap2
-  ncov = length(c(9:ncol(dat)))
-  a_indexes1 = a_indexes2 = seq(3, 2+ncov, 1)
+  ncov = length(c(9:ncol(dat))) #added line
+  a_indexes1 = a_indexes2 = seq(3, 2+ncov, 1) #added line
 
   ss10=cumsum(1/ugap1$mstar/n)
+  #ss11=apply(cbind(ugap1$a1,ugap1$a2,ugap1$a3)/ugap1$mstar/n,2,cumsum)
+  #sub1=ugap1$delta*(cbind(ugap1$a1,ugap1$a2,ugap1$a3)-ss11/ss10)/ugap1$mstar/sqrt(n)
   ss11=apply(ugap1[, a_indexes1]/ugap1$mstar/n,2,cumsum)
   sub1=ugap1$delta*(ugap1[, a_indexes1]-ss11/ss10)/ugap1$mstar/sqrt(n)
 
   ss20=cumsum(1/ugap2$mstar/n)
+  #ss21=apply(cbind(ugap2$a1,ugap2$a2,ugap2$a3)/ugap2$mstar/n,2,cumsum)
+  #sub2=ugap2$delta*(cbind(ugap2$a1,ugap2$a2,ugap2$a3)-ss21/ss20)/ugap2$mstar/sqrt(n)
+  #changed below
   ss21=apply(ugap2[, a_indexes2]/ugap2$mstar/n,2,cumsum)
   sub2=ugap2$delta*(ugap2[, a_indexes2]-ss21/ss20)/ugap2$mstar/sqrt(n)
 

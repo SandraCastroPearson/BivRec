@@ -2,7 +2,7 @@
 ## New Release - previous 11/17/19 release was rejected. All issues fixed.
 
 ## Test environments
-* Local: Windows OS  x86_64-w64-mingw32, R 3.6.1
+* Local: Windows OS x86_64-w64-mingw32/x64 (64-bit), R 3.6.1
 * On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.1
 
 ## R CMD check results

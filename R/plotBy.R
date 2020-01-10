@@ -5,7 +5,7 @@
 #' @param cov_name pass from plot fcts
 #' @param args pass from plot fcts
 #'
-#' @impor graphics
+#' @import graphics
 #' @keywords internal
 #' @noRd
 #'

@@ -41,7 +41,7 @@ This is an example using a simulated data set.
 ```{r BivRecExample}
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
-set.seed(288)
+set.seed(28)
 sim_data <- simBivRec(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63, set=1.1)
 head(sim_data)
 

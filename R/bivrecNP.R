@@ -48,12 +48,12 @@
 #' library(BivRec)
 #'
 #' # Simulate bivariate alternating recurrent event data
-#' set.seed(1234)
-#' sim_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+#' set.seed(28)
+#' sim_data <- simBivRec(nsize=75, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 #'             tau_c=63, set=1.1)
 #' bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #' npresult <- bivrecNP(response = bivrecsurv_data, ai=1,
-#'                      u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), level=0.99)
+#'                      u1 = seq(2, 20, 1), u2 = seq(1, 15, 1), level=0.99)
 #' head(npresult)
 #' plot(npresult)
 #'

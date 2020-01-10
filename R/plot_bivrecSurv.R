@@ -30,8 +30,8 @@
 #' @examples
 #'# Simulate bivariate alternating recurrent event data
 #' library(BivRec)
-#' set.seed(1234)
-#' bivrec_data <- simBivRec(nsize=150, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
+#' set.seed(28)
+#' bivrec_data <- simBivRec(nsize=75, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
 #'                set=1.1)
 #' plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
 #'      type = c("In Hospital", "Out of Hospital"))

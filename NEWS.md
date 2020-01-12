@@ -1,5 +1,7 @@
 # BivRec 1.2.0
 
+Re-submitted to CRAN 2020-01-12
+
 Submitted to CRAN 2019-11-17
 
 # BivRec 1.0.0

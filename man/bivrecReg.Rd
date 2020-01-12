@@ -38,10 +38,13 @@ This approximation requires extensive computing time for a relatively small samp
 Related methods: \verb{coef.bivrecReg}, \verb{confint.bivrecReg}, \verb{plot}, \verb{print}, \verb{summary.bivrecReg}, \verb{vcov.bivrecReg}.
 }
 \examples{
+
+\dontrun{
+
 library(BivRec)
 set.seed(28)
 # Simulate bivariate alternating recurrent event data
-bivrec_data <- simBivRec(nsize=75, beta1=c(0.5,0.5), beta2=c(0,-0.5),
+bivrec_data <- simBivRec(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5),
                tau_c=63, set=1.1)
 # Apply Lee, Huang, Xu, Luo (2018) method using two covariates
 lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
@@ -50,7 +53,6 @@ summary(lee_reg)
 confint(lee_reg, level=0.99)
 vcov(lee_reg)
 
-\dontrun{
 # Chang (2004) method using method="Chang". This is an example with longer runtime.
 chang_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                       bivrec_data, method = "Chang")

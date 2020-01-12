@@ -18,7 +18,7 @@ The package also provides options to simulate and visualize the data and the res
 \url{https://doi.org/10.1023/B:LIDA.0000030202.20842.c9}
 
 \item Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
-\url{doi.org/10.1111/j.1541-0420.2005.00328.x}
+\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1541-0420.2005.00328.x}
 
 \item Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
 \url{https://doi.org/10.1002/sim.7563}

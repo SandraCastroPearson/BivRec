@@ -28,6 +28,7 @@
 #' To avoid errors make sure the vectors used for the \verb{bivrecSurv} object have the same length as the categorical variables and no missing values.
 #'
 #' @examples
+#' \dontrun{
 #'# Simulate bivariate alternating recurrent event data
 #' library(BivRec)
 #' set.seed(28)
@@ -36,7 +37,6 @@
 #' plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
 #'      type = c("In Hospital", "Out of Hospital"))
 #'
-#' \dontrun{
 #' #Present the data by subgroups
 #' #Note that the covariate a2 in the function will be dropped because it is continuous
 #' attach(bivrec_data)

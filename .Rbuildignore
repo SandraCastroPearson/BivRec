@@ -1,13 +1,32 @@
-^CRAN-RELEASE$
+
+
+#RStudio and travis files
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+
+#Read me
 ^README\.Rmd$
 ^README-.*\.png$
+
+#Comments, release and license files
 ^cran-comments\.md$
 ^LICENSE$
-^examples_i386
-^examples_x64
-^tests_i386
-^tests_x64
-^.*\.Rout$
+^CRAN-RELEASE$
+
+#Test files
+^test\.sh$
+
+#History files
+^\.Rhistory*
+^\.Rapp\.history*
+
+# Example code in package build process
+.*-Ex\.R
+.*-Ex\.Rout
+
+# Output files from R CMD build
+.*\.tar\.gz
+
+# Output files from R CMD check
+.*\.Rcheck/

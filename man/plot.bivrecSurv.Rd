@@ -33,6 +33,7 @@ When the \verb{by} argument is used it overrides the \verb{main} argument and se
 To avoid errors make sure the vectors used for the \verb{bivrecSurv} object have the same length as the categorical variables and no missing values.
 }
 \examples{
+\dontrun{
 # Simulate bivariate alternating recurrent event data
 library(BivRec)
 set.seed(28)
@@ -41,7 +42,6 @@ bivrec_data <- simBivRec(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5), tau_c=63,
 plot(x = with(bivrec_data,bivrecSurv(id, epi, xij, yij, d1, d2)), main="Example",
      type = c("In Hospital", "Out of Hospital"))
 
-\dontrun{
 #Present the data by subgroups
 #Note that the covariate a2 in the function will be dropped because it is continuous
 attach(bivrec_data)

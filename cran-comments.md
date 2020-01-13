@@ -14,10 +14,15 @@
 Done. Your build exited with 0.
 
 *check_rhub() results:*
-
+1 NOTE:
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  'BivRec-Ex_i386.Rout' 'BivRec-Ex_x64.Rout' 'examples_i386'
+  'examples_x64' 'tests_i386' 'tests_x64'
+  
 
 *check_win_devel() results*
-
+1 NOTE:
 
 ## Reverse dependencies
 Previous functions deprecated but in working order.

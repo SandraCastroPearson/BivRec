@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.R_Data
 .Ruserdata
 .Rout
 inst/doc

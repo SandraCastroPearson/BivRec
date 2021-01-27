@@ -82,17 +82,13 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
         if (nrows_c[1]!= nrows_c[2]) {
           stop("Non-conformable arguments. Vector variables to create bivrecSurv object and categorical variables to plot by must have the same length.")
         }
-      } else {stop("Parameter by must be a vector or data frame.")}
-      }
+      } else {stop("Parameter by must be a vector or data frame.")}      }
 
     #colnames(df) <- c("id", "episode", "xij", "yij", "ci")
     df = as.data.frame(cbind(object$data4Creg[,-(5:7)], na.omit(by)))
     plotBy(df, args)
 
   }
-
-
-
 
 
 }

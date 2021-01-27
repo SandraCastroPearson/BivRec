@@ -64,9 +64,12 @@ plotBy <- function(df, args) {
   #number of levels for each predictor
   num_levs <- apply(df[, 6:ncol(df)], 2, function(x) length(unique(x)))
   to_delete <- which(num_levs > 6) + 5
-  message1 <- paste(colnames(df)[to_delete], " not used - either continuous or had more than 6 levels.", sep="")
-  print(message1)
-  df <- df[, -to_delete]
+
+  if(length(to_delete)>0){
+     message1 <- paste(colnames(df)[to_delete], " not used - either continuous or had more than 6 levels.", sep="")
+     print(message1)
+     df <- df[, -to_delete]
+  }
 
   if (ncol(df)==5) {stop("Cannot break by covariate. All covariates are continuous or have more than 6 levels.")}
 

@@ -21,13 +21,6 @@ plotJoint <- function(object, type) {
 
   forplot <- x$joint_cdf
 
-  #####OLD MAY RE-USE LATTER: Wald CI and plot
-  # rgl::plot3d(forplot[,1], forplot[,2], forplot[,3], col = "black", xlab = "x",
-  #        main = "Joint cdf", ylab ="y", zlab = expression(P(X^0 <= x, Y^0 <= y)),  expand = 1.1, cex.lab = 1.5)
-  # for (i in 1:nrow(forplot)) {
-  #   rgl::rgl.lines(forplot[i,1], forplot[i,2], as.matrix(forplot[i,5:6]), col="red")
-  # }
-
   forplot <- forplot[1:3]
   colnames(forplot) <- c("X", "Y", "Cumm.Prob")
   myx <- as.factor(forplot$X)
@@ -111,7 +104,7 @@ plotCond <- function(object, type) {
 
   plot(cond$Time, cond[,5], type="l", lty = 2, xlab = type,
        ylab = "Conditional Probability", xlim=c(0, round(max(x$conditional_cdf$ygrid), digits=1)),
-       ylim=c(0, round(max(cond[,5]), digits=1)),
+       ylim=c(0, 1),
        main=substitute(paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
                        list(gi1 = x$given.interval[1], gi2 = x$given.interval[2]))
   )

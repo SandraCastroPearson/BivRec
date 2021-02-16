@@ -46,7 +46,7 @@
 #' }
 
 plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
-                            xlab = NULL, ylab = NULL, ...){
+                            xlab = NULL, ylab = NULL, col=NULL, ...){
 
   if (!inherits(x, "bivrecSurv")) stop("Must be a bivrecSurv object.")
   object <- x
@@ -55,6 +55,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
   if (missing(type)) {type=c("Type I","Type II")}
   if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
+  if (missing(col)) {col=c("black", "grey")}
   if (missing(main)) {main=""}
   args = c(main, xlab, ylab, type)
 
@@ -66,7 +67,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
   nsubject <- object$data4Lreg$n
 
   basicplot(parameters=parameters, ctimes=ctimes,
-            nsubject=nsubject, temp = NULL, args = args,
+            nsubject=nsubject, temp = NULL, args = args, col = col,
             c=0.95, cm=1.5, byp=FALSE)
 
   } else {
@@ -86,7 +87,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
 
     #colnames(df) <- c("id", "episode", "xij", "yij", "ci")
     df = as.data.frame(cbind(object$data4Creg[,-(5:7)], na.omit(by)))
-    plotBy(df, args)
+    plotBy(df, args, col=col)
 
   }
 

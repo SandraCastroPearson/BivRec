@@ -8,7 +8,6 @@
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #' @importFrom dplyr filter
-#' @importFrom dplyr arrange
 #'
 #' @param formula A formula with a \verb{bivrecSurv} object on the left of a ~ operator as response, and the covariate(s) on the right.
 #' @param data A data frame that includes the vectors needed for the \verb{bivrecSurv} response and the covariates in the formula.
@@ -83,9 +82,9 @@ bivrecReg <- function(formula, data, method) {
   variables <- all.vars(formula)
   ref_data <- data
   data <- na.omit(data[ , colnames(data) %in% variables])
-  colnames(data)[1] <- "id"
-  data <- arrange(data, id)
-  iden1 <- ref_data[,1];  iden2 <- data[,1];
+  data <- data[order(eval(parse(text = paste("data$", variables[1], sep="")))),]
+  iden1 <- eval(parse(text = paste("ref_data$", variables[1], sep="")))
+  iden2 <- eval(parse(text = paste("data$", variables[1], sep="")))
   num_missing = length(unique(iden1)) - length(unique(iden2))
 
   if (num_missing > 0) {
@@ -93,7 +92,7 @@ bivrecReg <- function(formula, data, method) {
     print(msg)
   }
 
-  d2check <-  unique(eval(parse(text = paste("data$", variables[6], sep=""))))
+  d2check <- unique(eval(parse(text = paste("data$", variables[6], sep=""))))
   if (length(d2check)==1) {
     if (d2check==0) {
       stop("Data not cleaned. All episodes provided are censored (all d2=0).")
@@ -149,8 +148,9 @@ bivrecReg <- function(formula, data, method) {
     #predictor portion
     predictors <- data.frame(id = resp$data4Creg$id, epi = resp$data4Creg$epi,
                              model.matrix(formula, data)[,-1])
+    colnames(predictors) <-  c("id", "epi", colnames(model.matrix(formula, data))[-1])
     cov_names <- colnames(predictors)[-c(1,2)]
-    new_data <- merge(resp$data4Creg, predictors, by = c("id","epi"))
+    new_data <- merge(resp$data4Creg, predictors, c("id","epi"))
     new_data <- new_data[order(new_data$id, decreasing = FALSE),]
 
     if (length(cov_names)==1) {

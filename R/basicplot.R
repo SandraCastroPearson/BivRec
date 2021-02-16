@@ -11,7 +11,7 @@
 #' @keywords internal
 #' @noRd
 
-basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
+basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp, col) {
 
   if (missing(c)) {c = 1}
   if (missing(cm)) {cm = 2}
@@ -58,7 +58,7 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
   axis(side=1)
   title(main=args[1], xlab=args[2], ylab=args[3], cex.main = cm)
   if (byp == FALSE) {
-    legend("bottomright", legend=legendtext, col = c("blue", "red"),
+    legend("bottomright", legend=legendtext, col = col,
          lty = 1, cex=c, inset=.02, bg = "white", bty='n', seg.len = 0.7,
          x.intersp=0.9, y.intersp = 0.85, xjust = 0, yjust = 0)
   }
@@ -71,10 +71,10 @@ basicplot <- function(parameters, ctimes, nsubject, temp, args, c, cm, byp) {
     subject$newid = newid
     if (nrow(subject)==1) {
       segments(subject$start_time[1], subject$newid,
-               subject$stop_time[1], subject$newid, col="blue")
+               subject$stop_time[1], subject$newid, col= col[1])
     } else {
       for (j in 1:length(subject$id)) {
-        if (j %% 2 == 1) colors <- "blue" else colors <- "red"
+        if (j %% 2 == 1) colors <- col[1] else colors <- col[2]
         segments(subject$start_time[j], subject$newid,
                  subject$stop_time[j], subject$newid, col=colors)
       }

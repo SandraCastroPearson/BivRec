@@ -55,7 +55,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
   if (missing(type)) {type=c("Type I","Type II")}
   if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
-  if (missing(col)) {col=c("black", "grey")}
+  if (missing(col)) {col=c("grey13", "grey49")}
   if (missing(main)) {main=""}
   args = c(main, xlab, ylab, type)
 

@@ -15,7 +15,7 @@ ploteach <- function(pred_levels, plotdat, cov_name, args, col) {
     ##EXTRACT VECTORS FOR PLOTTING FUNCTION
     parameters <- plotdat[which(plotdat[ ,6] == pred_levels[p]), 1:5]
     new_main = paste(cov_name, " = ", pred_levels[p], sep="")
-    unik_ids <- unique(parameers$id)
+    unik_ids <- unique(parameters$id)
     nsubject2 <- length(unik_ids)
     parameters$id2 <- rep(NA, nrow(parameters))
     for (i in 1:nsubject2){
@@ -59,7 +59,7 @@ ploteach <- function(pred_levels, plotdat, cov_name, args, col) {
 #' @keywords internal
 #' @noRd
 
-plotBy <- function(df, args) {
+plotBy <- function(df, args, col) {
 
   #number of levels for each predictor
   num_levs <- apply(df[, 6:ncol(df)], 2, function(x) length(unique(x)))

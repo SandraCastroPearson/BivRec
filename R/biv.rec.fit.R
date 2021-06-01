@@ -40,10 +40,10 @@
 #' @references
 #' \enumerate{
 #' \item Chang S-H. (2004). Estimating marginal effects in accelerated failure time models for serial sojourn times among repeated events. Lifetime Data Analysis, 10: 175-190.
-#' \url{https://doi.org/10.1023/B:LIDA.0000030202.20842.c9}
+#' \doi{10.1023/B:LIDA.0000030202.20842.c9}
 #'
 #' \item Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
-#' \url{https://doi.org/10.1002/sim.7563}
+#' \doi{10.1002/sim.7563}
 #'
 #' \item Parzen MI, Wei LJ, Ying Z. (1994). A resampling method based on pivotal estimating functions. Biometrika, 81: 341-350.
 #' \url{http://www.people.fas.harvard.edu/~mparzen/published/parzen1.pdf}

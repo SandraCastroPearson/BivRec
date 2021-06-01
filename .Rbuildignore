@@ -29,3 +29,8 @@
 
 # Output files from R CMD check
 .*\.Rcheck/
+
+# .fsrc, .o, and .so files
+\.fsrc$
+\.o$
+\.so$

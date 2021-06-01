@@ -76,5 +76,5 @@ plot(npresult)
 }
 \references{
 Huang CY, Wang MC. (2005). Nonparametric estimation of the bivariate recurrence time distribution. Biometrics, 61: 392-402.
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1541-0420.2005.00328.x}
+\doi{10.1111/j.1541-0420.2005.00328.x}
 }

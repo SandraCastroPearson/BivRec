@@ -38,7 +38,6 @@ plotJoint <- function(object, type) {
                            forplot2, color.palette = grDevices::heat.colors, cex.main=1.5,
                            xlab=type[1], ylab=type[2],
                            main = expression(P(X^0 <= x, Y^0 <= y)))
-
 }
 
 ########################    plotMarg     ########################

@@ -56,7 +56,7 @@
 #'             tau_c=63, set=1.1)
 #' bivrecsurv_data <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 #' npresult <- bivrecNP(response = bivrecsurv_data, ai=1,
-#'                      u1 = seq(2, 20, 1), u2 = seq(1, 15, 1), level=0.99)
+#'                      u1 = seq(2, 20, 2), u2 = seq(1, 14, 2), level=0.99)
 #' head(npresult)
 #' plot(npresult)
 #'
@@ -85,13 +85,13 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 
   xij <- x$data4Creg$xij
   yij <- x$data4Creg$yij
+  tau_c <- max(c(xij, yij))
 
   if (missing(u1)) {u1 <- round(seq(quantile(xij, probs = 0.4), quantile(xij, probs = 0.8), length.out=5))}
   if (missing(u2)) {u2 <- round(seq(quantile(yij, probs = 0.4), quantile(yij, probs = 0.8), length.out=4))}
   temp <- rep(u1, each = length(u2))
   temp2 <- rep(u2, length(u1))
   u <- cbind(u1=temp, u2=temp2)
-
   print("Estimating joint CDF and marginal survival")
 
   if (ai==1) {
@@ -107,6 +107,9 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
     }
 
   cdf_res <- nonparam_cdf(forcdf, u, ai, CI)
+  cdf_res$`Joint Probability` <- ifelse(cdf_res$x+cdf_res$y > tau_c, NA,
+                                        cdf_res$`Joint Probability`)
+
   marg_res <- nonparam_marginal(formarg, CI)
 
   if (conditional==FALSE) {
@@ -123,7 +126,8 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
 
     if (missing(given.interval)) {
       print("Error: Missing given.interval while conditional=TRUE.")
-      final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai)
+      final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
+                           ai=ai, tau_c=tau_c)
       final_result$level <- CI
       final_result$conditional <- conditional
 
@@ -138,7 +142,8 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
       ccdf_res <- nonparam_conditional(res=partial_result, given.interval, CI, yij)
 
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
-                           conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij, new_data=new_data)
+                           conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij,
+                           tau_c=tau_c, new_data=new_data)
 
       final_result$given.interval <- given.interval
 

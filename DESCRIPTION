@@ -2,7 +2,7 @@ Package: BivRec
 Type: Package
 Title: Bivariate Alternating Recurrent Event Data Analysis
 Date: 2020-01-12
-Version: 1.2.0
+Version: 1.2.1
 Authors@R: c(person("Sandra", "Castro-Pearson", email= "cast0135@umn.edu", role = c("aut", "cre")), person("Aparajita", "Sur", email = "sur00001@umn.edu", role = "aut"), person("Chi Hyun", "Lee", email = "chihyunlee@umass.edu", role ="aut"), person("Chiung-Yu", "Huang", email = "chiungyu.huang@ucsf.edu", role = "aut"),
   person("Xianghua", "Luo", email = "luox0054@umn.edu", role = "aut"))
 Author: Sandra Castro-Pearson [aut, cre], Aparajita Sur [aut], Chi Hyun Lee [aut], Chiung-Yu Huang [aut], Xianghua Luo [aut]

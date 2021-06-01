@@ -16,6 +16,7 @@
 #' @param main Optional string with plot title. Default is no title (will go to default when using \verb{by} argument).
 #' @param xlab Optional string with label for horizontal axis. Default is "Time".
 #' @param ylab Optional string with label for vertical axis. Default is "Individual".
+#' @param col Optional string vector with colors to use for each of the gap types. Default is c("red", "blue")
 #' @param type Optional vector of strings to label Type I and Type II gap times. Default is c("Type I", "Type II").
 #' @param ... Additional arguments to be passed to graphical methods if needed.
 #'
@@ -55,7 +56,7 @@ plot.bivrecSurv <- function(x, y=NULL, by, type = NULL, main = NULL,
   if (missing(type)) {type=c("Type I","Type II")}
   if (missing(xlab)) {xlab="Time"}
   if (missing(ylab)) {ylab="Individual"}
-  if (missing(col)) {col=c("grey13", "grey49")}
+  if (missing(col)) {col=c("red", "blue")}
   if (missing(main)) {main=""}
   args = c(main, xlab, ylab, type)
 

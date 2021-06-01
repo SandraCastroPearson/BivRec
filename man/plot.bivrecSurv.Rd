@@ -4,7 +4,17 @@
 \alias{plot.bivrecSurv}
 \title{Plot Bivariate Alternating Recurrent Series}
 \usage{
-\method{plot}{bivrecSurv}(x, y = NULL, by, type = NULL, main = NULL, xlab = NULL, ylab = NULL, ...)
+\method{plot}{bivrecSurv}(
+  x,
+  y = NULL,
+  by,
+  type = NULL,
+  main = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  col = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A \verb{bivrecSurv} object.}
@@ -20,6 +30,8 @@
 \item{xlab}{Optional string with label for horizontal axis. Default is "Time".}
 
 \item{ylab}{Optional string with label for vertical axis. Default is "Individual".}
+
+\item{col}{Optional string vector with colors to use for each of the gap types. Default is c("red", "blue")}
 
 \item{...}{Additional arguments to be passed to graphical methods if needed.}
 }

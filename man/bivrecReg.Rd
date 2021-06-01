@@ -50,15 +50,7 @@ bivrec_data <- simBivRec(nsize=100, beta1=c(0.5,0.5), beta2=c(0,-0.5),
 lee_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
                      bivrec_data, "Lee.et.al")
 summary(lee_reg)
-confint(lee_reg, level=0.99)
-vcov(lee_reg)
 
-# Chang (2004) method using method="Chang". This is an example with longer runtime.
-chang_reg <- bivrecReg(bivrecSurv(id, epi, xij, yij, d1, d2) ~ a1 + a2,
-                      bivrec_data, method = "Chang")
-summary(chang_reg)
-confint(chang_reg, level=0.99)
-vcov(chang_reg)
 }
 
 }

@@ -59,7 +59,7 @@ head(sim_data)
 # Create a bivrecSurv object
 bivrec_object <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 # Plot gap times
-plot(bivrec_object, main="Example", type = c("Type I", "Type II"))
+plot(bivrec_object, main="Example", type = c("Type I", "Type II"), col = c("darkgrey","darkgreen"))
 ```
 
 ![](man/figures/README-BivRecExample-1.png)<!-- -->
@@ -70,21 +70,21 @@ Nonparametric Analysis
 # Apply the nonparametric method of Huang and Wang (2005) and visualize joint, marginal and conditional results
 
 library(BivRec)
-npresult <- bivrecNP(response = bivrec_object, ai=1,
-                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
-                given.interval = c(0, 10), level = 0.99)
+npresult <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                ai=1, u1 = seq(1, 15, 0.5), u2 = seq(1, 15, 0.5), conditional = TRUE,
+                given.interval = c(1, 10), level = 0.99)
 #> [1] "Estimating joint CDF and marginal survival"
 #> [1] "Estimating conditional cdf with 99% confidence interval using 200 bootstrap samples"
 head(npresult)
 #> 
 #> Joint CDF:
-#>    x y Joint Probability         SE Lower .99 Upper .99
-#> 1 2 1         0.1598075 0.03321294 0.0742566 0.2453583
-#> 2 2 2         0.2097532 0.03725269 0.1137967 0.3057098
-#> 3 2 3         0.2133441 0.03713210 0.1176981 0.3089900
-#> 4 2 4         0.2154721 0.03706672 0.1199946 0.3109496
-#> 5 2 5         0.2181802 0.03700250 0.1228681 0.3134923
-#> 6 2 6         0.2181802 0.03700250 0.1228681 0.3134923
+#>    x   y Joint Probability         SE   Lower .99 Upper .99
+#> 1 1 1.0        0.05900966 0.01967078 0.008341088 0.1096782
+#> 2 1 1.5        0.06086021 0.01995590 0.009457207 0.1122632
+#> 3 1 2.0        0.06179946 0.01994861 0.010415238 0.1131837
+#> 4 1 2.5        0.06179946 0.01994861 0.010415238 0.1131837
+#> 5 1 3.0        0.06179946 0.01994861 0.010415238 0.1131837
+#> 6 1 3.5        0.06179946 0.01994861 0.010415238 0.1131837
 #> 
 #> Marginal Survival:
 #>         Time Marginal Survival           SE Lower .99 Upper .99
@@ -99,17 +99,17 @@ head(npresult)
 #>      Time Conditional Probability  Bootstrap SE Bootstrap Lower .99
 #> 1 0.0000                  0.0000        0.0000                0.00
 #> 2 0.0776                  0.0000        0.0000                0.00
-#> 3 0.1551                  0.0003        0.0003                0.00
-#> 4 0.2327                  0.0084        0.0047                0.00
-#> 5 0.3103                  0.0259        0.0114                0.00
-#> 6 0.3878                  0.0485        0.0184                0.01
+#> 3 0.1551                  0.0000        0.0000                0.00
+#> 4 0.2327                  0.0018        0.0011                0.00
+#> 5 0.3103                  0.0095        0.0038                0.00
+#> 6 0.3878                  0.0224        0.0081                0.01
 #>   Bootstrap Upper .99
 #> 1                0.00
 #> 2                0.00
 #> 3                0.00
-#> 4                0.02
-#> 5                0.06
-#> 6                0.10
+#> 4                0.00
+#> 5                0.02
+#> 6                0.04
 plot(npresult)
 ```
 
@@ -136,7 +136,7 @@ Semiparametric Regression Analysis
 #Use attach as follows or specifiy each vector using the $ operator (sim_data$id, sim_data$epi, etc.)
 
 attach(sim_data)
-plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2), type = c("Type I", "Type II"))
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2), type = c("Type I", "Type II"), col = c("darkgrey","darkgreen"))
 #> [1] "a2 not used - either continuous or had more than 6 levels."
 #> [1] "Subjects for plots: 100."
 ```

@@ -48,7 +48,7 @@ head(sim_data)
 # Create a bivrecSurv object
 bivrec_object <- with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2))
 # Plot gap times
-plot(bivrec_object, main="Example", type = c("Type I", "Type II"))
+plot(bivrec_object, main="Example", type = c("Type I", "Type II"), col = c("darkgrey","darkgreen"))
 ```
 
 Nonparametric Analysis
@@ -57,9 +57,9 @@ Nonparametric Analysis
 # Apply the nonparametric method of Huang and Wang (2005) and visualize joint, marginal and conditional results
 
 library(BivRec)
-npresult <- bivrecNP(response = bivrec_object, ai=1,
-                u1 = seq(2, 25, 1), u2 = seq(1, 20, 1), conditional = TRUE,
-                given.interval = c(0, 10), level = 0.99)
+npresult <- bivrecNP(response = with(sim_data, bivrecSurv(id, epi, xij, yij, d1, d2)),
+                ai=1, u1 = seq(1, 15, 0.5), u2 = seq(1, 15, 0.5), conditional = TRUE,
+                given.interval = c(1, 10), level = 0.99)
 head(npresult)
 plot(npresult)
 
@@ -82,7 +82,7 @@ Semiparametric Regression Analysis
 #Use attach as follows or specifiy each vector using the $ operator (sim_data$id, sim_data$epi, etc.)
 
 attach(sim_data)
-plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2), type = c("Type I", "Type II"))
+plot(x = bivrecSurv(id, epi, xij, yij, d1, d2), by = data.frame(a1, a2), type = c("Type I", "Type II"), col = c("darkgrey","darkgreen"))
 detach(sim_data)
 
 # Apply Lee, Huang, Xu, Luo (2018) method using multiple covariates.

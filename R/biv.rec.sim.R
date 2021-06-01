@@ -27,7 +27,7 @@
 #'
 #' @references
 #'  Lee CH, Huang CY, Xu G, Luo X. (2018). Semiparametric regression analysis for alternating recurrent event data. Statistics in Medicine, 37: 996-1008.
-#' \url{https://doi.org/10.1002/sim.7563}
+#' \doi{10.1002/sim.7563}
 #'
 #' @export
 

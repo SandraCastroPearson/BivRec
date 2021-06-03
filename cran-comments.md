@@ -2,12 +2,10 @@
 
 ## This is a resubmission
 
-## Previous submission 11/17/19 release was rejected. 
-## Issues with examples and links fixed.
 
 ## Test environments
-* Local: Windows OS x86_64-w64-mingw32/x64 (64-bit), R 3.6.2
-* On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.1
+* Local: Windows OS x86_64-w64-mingw32/x64 (64-bit), R 4.1.0
+* On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.0 and 4.1.0
 
 ## R CMD check results
 
@@ -19,26 +17,20 @@ Done. Your build exited with 0.
 
 *check_rhub() results:*
 
-1 note when it runs under Windows Server 2008 R2 SP1, R-devel, 32/64 bit  
+- For	Windows Server 2008 R2 SP1, R-devel, 32/64 bit:
+  Error: Bioconductor does not yet build and check packages for R version 4.2; see
+  https://bioconductor.org/install
+  Execution halted
 
-* checking for non-standard things in the check directory ... NOTE
-Found the following files/directories:
-  'BivRec-Ex_i386.Rout' 'BivRec-Ex_x64.Rout' 'examples_i386'
-  'examples_x64' 'tests_i386' 'tests_x64'
+  Package was sent for check using R 4.0.3 and 4.1.0 and this issue persisted. 
   
-0 errors √ | 0 warnings √ | 1 note x
+- All other platforms
+  BivRec 1.2.1: OK
 
-No errors, warnings or notes when using:
-Ubuntu Linux 16.04 LTS, R-release, GCC
-Fedora Linux, R-devel, clang, gfortran
-Debian Linux, R-devel, GCC ASAN/UBSAN
   
-*check_win_devel() results*
-
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Sandra Castro-Pearson <cast0135@umn.edu>'
-
-This is a resubmission.
+*check_win_devel() and check_win_release() results*
+* DONE
+Status: OK
 
 ## Reverse dependencies
 Previous functions deprecated but in working order.

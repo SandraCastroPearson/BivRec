@@ -3,6 +3,7 @@
 language: r
 rvm:
  - 3.5.0
+ - 4.0.2
 sudo: false
 before_install:
   - tlmgr install index

@@ -1,16 +1,14 @@
-## Package update - version 1.2.0
-
-## This is a resubmission
-
+## Package update - version 1.2.1
 
 ## Test environments
-* Local: Windows OS x86_64-w64-mingw32/x64 (64-bit), R 4.1.0
-* On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.0 and 4.1.0
+* Local: Windows OS x86_64-w64-mingw32/x64 (64-bit), R 4.0.2
+* On travis-ci: Linux Ubuntu Trusty 14.04.5 x86_64-pc-linux-gnu, R 3.5.0 and 4.0.2
 
 ## R CMD check results
 
 *Local results:*   
-0 errors | 0 warnings | 0 notes  
+Duration: 2m 24.1s
+0 errors | 0 warnings | 0 notes
 
 *Travis-ci results (https://travis-ci.org/SandraCastroPearson/BivRec):*   
 Done. Your build exited with 0.
@@ -22,11 +20,10 @@ Done. Your build exited with 0.
   https://bioconductor.org/install
   Execution halted
 
-  Package was sent for check using R 4.0.3 and 4.1.0 and this issue persisted. 
+  Found a reference to this issue at: https://github.com/r-hub/rhub/issues/471. Not      much as how to fix this as it doesn't apear to be a package issue but a testing        set-up issue.
   
-- All other platforms
+- All other platforms:
   BivRec 1.2.1: OK
-
   
 *check_win_devel() and check_win_release() results*
 * DONE

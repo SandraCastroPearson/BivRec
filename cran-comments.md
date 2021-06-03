@@ -15,17 +15,18 @@ Done. Your build exited with 0.
 
 *check_rhub() results:*
 
-- For	Windows Server 2008 R2 SP1, R-devel, 32/64 bit:
+- PREPERROR for	Windows Server 2008 R2 SP1, R-devel, 32/64 bit
   Error: Bioconductor does not yet build and check packages for R version 4.2; see
   https://bioconductor.org/install
   Execution halted
 
-  Found a reference to this issue at: https://github.com/r-hub/rhub/issues/471. Not      much as how to fix this as it doesn't apear to be a package issue but a testing        set-up issue.
+  Found a reference to this issue at: https://github.com/r-hub/rhub/issues/471. No       information on how to fix this as it doesn't apear to be a package issue but a         testing set-up issue.
   
-- All other platforms:
-  BivRec 1.2.1: OK
+- BivRec 1.2.1: OK for all other platforms
+  
   
 *check_win_devel() and check_win_release() results*
+
 * DONE
 Status: OK
 

@@ -21,4 +21,4 @@ Language: en-US
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp
 NeedsCompilation: yes
-LazyLoad: yes
+

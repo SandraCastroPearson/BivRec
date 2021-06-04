@@ -93,6 +93,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @param CI confidence level. Passed from bivrecNP()
 #' @param condiplot a logical value. Passed from bivrecNP()
 #' @param yij Passed from bivrecNP()
+#' @param tau_c Passed from bivrecNP()
 #'
 #' @return A data frame with the conditional CDF for the given an interval of the first gap time and corresponding plot.
 #' @importFrom stats sd
@@ -101,7 +102,7 @@ bstp <- function(seedi, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime) {
 #' @keywords internal
 #'
 
-nonparam_conditional <- function(res, given.interval, CI, yij) {
+nonparam_conditional <- function(res, given.interval, CI, yij, tau_c) {
 
   ####Extract items from results
   marginal <- res$marginal_survival #marg result (res2)
@@ -114,15 +115,15 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
 
   x.grid <- marginal[which(marginal$Time<=given.interval[2]), ] #this uses marginal result and is a param for bstp
   x.grid <- x.grid[which(x.grid$Time>=given.interval[1]), ]
-  x.grid$diffs <- x.grid$rounded - x.grid$rounded[nrow(x.grid)]
-  if (length(which(x.grid$diffs >= 0.1))==0) {
+  if (max(x.grid$rounded - x.grid$rounded[nrow(x.grid)])<0.1) {
     print("Cannot estimate conditional cdf, given.interval is too narrow")
     stop()
   }
-  x.grid <- x.grid[c(1, max(which(x.grid$diffs >= 0.05)), nrow(x.grid)),]
-  y.grid <- seq(min(yij), max(yij), length.out = 200)
-  ps1 <- x.grid[1,2]
-  ps2 <- x.grid[3,2]
+  x.grid <- x.grid[c(1, nrow(x.grid)),]
+  y.grid <- seq(min(yij), min(max(yij), tau_c), length.out = 200)
+  y.grid <- floor(na.omit(ifelse(max(x.grid$Time)+y.grid <= tau_c, y.grid, NA)))
+
+  ps1 <- x.grid[1,2]; ps2 <- x.grid[2,2]
 
   B = ifelse(CI==0.99, 200, 100)
   cond.prob <- matrix(rep(NA, length(y.grid)*B), ncol=B)
@@ -131,7 +132,8 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
 
   for (i in 1:B) {
     #print(paste("Sample", i, sep = " "))
-    cond.prob[,i] <- bstp(seedi=i, ps1, ps2, x.grid, y.grid, n, refdata, ai, mintime = min(marginal$Time))
+    cond.prob[,i] <- bstp(seedi=i, ps1, ps2, x.grid, y.grid, n, refdata,
+                          ai, mintime = min(marginal$Time))
   }
 
   conf.lev = 1 - ((1-CI)/2)
@@ -143,24 +145,9 @@ nonparam_conditional <- function(res, given.interval, CI, yij) {
 
   flat.ind <- which(cond[,5]>=1.001)
   if (length(flat.ind)!=0) {cond[flat.ind, 2:5] <- cond[(min(flat.ind)-1), 2:5]}
-  #if (condiplot == TRUE) {
-  #plot(cond$Time, cond[,5], type="l", lty = 2, xlab = "Type II Gap Times (y)", ylab = "Conditional Probability",
-  #xlim=c(0, round(max(y.grid), digits=1)),
-  #ylim=c(0, round(max(cond[,5]), digits=1)),
-  #main=substitute(
-  #paste("P(", Y^0 <= y, "|", X^0 %in% "[", gi1, ",", gi2, "])"),
-  #list(gi1 = given.interval[1], gi2 = given.interval[2]))
-  #)
-  #graphics::lines(cond$Time, cond[,4], lty = 2)
-  #graphics::lines(cond$Time, cond$Conditional.Probability,lty = 1)
-
-  #}
 
   cond[, 4:5] <- round(cond[,4:5], digits = 2)
-  # cond$xgrid=x.grid
-  # cond$ygrid=y.grid
-  # cond$data=data
-  # cond$cond.prob
+
   return(list(conditional=cond, ygrid=y.grid))
   #return(list(conditional=cond,xgrid=x.grid,ygrid=y.grid,data=data,condprob=cond.prob,yij=yij))
 }

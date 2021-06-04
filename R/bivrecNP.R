@@ -115,7 +115,7 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
   if (conditional==FALSE) {
 
     final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res, ai=ai,
-                         xij=xij, yij=yij, new_data=new_data)
+                         xij=xij, yij=yij, new_data=new_data, tau_c=tau_c)
     final_result$level <- CI
     final_result$conditional <- conditional
 
@@ -139,7 +139,7 @@ bivrecNP <- function(response, ai, u1, u2, level, conditional, given.interval){
       partial_result <- list(cdf = cdf_res, marginal_survival = marg_res,
                              ai=ai, new_data=new_data)
 
-      ccdf_res <- nonparam_conditional(res=partial_result, given.interval, CI, yij)
+      ccdf_res <- nonparam_conditional(res=partial_result, given.interval, CI, yij, tau_c)
 
       final_result <- list(joint_cdf = cdf_res, marginal_survival = marg_res,
                            conditional_cdf = ccdf_res, ai=ai, xij=xij, yij=yij,
